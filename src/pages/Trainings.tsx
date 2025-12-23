@@ -19,12 +19,12 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { TrainingStatusBadge } from '@/components/trainings/TrainingStatusBadge';
+import { CreateTrainingDialog } from '@/components/trainings/CreateTrainingDialog';
 import { mockTrainings } from '@/data/mockData';
 import { TRAINING_CATEGORIES } from '@/types/training';
 import {
   Plus,
   Search,
-  Filter,
   MoreHorizontal,
   MapPin,
   Users,
@@ -66,10 +66,12 @@ export default function Trainings() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>All Trainings</CardTitle>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            Create Training
-          </Button>
+          <CreateTrainingDialog>
+            <Button>
+              <Plus className="mr-2 h-4 w-4" />
+              Create Training
+            </Button>
+          </CreateTrainingDialog>
         </CardHeader>
         <CardContent>
           {/* Filters */}
