@@ -21,6 +21,7 @@ import {
 import { TrainingStatusBadge } from '@/components/trainings/TrainingStatusBadge';
 import { CreateTrainingDialog } from '@/components/trainings/CreateTrainingDialog';
 import { ShareEnrollmentLink } from '@/components/trainings/ShareEnrollmentLink';
+import { TrainingQRCode } from '@/components/trainings/TrainingQRCode';
 import { mockTrainings } from '@/data/mockData';
 import { TRAINING_CATEGORIES } from '@/types/training';
 import {
@@ -31,6 +32,7 @@ import {
   Users,
   Calendar,
   Link2,
+  QrCode,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -196,6 +198,15 @@ export default function Trainings() {
                               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                                 <Link2 className="mr-2 h-4 w-4" />
                                 Share Enrollment Link
+                              </DropdownMenuItem>
+                            }
+                          />
+                          <TrainingQRCode
+                            training={training}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <QrCode className="mr-2 h-4 w-4" />
+                                Generate QR Code
                               </DropdownMenuItem>
                             }
                           />
