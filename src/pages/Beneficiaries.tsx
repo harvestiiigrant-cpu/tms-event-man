@@ -39,6 +39,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { EnrollBeneficiaryDialog } from '@/components/enrollment/EnrollBeneficiaryDialog';
 
 export default function Beneficiaries() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -71,6 +72,7 @@ export default function Beneficiaries() {
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>All Beneficiaries</CardTitle>
           <div className="flex gap-2">
+            <EnrollBeneficiaryDialog />
             <Button variant="outline">
               <Upload className="mr-2 h-4 w-4" />
               Import
