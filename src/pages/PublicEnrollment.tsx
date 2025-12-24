@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -55,6 +56,9 @@ interface ConflictInfo {
 }
 
 export default function PublicEnrollment() {
+  const [searchParams] = useSearchParams();
+  const preselectedTrainingId = searchParams.get("training");
+
   const [showConflictDialog, setShowConflictDialog] = useState(false);
   const [pendingSubmission, setPendingSubmission] = useState<EnrollmentFormValues | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -63,16 +67,28 @@ export default function PublicEnrollment() {
     (t) => t.training_status === "ONGOING" || t.training_status === "DRAFT"
   );
 
+  // Check if preselected training exists and is available
+  const preselectedTraining = preselectedTrainingId
+    ? availableTrainings.find((t) => t.id === preselectedTrainingId)
+    : null;
+
   const form = useForm<EnrollmentFormValues>({
     resolver: zodResolver(enrollmentSchema),
     defaultValues: {
       teacher_id: "",
       name: "",
       phone: "",
-      selected_trainings: [],
+      selected_trainings: preselectedTraining ? [preselectedTrainingId!] : [],
       accept_conflicts: false,
     },
   });
+
+  // Set preselected training when component mounts with URL param
+  useEffect(() => {
+    if (preselectedTraining && preselectedTrainingId) {
+      form.setValue("selected_trainings", [preselectedTrainingId]);
+    }
+  }, [preselectedTrainingId, preselectedTraining, form]);
 
   const selectedTrainingIds = form.watch("selected_trainings");
 

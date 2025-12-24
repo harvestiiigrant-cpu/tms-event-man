@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/table';
 import { TrainingStatusBadge } from '@/components/trainings/TrainingStatusBadge';
 import { CreateTrainingDialog } from '@/components/trainings/CreateTrainingDialog';
+import { ShareEnrollmentLink } from '@/components/trainings/ShareEnrollmentLink';
 import { mockTrainings } from '@/data/mockData';
 import { TRAINING_CATEGORIES } from '@/types/training';
 import {
@@ -29,6 +30,7 @@ import {
   MapPin,
   Users,
   Calendar,
+  Link2,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -187,6 +189,16 @@ export default function Trainings() {
                           <DropdownMenuItem>Edit Training</DropdownMenuItem>
                           <DropdownMenuItem>Manage Participants</DropdownMenuItem>
                           <DropdownMenuItem>View Attendance</DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <ShareEnrollmentLink 
+                            training={training} 
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <Link2 className="mr-2 h-4 w-4" />
+                                Share Enrollment Link
+                              </DropdownMenuItem>
+                            }
+                          />
                           <DropdownMenuSeparator />
                           <DropdownMenuItem className="text-destructive">
                             Cancel Training
