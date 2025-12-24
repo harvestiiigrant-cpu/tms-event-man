@@ -22,7 +22,6 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { mockBeneficiaries } from '@/data/mockData';
 import {
-  Plus,
   Search,
   Upload,
   MoreHorizontal,
@@ -40,12 +39,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { EnrollBeneficiaryDialog } from '@/components/enrollment/EnrollBeneficiaryDialog';
-import { CreateBeneficiaryDialog } from '@/components/beneficiaries/CreateBeneficiaryDialog';
+import { BeneficiaryFormDialog } from '@/components/beneficiaries/BeneficiaryFormDialog';
+import type { Beneficiary } from '@/types/training';
 
 export default function Beneficiaries() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [provinceFilter, setProvinceFilter] = useState<string>('all');
+  const [editingBeneficiary, setEditingBeneficiary] = useState<Beneficiary | null>(null);
 
   const provinces = [
     ...new Set(mockBeneficiaries.map((b) => b.province_name).filter(Boolean)),
@@ -78,7 +79,7 @@ export default function Beneficiaries() {
               <Upload className="mr-2 h-4 w-4" />
               Import
             </Button>
-            <CreateBeneficiaryDialog />
+            <BeneficiaryFormDialog mode="create" />
           </div>
         </CardHeader>
         <CardContent>
@@ -208,7 +209,9 @@ export default function Beneficiaries() {
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem>View Profile</DropdownMenuItem>
-                          <DropdownMenuItem>Edit Details</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setEditingBeneficiary(beneficiary)}>
+                            Edit Details
+                          </DropdownMenuItem>
                           <DropdownMenuItem>View Training History</DropdownMenuItem>
                           <DropdownMenuItem>Enroll in Training</DropdownMenuItem>
                           <DropdownMenuSeparator />
@@ -236,6 +239,14 @@ export default function Beneficiaries() {
           )}
         </CardContent>
       </Card>
+
+      {/* Edit Dialog */}
+      <BeneficiaryFormDialog
+        mode="edit"
+        beneficiary={editingBeneficiary || undefined}
+        open={!!editingBeneficiary}
+        onOpenChange={(open) => !open && setEditingBeneficiary(null)}
+      />
     </DashboardLayout>
   );
 }

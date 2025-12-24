@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Plus } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -31,24 +31,18 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "@/hooks/use-toast";
+import type { Beneficiary } from "@/types/training";
 
 const beneficiarySchema = z.object({
-  // Personal Info
   name: z.string().min(2, "Khmer name is required").max(100),
   name_english: z.string().max(100).optional(),
   sex: z.enum(["M", "F"], { required_error: "Please select gender" }),
   role: z.string().optional(),
-  
-  // Contact
   phone: z.string().regex(/^[0-9]{9,10}$/, "Phone must be 9-10 digits").optional().or(z.literal("")),
-  
-  // Location
   province_name: z.string().min(1, "Province is required"),
   district_name: z.string().optional(),
   commune_name: z.string().optional(),
   village_name: z.string().optional(),
-  
-  // School Assignment
   school: z.string().min(1, "School is required"),
   school_id: z.string().optional(),
   position: z.string().optional(),
@@ -58,7 +52,6 @@ const beneficiarySchema = z.object({
 
 type BeneficiaryFormValues = z.infer<typeof beneficiarySchema>;
 
-// Sample data for dropdowns
 const PROVINCES = [
   "ភ្នំពេញ",
   "កណ្ដាល",
@@ -89,8 +82,28 @@ const SUBJECTS = [
   "IT",
 ];
 
-export function CreateBeneficiaryDialog() {
-  const [open, setOpen] = useState(false);
+interface BeneficiaryFormDialogProps {
+  mode: "create" | "edit";
+  beneficiary?: Beneficiary;
+  trigger?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+
+export function BeneficiaryFormDialog({ 
+  mode, 
+  beneficiary, 
+  trigger,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+}: BeneficiaryFormDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const setOpen = isControlled ? controlledOnOpenChange! : setInternalOpen;
+
+  const isEdit = mode === "edit";
 
   const form = useForm<BeneficiaryFormValues>({
     resolver: zodResolver(beneficiarySchema),
@@ -112,38 +125,76 @@ export function CreateBeneficiaryDialog() {
     },
   });
 
+  // Reset form with beneficiary data when editing
+  useEffect(() => {
+    if (isEdit && beneficiary && open) {
+      form.reset({
+        name: beneficiary.name || "",
+        name_english: beneficiary.name_english || "",
+        sex: beneficiary.sex,
+        role: beneficiary.role || "",
+        phone: beneficiary.phone || "",
+        province_name: beneficiary.province_name || "",
+        district_name: beneficiary.district_name || "",
+        commune_name: beneficiary.commune_name || "",
+        village_name: beneficiary.village_name || "",
+        school: beneficiary.school || "",
+        school_id: beneficiary.school_id || "",
+        position: beneficiary.position || "",
+        subject: beneficiary.subject || "",
+        grade: beneficiary.grade,
+      });
+    }
+  }, [isEdit, beneficiary, open, form]);
+
   const onSubmit = (data: BeneficiaryFormValues) => {
-    console.log("Beneficiary data:", data);
+    console.log(`${isEdit ? "Updated" : "Created"} beneficiary:`, data);
     
     toast({
-      title: "Beneficiary Created",
-      description: `${data.name} has been added successfully.`,
+      title: isEdit ? "Beneficiary Updated" : "Beneficiary Created",
+      description: `${data.name} has been ${isEdit ? "updated" : "added"} successfully.`,
     });
 
     setOpen(false);
-    form.reset();
-  };
-
-  const handleOpenChange = (isOpen: boolean) => {
-    setOpen(isOpen);
-    if (!isOpen) {
+    if (!isEdit) {
       form.reset();
     }
   };
 
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen && !isEdit) {
+      form.reset();
+    }
+  };
+
+  const defaultTrigger = isEdit ? (
+    <Button variant="ghost" size="sm" className="w-full justify-start">
+      <Pencil className="mr-2 h-4 w-4" />
+      Edit Details
+    </Button>
+  ) : (
+    <Button>
+      <Plus className="mr-2 h-4 w-4" />
+      Add Beneficiary
+    </Button>
+  );
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Add Beneficiary
-        </Button>
-      </DialogTrigger>
+      {!isControlled && (
+        <DialogTrigger asChild>
+          {trigger || defaultTrigger}
+        </DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] p-0">
         <DialogHeader className="p-6 pb-0">
-          <DialogTitle>Add New Beneficiary</DialogTitle>
+          <DialogTitle>{isEdit ? "Edit Beneficiary" : "Add New Beneficiary"}</DialogTitle>
           <DialogDescription>
-            Enter the participant's information to add them to the system.
+            {isEdit 
+              ? "Update the participant's information below."
+              : "Enter the participant's information to add them to the system."
+            }
           </DialogDescription>
         </DialogHeader>
 
@@ -192,7 +243,7 @@ export function CreateBeneficiaryDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Gender *</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Select gender" />
@@ -256,7 +307,7 @@ export function CreateBeneficiaryDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Province *</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Select province" />
@@ -363,7 +414,7 @@ export function CreateBeneficiaryDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Position</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Select position" />
@@ -388,7 +439,7 @@ export function CreateBeneficiaryDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subject</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Select subject" />
@@ -415,7 +466,7 @@ export function CreateBeneficiaryDialog() {
                         <FormLabel>Grade Level</FormLabel>
                         <Select 
                           onValueChange={(val) => field.onChange(parseInt(val))} 
-                          defaultValue={field.value?.toString()}
+                          value={field.value?.toString()}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -441,7 +492,9 @@ export function CreateBeneficiaryDialog() {
                 <Button type="button" variant="outline" onClick={() => setOpen(false)}>
                   Cancel
                 </Button>
-                <Button type="submit">Create Beneficiary</Button>
+                <Button type="submit">
+                  {isEdit ? "Save Changes" : "Create Beneficiary"}
+                </Button>
               </div>
             </form>
           </Form>
