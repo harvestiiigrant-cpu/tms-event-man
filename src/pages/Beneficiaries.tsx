@@ -40,6 +40,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { EnrollBeneficiaryDialog } from '@/components/enrollment/EnrollBeneficiaryDialog';
+import { CreateBeneficiaryDialog } from '@/components/beneficiaries/CreateBeneficiaryDialog';
 
 export default function Beneficiaries() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,10 +78,7 @@ export default function Beneficiaries() {
               <Upload className="mr-2 h-4 w-4" />
               Import
             </Button>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Beneficiary
-            </Button>
+            <CreateBeneficiaryDialog />
           </div>
         </CardHeader>
         <CardContent>
