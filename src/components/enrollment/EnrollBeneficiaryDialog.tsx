@@ -8,6 +8,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -129,8 +130,8 @@ export function EnrollBeneficiaryDialog({
           Enroll Participants
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col p-0">
+        <DialogHeader className="px-6 pt-6 pb-4 border-b">
           <DialogTitle>Enroll Participants in Training</DialogTitle>
           <DialogDescription>
             Select a training and choose participants to enroll.
@@ -138,7 +139,8 @@ export function EnrollBeneficiaryDialog({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden">
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
             <FormField
               control={form.control}
               name="training_id"
@@ -295,15 +297,16 @@ export function EnrollBeneficiaryDialog({
                 </FormItem>
               )}
             />
+            </div>
 
-            <div className="flex justify-end gap-2 pt-4">
+            <DialogFooter className="px-6 py-4 border-t bg-background gap-2 sm:gap-0">
               <Button type="button" variant="outline" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
               <Button type="submit" disabled={selectedBeneficiaries.length === 0}>
                 Enroll {selectedBeneficiaries.length > 0 && `(${selectedBeneficiaries.length})`}
               </Button>
-            </div>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>

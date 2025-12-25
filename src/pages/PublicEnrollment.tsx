@@ -1,10 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { format, parseISO, areIntervalsOverlapping } from "date-fns";
-import { GraduationCap, Calendar, MapPin, Users, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Calendar, MapPin, Users, AlertTriangle, CheckCircle2, Search } from "lucide-react";
+import { CompactBrandHeader } from "@/components/branding/BrandHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -192,17 +193,9 @@ export default function PublicEnrollment() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="border-b bg-card">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-              <GraduationCap className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Training Enrollment</h1>
-              <p className="text-sm text-muted-foreground">Self-registration portal</p>
-            </div>
-          </div>
+      <div className="border-b bg-card sticky top-0 z-50 backdrop-blur-sm bg-background/80">
+        <div className="container mx-auto px-4 py-4">
+          <CompactBrandHeader />
         </div>
       </div>
 
@@ -305,10 +298,27 @@ export default function PublicEnrollment() {
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
-                <CardTitle>Available Trainings</CardTitle>
-                <CardDescription>
-                  Select the trainings you want to enroll in
-                </CardDescription>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <CardTitle>Available Trainings</CardTitle>
+                    <CardDescription>
+                      Select the trainings you want to enroll in
+                    </CardDescription>
+                  </div>
+                  <Button asChild variant="outline" size="sm" className="flex-shrink-0">
+                    <Link to="/trainings/browse">
+                      <Search className="mr-2 h-4 w-4" />
+                      Browse All
+                    </Link>
+                  </Button>
+                </div>
+                {!preselectedTraining && availableTrainings.length > 10 && (
+                  <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
+                    <p className="text-sm text-blue-900 dark:text-blue-100">
+                      💡 <strong>Tip:</strong> With 150+ trainings available, use the "Browse All" button above to search and filter by category, province, or date
+                    </p>
+                  </div>
+                )}
               </CardHeader>
               <CardContent>
                 <ScrollArea className="h-[600px] pr-4">

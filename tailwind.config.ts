@@ -96,7 +96,8 @@ export default {
   		},
   		fontFamily: {
   			sans: [
-  				'Work Sans',
+  				'Ubuntu',
+  				'Suwannaphum',
   				'ui-sans-serif',
   				'system-ui',
   				'-apple-system',
@@ -109,7 +110,8 @@ export default {
   				'sans-serif'
   			],
   			serif: [
-  				'Lora',
+  				'Ubuntu',
+  				'Suwannaphum',
   				'ui-serif',
   				'Georgia',
   				'Cambria',
@@ -117,8 +119,8 @@ export default {
   				'Times',
   				'serif'
   			],
+  			khmer: ['var(--font-khmer)'],
   			mono: [
-  				'Inconsolata',
   				'ui-monospace',
   				'SFMono-Regular',
   				'Menlo',

@@ -3,23 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Lovable App</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
 
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <!-- Page Title and Description -->
+    <title>PLP Training Management System - MoEYS Cambodia</title>
+    <meta name="description" content="Professional Learning Program - Teacher Training Management System by Ministry of Education, Youth and Sport, Cambodia" />
+    <meta name="author" content="Ministry of Education, Youth and Sport - Cambodia" />
+    <meta name="keywords" content="PLP, Cambodia, MoEYS, Teacher Training, Professional Development, Education, ITD, Professional Learning Program" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://plp-tms.moeys.gov.kh" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#0d9488" />
+    <meta name="msapplication-TileColor" content="#0d9488" />
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="https://plp-tms.moeys.gov.kh" />
+    <meta property="og:title" content="PLP Training Management System - MoEYS Cambodia" />
+    <meta property="og:description" content="Professional Learning Program - Teacher Training Management System by Ministry of Education, Youth and Sport, Cambodia" />
+    <meta property="og:site_name" content="PLP TMS" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="PLP Training Management System - MoEYS Cambodia" />
+    <meta name="twitter:description" content="Professional Learning Program - Teacher Training Management System by Ministry of Education, Youth and Sport, Cambodia" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Suwannaphum:wght@100;300;400;700;900&family=Taprom&family=Battambang:wght@100;300;400;700;900&family=Bayon&family=Bokor&family=Content:wght@400;700&family=Dangrek&family=Fasthand&family=Freehand&family=Kantumruy:wght@100;300;400;700;900&family=Khmer&family=Koulen&family=Metal&family=Moul&family=Moulpali&family=Nokora:wght@100;300;400;700;900&family=Odor+Mean+Chey&family=Preahvihear:wght@100;300;400;700;900&family=Siemreap&display=swap" rel="stylesheet">
   </head>
 
   <body>
+    <script>
+      // Apply theme immediately to prevent flash
+      (function() {
+        const theme = localStorage.getItem('theme') || 'system';
+        const root = document.documentElement;
+
+        if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.classList.add('dark');
+        } else {
+          root.classList.add('light');
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

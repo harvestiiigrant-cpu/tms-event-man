@@ -95,15 +95,15 @@ export function TrainingQRCode({ training, trigger }: TrainingQRCodeProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-md max-h-[90vh] flex flex-col p-0">
+        <DialogHeader className="px-6 pt-6 pb-4 border-b">
           <DialogTitle>Training QR Code</DialogTitle>
           <DialogDescription>
             Scan this QR code to access the enrollment page for this training.
           </DialogDescription>
         </DialogHeader>
-        
-        <div className="space-y-4">
+
+        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
           <div className="space-y-1">
             <p className="text-sm font-medium">{training.training_name}</p>
             {training.training_name_english && (

@@ -52,14 +52,14 @@ export function ShareEnrollmentLink({ training, trigger }: ShareEnrollmentLinkPr
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-md max-h-[90vh] flex flex-col p-0">
+        <DialogHeader className="px-6 pt-6 pb-4 border-b">
           <DialogTitle>Share Enrollment Link</DialogTitle>
           <DialogDescription>
             Share this link with participants to let them self-enroll in this training.
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4">
+        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
           <div className="space-y-2">
             <Label className="text-sm font-medium">Training</Label>
             <p className="text-sm text-muted-foreground">

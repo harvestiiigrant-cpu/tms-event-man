@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker-compose up:*)",
+      "Bash(docker exec:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm i)",
+      "Bash(npm run build:dev:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma init)",
+      "Bash(if not exist .env copy .env.example .env)",
+      "Bash(test:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npm run db:seed:*)",
+      "Bash(docker:*)",
+      "Bash(docker-compose ps:*)",
+      "Bash(npm run server:*)",
+      "Bash(npm run db:generate:*)",
+      "Bash(npm run db:migrate:*)",
+      "Bash(timeout:*)",
+      "Bash(curl:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git push:*)",
+      "Bash(tasklist:*)",
+      "Bash(docker-compose:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

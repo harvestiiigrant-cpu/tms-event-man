@@ -36,6 +36,7 @@ export interface Training {
   training_description?: string;
   training_type?: 'WORKSHOP' | 'COURSE' | 'SEMINAR';
   training_category?: string;
+  training_level?: 'NATIONAL' | 'PROVINCIAL' | 'CLUSTER';
   training_status: 'DRAFT' | 'ONGOING' | 'COMPLETED' | 'CANCELLED';
   training_start_date: string;
   training_end_date: string;
@@ -49,6 +50,7 @@ export interface Training {
   district_name?: string;
   commune_name?: string;
   school_name?: string;
+  cluster_schools?: string[];
   max_participants: number;
   current_participants: number;
   qr_code_data?: string;
@@ -115,4 +117,47 @@ export const TRAINING_CATEGORIES: { code: TrainingCategory; name_en: string; nam
   { code: 'IT', name_en: 'Information Technology', name_km: 'ព័ត៌មានវិទ្យា' },
   { code: 'PEDAGOGY', name_en: 'Teaching Methods', name_km: 'វិធីសាស្រ្តបង្រៀន' },
   { code: 'LEADERSHIP', name_en: 'Leadership', name_km: 'ភាពជាអ្នកដឹកនាំ' },
+];
+
+export type TrainingType = 'WORKSHOP' | 'COURSE' | 'SEMINAR';
+
+export const TRAINING_TYPES: { code: TrainingType; name_en: string; name_km: string }[] = [
+  { code: 'WORKSHOP', name_en: 'Workshop', name_km: 'សិក្ខាសាលា' },
+  { code: 'COURSE', name_en: 'Course', name_km: 'វគ្គសិក្សា' },
+  { code: 'SEMINAR', name_en: 'Seminar', name_km: 'សិក្ខាសាលាពិគ្រោះយោបល់' },
+];
+
+export type TrainingLevel = 'NATIONAL' | 'PROVINCIAL' | 'CLUSTER';
+
+export type TrainingStatus = 'DRAFT' | 'ONGOING' | 'COMPLETED' | 'CANCELLED';
+
+export const TRAINING_STATUSES: { code: TrainingStatus; name_en: string; name_km: string }[] = [
+  { code: 'DRAFT', name_en: 'Draft', name_km: 'សេចក្តីព្រាង' },
+  { code: 'ONGOING', name_en: 'Ongoing', name_km: 'កំពុងដំណើរការ' },
+  { code: 'COMPLETED', name_en: 'Completed', name_km: 'បានបញ្ចប់' },
+  { code: 'CANCELLED', name_en: 'Cancelled', name_km: 'បានលុបចោល' },
+];
+
+export const TRAINING_LEVELS: { code: TrainingLevel; name_en: string; name_km: string; description_en: string; description_km: string }[] = [
+  {
+    code: 'NATIONAL',
+    name_en: 'National Level',
+    name_km: 'កម្រិតជាតិ',
+    description_en: 'Training conducted at national level',
+    description_km: 'ការបណ្តុះបណ្តាលកម្រិតជាតិ'
+  },
+  {
+    code: 'PROVINCIAL',
+    name_en: 'Provincial Level',
+    name_km: 'កម្រិតខេត្ត',
+    description_en: 'Training conducted at provincial level',
+    description_km: 'ការបណ្តុះបណ្តាលកម្រិតខេត្ត'
+  },
+  {
+    code: 'CLUSTER',
+    name_en: 'Cluster Level',
+    name_km: 'កម្រិតកម្រង',
+    description_en: 'Training distributed across multiple schools in a cluster',
+    description_km: 'ការបណ្តុះបណ្តាលចែកចាយក្នុងសាលារៀនច្រើន'
+  },
 ];

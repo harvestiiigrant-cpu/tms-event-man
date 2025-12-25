@@ -1,0 +1,367 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User Authentication
+model User {
+  id                String   @id @default(cuid())
+  username          String   @unique
+  email             String   @unique
+  password          String
+  role              UserRole
+  name              String
+  phone             String?
+  profile_image_url String?
+
+  // Beneficiary-specific fields (for role = BENEFICIARY)
+  teacher_id    String?
+  school        String?
+  school_id     String?
+  province_name String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  SUPER_ADMIN
+  BENEFICIARY
+}
+
+// Beneficiary (Teacher) Model
+model Beneficiary {
+  teacher_id   String  @id
+  name         String
+  name_english String?
+  phone        String?
+  sex          Sex?
+  role         String?
+  passcode     String?
+
+  // Location
+  province_name String?
+  district_name String?
+  commune_name  String?
+  village_name  String?
+
+  // School Info
+  school    String?
+  school_id String?
+  position  String?
+  subject   String?
+  grade     Int?
+
+  // Profile
+  profile_image_url String?
+  signature_url     String?
+  status            BeneficiaryStatus
+  is_deleted        Boolean           @default(false)
+  profile_completed Boolean           @default(false)
+
+  // Audit
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  created_by String?
+  updated_by String?
+
+  // Relations
+  trainings         BeneficiaryTraining[]
+  attendance_records AttendanceRecord[]
+
+  @@map("beneficiaries")
+}
+
+enum Sex {
+  M
+  F
+}
+
+enum BeneficiaryStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// Training Model
+model Training {
+  id                   String   @id @default(cuid())
+  training_code        String   @unique
+  training_name        String
+  training_name_english String?
+  training_description String?  @db.Text
+
+  // Training Details
+  training_type     TrainingType?
+  training_category String?
+  training_level    TrainingLevel?
+  training_status   TrainingStatus
+
+  // Dates
+  training_start_date   DateTime
+  training_end_date     DateTime
+  registration_deadline DateTime?
+
+  // Location
+  training_location String
+  training_venue    String?
+  venue_latitude    Float?
+  venue_longitude   Float?
+  geofence_radius   Int      @default(100)
+
+  province_name  String?
+  district_name  String?
+  commune_name   String?
+  school_name    String?
+  cluster_schools String[]
+
+  // Participants
+  max_participants     Int
+  current_participants Int @default(0)
+
+  // Features
+  qr_code_data                  String?
+  gps_validation_required       Boolean @default(false)
+  geofence_validation_required  Boolean @default(false)
+  is_published                  Boolean @default(false)
+
+  // Audit
+  training_is_deleted  Boolean   @default(false)
+  training_created_by  String?
+  training_updated_by  String?
+  training_created_at  DateTime  @default(now())
+  training_updated_at  DateTime  @updatedAt
+
+  // Relations
+  beneficiary_trainings BeneficiaryTraining[]
+  attendance_records    AttendanceRecord[]
+
+  @@map("trainings")
+}
+
+enum TrainingType {
+  WORKSHOP
+  COURSE
+  SEMINAR
+}
+
+enum TrainingLevel {
+  NATIONAL
+  PROVINCIAL
+  CLUSTER
+}
+
+enum TrainingStatus {
+  DRAFT
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+// Enrollment/Registration
+model BeneficiaryTraining {
+  beneficiary_training_id String   @id @default(cuid())
+  beneficiary_id          String
+  training_id             String
+
+  // Registration
+  registration_date   DateTime
+  registration_method RegistrationMethod?
+
+  // Attendance
+  attendance_status     AttendanceStatus
+  attendance_percentage Float?
+  training_role         TrainingRole
+  enrollment_type       String
+
+  // Certificate
+  certificate_issued     Boolean   @default(false)
+  certificate_number     String?
+  certificate_issue_date DateTime?
+
+  // Feedback
+  feedback_submitted Boolean @default(false)
+  feedback_score     Float?
+  feedback_comments  String? @db.Text
+
+  // Audit
+  beneficiary_training_status     String
+  beneficiary_training_created_at DateTime @default(now())
+  beneficiary_training_updated_at DateTime @updatedAt
+
+  // Relations
+  beneficiary Beneficiary @relation(fields: [beneficiary_id], references: [teacher_id])
+  training    Training    @relation(fields: [training_id], references: [id])
+
+  @@unique([beneficiary_id, training_id])
+  @@map("beneficiary_trainings")
+}
+
+enum RegistrationMethod {
+  QR
+  MANUAL
+  IMPORT
+}
+
+enum AttendanceStatus {
+  REGISTERED
+  ATTENDED
+  COMPLETED
+  DROPPED
+}
+
+enum TrainingRole {
+  PARTICIPANT
+  TRAINER
+  COORDINATOR
+}
+
+// Attendance Records
+model AttendanceRecord {
+  id             String   @id @default(cuid())
+  training_id    String
+  beneficiary_id String
+  date           DateTime @db.Date
+
+  // Time Tracking (4 sessions per day)
+  morning_in    DateTime?
+  morning_out   DateTime?
+  afternoon_in  DateTime?
+  afternoon_out DateTime?
+
+  // Status
+  session_attendance_status SessionAttendanceStatus
+
+  // Manual Entry
+  manual_entry        Boolean @default(false)
+  manual_marked_by    String?
+  manual_marked_by_name String?
+  manual_entry_reason String?
+
+  // GPS Location
+  location_lat      Float?
+  location_lng      Float?
+  location_accuracy Float?
+
+  // Device Info
+  device String?
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  beneficiary Beneficiary @relation(fields: [beneficiary_id], references: [teacher_id])
+  training    Training    @relation(fields: [training_id], references: [id])
+
+  @@unique([training_id, beneficiary_id, date])
+  @@map("attendance_records")
+}
+
+enum SessionAttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+// System Settings
+model SystemSettings {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+  type  SettingType
+
+  category    String? // e.g., "general", "appearance", "localization"
+  label       String?
+  description String?
+
+  // For dropdown/select options
+  options String[] @default([])
+
+  is_public Boolean @default(false) // Can be accessed without authentication
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  updated_by String?
+
+  @@map("system_settings")
+}
+
+enum SettingType {
+  STRING
+  NUMBER
+  BOOLEAN
+  JSON
+  SELECT
+}
+
+// Training Categories (Dynamic)
+model TrainingCategory {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name_en     String
+  name_km     String
+  description String? @db.Text
+  icon        String?
+  color       String? // Hex color for UI
+  is_active   Boolean @default(true)
+  sort_order  Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("training_categories")
+}
+
+// Training Types (Dynamic)
+model TrainingTypeConfig {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name_en     String
+  name_km     String
+  description String? @db.Text
+  icon        String?
+  color       String? // Hex color for UI
+  is_active   Boolean @default(true)
+  sort_order  Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("training_types")
+}
+
+// Training Levels (Dynamic)
+model TrainingLevelConfig {
+  id             String  @id @default(cuid())
+  code           String  @unique
+  name_en        String
+  name_km        String
+  description_en String? @db.Text
+  description_km String? @db.Text
+  icon           String?
+  color          String? // Hex color for UI
+  is_active      Boolean @default(true)
+  sort_order     Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("training_levels")
+}

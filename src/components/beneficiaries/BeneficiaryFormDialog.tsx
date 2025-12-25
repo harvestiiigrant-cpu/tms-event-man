@@ -29,13 +29,12 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { DialogFooter } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 import type { Beneficiary } from "@/types/training";
 
 const beneficiarySchema = z.object({
-  name: z.string().min(2, "Khmer name is required").max(100),
-  name_english: z.string().max(100).optional(),
+  name: z.string().min(2, "Name is required").max(100),
   sex: z.enum(["M", "F"], { required_error: "Please select gender" }),
   role: z.string().optional(),
   phone: z.string().regex(/^[0-9]{9,10}$/, "Phone must be 9-10 digits").optional().or(z.literal("")),
@@ -109,7 +108,6 @@ export function BeneficiaryFormDialog({
     resolver: zodResolver(beneficiarySchema),
     defaultValues: {
       name: "",
-      name_english: "",
       sex: undefined,
       role: "",
       phone: "",
@@ -130,7 +128,6 @@ export function BeneficiaryFormDialog({
     if (isEdit && beneficiary && open) {
       form.reset({
         name: beneficiary.name || "",
-        name_english: beneficiary.name_english || "",
         sex: beneficiary.sex,
         role: beneficiary.role || "",
         phone: beneficiary.phone || "",
@@ -187,54 +184,38 @@ export function BeneficiaryFormDialog({
           {trigger || defaultTrigger}
         </DialogTrigger>
       )}
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] p-0">
-        <DialogHeader className="p-6 pb-0">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col p-0">
+        <DialogHeader className="px-6 pt-6 pb-4 border-b">
           <DialogTitle>{isEdit ? "Edit Beneficiary" : "Add New Beneficiary"}</DialogTitle>
           <DialogDescription>
-            {isEdit 
+            {isEdit
               ? "Update the participant's information below."
               : "Enter the participant's information to add them to the system."
             }
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="max-h-[calc(90vh-120px)]">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-6">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden">
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
               {/* Personal Information */}
               <div className="space-y-4">
                 <h3 className="text-sm font-medium text-foreground">Personal Information</h3>
                 <Separator />
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name (Khmer) *</FormLabel>
-                        <FormControl>
-                          <Input placeholder="ឈ្មោះជាភាសាខ្មែរ" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
 
-                  <FormField
-                    control={form.control}
-                    name="name_english"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name (English)</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Name in English" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name *</FormLabel>
+                      <FormControl>
+                        <Input placeholder="ឈ្មោះ" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -487,18 +468,18 @@ export function BeneficiaryFormDialog({
                   />
                 </div>
               </div>
+            </div>
 
-              <div className="flex justify-end gap-2 pt-4">
-                <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit">
-                  {isEdit ? "Save Changes" : "Create Beneficiary"}
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </ScrollArea>
+            <DialogFooter className="px-6 py-4 border-t bg-background gap-2 sm:gap-0">
+              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit">
+                {isEdit ? "Save Changes" : "Create Beneficiary"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

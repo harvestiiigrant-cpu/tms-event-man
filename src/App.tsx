@@ -9,28 +9,155 @@ import Beneficiaries from "./pages/Beneficiaries";
 import Attendance from "./pages/Attendance";
 import Settings from "./pages/Settings";
 import PublicEnrollment from "./pages/PublicEnrollment";
+import EnrollmentLanding from "./pages/EnrollmentLanding";
+import TrainingBrowser from "./pages/TrainingBrowser";
 import NotFound from "./pages/NotFound";
+import MyTrainings from "./pages/portal/MyTrainings";
+import TrainingDetails from "./pages/portal/TrainingDetails";
+import AttendanceCheckin from "./pages/portal/AttendanceCheckin";
+import TrainingHistory from "./pages/portal/TrainingHistory";
+import AttendanceHistory from "./pages/portal/AttendanceHistory";
+import BeneficiaryProfile from "./pages/portal/BeneficiaryProfile";
+import { SidebarProvider } from "@/contexts/SidebarContext";
+import { FontProvider } from "@/contexts/FontContext";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import "@/utils/authDebug"; // Load debug utilities
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/trainings" element={<Trainings />} />
-          <Route path="/beneficiaries" element={<Beneficiaries />} />
-          <Route path="/attendance" element={<Attendance />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/enroll" element={<PublicEnrollment />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <FontProvider>
+        <TooltipProvider>
+          <SidebarProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                {/* Public Auth Routes */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
+                {/* Public Training Discovery & Enrollment */}
+                <Route path="/enroll/start" element={<EnrollmentLanding />} />
+                <Route path="/trainings/browse" element={<TrainingBrowser />} />
+                <Route path="/enroll" element={<PublicEnrollment />} />
+
+                {/* Admin Dashboard Routes - Protected */}
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/trainings"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <Trainings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/beneficiaries"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <Beneficiaries />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/attendance"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <Attendance />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <Settings />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Beneficiary Portal Routes - Protected */}
+                <Route
+                  path="/portal/trainings"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <MyTrainings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/trainings/:id"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <TrainingDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/attendance"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <AttendanceCheckin />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/attendance/:trainingId"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <AttendanceCheckin />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/history"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <TrainingHistory />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/history/:trainingId/attendance"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <AttendanceHistory />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/profile"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <BeneficiaryProfile />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </SidebarProvider>
+        </TooltipProvider>
+      </FontProvider>
+    </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
