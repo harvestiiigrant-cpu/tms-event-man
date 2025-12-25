@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -31,6 +32,10 @@ import { EditTrainingDialog } from '@/components/trainings/EditTrainingDialog';
 import { ManageParticipantsDialog } from '@/components/trainings/ManageParticipantsDialog';
 import { ViewAttendanceDialog } from '@/components/trainings/ViewAttendanceDialog';
 import { CancelTrainingDialog } from '@/components/trainings/CancelTrainingDialog';
+import { SmartPagination } from '@/components/ui/smart-pagination';
+import { BulkActionToolbar } from '@/components/ui/bulk-action-toolbar';
+import { useSelection } from '@/hooks/use-selection';
+import { toast } from '@/hooks/use-toast';
 import { TRAINING_CATEGORIES, TRAINING_LEVELS } from '@/types/training';
 import type { Training } from '@/types/training';
 import {
@@ -64,17 +69,113 @@ export default function Trainings() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [levelFilter, setLevelFilter] = useState<string>('all');
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   // Fetch trainings from API
-  const { data: trainings = [], isLoading, error } = useQuery({
+  const { data: trainings = [], isLoading } = useQuery({
     queryKey: ['trainings'],
     queryFn: api.trainings.getAll,
   });
 
-  // Update training mutation
+  // Filter trainings
+  const filteredTrainings = useMemo(() => {
+    return trainings.filter((training: Training) => {
+      const matchesSearch =
+        training.training_name_english
+          ?.toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        training.training_name
+          ?.toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        training.training_code.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchesStatus =
+        statusFilter === 'all' || training.training_status === statusFilter;
+
+      const matchesCategory =
+        categoryFilter === 'all' || training.training_category === categoryFilter;
+
+      const matchesLevel =
+        levelFilter === 'all' || training.training_level === levelFilter;
+
+      return matchesSearch && matchesStatus && matchesCategory && matchesLevel;
+    });
+  }, [trainings, searchQuery, statusFilter, categoryFilter, levelFilter]);
+
+  // Pagination
+  const totalItems = filteredTrainings.length;
+  const totalPages = Math.ceil(totalItems / pageSize) || 1;
+  const paginatedTrainings = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return filteredTrainings.slice(start, start + pageSize);
+  }, [filteredTrainings, page, pageSize]);
+
+  // Selection hook for bulk operations
+  const selection = useSelection<Training>(paginatedTrainings);
+
+  // Update training mutation with optimistic update
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: any }) => api.trainings.update(id, data),
+    mutationFn: ({ id, data }: { id: string; data: Partial<Training> }) =>
+      api.trainings.update(id, data),
+    onMutate: async ({ id, data }) => {
+      await queryClient.cancelQueries({ queryKey: ['trainings'] });
+      const previousTrainings = queryClient.getQueryData<Training[]>(['trainings']);
+      queryClient.setQueryData<Training[]>(['trainings'], (old) =>
+        old?.map((t) => (t.id === id ? { ...t, ...data } : t)) || []
+      );
+      return { previousTrainings };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousTrainings) {
+        queryClient.setQueryData(['trainings'], context.previousTrainings);
+      }
+      toast({
+        title: 'បរាជ័យ',
+        description: 'មានបញ្ហាក្នុងការធ្វើបច្ចុប្បន្នភាព',
+        variant: 'destructive',
+      });
+    },
     onSuccess: () => {
+      toast({
+        title: 'ជោគជ័យ',
+        description: 'បានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ',
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['trainings'] });
+    },
+  });
+
+  // Bulk delete mutation with optimistic update
+  const bulkDeleteMutation = useMutation({
+    mutationFn: (ids: string[]) => api.trainings.bulkDelete(ids),
+    onMutate: async (ids) => {
+      await queryClient.cancelQueries({ queryKey: ['trainings'] });
+      const previousTrainings = queryClient.getQueryData<Training[]>(['trainings']);
+      queryClient.setQueryData<Training[]>(['trainings'], (old) =>
+        old?.filter((t) => !ids.includes(t.id)) || []
+      );
+      return { previousTrainings };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousTrainings) {
+        queryClient.setQueryData(['trainings'], context.previousTrainings);
+      }
+      toast({
+        title: 'បរាជ័យ',
+        description: 'មានបញ្ហាក្នុងការលុប',
+        variant: 'destructive',
+      });
+    },
+    onSuccess: (data, ids) => {
+      selection.deselectAll();
+      toast({
+        title: 'ជោគជ័យ',
+        description: `បានលុប ${ids.length} ការបណ្តុះបណ្តាល`,
+      });
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['trainings'] });
     },
   });
@@ -82,31 +183,25 @@ export default function Trainings() {
   const handleUpdateTraining = (updatedTraining: Training) => {
     updateMutation.mutate({
       id: updatedTraining.id,
-      data: updatedTraining
+      data: updatedTraining,
     });
   };
 
-  const filteredTrainings = trainings.filter((training) => {
-    const matchesSearch =
-      training.training_name_english
-        ?.toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      training.training_name
-        ?.toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      training.training_code.toLowerCase().includes(searchQuery.toLowerCase());
+  const handleBulkDelete = () => {
+    const ids = Array.from(selection.selectedIds);
+    bulkDeleteMutation.mutate(ids);
+  };
 
-    const matchesStatus =
-      statusFilter === 'all' || training.training_status === statusFilter;
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    selection.deselectAll();
+  };
 
-    const matchesCategory =
-      categoryFilter === 'all' || training.training_category === categoryFilter;
-
-    const matchesLevel =
-      levelFilter === 'all' || training.training_level === levelFilter;
-
-    return matchesSearch && matchesStatus && matchesCategory && matchesLevel;
-  });
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setPage(1);
+    selection.deselectAll();
+  };
 
   return (
     <DashboardLayout title="ការបណ្តុះបណ្តាល" subtitle="គ្រប់គ្រងកម្មវិធីបណ្តុះបណ្តាល">
@@ -163,19 +258,34 @@ export default function Trainings() {
           </CardContent>
         </Card>
 
+        {/* Mobile Bulk Actions */}
+        <BulkActionToolbar
+          selectedCount={selection.selectedCount}
+          onClearSelection={selection.deselectAll}
+          onBulkDelete={handleBulkDelete}
+          isDeleting={bulkDeleteMutation.isPending}
+          deleteDescription={`តើអ្នកប្រាកដថាចង់លុប ${selection.selectedCount} ការបណ្តុះបណ្តាលទេ?`}
+        />
+
         {/* Mobile Training Cards */}
         <div className="space-y-3">
-          {filteredTrainings.map((training) => (
+          {paginatedTrainings.map((training) => (
             <Card key={training.id} className="overflow-hidden">
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <TrainingStatusBadge status={training.training_status} />
-                      <TrainingLevelBadge level={training.training_level} />
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <Checkbox
+                      checked={selection.isSelected(training.id)}
+                      onCheckedChange={() => selection.toggle(training.id)}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <TrainingStatusBadge status={training.training_status} />
+                        <TrainingLevelBadge level={training.training_level} />
+                      </div>
+                      <h3 className="font-semibold text-sm truncate">{training.training_name}</h3>
+                      <p className="text-xs text-muted-foreground">{training.training_code}</p>
                     </div>
-                    <h3 className="font-semibold text-sm truncate">{training.training_name}</h3>
-                    <p className="text-xs text-muted-foreground">{training.training_code}</p>
                   </div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -281,6 +391,17 @@ export default function Trainings() {
           ))}
         </div>
 
+        {/* Mobile Pagination */}
+        <SmartPagination
+          page={page}
+          pageSize={pageSize}
+          totalItems={totalItems}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+          showPageSize={false}
+        />
+
         {filteredTrainings.length === 0 && (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
@@ -357,11 +478,27 @@ export default function Trainings() {
             </Select>
           </div>
 
+          {/* Bulk Actions */}
+          <BulkActionToolbar
+            selectedCount={selection.selectedCount}
+            onClearSelection={selection.deselectAll}
+            onBulkDelete={handleBulkDelete}
+            isDeleting={bulkDeleteMutation.isPending}
+            deleteDescription={`តើអ្នកប្រាកដថាចង់លុប ${selection.selectedCount} ការបណ្តុះបណ្តាលទេ?`}
+          />
+
           {/* Table */}
           <div className="rounded-lg border border-border">
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-12">
+                    <Checkbox
+                      checked={selection.isAllSelected}
+                      onCheckedChange={selection.toggleAll}
+                      aria-label="Select all"
+                    />
+                  </TableHead>
                   <TableHead>ការបណ្តុះបណ្តាល</TableHead>
                   <TableHead>ប្រភេទ</TableHead>
                   <TableHead>កម្រិត</TableHead>
@@ -373,8 +510,18 @@ export default function Trainings() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredTrainings.map((training) => (
-                  <TableRow key={training.id}>
+                {paginatedTrainings.map((training) => (
+                  <TableRow
+                    key={training.id}
+                    className={selection.isSelected(training.id) ? 'bg-muted/50' : ''}
+                  >
+                    <TableCell>
+                      <Checkbox
+                        checked={selection.isSelected(training.id)}
+                        onCheckedChange={() => selection.toggle(training.id)}
+                        aria-label={`Select ${training.training_name}`}
+                      />
+                    </TableCell>
                     <TableCell>
                       <div>
                         <p className="font-medium text-foreground">
@@ -509,6 +656,16 @@ export default function Trainings() {
               </TableBody>
             </Table>
           </div>
+
+          {/* Pagination */}
+          <SmartPagination
+            page={page}
+            pageSize={pageSize}
+            totalItems={totalItems}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+          />
 
           {filteredTrainings.length === 0 && (
             <div className="flex flex-col items-center justify-center py-12">

@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -20,7 +23,10 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { mockBeneficiaries } from '@/data/mockData';
+import { SmartPagination } from '@/components/ui/smart-pagination';
+import { BulkActionToolbar } from '@/components/ui/bulk-action-toolbar';
+import { useSelection } from '@/hooks/use-selection';
+import { toast } from '@/hooks/use-toast';
 import {
   Search,
   Upload,
@@ -49,30 +55,138 @@ import { BeneficiaryFormDialog } from '@/components/beneficiaries/BeneficiaryFor
 import type { Beneficiary } from '@/types/training';
 
 export default function Beneficiaries() {
+  const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [provinceFilter, setProvinceFilter] = useState<string>('all');
   const [editingBeneficiary, setEditingBeneficiary] = useState<Beneficiary | null>(null);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-  const provinces = [
-    ...new Set(mockBeneficiaries.map((b) => b.province_name).filter(Boolean)),
-  ];
-
-  const filteredBeneficiaries = mockBeneficiaries.filter((beneficiary) => {
-    const matchesSearch =
-      beneficiary.name.includes(searchQuery) ||
-      beneficiary.name_english?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      beneficiary.teacher_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      beneficiary.phone?.includes(searchQuery);
-
-    const matchesStatus =
-      statusFilter === 'all' || beneficiary.status === statusFilter;
-
-    const matchesProvince =
-      provinceFilter === 'all' || beneficiary.province_name === provinceFilter;
-
-    return matchesSearch && matchesStatus && matchesProvince;
+  // Fetch beneficiaries from API
+  const { data: beneficiaries = [], isLoading } = useQuery({
+    queryKey: ['beneficiaries'],
+    queryFn: api.beneficiaries.getAll,
   });
+
+  // Get unique provinces for filter
+  const provinces = useMemo(() => {
+    return [...new Set(beneficiaries.map((b: Beneficiary) => b.province_name).filter(Boolean))];
+  }, [beneficiaries]);
+
+  // Filter beneficiaries
+  const filteredBeneficiaries = useMemo(() => {
+    return beneficiaries.filter((beneficiary: Beneficiary) => {
+      const matchesSearch =
+        beneficiary.name?.includes(searchQuery) ||
+        beneficiary.name_english?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        beneficiary.teacher_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        beneficiary.phone?.includes(searchQuery);
+
+      const matchesStatus =
+        statusFilter === 'all' || beneficiary.status === statusFilter;
+
+      const matchesProvince =
+        provinceFilter === 'all' || beneficiary.province_name === provinceFilter;
+
+      return matchesSearch && matchesStatus && matchesProvince;
+    });
+  }, [beneficiaries, searchQuery, statusFilter, provinceFilter]);
+
+  // Pagination
+  const totalItems = filteredBeneficiaries.length;
+  const totalPages = Math.ceil(totalItems / pageSize) || 1;
+  const paginatedBeneficiaries = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return filteredBeneficiaries.slice(start, start + pageSize);
+  }, [filteredBeneficiaries, page, pageSize]);
+
+  // Selection hook for bulk operations
+  const selection = useSelection<Beneficiary & { id: string }>(
+    paginatedBeneficiaries.map((b: Beneficiary) => ({ ...b, id: b.teacher_id }))
+  );
+
+  // Bulk delete mutation with optimistic update
+  const bulkDeleteMutation = useMutation({
+    mutationFn: (ids: string[]) => api.beneficiaries.bulkDelete(ids),
+    onMutate: async (ids) => {
+      await queryClient.cancelQueries({ queryKey: ['beneficiaries'] });
+      const previousBeneficiaries = queryClient.getQueryData<Beneficiary[]>(['beneficiaries']);
+      queryClient.setQueryData<Beneficiary[]>(['beneficiaries'], (old) =>
+        old?.filter((b) => !ids.includes(b.teacher_id)) || []
+      );
+      return { previousBeneficiaries };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousBeneficiaries) {
+        queryClient.setQueryData(['beneficiaries'], context.previousBeneficiaries);
+      }
+      toast({
+        title: 'បរាជ័យ',
+        description: 'មានបញ្ហាក្នុងការលុប',
+        variant: 'destructive',
+      });
+    },
+    onSuccess: (data, ids) => {
+      selection.deselectAll();
+      toast({
+        title: 'ជោគជ័យ',
+        description: `បានលុប ${ids.length} អ្នកទទួលផល`,
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['beneficiaries'] });
+    },
+  });
+
+  // Update beneficiary mutation with optimistic update
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Partial<Beneficiary> }) =>
+      api.beneficiaries.update(id, data),
+    onMutate: async ({ id, data }) => {
+      await queryClient.cancelQueries({ queryKey: ['beneficiaries'] });
+      const previousBeneficiaries = queryClient.getQueryData<Beneficiary[]>(['beneficiaries']);
+      queryClient.setQueryData<Beneficiary[]>(['beneficiaries'], (old) =>
+        old?.map((b) => (b.teacher_id === id ? { ...b, ...data } : b)) || []
+      );
+      return { previousBeneficiaries };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousBeneficiaries) {
+        queryClient.setQueryData(['beneficiaries'], context.previousBeneficiaries);
+      }
+      toast({
+        title: 'បរាជ័យ',
+        description: 'មានបញ្ហាក្នុងការធ្វើបច្ចុប្បន្នភាព',
+        variant: 'destructive',
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: 'ជោគជ័យ',
+        description: 'បានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ',
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['beneficiaries'] });
+    },
+  });
+
+  const handleBulkDelete = () => {
+    const ids = Array.from(selection.selectedIds);
+    bulkDeleteMutation.mutate(ids);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    selection.deselectAll();
+  };
+
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setPage(1);
+    selection.deselectAll();
+  };
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -136,13 +250,26 @@ export default function Beneficiaries() {
           </CardContent>
         </Card>
 
+        {/* Mobile Bulk Actions */}
+        <BulkActionToolbar
+          selectedCount={selection.selectedCount}
+          onClearSelection={selection.deselectAll}
+          onBulkDelete={handleBulkDelete}
+          isDeleting={bulkDeleteMutation.isPending}
+          deleteDescription={`តើអ្នកប្រាកដថាចង់លុប ${selection.selectedCount} អ្នកទទួលផលទេ?`}
+        />
+
         {/* Mobile Beneficiary Cards */}
         <div className="space-y-3">
-          {filteredBeneficiaries.map((beneficiary) => (
+          {paginatedBeneficiaries.map((beneficiary: Beneficiary) => (
             <Card key={beneficiary.teacher_id} className="overflow-hidden">
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <Checkbox
+                      checked={selection.isSelected(beneficiary.teacher_id)}
+                      onCheckedChange={() => selection.toggle(beneficiary.teacher_id)}
+                    />
                     <Avatar className="h-12 w-12 shrink-0">
                       <AvatarImage src={beneficiary.profile_image_url} />
                       <AvatarFallback className="bg-primary/10 text-primary text-sm">
@@ -233,6 +360,17 @@ export default function Beneficiaries() {
           ))}
         </div>
 
+        {/* Mobile Pagination */}
+        <SmartPagination
+          page={page}
+          pageSize={pageSize}
+          totalItems={totalItems}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+          showPageSize={false}
+        />
+
         {filteredBeneficiaries.length === 0 && (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
@@ -296,11 +434,27 @@ export default function Beneficiaries() {
             </Select>
           </div>
 
+          {/* Bulk Actions */}
+          <BulkActionToolbar
+            selectedCount={selection.selectedCount}
+            onClearSelection={selection.deselectAll}
+            onBulkDelete={handleBulkDelete}
+            isDeleting={bulkDeleteMutation.isPending}
+            deleteDescription={`តើអ្នកប្រាកដថាចង់លុប ${selection.selectedCount} អ្នកទទួលផលទេ?`}
+          />
+
           {/* Table */}
           <div className="rounded-lg border border-border">
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-12">
+                    <Checkbox
+                      checked={selection.isAllSelected}
+                      onCheckedChange={selection.toggleAll}
+                      aria-label="Select all"
+                    />
+                  </TableHead>
                   <TableHead>អ្នកទទួលផល</TableHead>
                   <TableHead>ទំនាក់ទំនង</TableHead>
                   <TableHead>ទីតាំង</TableHead>
@@ -311,8 +465,18 @@ export default function Beneficiaries() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredBeneficiaries.map((beneficiary) => (
-                  <TableRow key={beneficiary.teacher_id}>
+                {paginatedBeneficiaries.map((beneficiary: Beneficiary) => (
+                  <TableRow
+                    key={beneficiary.teacher_id}
+                    className={selection.isSelected(beneficiary.teacher_id) ? 'bg-muted/50' : ''}
+                  >
+                    <TableCell>
+                      <Checkbox
+                        checked={selection.isSelected(beneficiary.teacher_id)}
+                        onCheckedChange={() => selection.toggle(beneficiary.teacher_id)}
+                        aria-label={`Select ${beneficiary.name}`}
+                      />
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <Avatar className="h-9 w-9">
@@ -414,6 +578,16 @@ export default function Beneficiaries() {
               </TableBody>
             </Table>
           </div>
+
+          {/* Pagination */}
+          <SmartPagination
+            page={page}
+            pageSize={pageSize}
+            totalItems={totalItems}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+          />
 
           {filteredBeneficiaries.length === 0 && (
             <div className="flex flex-col items-center justify-center py-12">

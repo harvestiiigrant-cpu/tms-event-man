@@ -105,4 +105,29 @@ router.post('/bulk-import', authenticateToken, async (req, res) => {
   res.status(501).json({ error: 'Bulk import not yet implemented' });
 });
 
+// POST /api/beneficiaries/bulk-delete - Bulk soft delete beneficiaries
+router.post('/bulk-delete', authenticateToken, async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: 'Invalid or empty ids array' });
+    }
+
+    const result = await prisma.beneficiary.updateMany({
+      where: { teacher_id: { in: ids } },
+      data: {
+        is_deleted: true,
+        updated_by: req.user?.userId,
+        updated_at: new Date(),
+      },
+    });
+
+    res.json({ count: result.count, message: `${result.count} beneficiaries deleted` });
+  } catch (error) {
+    console.error('Error bulk deleting beneficiaries:', error);
+    res.status(500).json({ error: 'Failed to bulk delete beneficiaries' });
+  }
+});
+
 export default router;

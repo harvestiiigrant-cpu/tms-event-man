@@ -62,6 +62,10 @@ export const api = {
     delete: (id: string) => api.fetch(`/trainings/${id}`, {
       method: 'DELETE',
     }),
+    bulkDelete: (ids: string[]) => api.fetch('/trainings/bulk-delete', {
+      method: 'POST',
+      body: JSON.stringify({ ids }),
+    }),
   },
 
   // Beneficiaries
@@ -78,6 +82,10 @@ export const api = {
     }),
     delete: (id: string) => api.fetch(`/beneficiaries/${id}`, {
       method: 'DELETE',
+    }),
+    bulkDelete: (ids: string[]) => api.fetch('/beneficiaries/bulk-delete', {
+      method: 'POST',
+      body: JSON.stringify({ ids }),
     }),
   },
 

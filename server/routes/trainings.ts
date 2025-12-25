@@ -101,6 +101,30 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// POST /api/trainings/bulk-delete - Bulk soft delete trainings
+router.post('/bulk-delete', async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: 'Invalid or empty ids array' });
+    }
+
+    const result = await prisma.training.updateMany({
+      where: { id: { in: ids } },
+      data: {
+        training_is_deleted: true,
+        training_updated_at: new Date(),
+      },
+    });
+
+    res.json({ count: result.count, message: `${result.count} trainings deleted` });
+  } catch (error) {
+    console.error('Error bulk deleting trainings:', error);
+    res.status(500).json({ error: 'Failed to bulk delete trainings' });
+  }
+});
+
 // GET /api/trainings/enrolled/:beneficiaryId - Get trainings enrolled by a beneficiary
 router.get('/enrolled/:beneficiaryId', async (req, res) => {
   try {
