@@ -1,10 +1,11 @@
 import express from 'express';
 import prisma from '../db';
+import { authenticateToken, requireRole } from '../middleware/auth';
 
 const router = express.Router();
 
 // GET /api/trainings - Get all trainings
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   try {
     const trainings = await prisma.training.findMany({
       where: {
@@ -22,7 +23,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/trainings/:id - Get single training
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateToken, async (req, res) => {
   try {
     const training = await prisma.training.findUnique({
       where: { id: req.params.id },
@@ -47,7 +48,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/trainings - Create new training
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, requireRole('ADMIN', 'SUPER_ADMIN'), async (req, res) => {
   try {
     const training = await prisma.training.create({
       data: {
@@ -65,7 +66,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT /api/trainings/:id - Update training
-router.put('/:id', async (req, res) => {
+router.put('/:id', authenticateToken, requireRole('ADMIN', 'SUPER_ADMIN'), async (req, res) => {
   try {
     const training = await prisma.training.update({
       where: { id: req.params.id },
@@ -85,7 +86,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE /api/trainings/:id - Soft delete training
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticateToken, requireRole('ADMIN', 'SUPER_ADMIN'), async (req, res) => {
   try {
     const training = await prisma.training.update({
       where: { id: req.params.id },
@@ -102,7 +103,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // POST /api/trainings/bulk-delete - Bulk soft delete trainings
-router.post('/bulk-delete', async (req, res) => {
+router.post('/bulk-delete', authenticateToken, requireRole('ADMIN', 'SUPER_ADMIN'), async (req, res) => {
   try {
     const { ids } = req.body;
 
@@ -126,7 +127,7 @@ router.post('/bulk-delete', async (req, res) => {
 });
 
 // GET /api/trainings/enrolled/:beneficiaryId - Get trainings enrolled by a beneficiary
-router.get('/enrolled/:beneficiaryId', async (req, res) => {
+router.get('/enrolled/:beneficiaryId', authenticateToken, async (req, res) => {
   try {
     const { beneficiaryId } = req.params;
 
@@ -156,7 +157,7 @@ router.get('/enrolled/:beneficiaryId', async (req, res) => {
 });
 
 // GET /api/trainings/available/:beneficiaryId - Get available trainings for a beneficiary
-router.get('/available/:beneficiaryId', async (req, res) => {
+router.get('/available/:beneficiaryId', authenticateToken, async (req, res) => {
   try {
     const { beneficiaryId } = req.params;
 

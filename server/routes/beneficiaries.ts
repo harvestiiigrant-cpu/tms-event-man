@@ -1,11 +1,11 @@
 import express from 'express';
 import prisma from '../db';
-import { authenticateToken } from '../middleware/auth';
+import { authenticateToken, requireRole } from '../middleware/auth';
 
 const router = express.Router();
 
 // GET /api/beneficiaries - Get all beneficiaries
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   try {
     const beneficiaries = await prisma.beneficiary.findMany({
       where: {
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/beneficiaries/:id - Get single beneficiary
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateToken, async (req, res) => {
   try {
     const beneficiary = await prisma.beneficiary.findUnique({
       where: { teacher_id: req.params.id },

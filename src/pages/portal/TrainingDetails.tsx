@@ -1,10 +1,17 @@
-import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import { BeneficiaryPortalLayout } from '@/components/layout/BeneficiaryPortalLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import {
   Calendar,
   MapPin,
@@ -16,41 +23,23 @@ import {
   BookOpen,
   ChevronLeft,
   FileText,
+  ListTodo,
+  Download,
+  ExternalLink,
+  File,
+  Link2,
+  Video,
+  Image,
+  FileSpreadsheet,
+  Presentation,
+  Loader2,
 } from 'lucide-react';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, addDays, differenceInDays } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { MATERIAL_CATEGORIES } from '@/types/training';
+import type { Training, TrainingAgenda, TrainingMaterialLink, TrainingMaterial } from '@/types/training';
 
-// Mock training data - would come from API
-const mockTraining = {
-  id: '1',
-  training_code: 'TR-2024-001',
-  training_name: 'វគ្គបណ្តុះបណ្តាលគណិតវិទ្យា',
-  training_name_english: 'Mathematics Training Workshop',
-  training_category: 'MATH',
-  training_type: 'WORKSHOP',
-  training_level: 'PROVINCIAL',
-  training_start_date: '2024-01-15',
-  training_end_date: '2024-01-20',
-  training_location: 'Phnom Penh',
-  training_venue: 'Ministry of Education',
-  training_description: 'This comprehensive mathematics training workshop is designed to enhance teaching methodologies and introduce modern pedagogical approaches for mathematics education at the secondary level.',
-  max_participants: 50,
-  current_participants: 35,
-  gps_validation_required: true,
-  geofence_validation_required: true,
-  geofence_radius: 100,
-  venue_latitude: 11.5564,
-  venue_longitude: 104.9282,
-  status: 'ONGOING',
-  my_attendance_status: 'ATTENDED',
-  my_training_role: 'PARTICIPANT',
-  attendance_percentage: 75,
-  total_sessions: 10,
-  attended_sessions: 8,
-  is_enrolled: true,
-};
-
-const getCategoryIcon = (category: string) => {
+const getCategoryIcon = (category?: string) => {
   const colors: Record<string, string> = {
     MATH: 'from-purple-500 to-purple-600',
     KHMER: 'from-blue-500 to-blue-600',
@@ -58,15 +47,112 @@ const getCategoryIcon = (category: string) => {
     PEDAGOGY: 'from-green-500 to-green-600',
     LEADERSHIP: 'from-orange-500 to-orange-600',
   };
-  return colors[category] || 'from-gray-500 to-gray-600';
+  return colors[category || ''] || 'from-gray-500 to-gray-600';
+};
+
+// Helper to get material icon
+const getMaterialIcon = (material: TrainingMaterial) => {
+  if (material.material_type === 'URL') {
+    return <Link2 className="h-4 w-4" />;
+  }
+
+  const mime = material.mime_type || '';
+  if (mime.startsWith('image/')) {
+    return <Image className="h-4 w-4" />;
+  }
+  if (mime.startsWith('video/')) {
+    return <Video className="h-4 w-4" />;
+  }
+  if (mime.includes('spreadsheet') || mime.includes('excel')) {
+    return <FileSpreadsheet className="h-4 w-4" />;
+  }
+  if (mime.includes('presentation') || mime.includes('powerpoint')) {
+    return <Presentation className="h-4 w-4" />;
+  }
+  return <File className="h-4 w-4" />;
+};
+
+// Format file size
+const formatFileSize = (bytes?: number) => {
+  if (!bytes) return '';
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
 export default function TrainingDetails() {
   const { id } = useParams();
-  const [training] = useState(mockTraining);
 
-  const isOngoing = training.status === 'ONGOING';
-  const isCompleted = training.status === 'COMPLETED';
+  // Fetch training details
+  const { data: training, isLoading: loadingTraining } = useQuery({
+    queryKey: ['training', id],
+    queryFn: () => api.trainings.getById(id!),
+    enabled: !!id,
+  });
+
+  // Fetch agendas
+  const { data: agendas = [], isLoading: loadingAgendas } = useQuery({
+    queryKey: ['agendas', id],
+    queryFn: () => api.agendas.getByTraining(id!),
+    enabled: !!id,
+  });
+
+  // Fetch linked materials
+  const { data: materialLinks = [], isLoading: loadingMaterials } = useQuery({
+    queryKey: ['training-materials', id],
+    queryFn: () => api.materials.getByTraining(id!),
+    enabled: !!id,
+  });
+
+  const handleDownloadMaterial = (material: TrainingMaterial) => {
+    if (material.material_type === 'URL' && material.external_url) {
+      window.open(material.external_url, '_blank');
+    } else if (material.file_url) {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      window.open(`${apiUrl.replace('/api', '')}${material.file_url}`, '_blank');
+    }
+  };
+
+  if (loadingTraining) {
+    return (
+      <BeneficiaryPortalLayout>
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </BeneficiaryPortalLayout>
+    );
+  }
+
+  if (!training) {
+    return (
+      <BeneficiaryPortalLayout>
+        <div className="flex flex-col items-center justify-center py-12">
+          <p className="text-lg font-medium">រកមិនឃើញការបណ្តុះបណ្តាល</p>
+          <Button asChild variant="link" className="mt-2">
+            <Link to="/portal/trainings">ត្រឡប់ទៅការបណ្តុះបណ្តាលរបស់ខ្ញុំ</Link>
+          </Button>
+        </div>
+      </BeneficiaryPortalLayout>
+    );
+  }
+
+  const isOngoing = training.training_status === 'ONGOING';
+  const isCompleted = training.training_status === 'COMPLETED';
+
+  // Calculate training days for agenda grouping
+  const startDate = new Date(training.training_start_date);
+  const endDate = new Date(training.training_end_date);
+  const totalDays = differenceInDays(endDate, startDate) + 1;
+
+  // Group agendas by day
+  const getAgendasForDay = (dayNumber: number) => {
+    return agendas
+      .filter((a: TrainingAgenda) => a.day_number === dayNumber)
+      .sort((a: TrainingAgenda, b: TrainingAgenda) => {
+        if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
+        return a.start_time.localeCompare(b.start_time);
+      });
+  };
 
   return (
     <BeneficiaryPortalLayout>
@@ -94,11 +180,6 @@ export default function TrainingDetails() {
                 <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/20">
                   {training.training_level}
                 </Badge>
-                {training.is_enrolled && (
-                  <Badge className="bg-green-500 text-white border-white/20">
-                    ✓ បានចុះឈ្មោះ
-                  </Badge>
-                )}
               </div>
 
               <h1 className="text-xl font-bold mb-1">{training.training_name}</h1>
@@ -124,7 +205,7 @@ export default function TrainingDetails() {
                   <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                   <div>
                     <p className="text-xs text-muted-foreground">រយៈពេល</p>
-                    <p className="font-medium text-xs">{training.total_sessions} វគ្គ</p>
+                    <p className="font-medium text-xs">{totalDays} ថ្ងៃ</p>
                   </div>
                 </div>
 
@@ -145,22 +226,8 @@ export default function TrainingDetails() {
                 </div>
               </div>
 
-              {/* My Progress (if enrolled) */}
-              {training.is_enrolled && isOngoing && (
-                <div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-medium">ការវឌ្ឍនភាពរបស់ខ្ញុំ</span>
-                    <span className="text-2xl font-bold text-primary">{training.attendance_percentage}%</span>
-                  </div>
-                  <Progress value={training.attendance_percentage} className="h-2 mb-2" />
-                  <p className="text-xs text-muted-foreground">
-                    បានចូលរួម {training.attended_sessions} ក្នុងចំណោម {training.total_sessions} វគ្គ
-                  </p>
-                </div>
-              )}
-
               {/* Action Buttons */}
-              {training.is_enrolled && isOngoing && (
+              {isOngoing && (
                 <div className="grid grid-cols-2 gap-3">
                   <Button asChild size="lg" className="h-12">
                     <Link to={`/portal/attendance/${training.id}`}>
@@ -177,7 +244,7 @@ export default function TrainingDetails() {
                 </div>
               )}
 
-              {isCompleted && training.is_enrolled && (
+              {isCompleted && (
                 <Button asChild className="w-full h-12">
                   <a href="#" download>
                     <Award className="mr-2 h-5 w-5" />
@@ -204,6 +271,137 @@ export default function TrainingDetails() {
           </Card>
         )}
 
+        {/* Training Agenda */}
+        {agendas.length > 0 && (
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <ListTodo className="h-5 w-5 text-primary" />
+                <h3 className="font-semibold">កម្មវិធីបណ្តុះបណ្តាល</h3>
+              </div>
+
+              <Accordion type="single" collapsible className="w-full">
+                {Array.from({ length: totalDays }, (_, i) => i + 1).map((dayNum) => {
+                  const dayAgendas = getAgendasForDay(dayNum);
+                  const dayDate = addDays(startDate, dayNum - 1);
+
+                  if (dayAgendas.length === 0) return null;
+
+                  return (
+                    <AccordionItem key={dayNum} value={`day-${dayNum}`}>
+                      <AccordionTrigger className="text-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold">ថ្ងៃទី {dayNum}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {format(dayDate, 'EEEE, MMM d')}
+                          </span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-3">
+                          {dayAgendas.map((agenda: TrainingAgenda) => (
+                            <div
+                              key={agenda.id}
+                              className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg"
+                            >
+                              <div className="text-center shrink-0 bg-primary/10 rounded-lg p-2 min-w-[60px]">
+                                <p className="text-xs font-semibold text-primary">
+                                  {agenda.start_time}
+                                </p>
+                                <p className="text-[10px] text-muted-foreground">
+                                  {agenda.end_time}
+                                </p>
+                              </div>
+                              <div className="flex-1">
+                                <p className="font-medium text-sm">{agenda.topic_km || agenda.topic_en}</p>
+                                {agenda.topic_en && agenda.topic_km && (
+                                  <p className="text-xs text-muted-foreground">{agenda.topic_en}</p>
+                                )}
+                                {(agenda.instructor_name || agenda.instructor_name_km) && (
+                                  <p className="text-xs text-primary mt-1">
+                                    {agenda.instructor_name_km || agenda.instructor_name}
+                                  </p>
+                                )}
+                                {(agenda.description_km || agenda.description_en) && (
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    {agenda.description_km || agenda.description_en}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Training Materials */}
+        {materialLinks.length > 0 && (
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <FileText className="h-5 w-5 text-primary" />
+                <h3 className="font-semibold">ឯកសារបណ្តុះបណ្តាល</h3>
+              </div>
+
+              <div className="space-y-2">
+                {materialLinks.map((link: TrainingMaterialLink) => {
+                  const material = link.material;
+                  if (!material) return null;
+
+                  return (
+                    <div
+                      key={link.id}
+                      className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
+                    >
+                      <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 text-primary shrink-0">
+                        {getMaterialIcon(material)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm truncate">
+                          {material.title_km || material.title_en}
+                        </p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <Badge variant="outline" className="text-[10px] py-0">
+                            {material.material_type === 'FILE' ? 'ឯកសារ' : 'តំណ'}
+                          </Badge>
+                          {material.category && (
+                            <span className="text-[10px] text-muted-foreground">
+                              {MATERIAL_CATEGORIES.find(c => c.code === material.category)?.name_km}
+                            </span>
+                          )}
+                          {material.file_size && (
+                            <span className="text-[10px] text-muted-foreground">
+                              {formatFileSize(material.file_size)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9"
+                        onClick={() => handleDownloadMaterial(material)}
+                      >
+                        {material.material_type === 'URL' ? (
+                          <ExternalLink className="h-4 w-4" />
+                        ) : (
+                          <Download className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Venue Details */}
         <Card>
           <CardContent className="p-4">
@@ -212,10 +410,12 @@ export default function TrainingDetails() {
               <h3 className="font-semibold">ព័ត៌មានទីកន្លែង</h3>
             </div>
             <div className="space-y-3">
-              <div>
-                <p className="text-xs text-muted-foreground">ឈ្មោះទីកន្លែង</p>
-                <p className="text-sm font-medium">{training.training_venue}</p>
-              </div>
+              {training.training_venue && (
+                <div>
+                  <p className="text-xs text-muted-foreground">ឈ្មោះទីកន្លែង</p>
+                  <p className="text-sm font-medium">{training.training_venue}</p>
+                </div>
+              )}
               <div>
                 <p className="text-xs text-muted-foreground">ទីតាំង</p>
                 <p className="text-sm font-medium">{training.training_location}</p>
@@ -262,8 +462,8 @@ export default function TrainingDetails() {
                 <p className="font-medium">{training.training_level}</p>
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">វគ្គសរុប</p>
-                <p className="font-medium">{training.total_sessions} វគ្គ</p>
+                <p className="text-xs text-muted-foreground">រយៈពេល</p>
+                <p className="font-medium">{totalDays} ថ្ងៃ</p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">សមត្ថភាពទទួល</p>

@@ -1,8 +1,10 @@
 import { useState, useMemo, useEffect } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { format, parseISO, areIntervalsOverlapping } from "date-fns";
 import { Calendar, MapPin, Users, AlertTriangle, CheckCircle2, Search } from "lucide-react";
 import { CompactBrandHeader } from "@/components/branding/BrandHeader";
@@ -38,7 +40,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/hooks/use-toast";
-import { mockTrainings } from "@/data/mockData";
 import type { Training } from "@/types/training";
 
 const enrollmentSchema = z.object({
@@ -58,15 +59,41 @@ interface ConflictInfo {
 
 export default function PublicEnrollment() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const preselectedTrainingId = searchParams.get("training");
 
   const [showConflictDialog, setShowConflictDialog] = useState(false);
   const [pendingSubmission, setPendingSubmission] = useState<EnrollmentFormValues | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const availableTrainings = mockTrainings.filter(
-    (t) => t.training_status === "ONGOING" || t.training_status === "DRAFT"
+  // Fetch published trainings
+  const { data: allTrainings = [] } = useQuery({
+    queryKey: ['trainings-public'],
+    queryFn: api.trainings.getAll,
+  });
+
+  const availableTrainings = allTrainings.filter(
+    (t: Training) => t.is_published && (t.training_status === "ONGOING" || t.training_status === "DRAFT")
   );
+
+  // Enrollment mutation
+  const enrollmentMutation = useMutation({
+    mutationFn: (data: any) => api.enrollments.create(data),
+    onSuccess: () => {
+      setIsSubmitted(true);
+      toast({
+        title: "ជោគជ័យ",
+        description: "បានចុះឈ្មោះចូលរួមដោយជោគជ័យ",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "កំហុស",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   // Check if preselected training exists and is available
   const preselectedTraining = preselectedTrainingId
@@ -137,28 +164,31 @@ export default function PublicEnrollment() {
       return;
     }
 
-    // Process submission
-    console.log("Enrollment submitted:", data);
-    
-    toast({
-      title: "Enrollment Successful!",
-      description: `You have been enrolled in ${data.selected_trainings.length} training(s).`,
+    // Submit enrollments for each selected training
+    data.selected_trainings.forEach((training_id) => {
+      enrollmentMutation.mutate({
+        training_id,
+        beneficiary_id: data.teacher_id,
+        registration_method: 'MANUAL',
+        training_role: 'PARTICIPANT',
+        enrollment_type: 'PUBLIC',
+      });
     });
-
-    setIsSubmitted(true);
   };
 
   const handleConfirmWithConflicts = () => {
     if (pendingSubmission) {
       const dataWithAccept = { ...pendingSubmission, accept_conflicts: true };
-      console.log("Enrollment submitted with conflicts:", dataWithAccept);
-      
-      toast({
-        title: "Enrollment Successful!",
-        description: `You have been enrolled in ${dataWithAccept.selected_trainings.length} training(s).`,
+      // Submit enrollments
+      dataWithAccept.selected_trainings.forEach((training_id: string) => {
+        enrollmentMutation.mutate({
+          training_id,
+          beneficiary_id: dataWithAccept.teacher_id,
+          registration_method: 'MANUAL',
+          training_role: 'PARTICIPANT',
+          enrollment_type: 'PUBLIC',
+        });
       });
-
-      setIsSubmitted(true);
     }
     setShowConflictDialog(false);
     setPendingSubmission(null);

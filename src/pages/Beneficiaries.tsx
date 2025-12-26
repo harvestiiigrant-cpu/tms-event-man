@@ -27,6 +27,9 @@ import { SmartPagination } from '@/components/ui/smart-pagination';
 import { BulkActionToolbar } from '@/components/ui/bulk-action-toolbar';
 import { useSelection } from '@/hooks/use-selection';
 import { toast } from '@/hooks/use-toast';
+import { ViewBeneficiaryDialog } from '@/components/beneficiaries/ViewBeneficiaryDialog';
+import { BeneficiaryTrainingHistoryDialog } from '@/components/beneficiaries/BeneficiaryTrainingHistoryDialog';
+import { EnrollInTrainingDialog } from '@/components/beneficiaries/EnrollInTrainingDialog';
 import {
   Search,
   Upload,
@@ -177,6 +180,15 @@ export default function Beneficiaries() {
     bulkDeleteMutation.mutate(ids);
   };
 
+  const handleDeactivate = (beneficiary: any) => {
+    if (confirm(`តើអ្នកប្រាកដថាចង់បិទដំណើរការ ${beneficiary.name} ទេ?`)) {
+      updateMutation.mutate({
+        id: beneficiary.teacher_id,
+        data: { status: 'INACTIVE' },
+      });
+    }
+  };
+
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     selection.deselectAll();
@@ -313,24 +325,42 @@ export default function Beneficiaries() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>សកម្មភាព</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                          <Eye className="mr-2 h-4 w-4" />
-                          មើលប្រវត្តិរូប
-                        </DropdownMenuItem>
+                        <ViewBeneficiaryDialog
+                          beneficiary={beneficiary}
+                          trigger={
+                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                              <Eye className="mr-2 h-4 w-4" />
+                              មើលប្រវត្តិរូប
+                            </DropdownMenuItem>
+                          }
+                        />
                         <DropdownMenuItem onClick={() => setEditingBeneficiary(beneficiary)}>
                           <Pencil className="mr-2 h-4 w-4" />
                           កែសម្រួល
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <History className="mr-2 h-4 w-4" />
-                          មើលប្រវត្តិការបណ្តុះបណ្តាល
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <UserPlus className="mr-2 h-4 w-4" />
-                          ចុះឈ្មោះក្នុងការបណ្តុះបណ្តាល
-                        </DropdownMenuItem>
+                        <BeneficiaryTrainingHistoryDialog
+                          beneficiary={beneficiary}
+                          trigger={
+                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                              <History className="mr-2 h-4 w-4" />
+                              មើលប្រវត្តិការបណ្តុះបណ្តាល
+                            </DropdownMenuItem>
+                          }
+                        />
+                        <EnrollInTrainingDialog
+                          beneficiary={beneficiary}
+                          trigger={
+                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                              <UserPlus className="mr-2 h-4 w-4" />
+                              ចុះឈ្មោះក្នុងការបណ្តុះបណ្តាល
+                            </DropdownMenuItem>
+                          }
+                        />
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-destructive">
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={() => handleDeactivate(beneficiary)}
+                        >
                           <UserX className="mr-2 h-4 w-4" />
                           បិទដំណើរការ
                         </DropdownMenuItem>
@@ -549,24 +579,42 @@ export default function Beneficiaries() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>សកម្មភាព</DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <Eye className="mr-2 h-4 w-4" />
-                            មើលប្រវត្តិរូប
-                          </DropdownMenuItem>
+                          <ViewBeneficiaryDialog
+                            beneficiary={beneficiary}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <Eye className="mr-2 h-4 w-4" />
+                                មើលប្រវត្តិរូប
+                              </DropdownMenuItem>
+                            }
+                          />
                           <DropdownMenuItem onClick={() => setEditingBeneficiary(beneficiary)}>
                             <Pencil className="mr-2 h-4 w-4" />
                             កែសម្រួល
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <History className="mr-2 h-4 w-4" />
-                            មើលប្រវត្តិការបណ្តុះបណ្តាល
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <UserPlus className="mr-2 h-4 w-4" />
-                            ចុះឈ្មោះក្នុងការបណ្តុះបណ្តាល
-                          </DropdownMenuItem>
+                          <BeneficiaryTrainingHistoryDialog
+                            beneficiary={beneficiary}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <History className="mr-2 h-4 w-4" />
+                                មើលប្រវត្តិការបណ្តុះបណ្តាល
+                              </DropdownMenuItem>
+                            }
+                          />
+                          <EnrollInTrainingDialog
+                            beneficiary={beneficiary}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <UserPlus className="mr-2 h-4 w-4" />
+                                ចុះឈ្មោះក្នុងការបណ្តុះបណ្តាល
+                              </DropdownMenuItem>
+                            }
+                          />
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-destructive">
+                          <DropdownMenuItem
+                            className="text-destructive"
+                            onClick={() => handleDeactivate(beneficiary)}
+                          >
                             <UserX className="mr-2 h-4 w-4" />
                             បិទដំណើរការ
                           </DropdownMenuItem>

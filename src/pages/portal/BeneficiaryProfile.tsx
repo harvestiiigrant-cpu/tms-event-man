@@ -1,4 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api';
+import { useAuth } from '@/contexts/AuthContext';
 import { BeneficiaryPortalLayout } from '@/components/layout/BeneficiaryPortalLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -16,35 +19,46 @@ import { Camera, Save, User, School, MapPin, Phone, Mail, Loader2 } from 'lucide
 import { toast } from '@/hooks/use-toast';
 import { uploadProfileImage, uploadSignatureImage } from '@/lib/uploadUtils';
 
-// Mock user data
-const mockUserData = {
-  teacher_id: 'T001',
-  name: 'សុខ សុវណ្ណា',
-  name_english: 'Sok Sovannak',
-  phone: '012 345 678',
-  email: 'sok.sovannak@moeys.gov.kh',
-  sex: 'M',
-  position: 'Teacher',
-  subject: 'Mathematics',
-  school: 'Phnom Penh Primary School',
-  school_id: 'SCH-001',
-  province_name: 'Phnom Penh',
-  district_name: 'Chamkar Mon',
-  commune_name: 'Tonle Bassac',
-  village_name: 'Phsar Doeum Kor',
-  profile_image_url: '',
-  signature_url: '',
-};
-
 export default function BeneficiaryProfile() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState(mockUserData);
+  const [profileData, setProfileData] = useState<any>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [signatureImage, setSignatureImage] = useState<string | null>(null);
   const [uploadingProfile, setUploadingProfile] = useState(false);
   const [uploadingSignature, setUploadingSignature] = useState(false);
   const profileImageInputRef = useRef<HTMLInputElement>(null);
   const signatureInputRef = useRef<HTMLInputElement>(null);
+
+  // Fetch beneficiary data
+  const { data: beneficiary, isLoading } = useQuery({
+    queryKey: ['beneficiary', user?.teacher_id],
+    queryFn: () => api.beneficiaries.getById(user?.teacher_id!),
+    enabled: !!user?.teacher_id,
+  });
+
+  // Update beneficiary mutation
+  const updateMutation = useMutation({
+    mutationFn: (data: any) => api.beneficiaries.update(profileData.teacher_id, data),
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានធ្វើបច្ចុប្បន្នភាពព័ត៌មានផ្ទាល់ខ្លួន' });
+      setIsEditing(false);
+      queryClient.invalidateQueries({ queryKey: ['beneficiary', user?.teacher_id] });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  // Initialize profile data from fetched beneficiary
+  useEffect(() => {
+    if (beneficiary) {
+      setProfileData(beneficiary);
+      setProfileImage(beneficiary.profile_image_url);
+      setSignatureImage(beneficiary.signature_url);
+    }
+  }, [beneficiary]);
 
   const handleProfileImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -129,23 +143,20 @@ export default function BeneficiaryProfile() {
   };
 
   const handleSave = () => {
-    // Here you would save to API
-    console.log('Saving profile:', profileData);
-    console.log('Profile image:', profileImage);
-    console.log('Signature:', signatureImage);
-
-    toast({
-      title: 'ប្រវត្តិរូបបានធ្វើបច្ចុប្បន្នភាព',
-      description: 'ប្រវត្តិរូបរបស់អ្នកបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ។',
-    });
-
-    setIsEditing(false);
+    const dataToUpdate = {
+      ...profileData,
+      profile_image_url: profileImage,
+      signature_url: signatureImage,
+    };
+    updateMutation.mutate(dataToUpdate);
   };
 
   const handleCancel = () => {
-    setProfileData(mockUserData);
-    setProfileImage(null);
-    setSignatureImage(null);
+    if (beneficiary) {
+      setProfileData(beneficiary);
+      setProfileImage(beneficiary.profile_image_url);
+      setSignatureImage(beneficiary.signature_url);
+    }
     setIsEditing(false);
   };
 

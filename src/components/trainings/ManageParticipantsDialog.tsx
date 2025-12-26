@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,63 +21,39 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Training } from '@/types/training';
-import { Users, Plus, Search, Trash2, UserPlus } from 'lucide-react';
+import { Users, Plus, Search, Trash2, UserPlus, ArrowRightLeft, MoreHorizontal } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { TransferParticipantDialog } from './TransferParticipantDialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface ManageParticipantsDialogProps {
   training: Training;
   trigger?: React.ReactNode;
 }
 
-// Mock participant data structure
 interface Participant {
-  id: string;
-  teacher_id: string;
-  name: string;
-  phone?: string;
-  school?: string;
+  beneficiary_training_id: string;
+  beneficiary_id: string;
+  training_id: string;
   attendance_status: 'REGISTERED' | 'ATTENDED' | 'COMPLETED' | 'DROPPED';
   training_role: 'PARTICIPANT' | 'TRAINER' | 'COORDINATOR';
   registration_method: 'QR' | 'MANUAL' | 'IMPORT';
   registration_date: string;
+  beneficiary: {
+    teacher_id: string;
+    name: string;
+    name_english?: string;
+    phone?: string;
+    school?: string;
+  };
 }
-
-// Mock data - replace with actual data fetching
-const mockParticipants: Participant[] = [
-  {
-    id: '1',
-    teacher_id: 'T001',
-    name: 'សុខ សុវណ្ណា',
-    phone: '012345678',
-    school: 'Phnom Penh Primary School',
-    attendance_status: 'ATTENDED',
-    training_role: 'PARTICIPANT',
-    registration_method: 'QR',
-    registration_date: '2024-01-15',
-  },
-  {
-    id: '2',
-    teacher_id: 'T002',
-    name: 'ចន្ទ្រា ពេជ្រ',
-    phone: '012987654',
-    school: 'Siem Reap Secondary School',
-    attendance_status: 'REGISTERED',
-    training_role: 'PARTICIPANT',
-    registration_method: 'MANUAL',
-    registration_date: '2024-01-16',
-  },
-  {
-    id: '3',
-    teacher_id: 'T003',
-    name: 'វិចិត្រា ធារា',
-    phone: '011223344',
-    school: 'Battambang High School',
-    attendance_status: 'COMPLETED',
-    training_role: 'TRAINER',
-    registration_method: 'MANUAL',
-    registration_date: '2024-01-14',
-  },
-];
 
 const getAttendanceStatusColor = (status: string) => {
   switch (status) {
@@ -106,14 +84,41 @@ const getRoleColor = (role: string) => {
 export function ManageParticipantsDialog({ training, trigger }: ManageParticipantsDialogProps) {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [participants, setParticipants] = useState<Participant[]>(mockParticipants);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const queryClient = useQueryClient();
+
+  // Fetch participants (enrollments) for this training
+  const { data: participants = [], isLoading } = useQuery<Participant[]>({
+    queryKey: ['enrollments', training.id],
+    queryFn: () => api.enrollments.getByTraining(training.id),
+    enabled: open,
+  });
+
+  // Delete enrollment mutation
+  const deleteMutation = useMutation({
+    mutationFn: (enrollmentId: string) => api.enrollments.delete(enrollmentId),
+    onSuccess: () => {
+      toast({
+        title: 'ជោគជ័យ',
+        description: 'បានដកអ្នកចូលរួមចេញពីការបណ្តុះបណ្តាល',
+      });
+      queryClient.invalidateQueries({ queryKey: ['enrollments', training.id] });
+      queryClient.invalidateQueries({ queryKey: ['trainings'] });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'កំហុស',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
 
   const filteredParticipants = participants.filter((participant) => {
     const matchesSearch =
-      participant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      participant.teacher_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      participant.school?.toLowerCase().includes(searchQuery.toLowerCase());
+      participant.beneficiary.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      participant.beneficiary.teacher_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      participant.beneficiary.school?.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesStatus =
       statusFilter === 'all' || participant.attendance_status === statusFilter;
@@ -121,12 +126,10 @@ export function ManageParticipantsDialog({ training, trigger }: ManageParticipan
     return matchesSearch && matchesStatus;
   });
 
-  const handleRemoveParticipant = (participantId: string) => {
-    setParticipants(participants.filter((p) => p.id !== participantId));
-    toast({
-      title: 'Participant Removed',
-      description: 'The participant has been removed from this training.',
-    });
+  const handleRemoveParticipant = (enrollmentId: string) => {
+    if (confirm('តើអ្នកប្រាកដថាចង់ដកអ្នកចូលរួមនេះចេញទេ?')) {
+      deleteMutation.mutate(enrollmentId);
+    }
   };
 
   const handleAddParticipant = () => {
@@ -203,18 +206,18 @@ export function ManageParticipantsDialog({ training, trigger }: ManageParticipan
               </TableHeader>
               <TableBody>
                 {filteredParticipants.map((participant) => (
-                  <TableRow key={participant.id}>
-                    <TableCell className="font-medium">{participant.teacher_id}</TableCell>
+                  <TableRow key={participant.beneficiary_training_id}>
+                    <TableCell className="font-medium">{participant.beneficiary.teacher_id}</TableCell>
                     <TableCell>
                       <div>
-                        <p className="font-medium text-foreground">{participant.name}</p>
-                        {participant.phone && (
-                          <p className="text-xs text-muted-foreground">{participant.phone}</p>
+                        <p className="font-medium text-foreground">{participant.beneficiary.name}</p>
+                        {participant.beneficiary.phone && (
+                          <p className="text-xs text-muted-foreground">{participant.beneficiary.phone}</p>
                         )}
                       </div>
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">
-                      {participant.school || '-'}
+                      {participant.beneficiary.school || '-'}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline" className={getRoleColor(participant.training_role)}>
@@ -230,14 +233,42 @@ export function ManageParticipantsDialog({ training, trigger }: ManageParticipan
                       {participant.registration_method}
                     </TableCell>
                     <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-destructive hover:text-destructive"
-                        onClick={() => handleRemoveParticipant(participant.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>សកម្មភាព</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <TransferParticipantDialog
+                            sourceTraining={training}
+                            participant={{
+                              beneficiary_id: participant.beneficiary.teacher_id,
+                              name: participant.beneficiary.name,
+                              teacher_id: participant.beneficiary.teacher_id,
+                            }}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <ArrowRightLeft className="mr-2 h-4 w-4" />
+                                ផ្ទេរទៅការបណ្តុះបណ្តាលផ្សេង
+                              </DropdownMenuItem>
+                            }
+                            onTransferComplete={() => {
+                              queryClient.invalidateQueries({ queryKey: ['enrollments', training.id] });
+                            }}
+                          />
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            className="text-destructive focus:text-destructive"
+                            onClick={() => handleRemoveParticipant(participant.beneficiary_training_id)}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            លុបចេញ
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))}

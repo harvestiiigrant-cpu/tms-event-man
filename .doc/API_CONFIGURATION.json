@@ -1,0 +1,555 @@
+{
+  "project": "sa-training-for-plp",
+  "description": "Complete API configuration for login authentication and geographic cascading selection",
+
+  "authentication": {
+    "beneficiary_login": {
+      "endpoint": "POST /api/auth/beneficiary-login",
+      "description": "Phone-based authentication for beneficiaries (mobile app)",
+      "request_body": {
+        "phone_number": "string (required) - 9-10 digits, e.g., '012345678'",
+        "passcode": "string (required) - Last 4 digits of phone number"
+      },
+      "response": {
+        "success": "boolean",
+        "token": "string - JWT token (7 days expiry)",
+        "user": {
+          "id": "string - teacher_id (primary identifier)",
+          "name": "string - Beneficiary name",
+          "phone": "string - Phone number",
+          "role": "string - BENEFICIARY | COORDINATOR | TEACHER | etc.",
+          "type": "string - Beneficiary type",
+          "school": "string - School name",
+          "organization_id": "string - Multi-tenant organization ID"
+        }
+      },
+      "authentication_method": "Phone number with passcode (last 4 digits)",
+      "token_expiry": "7 days",
+      "cookie_set": "token (httpOnly, 7 days maxAge)"
+    },
+
+    "admin_login": {
+      "endpoint": "POST /api/auth/login",
+      "description": "Email/password authentication for admin dashboard",
+      "request_body": {
+        "email": "string (required)",
+        "password": "string (required)"
+      },
+      "response": {
+        "success": "boolean",
+        "token": "string - JWT token",
+        "user": {
+          "id": "string",
+          "email": "string",
+          "name": "string",
+          "role": "string - SUPER_ADMIN | NATION_ADMIN | PROVINCE_ADMIN | etc.",
+          "organization_id": "string"
+        }
+      }
+    },
+
+    "telegram_login": {
+      "endpoint": "POST /api/auth/telegram-login",
+      "description": "Telegram widget authentication",
+      "request_body": {
+        "telegram_data": "TelegramAuthData - From Telegram Widget"
+      },
+      "response": {
+        "success": "boolean",
+        "user": {
+          "id": "string - teacher_id",
+          "name": "string",
+          "telegram_id": "string",
+          "telegram_username": "string",
+          "auth_method": "telegram"
+        }
+      }
+    }
+  },
+
+  "geographic_cascading_api": {
+    "base_url": "https://plp-api.moeys.gov.kh/api/v1",
+    "description": "Global geographic API endpoints from Cambodia Ministry of Education",
+
+    "endpoints": {
+      "provinces": {
+        "url": "GET https://plp-api.moeys.gov.kh/api/v1/locations/provinces",
+        "description": "Get all provinces",
+        "query_params": {},
+        "response_type": "Province[]",
+        "response_structure": {
+          "id": "number - Province ID",
+          "province_code": "string - Province code",
+          "province_name_kh": "string - Khmer name",
+          "province_name_en": "string - English name",
+          "created_at": "string (optional)",
+          "updated_at": "string (optional)"
+        },
+        "example_response": [
+          {
+            "id": 1,
+            "province_code": "01",
+            "province_name_kh": "បន្ទាយមានជ័យ",
+            "province_name_en": "Banteay Meanchey",
+            "created_at": "2024-01-01T00:00:00Z",
+            "updated_at": "2024-01-01T00:00:00Z"
+          }
+        ]
+      },
+
+      "districts": {
+        "url": "GET https://plp-api.moeys.gov.kh/api/v1/locations/districts",
+        "description": "Get districts filtered by province",
+        "query_params": {
+          "province_id": "number (required) - Province ID to filter by"
+        },
+        "response_type": "District[]",
+        "response_structure": {
+          "id": "number - District ID",
+          "district_code": "string - District code",
+          "district_name_kh": "string - Khmer name",
+          "district_name_en": "string - English name",
+          "province_code": "number - References Province ID",
+          "created_at": "string (optional)",
+          "updated_at": "string (optional)"
+        },
+        "trigger": "Selected Province ID",
+        "clears_on_change": ["communes", "villages", "schools"]
+      },
+
+      "communes": {
+        "url": "GET https://plp-api.moeys.gov.kh/api/v1/locations/communes",
+        "description": "Get communes filtered by district",
+        "query_params": {
+          "district_id": "number (required) - District ID to filter by"
+        },
+        "response_type": "Commune[]",
+        "response_structure": {
+          "id": "number - Commune ID",
+          "commune_code": "string - Commune code",
+          "commune_name_kh": "string - Khmer name",
+          "commune_name_en": "string - English name",
+          "district_code": "number - References District ID",
+          "province_code": "number - References Province ID",
+          "created_at": "string (optional)",
+          "updated_at": "string (optional)"
+        },
+        "trigger": "Selected District ID",
+        "clears_on_change": ["villages"]
+      },
+
+      "villages": {
+        "url": "GET https://plp-api.moeys.gov.kh/api/v1/locations/villages",
+        "description": "Get villages filtered by commune",
+        "query_params": {
+          "commune_id": "number (required) - Commune ID to filter by"
+        },
+        "response_type": "Village[]",
+        "response_structure": {
+          "id": "number - Village ID",
+          "village_code": "string - Village code",
+          "village_name_kh": "string - Khmer name",
+          "village_name_en": "string - English name",
+          "commune_code": "number - References Commune ID",
+          "district_code": "number - References District ID",
+          "province_code": "number - References Province ID",
+          "created_at": "string (optional)",
+          "updated_at": "string (optional)"
+        },
+        "trigger": "Selected Commune ID",
+        "clears_on_change": []
+      },
+
+      "schools": {
+        "url": "GET https://plp-api.moeys.gov.kh/api/v1/schools/district/{districtId}",
+        "description": "Get schools filtered by district (CRITICAL: triggered by district, not separate cascade)",
+        "query_params": {},
+        "url_params": {
+          "districtId": "number (required) - District ID in URL path"
+        },
+        "response_type": "School[]",
+        "response_structure": {
+          "schoolId": "number - School ID",
+          "name": "string - School name (Khmer)",
+          "code": "string - School code",
+          "profile": "string | null - School profile",
+          "schoolType": "string - e.g., 'សាលារដ្ឋ' (Public School)",
+          "projectTypeId": "number",
+          "projectType": {
+            "id": "number",
+            "name": "string - e.g., 'សាលារៀនទូទៅ'",
+            "description": "string",
+            "isActive": "boolean",
+            "createdAt": "string",
+            "updatedAt": "string"
+          },
+          "status": "string - ACTIVE | INACTIVE",
+          "place": {
+            "id": "number",
+            "provinceId": "number",
+            "province_name_kh": "string",
+            "province_name_en": "string",
+            "districtId": "number",
+            "district_name_kh": "string",
+            "district_name_en": "string",
+            "communeId": "number | null",
+            "commune_name_kh": "string | null"
+          },
+          "createdAt": "string (optional)",
+          "updatedAt": "string (optional)"
+        },
+        "trigger": "Selected District ID (MUST call together with communes)",
+        "critical_note": "Schools are NOT a separate cascade level - they load parallel to communes when district is selected"
+      },
+
+      "clusters": {
+        "url": "GET /api/clusters",
+        "description": "Get clusters filtered by district (local API endpoint)",
+        "query_params": {
+          "district_id": "number (required) - District ID to filter by"
+        },
+        "response_type": "{ success: boolean, data: Cluster[] }",
+        "response_structure": {
+          "success": "boolean",
+          "data": [
+            {
+              "id": "number - Cluster ID",
+              "cluster_name": "string - Cluster name",
+              "province_id": "number",
+              "district_id": "number",
+              "province_name": "string (optional)",
+              "district_name": "string (optional)",
+              "cluster_number": "number",
+              "is_active": "boolean"
+            }
+          ]
+        },
+        "trigger": "Selected District ID"
+      }
+    }
+  },
+
+  "cascading_selection_flow": {
+    "description": "Step-by-step flow of geographic cascading selection",
+    "steps": [
+      {
+        "step": 1,
+        "action": "User selects Province",
+        "trigger": "onChange event on Province Select",
+        "api_calls": [
+          "loadDistricts(provinceId)"
+        ],
+        "state_updates": {
+          "selectedProvinceId": "Set to selected province ID",
+          "districts": "Populated with fetched districts",
+          "communes": "Cleared (empty array)",
+          "villages": "Cleared (empty array)",
+          "schools": "Cleared (empty array)",
+          "form_fields_cleared": ["districtId", "communeId", "villageId", "schoolId"]
+        }
+      },
+      {
+        "step": 2,
+        "action": "User selects District",
+        "trigger": "onChange event on District Select",
+        "critical_note": "MUST call BOTH loadCommunes() AND loadSchools() - this is the most common mistake",
+        "api_calls": [
+          "loadCommunes(districtId)",
+          "loadSchools(districtId)"
+        ],
+        "state_updates": {
+          "selectedDistrictId": "Set to selected district ID",
+          "communes": "Populated with fetched communes",
+          "schools": "Populated with fetched schools (parallel to communes)",
+          "villages": "Cleared (empty array)",
+          "form_fields_cleared": ["communeId", "villageId"]
+        },
+        "common_mistake": "Only calling loadCommunes() without loadSchools() - causes schools not to render"
+      },
+      {
+        "step": 3,
+        "action": "User selects Commune",
+        "trigger": "onChange event on Commune Select",
+        "api_calls": [
+          "loadVillages(communeId)"
+        ],
+        "state_updates": {
+          "selectedCommuneId": "Set to selected commune ID",
+          "villages": "Populated with fetched villages",
+          "form_fields_cleared": ["villageId"]
+        }
+      },
+      {
+        "step": 4,
+        "action": "User selects Village (optional)",
+        "trigger": "onChange event on Village Select",
+        "api_calls": [],
+        "state_updates": {
+          "selectedVillageId": "Set to selected village ID"
+        }
+      },
+      {
+        "step": 5,
+        "action": "User selects School",
+        "trigger": "onChange event on School Select (available after step 2)",
+        "api_calls": [],
+        "state_updates": {
+          "selectedSchoolId": "Set to selected school ID"
+        },
+        "note": "School selection is independent of commune/village selection"
+      }
+    ]
+  },
+
+  "critical_implementation_pattern": {
+    "description": "MUST USE THIS PATTERN - District onChange Handler",
+    "correct_implementation": {
+      "code_snippet": "onChange={(value) => {\n  setSelectedDistrictId(value)\n  if (value) {\n    loadCommunes(value)    // ✅ Load communes\n    loadSchools(value)     // ✅ Load schools (NEVER FORGET)\n  } else {\n    // Clear ALL dependent data\n    setCommunes([])\n    setSchools([])\n    setVillages([])\n    form.setFieldValue('communeId', null)\n    form.setFieldValue('schoolId', null)\n    form.setFieldValue('villageId', null)\n  }\n}}",
+      "explanation": "When district is selected, BOTH communes and schools must load because schools are triggered by district, not commune"
+    },
+    "wrong_implementation": {
+      "code_snippet": "onChange={(value) => {\n  if (value) {\n    loadCommunes(value)  // ❌ Missing loadSchools call!\n  }\n}}",
+      "consequence": "Schools will not render, causing confusion and debugging time"
+    }
+  },
+
+  "beneficiary_registration_api": {
+    "endpoint": "POST /api/beneficiaries/self-register",
+    "description": "Complete beneficiary self-registration with geographic data",
+    "request_body": {
+      "name": "string (required) - Khmer name",
+      "name_english": "string (optional) - English name",
+      "phone": "string (required) - Phone number (9-10 digits)",
+      "sex": "string (optional) - Male | Female",
+      "province_name": "string (optional) - Khmer province name (NOT ID)",
+      "district_name": "string (optional) - Khmer district name (NOT ID)",
+      "commune_name": "string (optional) - Khmer commune name (NOT ID)",
+      "village_name": "string (optional) - Khmer village name (NOT ID)",
+      "position": "string (optional) - Position/role",
+      "subject_code": "string (optional) - Subject code",
+      "grade": "number (optional) - Grade level",
+      "type_code": "string (optional) - Beneficiary type code",
+      "school": "string (optional) - School name",
+      "cluster": "string (optional) - Cluster name",
+      "other": "string (optional) - Other info",
+      "profile_image_url": "string (optional) - Base64 data URL",
+      "signature_url": "string (optional) - Base64 data URL",
+      "training_id": "string (optional) - Auto-enroll in training",
+      "registration_method": "string (optional) - Registration source"
+    },
+    "response": {
+      "success": "boolean",
+      "isUpdate": "boolean - true if updated existing, false if new",
+      "teacher_id": "string - Unique beneficiary ID",
+      "passcode": "string - Last 4 digits of phone (for login)",
+      "beneficiaries": {
+        "teacher_id": "string",
+        "name": "string",
+        "name_english": "string (optional)",
+        "phone": "string",
+        "sex": "string (optional)",
+        "position": "string (optional)",
+        "school": "string (optional)",
+        "province_name": "string (optional)",
+        "district_name": "string (optional)",
+        "commune_name": "string (optional)",
+        "village_name": "string (optional)"
+      },
+      "message": "string - Success message"
+    },
+    "storage_convention": {
+      "critical_rule": "Store geographic NAMES not IDs",
+      "reason": "Geographic IDs may change, names are stable",
+      "fields_stored": {
+        "province_name": "string - Khmer province name",
+        "district_name": "string - Khmer district name",
+        "commune_name": "string - Khmer commune name",
+        "village_name": "string - Khmer village name"
+      },
+      "fields_NOT_stored": [
+        "province_id (DO NOT STORE)",
+        "district_id (DO NOT STORE)",
+        "commune_id (DO NOT STORE)",
+        "village_id (DO NOT STORE)"
+      ]
+    }
+  },
+
+  "lookup_apis": {
+    "description": "Supporting lookup data for beneficiary forms",
+    "endpoints": {
+      "beneficiary_positions": {
+        "url": "GET /api/beneficiary-positions",
+        "query_params": {
+          "active_only": "boolean (optional) - true to get only active positions"
+        },
+        "response": [
+          {
+            "code": "string - Position code",
+            "name_km": "string - Khmer name",
+            "name_en": "string - English name"
+          }
+        ]
+      },
+      "beneficiary_subjects": {
+        "url": "GET /api/beneficiary-subjects",
+        "query_params": {
+          "active_only": "boolean (optional) - true to get only active subjects"
+        },
+        "response": [
+          {
+            "code": "string - Subject code",
+            "name_km": "string - Khmer name",
+            "name_en": "string - English name"
+          }
+        ]
+      },
+      "beneficiary_types": {
+        "url": "GET /api/beneficiary-types",
+        "query_params": {
+          "active_only": "boolean (optional) - true to get only active types"
+        },
+        "response": [
+          {
+            "code": "string - Type code",
+            "name_km": "string - Khmer name",
+            "name_en": "string - English name"
+          }
+        ]
+      }
+    }
+  },
+
+  "geoservice_implementation": {
+    "file_path": "/src/services/geoService.ts",
+    "description": "Centralized service for all geographic data operations with built-in caching",
+    "class": "GeoService",
+    "features": [
+      "Built-in cache to reduce redundant API calls",
+      "TypeScript interfaces for all geographic entities",
+      "Helper methods to find locations by names",
+      "Error handling with console logging"
+    ],
+    "methods": {
+      "getProvinces()": "Promise<Province[]> - Fetch all provinces",
+      "getDistricts(provinceId)": "Promise<District[]> - Fetch districts by province",
+      "getCommunes(districtId)": "Promise<Commune[]> - Fetch communes by district",
+      "getVillages(communeId)": "Promise<Village[]> - Fetch villages by commune",
+      "getSchoolsByDistrict(districtId)": "Promise<School[]> - Fetch schools by district",
+      "getClusters(districtId)": "Promise<any[]> - Fetch clusters by district (local API)",
+      "getProvinceById(id)": "Promise<Province | undefined> - Find province by ID",
+      "getDistrictById(id, provinceId)": "Promise<District | undefined> - Find district by ID",
+      "getCommuneById(id, districtId)": "Promise<Commune | undefined> - Find commune by ID",
+      "getVillageById(id, communeId)": "Promise<Village | undefined> - Find village by ID",
+      "findLocationByName(provinceName, districtName, communeName, villageName)": "Promise<LocationIds> - Find all IDs by cascading names"
+    },
+    "singleton_instance": "geoServiceInstance - Export default singleton",
+    "usage_example": "import geoService from '@/services/geoService'\nconst provinces = await geoService.getProvinces()"
+  },
+
+  "implemented_files": {
+    "description": "Files where cascading selection is fully implemented",
+    "files": [
+      {
+        "path": "/src/app/beneficiary/register/page.tsx",
+        "purpose": "Beneficiary self-registration form",
+        "features": [
+          "Full geographic cascade (Province → District → Commune → Village)",
+          "School selection triggered by District",
+          "Cluster selection",
+          "Profile image and signature upload",
+          "Position, subject, type lookups"
+        ]
+      },
+      {
+        "path": "/src/components/beneficiary/ProfileEditForm.tsx",
+        "purpose": "Beneficiary profile edit form",
+        "features": [
+          "Same cascading pattern as registration",
+          "Loads existing geographic data by names",
+          "Updates profile with new geographic selections"
+        ]
+      },
+      {
+        "path": "/src/services/geoService.ts",
+        "purpose": "Centralized geographic data service",
+        "features": [
+          "All API calls to PLP API",
+          "Built-in caching",
+          "TypeScript interfaces",
+          "Helper methods"
+        ]
+      }
+    ]
+  },
+
+  "testing_checklist": {
+    "description": "How to verify cascading selection works correctly",
+    "steps": [
+      {
+        "step": "Open browser console (F12)",
+        "verify": "Check for console logs during selection"
+      },
+      {
+        "step": "Select a Province",
+        "verify": "Districts dropdown populates with options"
+      },
+      {
+        "step": "Select a District",
+        "verify": "BOTH Communes AND Schools dropdowns populate (check console logs for both API calls)"
+      },
+      {
+        "step": "Select a Commune",
+        "verify": "Villages dropdown populates"
+      },
+      {
+        "step": "Change District",
+        "verify": "Previously selected Commune, Village, and School are cleared"
+      },
+      {
+        "step": "Submit form",
+        "verify": "Geographic NAMES (not IDs) are stored in database"
+      }
+    ],
+    "common_issues": [
+      {
+        "issue": "Schools don't render after selecting district",
+        "cause": "loadSchools() not called in district onChange",
+        "fix": "Add loadSchools(value) alongside loadCommunes(value)"
+      },
+      {
+        "issue": "Villages still show old data when changing district",
+        "cause": "Villages not cleared when district changes",
+        "fix": "Add setVillages([]) in district onChange clear logic"
+      },
+      {
+        "issue": "Geographic data not saved",
+        "cause": "Storing IDs instead of names",
+        "fix": "Use province_name, district_name, etc. (not IDs)"
+      }
+    ]
+  },
+
+  "critical_notes": {
+    "primary_beneficiary_id": {
+      "field": "teacher_id",
+      "note": "ALWAYS use teacher_id as primary identifier for beneficiaries (NOT beneficiary_id)",
+      "database_reality": "beneficiaries table PRIMARY KEY = teacher_id",
+      "foreign_key_usage": "beneficiary_trainings.beneficiary_id → beneficiaries.teacher_id"
+    },
+    "database_naming_convention": {
+      "rule": "snake_case EVERYWHERE",
+      "fields": "teacher_id, training_name, created_at, etc.",
+      "never_use": "camelCase (teacherId, trainingName, createdAt)"
+    },
+    "production_deployment": {
+      "production_url": "http://192.168.155.122:3030",
+      "production_script": "./deploy.sh",
+      "staging_url": "http://192.168.155.122:3033",
+      "staging_script": "./deploy3033.sh",
+      "domain": "http://plp-tms.moeys.gov.kh"
+    },
+    "most_common_mistake": "Forgetting to call loadSchools() when district is selected - costs 1-2 hours debugging",
+    "documentation_reference": "/docs/CASCADING_GEOGRAPHIC_SELECTION.md"
+  }
+}

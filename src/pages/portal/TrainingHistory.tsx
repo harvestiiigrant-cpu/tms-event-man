@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/lib/api';
+import { useAuth } from '@/contexts/AuthContext';
 import { BeneficiaryPortalLayout } from '@/components/layout/BeneficiaryPortalLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,118 +15,50 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Calendar, MapPin, Clock, CheckCircle2, Award, Search, FileText, BookOpen, History } from 'lucide-react';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
 
-// Mock training history
-const mockTrainingHistory = [
-  {
-    id: '1',
-    training_code: 'TR-2024-001',
-    training_name: 'វគ្គបណ្តុះបណ្តាលគណិតវិទ្យា',
-    training_name_english: 'Mathematics Training Workshop',
-    training_category: 'MATH',
-    training_start_date: '2024-01-15',
-    training_end_date: '2024-01-20',
-    training_location: 'Phnom Penh',
-    training_venue: 'Ministry of Education',
-    status: 'COMPLETED',
-    attendance_status: 'COMPLETED',
-    attendance_percentage: 95,
-    total_sessions: 10,
-    attended_sessions: 10,
-    certificate_issued: true,
-    certificate_number: 'CERT-2024-001-T001',
-  },
-  {
-    id: '2',
-    training_code: 'TR-2023-015',
-    training_name: 'វគ្គបណ្តុះបណ្តាលភាសាខ្មែរ',
-    training_name_english: 'Khmer Language Pedagogy',
-    training_category: 'KHMER',
-    training_start_date: '2023-12-01',
-    training_end_date: '2023-12-05',
-    training_location: 'Siem Reap',
-    training_venue: 'Provincial Education Office',
-    status: 'COMPLETED',
-    attendance_status: 'COMPLETED',
-    attendance_percentage: 88,
-    total_sessions: 8,
-    attended_sessions: 7,
-    certificate_issued: true,
-    certificate_number: 'CERT-2023-015-T001',
-  },
-  {
-    id: '3',
-    training_code: 'TR-2023-010',
-    training_name: 'វគ្គបណ្តុះបណ្តាលព័ត៌មានវិទ្យា',
-    training_name_english: 'Information Technology Workshop',
-    training_category: 'IT',
-    training_start_date: '2023-10-15',
-    training_end_date: '2023-10-18',
-    training_location: 'Battambang',
-    training_venue: 'IT Training Center',
-    status: 'COMPLETED',
-    attendance_status: 'COMPLETED',
-    attendance_percentage: 100,
-    total_sessions: 6,
-    attended_sessions: 6,
-    certificate_issued: true,
-    certificate_number: 'CERT-2023-010-T001',
-  },
-  {
-    id: '4',
-    training_code: 'TR-2023-005',
-    training_name: 'វគ្គបណ្តុះបណ្តាលភាពជាអ្នកដឹកនាំ',
-    training_name_english: 'Leadership Development',
-    training_category: 'LEADERSHIP',
-    training_start_date: '2023-08-10',
-    training_end_date: '2023-08-12',
-    training_location: 'Phnom Penh',
-    training_venue: 'National Institute of Education',
-    status: 'DROPPED',
-    attendance_status: 'DROPPED',
-    attendance_percentage: 33,
-    total_sessions: 5,
-    attended_sessions: 2,
-    certificate_issued: false,
-    certificate_number: null,
-  },
-];
-
 export default function TrainingHistory() {
+  const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [yearFilter, setYearFilter] = useState<string>('all');
 
+  // Fetch enrolled trainings for this beneficiary
+  const { data: enrolledTrainings = [], isLoading } = useQuery({
+    queryKey: ['enrolled-trainings', user?.teacher_id],
+    queryFn: () => api.trainings.getEnrolled(user?.teacher_id!),
+    enabled: !!user?.teacher_id,
+  });
+
   const years = Array.from(
-    new Set(mockTrainingHistory.map((t) => new Date(t.training_start_date).getFullYear()))
+    new Set(enrolledTrainings.map((t: any) => new Date(t.training_start_date).getFullYear()))
   ).sort((a, b) => b - a);
 
-  const filteredTrainings = mockTrainingHistory.filter((training) => {
+  const filteredTrainings = useMemo(() => enrolledTrainings.filter((training: any) => {
     const matchesSearch =
       training.training_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       training.training_name_english?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       training.training_code.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesStatus =
-      statusFilter === 'all' || training.attendance_status === statusFilter;
+      statusFilter === 'all' || training.enrollment_status === statusFilter;
 
     const matchesYear =
       yearFilter === 'all' ||
       new Date(training.training_start_date).getFullYear().toString() === yearFilter;
 
     return matchesSearch && matchesStatus && matchesYear;
-  });
+  }), [enrolledTrainings, searchQuery, statusFilter, yearFilter]);
 
-  const completedCount = mockTrainingHistory.filter((t) => t.attendance_status === 'COMPLETED').length;
-  const certificatesCount = mockTrainingHistory.filter((t) => t.certificate_issued).length;
-  const totalHours = mockTrainingHistory.reduce((sum, t) => {
+  const completedCount = enrolledTrainings.filter((t: any) => t.enrollment_status === 'COMPLETED').length;
+  const certificatesCount = enrolledTrainings.filter((t: any) => t.certificate_issued).length;
+  const totalHours = enrolledTrainings.reduce((sum: number, t: any) => {
     const days = Math.ceil(
       (new Date(t.training_end_date).getTime() - new Date(t.training_start_date).getTime()) /
         (1000 * 60 * 60 * 24)
     );
-    return sum + days * 8; // Assuming 8 hours per day
+    return sum + days * 6;
   }, 0);
 
   const getStatusColor = (status: string) => {

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,7 +21,6 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { mockTrainings, mockBeneficiaries, mockAttendanceRecords } from '@/data/mockData';
 import {
   Download,
   CheckCircle2,
@@ -59,19 +60,37 @@ const statusConfig: Record<AttendanceStatus, { label: string; icon: typeof Check
 };
 
 export default function Attendance() {
-  const [selectedTraining, setSelectedTraining] = useState<string>(mockTrainings[0]?.id || '');
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const ongoingTrainings = mockTrainings.filter(
-    (t) => t.training_status === 'ONGOING' || t.training_status === 'COMPLETED'
+  // Fetch all trainings
+  const { data: allTrainings = [] } = useQuery({
+    queryKey: ['trainings'],
+    queryFn: api.trainings.getAll,
+  });
+
+  const ongoingTrainings = allTrainings.filter(
+    (t: any) => t.training_status === 'ONGOING' || t.training_status === 'COMPLETED'
   );
 
-  const filteredRecords = mockAttendanceRecords.filter(
-    (r) => r.training_id === selectedTraining
-  );
+  const [selectedTraining, setSelectedTraining] = useState<string>('');
 
-  // Get beneficiaries enrolled in the selected training
-  const enrolledBeneficiaries = mockBeneficiaries.slice(0, 4);
+  // Fetch attendance records for selected training
+  const { data: attendanceRecords = [] } = useQuery({
+    queryKey: ['attendance', selectedTraining],
+    queryFn: () => api.attendance.getByTraining(selectedTraining),
+    enabled: !!selectedTraining,
+  });
+
+  // Fetch enrollments for selected training
+  const { data: enrollments = [] } = useQuery({
+    queryKey: ['enrollments', selectedTraining],
+    queryFn: () => api.enrollments.getByTraining(selectedTraining),
+    enabled: !!selectedTraining,
+  });
+
+  // Extract beneficiaries from enrollments
+  const enrolledBeneficiaries = enrollments.map((enrollment: any) => enrollment.beneficiary);
+  const filteredRecords = attendanceRecords;
 
   return (
     <DashboardLayout title="Attendance" subtitle="Track daily attendance records">

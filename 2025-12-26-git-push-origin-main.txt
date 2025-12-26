@@ -1,0 +1,1512 @@
+
+ * ▐▛███▜▌ *   Claude Code v2.0.76
+* ▝▜█████▛▘ *  Opus 4.5 · Claude Max
+ *  ▘▘ ▝▝  *   ~\OneDrive\Documents\GitHub\pixel-perfect-replica
+══════════════════ Conversation compacted · ctrl+o for history ═════════════════
+  ⎿  Read src\lib\api.ts (220 lines)
+  ⎿  Read src\types\training.ts (233 lines)
+  ⎿  Read server\routes\materials.ts (396 lines)
+  ⎿  Read server\index.ts (48 lines)
+  ⎿  Read server\routes\agendas.ts (178 lines)
+  ⎿  Todo list read (10 items)
+  ⎿  Plan file referenced (~\.claude\plans\fluttering-churning-peach.md)
+
+● I'll continue with the implementation. The API client is complete, so I'll move on to creating the frontend components. Let me start with the Materials library page.
+
+● Read(src\pages\Trainings.tsx)
+  ⎿  Read 683 lines
+
+● Now I'll create the Materials library page following the same pattern. Let me create the page and the dialogs for managing materials.
+
+● Write(src\pages\Materials.tsx)
+  ⎿  Wrote 1 lines to src\pages\Materials.tsx                              
+     import { useState, useMemo } from 'react';
+     import { useQuery, useMutation, useQueryClient } from
+     '@tanstack/react-query';
+     import { api } from '@/lib/api';
+     import { DashboardLayout } from '@/components/layout/DashboardLayout';
+     import { Card, CardContent, CardHeader, CardTitle } from
+     '@/components/ui/card';
+     import { Button } from '@/components/ui/button';
+     import { Input } from '@/components/ui/input';
+     import { Checkbox } from '@/components/ui/checkbox';
+     import { Badge } from '@/components/ui/badge';
+     import {
+
+● Now let me create the CreateMaterialDialog component:
+
+● Bash(mkdir -p "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect-repli
+      ca/src/components/materials")
+  ⎿  (No content)
+
+● Write(src\components\materials\CreateMaterialDialog.tsx)
+  ⎿  Wrote 1 lines to src\components\materials\CreateMaterialDialog.tsx  
+     import { useState, useRef } from 'react';
+     import { useMutation, useQueryClient } from '@tanstack/react-query';
+     import { api } from '@/lib/api';
+     import { Button } from '@/components/ui/button';
+     import { Input } from '@/components/ui/input';
+     import { Label } from '@/components/ui/label';
+     import { Textarea } from '@/components/ui/textarea';
+     import {
+       Dialog,
+       DialogContent,
+
+● Write(src\components\materials\EditMaterialDialog.tsx)
+  ⎿  Wrote 1 lines to src\components\materials\EditMaterialDialog.tsx    
+     import { useState, useEffect } from 'react';
+     import { useMutation, useQueryClient } from '@tanstack/react-query';
+     import { api } from '@/lib/api';
+     import { Button } from '@/components/ui/button';
+     import { Input } from '@/components/ui/input';
+     import { Label } from '@/components/ui/label';
+     import { Textarea } from '@/components/ui/textarea';
+     import {
+       Dialog,
+       DialogContent,
+
+● Now let me create the ManageAgendaDialog component:
+
+● Write(src\components\trainings\ManageAgendaDialog.tsx)
+  ⎿  Wrote 1 lines to src\components\trainings\ManageAgendaDialog.tsx
+     import { useState, useEffect } from 'react';
+     import { useQuery, useMutation, useQueryClient } from
+     '@tanstack/react-query';
+     import { api } from '@/lib/api';
+     import { Button } from '@/components/ui/button';
+     import { Input } from '@/components/ui/input';
+     import { Label } from '@/components/ui/label';
+     import { Textarea } from '@/components/ui/textarea';
+     import {
+       Dialog,
+       DialogContent,
+
+● Write(src\components\trainings\AttachMaterialsDialog.tsx)
+  ⎿  Wrote 1 lines to src\components\trainings\AttachMaterialsDialog.tsx
+     import { useState, useMemo } from 'react';
+     import { useQuery, useMutation, useQueryClient } from
+     '@tanstack/react-query';
+     import { api } from '@/lib/api';
+     import { Button } from '@/components/ui/button';
+     import { Input } from '@/components/ui/input';
+     import { Checkbox } from '@/components/ui/checkbox';
+     import { Badge } from '@/components/ui/badge';
+     import {
+       Dialog,
+       DialogContent,
+
+● Read(src\App.tsx)
+  ⎿  Read 165 lines
+
+● Read(src\components\layout\Sidebar.tsx)
+  ⎿  Read 217 lines
+
+● Now let me update the App.tsx and Sidebar.tsx:
+
+● Update(src\App.tsx)
+  ⎿  Added 1 line                                                        
+       5  import { BrowserRouter, Routes, Route } from                   
+          "react-router-dom";                                            
+       6  import Dashboard from "./pages/Dashboard";                     
+       7  import Trainings from "./pages/Trainings";                     
+       8 +import Materials from "./pages/Materials";                     
+       9  import Beneficiaries from "./pages/Beneficiaries";             
+      10  import Attendance from "./pages/Attendance";                   
+      11  import Settings from "./pages/Settings";                       
+
+● Update(src\App.tsx)
+  ⎿  Added 8 lines                                                       
+      68                    }                                            
+      69                  />                                             
+      70                  <Route                                         
+      71 +                  path="/materials"                            
+      72 +                  element={                                    
+      73 +                    <ProtectedRoute allowedRoles={['ADMIN',    
+         +'SUPER_ADMIN']}>                                               
+      74 +                      <Materials />                            
+      75 +                    </ProtectedRoute>                          
+      76 +                  }                                            
+      77 +                />                                             
+      78 +                <Route                                         
+      79                    path="/beneficiaries"                        
+      80                    element={                                    
+      81                      <ProtectedRoute allowedRoles={['ADMIN',    
+          'SUPER_ADMIN']}>                                               
+
+● Update(src\components\layout\Sidebar.tsx)
+  ⎿  Added 1 line                                                        
+      10    ChevronLeft,                                                 
+      11    ChevronRight,                                                
+      12    X,                                                           
+      13 +  FileText,                                                    
+      14  } from 'lucide-react';                                         
+      15  import { Button } from '@/components/ui/button';               
+      16  import {                                                       
+
+● Update(src\components\layout\Sidebar.tsx)
+  ⎿  Added 1 line                                                          
+      29  const navItems = [                                             
+      30    { path: '/', label: 'ផ្ទាំងគ្រប់គ្រង', labelEn: 'Dashboard', icon:
+
+           LayoutDashboard },                                            
+      31    { path: '/trainings', label: 'ការបណ្តុះបណ្តាល', labelEn:     
+          'Trainings', icon: GraduationCap },                            
+      32 +  { path: '/materials', label: 'បណ្ណាល័យឯកសារ', labelEn:       
+         +'Materials', icon: FileText },                                 
+      33    { path: '/beneficiaries', label: 'អ្នកទទួលផល', labelEn:      
+          'Beneficiaries', icon: Users },                                
+      34    { path: '/attendance', label: 'ការចូលរួម', labelEn:          
+          'Attendance', icon: ClipboardCheck },                          
+      35  ];                                                             
+
+● Now let me update the Trainings.tsx to add the agenda and materials menu items:
+
+● Update(src\pages\Trainings.tsx)
+  ⎿  Added 2 lines                                                       
+      32  import { ManageParticipantsDialog } from                       
+          '@/components/trainings/ManageParticipantsDialog';             
+      33  import { ViewAttendanceDialog } from                           
+          '@/components/trainings/ViewAttendanceDialog';                 
+      34  import { CancelTrainingDialog } from                           
+          '@/components/trainings/CancelTrainingDialog';                 
+      35 +import { ManageAgendaDialog } from                             
+         +'@/components/trainings/ManageAgendaDialog';                   
+      36 +import { AttachMaterialsDialog } from                          
+         +'@/components/trainings/AttachMaterialsDialog';                
+      37  import { SmartPagination } from                                
+          '@/components/ui/smart-pagination';                            
+      38  import { BulkActionToolbar } from                              
+          '@/components/ui/bulk-action-toolbar';                         
+      39  import { useSelection } from '@/hooks/use-selection';          
+
+● Update(src\pages\Trainings.tsx)
+  ⎿  Added 2 lines                                                       
+      54    ClipboardList,                                               
+      55    XCircle,                                                     
+      56    GraduationCap,                                               
+      57 +  ListTodo,                                                    
+      58 +  FileText,                                                    
+      59  } from 'lucide-react';                                         
+      60  import {                                                       
+      61    DropdownMenu,                                                
+
+● Update(src\pages\Trainings.tsx)
+  ⎿  Added 19 lines                                                      
+      338                          }                                     
+      339                        />                                      
+      340                        <DropdownMenuSeparator />               
+      341 +                      <ManageAgendaDialog                     
+      342 +                        training={training}                   
+      343 +                        trigger={                             
+      344 +                          <DropdownMenuItem onSelect={(e) =>  
+          +e.preventDefault()}>                                          
+      345 +                            <ListTodo className="mr-2 h-4     
+          +w-4" />                                                       
+      346 +                            គ្រប់គ្រងកម្មវិធី                 
+      347 +                          </DropdownMenuItem>                 
+      348 +                        }                                     
+      349 +                      />                                      
+      350 +                      <AttachMaterialsDialog                  
+      351 +                        training={training}                   
+      352 +                        trigger={                             
+      353 +                          <DropdownMenuItem onSelect={(e) =>  
+          +e.preventDefault()}>                                          
+      354 +                            <FileText className="mr-2 h-4     
+          +w-4" />                                                       
+      355 +                            គ្រប់គ្រងឯកសារ                    
+      356 +                          </DropdownMenuItem>                 
+      357 +                        }                                     
+      358 +                      />                                      
+      359 +                      <DropdownMenuSeparator />               
+      360                        <ShareEnrollmentLink                    
+      361                          training={training}                   
+      362                          trigger={                             
+
+● Now let me also update the desktop table view dropdown menu:
+
+● Search(pattern: "ManageParticipantsDialog", path: "src\pages\Trainings.tsx",
+        output_mode: "content")
+  ⎿  Found 3 lines (ctrl+o to expand)
+
+● Read(src\pages\Trainings.tsx)
+  ⎿  Read 80 lines
+
+● Update(src\pages\Trainings.tsx)
+  ⎿  Added 19 lines                                                      
+      640                              }                                 
+      641                            />                                  
+      642                            <DropdownMenuSeparator />           
+      643 +                          <ManageAgendaDialog                 
+      644 +                            training={training}               
+      645 +                            trigger={                         
+      646 +                              <DropdownMenuItem onSelect={(e) 
+          + => e.preventDefault()}>                                      
+      647 +                                <ListTodo className="mr-2 h-4 
+          + w-4" />                                                      
+      648 +                                គ្រប់គ្រងកម្មវិធី             
+      649 +                              </DropdownMenuItem>             
+      650 +                            }                                 
+      651 +                          />                                  
+      652 +                          <AttachMaterialsDialog              
+      653 +                            training={training}               
+      654 +                            trigger={                         
+      655 +                              <DropdownMenuItem onSelect={(e) 
+          + => e.preventDefault()}>                                      
+      656 +                                <FileText className="mr-2 h-4 
+          + w-4" />                                                      
+      657 +                                គ្រប់គ្រងឯកសារ                
+      658 +                              </DropdownMenuItem>             
+      659 +                            }                                 
+      660 +                          />                                  
+      661 +                          <DropdownMenuSeparator />           
+      662                            <ShareEnrollmentLink                
+      663                              training={training}               
+      664                              trigger={                         
+
+● Read(src\pages\portal\TrainingDetails.tsx)
+  ⎿  Read 279 lines
+
+● Now let me update the portal TrainingDetails page to include agenda and materials sections:
+
+● Write(src\pages\portal\TrainingDetails.tsx)
+  ⎿ Added 478 lines, removed 278 lines                                     
+       1 -import { useState } from 'react';                            
+       2 -import { useParams, Link } from 'react-router-dom';          
+       3 -import { BeneficiaryPortalLayout } from                       
+         -'@/components/layout/BeneficiaryPortalLayout';               
+       4 -import { Card, CardContent } from '@/components/ui/card';    
+       5 -import { Button } from '@/components/ui/button';             
+       6 -import { Badge } from '@/components/ui/badge';               
+       7 -import { Progress } from '@/components/ui/progress';         
+       8 -import {                                                     
+       9 -  Calendar,                                                  
+      10 -  MapPin,                                                    
+      11 -  Clock,                                                     
+      12 -  Users,                                                     
+      13 -  CheckCircle2,                                              
+      14 -  MapPinned,                                                 
+      15 -  Award,                                                     
+      16 -  BookOpen,                                                  
+      17 -  ChevronLeft,                                               
+      18 -  FileText,                                                  
+      19 -} from 'lucide-react';                                       
+      20 -import { format, parseISO } from 'date-fns';                 
+      21 -import { cn } from '@/lib/utils';                            
+      22 -                                                             
+      23 -// Mock training data - would come from API                  
+      24 -const mockTraining = {                                       
+      25 -  id: '1',                                                   
+      26 -  training_code: 'TR-2024-001',                              
+      27 -  training_name: 'វគ្គបណ្តុះបណ្តាលគណិតវិទ្យា',               
+      28 -  training_name_english: 'Mathematics Training Workshop',    
+      29 -  training_category: 'MATH',                                 
+      30 -  training_type: 'WORKSHOP',                                 
+      31 -  training_level: 'PROVINCIAL',                              
+      32 -  training_start_date: '2024-01-15',                         
+      33 -  training_end_date: '2024-01-20',                           
+      34 -  training_location: 'Phnom Penh',                           
+      35 -  training_venue: 'Ministry of Education',                   
+      36 -  training_description: 'This comprehensive mathematics       
+         -training workshop is designed to enhance teaching             
+         -methodologies and introduce modern pedagogical approaches for 
+         - mathematics education at the secondary level.',             
+      37 -  max_participants: 50,                                      
+      38 -  current_participants: 35,                                  
+      39 -  gps_validation_required: true,                             
+      40 -  geofence_validation_required: true,                        
+      41 -  geofence_radius: 100,                                      
+      42 -  venue_latitude: 11.5564,                                   
+      43 -  venue_longitude: 104.9282,                                 
+      44 -  status: 'ONGOING',                                         
+      45 -  my_attendance_status: 'ATTENDED',                          
+      46 -  my_training_role: 'PARTICIPANT',                           
+      47 -  attendance_percentage: 75,                                 
+      48 -  total_sessions: 10,                                        
+      49 -  attended_sessions: 8,                                      
+      50 -  is_enrolled: true,                                         
+      51 -};                                                           
+      52 -                                                             
+      53 -const getCategoryIcon = (category: string) => {              
+      54 -  const colors: Record<string, string> = {                   
+      55 -    MATH: 'from-purple-500 to-purple-600',                   
+      56 -    KHMER: 'from-blue-500 to-blue-600',                      
+      57 -    IT: 'from-cyan-500 to-cyan-600',                         
+      58 -    PEDAGOGY: 'from-green-500 to-green-600',                 
+      59 -    LEADERSHIP: 'from-orange-500 to-orange-600',             
+      60 -  };                                                         
+      61 -  return colors[category] || 'from-gray-500 to-gray-600';    
+      62 -};                                                           
+      63 -                                                             
+      64 -export default function TrainingDetails() {                  
+      65 -  const { id } = useParams();                                
+      66 -  const [training] = useState(mockTraining);                 
+      67 -                                                             
+      68 -  const isOngoing = training.status === 'ONGOING';           
+      69 -  const isCompleted = training.status === 'COMPLETED';       
+      70 -                                                             
+      71 -  return (                                                   
+      72 -    <BeneficiaryPortalLayout>                                
+      73 -      <div className="space-y-4">                            
+      74 -        {/* Back Button */}                                  
+      75 -        <Button asChild variant="ghost" size="sm"             
+         -className="mb-2">                                            
+      76 -          <Link to="/portal/trainings">                      
+      77 -            <ChevronLeft className="mr-2 h-4 w-4" />         
+      78 -            ត្រឡប់ទៅការបណ្តុះបណ្តាលរបស់ខ្ញុំ                 
+      79 -          </Link>                                            
+      80 -        </Button>                                            
+      81 -                                                             
+      82 -        {/* Training Header Card */}                         
+      83 -        <Card className={cn(                                 
+      84 -          'overflow-hidden border-2 shadow-lg                 
+         -bg-gradient-to-br',                                          
+      85 -          getCategoryIcon(training.training_category)        
+      86 -        )}>                                                  
+      87 -          <CardContent className="p-0">                      
+      88 -            {/* Gradient Header */}                          
+      89 -            <div className="p-5 text-white">                 
+      90 -              <div className="flex items-center gap-2 mb-3"> 
+      91 -                <Badge className="bg-white/20                 
+         -backdrop-blur-sm text-white border-white/20">                
+      92 -                  {training.training_category}               
+      93 -                </Badge>                                     
+      94 -                <Badge className="bg-white/20                 
+         -backdrop-blur-sm text-white border-white/20">                
+      95 -                  {training.training_level}                  
+      96 -                </Badge>                                     
+      97 -                {training.is_enrolled && (                   
+      98 -                  <Badge className="bg-green-500 text-white   
+         -border-white/20">                                            
+      99 -                    ✓ បានចុះឈ្មោះ                            
+     100 -                  </Badge>                                   
+     101 -                )}                                           
+     102 -              </div>                                         
+     103 -                                                             
+     104 -              <h1 className="text-xl font-bold                
+         -mb-1">{training.training_name}</h1>                          
+     105 -              <p className="text-sm text-white/90             
+         -mb-1">{training.training_name_english}</p>                   
+     106 -              <p className="text-xs                           
+         -text-white/70">{training.training_code}</p>                  
+     107 -            </div>                                           
+     108 -                                                             
+     109 -            {/* White Content Section */}                    
+     110 -            <div className="bg-card p-5 space-y-4">          
+     111 -              {/* Quick Info Grid */}                        
+     112 -              <div className="grid grid-cols-2 gap-3">       
+     113 -                <div className="flex items-center gap-2       
+         -text-sm">                                                    
+     114 -                  <Calendar className="h-4 w-4                
+         -text-muted-foreground flex-shrink-0" />                      
+     115 -                  <div>                                      
+     116 -                    <p className="text-xs                     
+         -text-muted-foreground">កាលបរិច្ឆេទ</p>                       
+     117 -                    <p className="font-medium text-xs">      
+     118 -                                                              
+         -{format(parseISO(training.training_start_date), 'MMM d')} -   
+         -{format(parseISO(training.training_end_date), 'MMM d')}      
+     119 -                    </p>                                     
+     120 -                  </div>                                     
+     121 -                </div>                                       
+     122 -                                                             
+     123 -                <div className="flex items-center gap-2       
+         -text-sm">                                                    
+     124 -                  <Clock className="h-4 w-4                   
+         -text-muted-foreground flex-shrink-0" />                      
+     125 -                  <div>                                      
+     126 -                    <p className="text-xs                     
+         -text-muted-foreground">រយៈពេល</p>                            
+     127 -                    <p className="font-medium                 
+         -text-xs">{training.total_sessions} វគ្គ</p>                  
+     128 -                  </div>                                     
+     129 -                </div>                                       
+     130 -                                                             
+     131 -                <div className="flex items-center gap-2       
+         -text-sm">                                                    
+     132 -                  <MapPin className="h-4 w-4                  
+         -text-muted-foreground flex-shrink-0" />                      
+     133 -                  <div>                                      
+     134 -                    <p className="text-xs                     
+         -text-muted-foreground">ទីតាំង</p>                            
+     135 -                    <p className="font-medium text-xs         
+         -line-clamp-1">{training.training_location}</p>               
+     136 -                  </div>                                     
+     137 -                </div>                                       
+     138 -                                                             
+     139 -                <div className="flex items-center gap-2       
+         -text-sm">                                                    
+     140 -                  <Users className="h-4 w-4                   
+         -text-muted-foreground flex-shrink-0" />                      
+     141 -                  <div>                                      
+     142 -                    <p className="text-xs                     
+         -text-muted-foreground">អ្នកចូលរួម</p>                        
+     143 -                    <p className="font-medium text-xs">{train 
+         -ing.current_participants}/{training.max_participants}</p>    
+     144 -                  </div>                                     
+     145 -                </div>                                       
+     146 -              </div>                                         
+     147 -                                                             
+     148 -              {/* My Progress (if enrolled) */}              
+     149 -              {training.is_enrolled && isOngoing && (        
+     150 -                <div className="rounded-xl bg-primary/5       
+         -border border-primary/20 p-4">                               
+     151 -                  <div className="flex items-center           
+         -justify-between mb-3">                                       
+     152 -                    <span className="text-sm                  
+         -font-medium">ការវឌ្ឍនភាពរបស់ខ្ញុំ</span>                     
+     153 -                    <span className="text-2xl font-bold       
+         -text-primary">{training.attendance_percentage}%</span>       
+     154 -                  </div>                                     
+     155 -                  <Progress                                   
+         -value={training.attendance_percentage} className="h-2 mb-2"   
+         -/>                                                           
+     156 -                  <p className="text-xs                       
+         -text-muted-foreground">                                      
+     157 -                    បានចូលរួម {training.attended_sessions}    
+         -ក្នុងចំណោម {training.total_sessions} វគ្គ                    
+     158 -                  </p>                                       
+     159 -                </div>                                       
+     160 -              )}                                             
+     161 -                                                             
+     162 -              {/* Action Buttons */}                         
+     163 -              {training.is_enrolled && isOngoing && (        
+     164 -                <div className="grid grid-cols-2 gap-3">     
+     165 -                  <Button asChild size="lg" className="h-12">
+     166 -                    <Link                                     
+         -to={`/portal/attendance/${training.id}`}>                    
+     167 -                      <CheckCircle2 className="mr-2 h-5 w-5"  
+         -/>                                                           
+     168 -                      ចុះឈ្មោះ                               
+     169 -                    </Link>                                  
+     170 -                  </Button>                                  
+     171 -                  <Button asChild variant="outline" size="lg" 
+         - className="h-12">                                           
+     172 -                    <Link                                     
+         -to={`/portal/history/${training.id}/attendance`}>            
+     173 -                      <FileText className="mr-2 h-5 w-5" />  
+     174 -                      ការចូលរួម                              
+     175 -                    </Link>                                  
+     176 -                  </Button>                                  
+     177 -                </div>                                       
+     178 -              )}                                             
+     179 -                                                             
+     180 -              {isCompleted && training.is_enrolled && (      
+     181 -                <Button asChild className="w-full h-12">     
+     182 -                  <a href="#" download>                      
+     183 -                    <Award className="mr-2 h-5 w-5" />       
+     184 -                    ទាញយកវិញ្ញាបនប័ត្រ                       
+     185 -                  </a>                                       
+     186 -                </Button>                                    
+     187 -              )}                                             
+     188 -            </div>                                           
+     189 -          </CardContent>                                     
+     190 -        </Card>                                              
+     191 -                                                             
+     192 -        {/* Description */}                                  
+     193 -        {training.training_description && (                  
+     194 -          <Card>                                             
+     195 -            <CardContent className="p-4">                    
+     196 -              <div className="flex items-center gap-2 mb-3"> 
+     197 -                <BookOpen className="h-5 w-5 text-primary" />
+     198 -                <h3                                           
+         -className="font-semibold">អំពីការបណ្តុះបណ្តាលនេះ</h3>        
+     199 -              </div>                                         
+     200 -              <p className="text-sm text-muted-foreground     
+         -leading-relaxed">                                            
+     201 -                {training.training_description}              
+     202 -              </p>                                           
+     203 -            </CardContent>                                   
+     204 -          </Card>                                            
+     205 -        )}                                                   
+     206 -                                                             
+     207 -        {/* Venue Details */}                                
+     208 -        <Card>                                               
+     209 -          <CardContent className="p-4">                      
+     210 -            <div className="flex items-center gap-2 mb-3">   
+     211 -              <MapPinned className="h-5 w-5 text-primary" /> 
+     212 -              <h3 className="font-semibold">ព័ត៌មានទីកន្លែង</h3>
+     213 -            </div>                                           
+     214 -            <div className="space-y-3">                      
+     215 -              <div>                                          
+     216 -                <p className="text-xs                         
+         -text-muted-foreground">ឈ្មោះទីកន្លែង</p>                     
+     217 -                <p className="text-sm                         
+         -font-medium">{training.training_venue}</p>                   
+     218 -              </div>                                         
+     219 -              <div>                                          
+     220 -                <p className="text-xs                         
+         -text-muted-foreground">ទីតាំង</p>                            
+     221 -                <p className="text-sm                         
+         -font-medium">{training.training_location}</p>                
+     222 -              </div>                                         
+     223 -                                                             
+     224 -              {(training.gps_validation_required ||           
+         -training.geofence_validation_required) && (                  
+     225 -                <div className="rounded-xl bg-blue-50         
+         -dark:bg-blue-950 border border-blue-200 dark:border-blue-800  
+         -p-3 mt-3">                                                   
+     226 -                  <div className="flex items-start gap-2">   
+     227 -                    <MapPinned className="h-4 w-4             
+         -text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />    
+     228 -                    <div>                                    
+     229 -                      <p className="text-sm font-medium       
+         -text-blue-900 dark:text-blue-100">តម្រូវការផ្ទៀងផ្ទាត់ GPS</p>
+     230 -                      <p className="text-xs text-blue-700     
+         -dark:text-blue-300 mt-1">                                    
+     231 -                                                              
+         -{training.geofence_validation_required                       
+     232 -                          ? `អ្នកត្រូវស្ថិតក្នុងរង្វង់        
+         -${training.geofence_radius}ម ពីទីកន្លែងដើម្បីចុះឈ្មោះ`       
+     233 -                          : 'ទីតាំង GPS របស់អ្នកនឹងត្រូវបានកត់ត្រាពេលចុះឈ្មោះ'}
+
+     234 -                      </p>                                   
+     235 -                    </div>                                   
+     236 -                  </div>                                     
+     237 -                </div>                                       
+     238 -              )}                                             
+     239 -            </div>                                           
+     240 -          </CardContent>                                     
+     241 -        </Card>                                              
+     242 -                                                             
+     243 -        {/* Training Details */}                             
+     244 -        <Card>                                               
+     245 -          <CardContent className="p-4">                      
+     246 -            <h3 className="font-semibold                      
+         -mb-3">ព័ត៌មានលម្អិតការបណ្តុះបណ្តាល</h3>                      
+     247 -            <div className="grid grid-cols-2 gap-3 text-sm"> 
+     248 -              <div>                                          
+     249 -                <p className="text-xs                         
+         -text-muted-foreground">លេខកូដការបណ្តុះបណ្តាល</p>             
+     250 -                <p className="font-medium                     
+         -font-mono">{training.training_code}</p>                      
+     251 -              </div>                                         
+     252 -              <div>                                          
+     253 -                <p className="text-xs                         
+         -text-muted-foreground">ប្រភេទ</p>                            
+     254 -                <p                                            
+         -className="font-medium">{training.training_type}</p>         
+     255 -              </div>                                         
+     256 -              <div>                                          
+     257 -                <p className="text-xs                         
+         -text-muted-foreground">ប្រភេទមុខវិជ្ជា</p>                   
+     258 -                <p                                            
+         -className="font-medium">{training.training_category}</p>     
+     259 -              </div>                                         
+     260 -              <div>                                          
+     261 -                <p className="text-xs                         
+         -text-muted-foreground">កម្រិត</p>                            
+     262 -                <p                                            
+         -className="font-medium">{training.training_level}</p>        
+     263 -              </div>                                         
+     264 -              <div>                                          
+     265 -                <p className="text-xs                         
+         -text-muted-foreground">វគ្គសរុប</p>                          
+     266 -                <p                                            
+         -className="font-medium">{training.total_sessions} វគ្គ</p>   
+     267 -              </div>                                         
+     268 -              <div>                                          
+     269 -                <p className="text-xs                         
+         -text-muted-foreground">សមត្ថភាពទទួល</p>                      
+     270 -                <p                                            
+         -className="font-medium">{training.max_participants}           
+         -អ្នកចូលរួម</p>                                               
+     271 -              </div>                                         
+     272 -            </div>                                           
+     273 -          </CardContent>                                     
+     274 -        </Card>                                              
+     275 -      </div>                                                 
+     276 -    </BeneficiaryPortalLayout>                               
+     277 -  );                                                         
+     278 -}                                                            
+       1 +import { useParams, Link } from 'react-router-dom';           
+       2 +import { useQuery } from '@tanstack/react-query';             
+       3 +import { api } from '@/lib/api';                              
+       4 +import { BeneficiaryPortalLayout } from                       
+         +'@/components/layout/BeneficiaryPortalLayout';                
+       5 +import { Card, CardContent } from '@/components/ui/card';     
+       6 +import { Button } from '@/components/ui/button';              
+       7 +import { Badge } from '@/components/ui/badge';                
+       8 +import { Progress } from '@/components/ui/progress';          
+       9 +import {                                                      
+      10 +  Accordion,                                                  
+      11 +  AccordionContent,                                           
+      12 +  AccordionItem,                                              
+      13 +  AccordionTrigger,                                           
+      14 +} from '@/components/ui/accordion';                           
+      15 +import {                                                      
+      16 +  Calendar,                                                   
+      17 +  MapPin,                                                     
+      18 +  Clock,                                                      
+      19 +  Users,                                                      
+      20 +  CheckCircle2,                                               
+      21 +  MapPinned,                                                  
+      22 +  Award,                                                      
+      23 +  BookOpen,                                                   
+      24 +  ChevronLeft,                                                
+      25 +  FileText,                                                   
+      26 +  ListTodo,                                                   
+      27 +  Download,                                                   
+      28 +  ExternalLink,                                               
+      29 +  File,                                                       
+      30 +  Link2,                                                      
+      31 +  Video,                                                      
+      32 +  Image,                                                      
+      33 +  FileSpreadsheet,                                            
+      34 +  Presentation,                                               
+      35 +  Loader2,                                                    
+      36 +} from 'lucide-react';                                        
+      37 +import { format, parseISO, addDays, differenceInDays } from   
+         +'date-fns';                                                   
+      38 +import { cn } from '@/lib/utils';                             
+      39 +import { MATERIAL_CATEGORIES } from '@/types/training';       
+      40 +import type { Training, TrainingAgenda, TrainingMaterialLink, 
+         + TrainingMaterial } from '@/types/training';                  
+      41 +                                                              
+      42 +const getCategoryIcon = (category?: string) => {              
+      43 +  const colors: Record<string, string> = {                    
+      44 +    MATH: 'from-purple-500 to-purple-600',                    
+      45 +    KHMER: 'from-blue-500 to-blue-600',                       
+      46 +    IT: 'from-cyan-500 to-cyan-600',                          
+      47 +    PEDAGOGY: 'from-green-500 to-green-600',                  
+      48 +    LEADERSHIP: 'from-orange-500 to-orange-600',              
+      49 +  };                                                          
+      50 +  return colors[category || ''] || 'from-gray-500             
+         +to-gray-600';                                                 
+      51 +};                                                            
+      52 +                                                              
+      53 +// Helper to get material icon                                
+      54 +const getMaterialIcon = (material: TrainingMaterial) => {     
+      55 +  if (material.material_type === 'URL') {                     
+      56 +    return <Link2 className="h-4 w-4" />;                     
+      57 +  }                                                           
+      58 +                                                              
+      59 +  const mime = material.mime_type || '';                      
+      60 +  if (mime.startsWith('image/')) {                            
+      61 +    return <Image className="h-4 w-4" />;                     
+      62 +  }                                                           
+      63 +  if (mime.startsWith('video/')) {                            
+      64 +    return <Video className="h-4 w-4" />;                     
+      65 +  }                                                           
+      66 +  if (mime.includes('spreadsheet') || mime.includes('excel')) 
+         + {                                                            
+      67 +    return <FileSpreadsheet className="h-4 w-4" />;           
+      68 +  }                                                           
+      69 +  if (mime.includes('presentation') ||                        
+         +mime.includes('powerpoint')) {                                
+      70 +    return <Presentation className="h-4 w-4" />;              
+      71 +  }                                                           
+      72 +  return <File className="h-4 w-4" />;                        
+      73 +};                                                            
+      74 +                                                              
+      75 +// Format file size                                           
+      76 +const formatFileSize = (bytes?: number) => {                  
+      77 +  if (!bytes) return '';                                      
+      78 +  if (bytes < 1024) return `${bytes} B`;                      
+      79 +  if (bytes < 1024 * 1024) return `${(bytes /                 
+         +1024).toFixed(1)} KB`;                                        
+      80 +  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;          
+      81 +};                                                            
+      82 +                                                              
+      83 +export default function TrainingDetails() {                   
+      84 +  const { id } = useParams();                                 
+      85 +                                                              
+      86 +  // Fetch training details                                   
+      87 +  const { data: training, isLoading: loadingTraining } =      
+         +useQuery({                                                    
+      88 +    queryKey: ['training', id],                               
+      89 +    queryFn: () => api.trainings.getById(id!),                
+      90 +    enabled: !!id,                                            
+      91 +  });                                                         
+      92 +                                                              
+      93 +  // Fetch agendas                                            
+      94 +  const { data: agendas = [], isLoading: loadingAgendas } =   
+         +useQuery({                                                    
+      95 +    queryKey: ['agendas', id],                                
+      96 +    queryFn: () => api.agendas.getByTraining(id!),            
+      97 +    enabled: !!id,                                            
+      98 +  });                                                         
+      99 +                                                              
+     100 +  // Fetch linked materials                                   
+     101 +  const { data: materialLinks = [], isLoading:                
+         +loadingMaterials } = useQuery({                               
+     102 +    queryKey: ['training-materials', id],                     
+     103 +    queryFn: () => api.materials.getByTraining(id!),          
+     104 +    enabled: !!id,                                            
+     105 +  });                                                         
+     106 +                                                              
+     107 +  const handleDownloadMaterial = (material: TrainingMaterial) 
+         + => {                                                         
+     108 +    if (material.material_type === 'URL' &&                   
+         +material.external_url) {                                      
+     109 +      window.open(material.external_url, '_blank');           
+     110 +    } else if (material.file_url) {                           
+     111 +      const apiUrl = import.meta.env.VITE_API_URL ||          
+         +'http://localhost:3000';                                      
+     112 +      window.open(`${apiUrl.replace('/api',                   
+         +'')}${material.file_url}`, '_blank');                         
+     113 +    }                                                         
+     114 +  };                                                          
+     115 +                                                              
+     116 +  if (loadingTraining) {                                      
+     117 +    return (                                                  
+     118 +      <BeneficiaryPortalLayout>                               
+     119 +        <div className="flex items-center justify-center      
+         +py-12">                                                       
+     120 +          <Loader2 className="h-8 w-8 animate-spin            
+         +text-muted-foreground" />                                     
+     121 +        </div>                                                
+     122 +      </BeneficiaryPortalLayout>                              
+     123 +    );                                                        
+     124 +  }                                                           
+     125 +                                                              
+     126 +  if (!training) {                                            
+     127 +    return (                                                  
+     128 +      <BeneficiaryPortalLayout>                               
+     129 +        <div className="flex flex-col items-center            
+         +justify-center py-12">                                        
+     130 +          <p className="text-lg                               
+         +font-medium">រកមិនឃើញការបណ្តុះបណ្តាល</p>                      
+     131 +          <Button asChild variant="link" className="mt-2">    
+     132 +            <Link                                             
+         +to="/portal/trainings">ត្រឡប់ទៅការបណ្តុះបណ្តាលរបស់ខ្ញុំ</Link>
+     133 +          </Button>                                           
+     134 +        </div>                                                
+     135 +      </BeneficiaryPortalLayout>                              
+     136 +    );                                                        
+     137 +  }                                                           
+     138 +                                                              
+     139 +  const isOngoing = training.training_status === 'ONGOING';   
+     140 +  const isCompleted = training.training_status ===            
+         +'COMPLETED';                                                  
+     141 +                                                              
+     142 +  // Calculate training days for agenda grouping              
+     143 +  const startDate = new Date(training.training_start_date);   
+     144 +  const endDate = new Date(training.training_end_date);       
+     145 +  const totalDays = differenceInDays(endDate, startDate) + 1; 
+     146 +                                                              
+     147 +  // Group agendas by day                                     
+     148 +  const getAgendasForDay = (dayNumber: number) => {           
+     149 +    return agendas                                            
+     150 +      .filter((a: TrainingAgenda) => a.day_number ===         
+         +dayNumber)                                                    
+     151 +      .sort((a: TrainingAgenda, b: TrainingAgenda) => {       
+     152 +        if (a.sort_order !== b.sort_order) return             
+         +a.sort_order - b.sort_order;                                  
+     153 +        return a.start_time.localeCompare(b.start_time);      
+     154 +      });                                                     
+     155 +  };                                                          
+     156 +                                                              
+     157 +  return (                                                    
+     158 +    <BeneficiaryPortalLayout>                                 
+     159 +      <div className="space-y-4">                             
+     160 +        {/* Back Button */}                                   
+     161 +        <Button asChild variant="ghost" size="sm"             
+         +className="mb-2">                                             
+     162 +          <Link to="/portal/trainings">                       
+     163 +            <ChevronLeft className="mr-2 h-4 w-4" />          
+     164 +            ត្រឡប់ទៅការបណ្តុះបណ្តាលរបស់ខ្ញុំ                  
+     165 +          </Link>                                             
+     166 +        </Button>                                             
+     167 +                                                              
+     168 +        {/* Training Header Card */}                          
+     169 +        <Card className={cn(                                  
+     170 +          'overflow-hidden border-2 shadow-lg                 
+         +bg-gradient-to-br',                                           
+     171 +          getCategoryIcon(training.training_category)         
+     172 +        )}>                                                   
+     173 +          <CardContent className="p-0">                       
+     174 +            {/* Gradient Header */}                           
+     175 +            <div className="p-5 text-white">                  
+     176 +              <div className="flex items-center gap-2 mb-3">  
+     177 +                <Badge className="bg-white/20                 
+         +backdrop-blur-sm text-white border-white/20">                 
+     178 +                  {training.training_category}                
+     179 +                </Badge>                                      
+     180 +                <Badge className="bg-white/20                 
+         +backdrop-blur-sm text-white border-white/20">                 
+     181 +                  {training.training_level}                   
+     182 +                </Badge>                                      
+     183 +              </div>                                          
+     184 +                                                              
+     185 +              <h1 className="text-xl font-bold                
+         +mb-1">{training.training_name}</h1>                           
+     186 +              <p className="text-sm text-white/90             
+         +mb-1">{training.training_name_english}</p>                    
+     187 +              <p className="text-xs                           
+         +text-white/70">{training.training_code}</p>                   
+     188 +            </div>                                            
+     189 +                                                              
+     190 +            {/* White Content Section */}                     
+     191 +            <div className="bg-card p-5 space-y-4">           
+     192 +              {/* Quick Info Grid */}                         
+     193 +              <div className="grid grid-cols-2 gap-3">        
+     194 +                <div className="flex items-center gap-2       
+         +text-sm">                                                     
+     195 +                  <Calendar className="h-4 w-4                
+         +text-muted-foreground flex-shrink-0" />                       
+     196 +                  <div>                                       
+     197 +                    <p className="text-xs                     
+         +text-muted-foreground">កាលបរិច្ឆេទ</p>                        
+     198 +                    <p className="font-medium text-xs">       
+     199 +                                                              
+         +{format(parseISO(training.training_start_date), 'MMM d')} -   
+         +{format(parseISO(training.training_end_date), 'MMM d')}       
+     200 +                    </p>                                      
+     201 +                  </div>                                      
+     202 +                </div>                                        
+     203 +                                                              
+     204 +                <div className="flex items-center gap-2       
+         +text-sm">                                                     
+     205 +                  <Clock className="h-4 w-4                   
+         +text-muted-foreground flex-shrink-0" />                       
+     206 +                  <div>                                       
+     207 +                    <p className="text-xs                     
+         +text-muted-foreground">រយៈពេល</p>                             
+     208 +                    <p className="font-medium                 
+         +text-xs">{totalDays} ថ្ងៃ</p>                                 
+     209 +                  </div>                                      
+     210 +                </div>                                        
+     211 +                                                              
+     212 +                <div className="flex items-center gap-2       
+         +text-sm">                                                     
+     213 +                  <MapPin className="h-4 w-4                  
+         +text-muted-foreground flex-shrink-0" />                       
+     214 +                  <div>                                       
+     215 +                    <p className="text-xs                     
+         +text-muted-foreground">ទីតាំង</p>                             
+     216 +                    <p className="font-medium text-xs         
+         +line-clamp-1">{training.training_location}</p>                
+     217 +                  </div>                                      
+     218 +                </div>                                        
+     219 +                                                              
+     220 +                <div className="flex items-center gap-2       
+         +text-sm">                                                     
+     221 +                  <Users className="h-4 w-4                   
+         +text-muted-foreground flex-shrink-0" />                       
+     222 +                  <div>                                       
+     223 +                    <p className="text-xs                     
+         +text-muted-foreground">អ្នកចូលរួម</p>                         
+     224 +                    <p className="font-medium text-xs">{train 
+         +ing.current_participants}/{training.max_participants}</p>     
+     225 +                  </div>                                      
+     226 +                </div>                                        
+     227 +              </div>                                          
+     228 +                                                              
+     229 +              {/* Action Buttons */}                          
+     230 +              {isOngoing && (                                 
+     231 +                <div className="grid grid-cols-2 gap-3">      
+     232 +                  <Button asChild size="lg" className="h-12"> 
+     233 +                    <Link                                     
+         +to={`/portal/attendance/${training.id}`}>                     
+     234 +                      <CheckCircle2 className="mr-2 h-5 w-5"  
+         +/>                                                            
+     235 +                      ចុះឈ្មោះ                                
+     236 +                    </Link>                                   
+     237 +                  </Button>                                   
+     238 +                  <Button asChild variant="outline" size="lg" 
+         + className="h-12">                                            
+     239 +                    <Link                                     
+         +to={`/portal/history/${training.id}/attendance`}>             
+     240 +                      <FileText className="mr-2 h-5 w-5" />   
+     241 +                      ការចូលរួម                               
+     242 +                    </Link>                                   
+     243 +                  </Button>                                   
+     244 +                </div>                                        
+     245 +              )}                                              
+     246 +                                                              
+     247 +              {isCompleted && (                               
+     248 +                <Button asChild className="w-full h-12">      
+     249 +                  <a href="#" download>                       
+     250 +                    <Award className="mr-2 h-5 w-5" />        
+     251 +                    ទាញយកវិញ្ញាបនប័ត្រ                        
+     252 +                  </a>                                        
+     253 +                </Button>                                     
+     254 +              )}                                              
+     255 +            </div>                                            
+     256 +          </CardContent>                                      
+     257 +        </Card>                                               
+     258 +                                                              
+     259 +        {/* Description */}                                   
+     260 +        {training.training_description && (                   
+     261 +          <Card>                                              
+     262 +            <CardContent className="p-4">                     
+     263 +              <div className="flex items-center gap-2 mb-3">  
+     264 +                <BookOpen className="h-5 w-5 text-primary" /> 
+     265 +                <h3                                           
+         +className="font-semibold">អំពីការបណ្តុះបណ្តាលនេះ</h3>         
+     266 +              </div>                                          
+     267 +              <p className="text-sm text-muted-foreground     
+         +leading-relaxed">                                             
+     268 +                {training.training_description}               
+     269 +              </p>                                            
+     270 +            </CardContent>                                    
+     271 +          </Card>                                             
+     272 +        )}                                                    
+     273 +                                                              
+     274 +        {/* Training Agenda */}                               
+     275 +        {agendas.length > 0 && (                              
+     276 +          <Card>                                              
+     277 +            <CardContent className="p-4">                     
+     278 +              <div className="flex items-center gap-2 mb-3">  
+     279 +                <ListTodo className="h-5 w-5 text-primary" /> 
+     280 +                <h3                                           
+         +className="font-semibold">កម្មវិធីបណ្តុះបណ្តាល</h3>           
+     281 +              </div>                                          
+     282 +                                                              
+     283 +              <Accordion type="single" collapsible            
+         +className="w-full">                                           
+     284 +                {Array.from({ length: totalDays }, (_, i) =>  
+         +i + 1).map((dayNum) => {                                      
+     285 +                  const dayAgendas =                          
+         +getAgendasForDay(dayNum);                                     
+     286 +                  const dayDate = addDays(startDate, dayNum - 
+         + 1);                                                          
+     287 +                                                              
+     288 +                  if (dayAgendas.length === 0) return null;   
+     289 +                                                              
+     290 +                  return (                                    
+     291 +                    <AccordionItem key={dayNum}               
+         +value={`day-${dayNum}`}>                                      
+     292 +                      <AccordionTrigger className="text-sm">  
+     293 +                        <div className="flex items-center     
+         +gap-2">                                                       
+     294 +                          <span className="font-semibold">ថ្ងៃទី
+         + {dayNum}</span>                                              
+     295 +                          <span className="text-xs            
+         +text-muted-foreground">                                       
+     296 +                            {format(dayDate, 'EEEE, MMM d')}  
+     297 +                          </span>                             
+     298 +                        </div>                                
+     299 +                      </AccordionTrigger>                     
+     300 +                      <AccordionContent>                      
+     301 +                        <div className="space-y-3">           
+     302 +                          {dayAgendas.map((agenda:            
+         +TrainingAgenda) => (                                          
+     303 +                            <div                              
+     304 +                              key={agenda.id}                 
+     305 +                              className="flex items-start     
+         +gap-3 p-3 bg-muted/50 rounded-lg"                             
+     306 +                            >                                 
+     307 +                              <div className="text-center     
+         +shrink-0 bg-primary/10 rounded-lg p-2 min-w-[60px]">          
+     308 +                                <p className="text-xs         
+         +font-semibold text-primary">                                  
+     309 +                                  {agenda.start_time}         
+     310 +                                </p>                          
+     311 +                                <p className="text-[10px]     
+         +text-muted-foreground">                                       
+     312 +                                  {agenda.end_time}           
+     313 +                                </p>                          
+     314 +                              </div>                          
+     315 +                              <div className="flex-1">        
+     316 +                                <p className="font-medium     
+         +text-sm">{agenda.topic_km || agenda.topic_en}</p>             
+     317 +                                {agenda.topic_en &&           
+         +agenda.topic_km && (                                          
+     318 +                                  <p className="text-xs       
+         +text-muted-foreground">{agenda.topic_en}</p>                  
+     319 +                                )}                            
+     320 +                                {(agenda.instructor_name ||   
+         +agenda.instructor_name_km) && (                               
+     321 +                                  <p className="text-xs       
+         +text-primary mt-1">                                           
+     322 +                                                              
+         +{agenda.instructor_name_km || agenda.instructor_name}         
+     323 +                                  </p>                        
+     324 +                                )}                            
+     325 +                                {(agenda.description_km ||    
+         +agenda.description_en) && (                                   
+     326 +                                  <p className="text-xs       
+         +text-muted-foreground mt-1">                                  
+     327 +                                    {agenda.description_km || 
+         + agenda.description_en}                                       
+     328 +                                  </p>                        
+     329 +                                )}                            
+     330 +                              </div>                          
+     331 +                            </div>                            
+     332 +                          ))}                                 
+     333 +                        </div>                                
+     334 +                      </AccordionContent>                     
+     335 +                    </AccordionItem>                          
+     336 +                  );                                          
+     337 +                })}                                           
+     338 +              </Accordion>                                    
+     339 +            </CardContent>                                    
+     340 +          </Card>                                             
+     341 +        )}                                                    
+     342 +                                                              
+     343 +        {/* Training Materials */}                            
+     344 +        {materialLinks.length > 0 && (                        
+     345 +          <Card>                                              
+     346 +            <CardContent className="p-4">                     
+     347 +              <div className="flex items-center gap-2 mb-3">  
+     348 +                <FileText className="h-5 w-5 text-primary" /> 
+     349 +                <h3                                           
+         +className="font-semibold">ឯកសារបណ្តុះបណ្តាល</h3>              
+     350 +              </div>                                          
+     351 +                                                              
+     352 +              <div className="space-y-2">                     
+     353 +                {materialLinks.map((link:                     
+         +TrainingMaterialLink) => {                                    
+     354 +                  const material = link.material;             
+     355 +                  if (!material) return null;                 
+     356 +                                                              
+     357 +                  return (                                    
+     358 +                    <div                                      
+     359 +                      key={link.id}                           
+     360 +                      className="flex items-center gap-3 p-3  
+         +bg-muted/50 rounded-lg hover:bg-muted transition-colors"      
+     361 +                    >                                         
+     362 +                      <div className="flex items-center       
+         +justify-center h-10 w-10 rounded-lg bg-primary/10             
+         +text-primary shrink-0">                                       
+     363 +                        {getMaterialIcon(material)}           
+     364 +                      </div>                                  
+     365 +                      <div className="flex-1 min-w-0">        
+     366 +                        <p className="font-medium text-sm     
+         +truncate">                                                    
+     367 +                          {material.title_km ||               
+         +material.title_en}                                            
+     368 +                        </p>                                  
+     369 +                        <div className="flex items-center     
+         +gap-2 mt-0.5">                                                
+     370 +                          <Badge variant="outline"            
+         +className="text-[10px] py-0">                                 
+     371 +                            {material.material_type ===       
+         +'FILE' ? 'ឯកសារ' : 'តំណ'}                                     
+     372 +                          </Badge>                            
+     373 +                          {material.category && (             
+     374 +                            <span className="text-[10px]      
+         +text-muted-foreground">                                       
+     375 +                              {MATERIAL_CATEGORIES.find(c =>  
+         +c.code === material.category)?.name_km}                       
+     376 +                            </span>                           
+     377 +                          )}                                  
+     378 +                          {material.file_size && (            
+     379 +                            <span className="text-[10px]      
+         +text-muted-foreground">                                       
+     380 +                                                              
+         +{formatFileSize(material.file_size)}                          
+     381 +                            </span>                           
+     382 +                          )}                                  
+     383 +                        </div>                                
+     384 +                      </div>                                  
+     385 +                      <Button                                 
+     386 +                        variant="ghost"                       
+     387 +                        size="icon"                           
+     388 +                        className="h-9 w-9"                   
+     389 +                        onClick={() =>                        
+         +handleDownloadMaterial(material)}                             
+     390 +                      >                                       
+     391 +                        {material.material_type === 'URL' ? ( 
+     392 +                          <ExternalLink className="h-4 w-4"   
+         +/>                                                            
+     393 +                        ) : (                                 
+     394 +                          <Download className="h-4 w-4" />    
+     395 +                        )}                                    
+     396 +                      </Button>                               
+     397 +                    </div>                                    
+     398 +                  );                                          
+     399 +                })}                                           
+     400 +              </div>                                          
+     401 +            </CardContent>                                    
+     402 +          </Card>                                             
+     403 +        )}                                                    
+     404 +                                                              
+     405 +        {/* Venue Details */}                                 
+     406 +        <Card>                                                
+     407 +          <CardContent className="p-4">                       
+     408 +            <div className="flex items-center gap-2 mb-3">    
+     409 +              <MapPinned className="h-5 w-5 text-primary" />  
+     410 +              <h3 className="font-semibold">ព័ត៌មានទីកន្លែង</h3>
+     411 +            </div>                                            
+     412 +            <div className="space-y-3">                       
+     413 +              {training.training_venue && (                   
+     414 +                <div>                                         
+     415 +                  <p className="text-xs                       
+         +text-muted-foreground">ឈ្មោះទីកន្លែង</p>                      
+     416 +                  <p className="text-sm                       
+         +font-medium">{training.training_venue}</p>                    
+     417 +                </div>                                        
+     418 +              )}                                              
+     419 +              <div>                                           
+     420 +                <p className="text-xs                         
+         +text-muted-foreground">ទីតាំង</p>                             
+     421 +                <p className="text-sm                         
+         +font-medium">{training.training_location}</p>                 
+     422 +              </div>                                          
+     423 +                                                              
+     424 +              {(training.gps_validation_required ||           
+         +training.geofence_validation_required) && (                   
+     425 +                <div className="rounded-xl bg-blue-50         
+         +dark:bg-blue-950 border border-blue-200 dark:border-blue-800  
+         +p-3 mt-3">                                                    
+     426 +                  <div className="flex items-start gap-2">    
+     427 +                    <MapPinned className="h-4 w-4             
+         +text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />     
+     428 +                    <div>                                     
+     429 +                      <p className="text-sm font-medium       
+         +text-blue-900 dark:text-blue-100">តម្រូវការផ្ទៀងផ្ទាត់ GPS</p>
+     430 +                      <p className="text-xs text-blue-700     
+         +dark:text-blue-300 mt-1">                                     
+     431 +                                                              
+         +{training.geofence_validation_required                        
+     432 +                          ? `អ្នកត្រូវស្ថិតក្នុងរង្វង់        
+         +${training.geofence_radius}ម ពីទីកន្លែងដើម្បីចុះឈ្មោះ`        
+     433 +                          : 'ទីតាំង GPS របស់អ្នកនឹងត្រូវបានកត់ត្រាពេលចុះឈ្មោះ'}
+
+     434 +                      </p>                                    
+     435 +                    </div>                                    
+     436 +                  </div>                                      
+     437 +                </div>                                        
+     438 +              )}                                              
+     439 +            </div>                                            
+     440 +          </CardContent>                                      
+     441 +        </Card>                                               
+     442 +                                                              
+     443 +        {/* Training Details */}                              
+     444 +        <Card>                                                
+     445 +          <CardContent className="p-4">                       
+     446 +            <h3 className="font-semibold                      
+         +mb-3">ព័ត៌មានលម្អិតការបណ្តុះបណ្តាល</h3>                       
+     447 +            <div className="grid grid-cols-2 gap-3 text-sm">  
+     448 +              <div>                                           
+     449 +                <p className="text-xs                         
+         +text-muted-foreground">លេខកូដការបណ្តុះបណ្តាល</p>              
+     450 +                <p className="font-medium                     
+         +font-mono">{training.training_code}</p>                       
+     451 +              </div>                                          
+     452 +              <div>                                           
+     453 +                <p className="text-xs                         
+         +text-muted-foreground">ប្រភេទ</p>                             
+     454 +                <p                                            
+         +className="font-medium">{training.training_type}</p>          
+     455 +              </div>                                          
+     456 +              <div>                                           
+     457 +                <p className="text-xs                         
+         +text-muted-foreground">ប្រភេទមុខវិជ្ជា</p>                    
+     458 +                <p                                            
+         +className="font-medium">{training.training_category}</p>      
+     459 +              </div>                                          
+     460 +              <div>                                           
+     461 +                <p className="text-xs                         
+         +text-muted-foreground">កម្រិត</p>                             
+     462 +                <p                                            
+         +className="font-medium">{training.training_level}</p>         
+     463 +              </div>                                          
+     464 +              <div>                                           
+     465 +                <p className="text-xs                         
+         +text-muted-foreground">រយៈពេល</p>                             
+     466 +                <p className="font-medium">{totalDays} ថ្ងៃ</p>
+     467 +              </div>                                          
+     468 +              <div>                                           
+     469 +                <p className="text-xs                         
+         +text-muted-foreground">សមត្ថភាពទទួល</p>                       
+     470 +                <p                                            
+         +className="font-medium">{training.max_participants}           
+         +អ្នកចូលរួម</p>                                                
+     471 +              </div>                                          
+     472 +            </div>                                            
+     473 +          </CardContent>                                      
+     474 +        </Card>                                               
+     475 +      </div>                                                  
+     476 +    </BeneficiaryPortalLayout>                                
+     477 +  );                                                          
+     478 +}                                                             
+
+● Now let me run the build to verify everything is working:
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect-replica" &&
+       npm run build:dev)
+  ⎿  > plp-tms-moeys@1.0.0 build:dev
+     > vite build --mode development
+     … +20 lines (ctrl+o to expand)
+
+● Build succeeded. Let me also verify the server TypeScript compilation:
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect timeout: 
+      -replica" && npx tsc --noEmit -p server 2>&1 || npx tsc        1m 0s
+      --noEmit 2>&1 | head -50)
+  ⎿ error TS5057: Cannot find a tsconfig.json file at the specified directo
+    ry: 'server'.
+
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect timeout: 
+      -replica" && npx tsc --noEmit 2>&1 | head -30)                 1m 0s
+  ⎿  (No content)
+
+● I've completed the implementation of reusable Agendas and Training Materials. Here's a summary of what was added:
+
+  Summary of Implementation
+
+  Database Schema (Prisma)
+
+  - TrainingAgenda: Per-training schedule items with day number, time slots, topics (bilingual), instructor info
+  - TrainingMaterial: Central library for files and URLs with metadata
+  - TrainingMaterialLink: Many-to-many junction table linking materials to trainings
+
+  Backend API Routes
+
+  Agendas (server/routes/agendas.ts):
+  - CRUD operations for agenda items
+  - Bulk create/update for efficient editing
+  - Copy agendas from another training (for cascade)
+
+  Materials (server/routes/materials.ts):
+  - Material library CRUD with file upload support (Multer)
+  - Supports PDF, Word, PowerPoint, Excel, images, videos (up to 50MB)
+  - Link/unlink materials to trainings
+  - Reorder and copy material links
+
+  Frontend Components
+
+  - Materials Library Page (src/pages/Materials.tsx): Admin page to manage the central material library
+  - CreateMaterialDialog: Upload files or add external URLs
+  - EditMaterialDialog: Edit material metadata
+  - ManageAgendaDialog: Add/edit/delete agenda items per training day
+  - AttachMaterialsDialog: Link materials from library to trainings
+
+  Navigation Updates
+
+  - Added "បណ្ណាល័យឯកសារ" (Materials Library) to sidebar
+  - Added "គ្រប់គ្រងកម្មវិធី" (Manage Agenda) and "គ្រប់គ្រងឯកសារ" (Manage Materials) to training dropdown menus
+
+  Beneficiary Portal
+
+  - Updated TrainingDetails page to display:
+    - Training agenda with collapsible day-by-day view
+    - Linked materials with download/open buttons
+
+  Key Features
+
+  - Per-Training Agendas: Each training has its own agenda that can be copied when cascading
+  - Central Material Library: Materials are stored once, linked to multiple trainings
+  - File Upload: Support for documents, presentations, images, videos
+  - External URLs: Link to online resources
+  - Copy Feature: Copy agendas/materials from one training to another
+  - Bilingual Support: English and Khmer for all content
+
+> now my localhost can not login look like it's not connect to databse 
+
+● Let me help troubleshoot the database connection issue.
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect-replica" &&
+       docker-compose ps 2>&1)
+  ⎿ time="2025-12-26T02:42:04+07:00" level=warning msg="C:\\Users\\Personal
+    \\OneDrive\\Documents\\GitHub\\pixel-perfect-replica\\docker-compose.ym
+    l: the attribute `version` is obsolete, it will be ignored, please remo
+    … +6 lines (ctrl+o to expand)
+
+
+
+
+● Read(.env)
+  ⎿  Read 30 lines
+
+● The database container is running. Let me check if the server is running and test the connection:
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect-replica" &&
+       curl -s http://localhost:3000/health 2>&1 || echo "Server not
+      responding")
+  ⎿  Server not responding
+
+● The backend server is not running. Let me start it:
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect-replica" &&
+       npm run server 2>&1 &)
+  ⎿  Running in the background (↓ to manage)
+
+● Bash(sleep 3 && curl -s http://localhost:3000/health 2>&1) timeout: 10s
+  ⎿  Error: Exit code 7
+
+● Read(~\AppData\Local\Temp\claude\C--Users-Personal-OneDrive-Documents-GitHub-p
+      ixel-perfect-replica\tasks\b82c39a.output)
+  ⎿  Read 24 lines
+
+● The multer package is missing. Let me install it:
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect timeout: 
+      -replica" && npm install multer @types/multer)                 1m 0s
+  ⎿  added 16 packages, and audited 599 packages in 3s
+
+     115 packages are looking for funding
+     … +8 lines (ctrl+o to expand)
+
+● Now let me restart the server:
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect-replica" &&
+       npm run server 2>&1 &)
+  ⎿  Running in the background (↓ to manage)
+
+● Bash(sleep 4 && curl -s http://localhost:3000/health 2>&1) timeout: 10s
+  ⎿  {                                        
+       "status": "ok",
+       "timestamp": "2025-12-25T19:48:26.539Z"
+     }
+
+● The server is now running. Let me also start the frontend dev server:
+
+● Bash(cd "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect-replica" &&
+       npm run dev 2>&1 &)
+  ⎿  Running in the background (↓ to manage)
+
+● Bash(sleep 3 && curl -s http://localhost:8080 2>&1 | head -5) timeout: 10s
+  ⎿  <!doctype html>              
+     <html lang="en">
+       <head>
+     … +3 lines (ctrl+o to expand)
+
+● Both servers are now running. Let me verify the login endpoint works:
+
+● Bash(curl -s -X POST http://localhost:3000/api/auth/login -H "Content-Type:
+      application/json" -d '{"username":"admin","password":"admin123"}' 2>&1)
+  ⎿ {                                                                      
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhZG1pbi
+    0wMDEiLCJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBtb2V5cy5nb3Yua2giL
+    … +18 lines (ctrl+o to expand)
+
+
+
+● Everything is working now. The issue was that the multer package wasn't installed. I've installed it and both servers are running:
+
+  - Backend: http://localhost:3000 (API server)
+  - Frontend: http://localhost:8080 (Vite dev server)
+
+  You can now login at http://localhost:8080/login with:
+  - Username: admin
+  - Password: admin123
+
+> i observe i can't find agenda yet 
+
+● Let me check where the agenda feature is located. The "Manage Agenda" option should be in the training dropdown menu.
+
+● Search(pattern: "ManageAgendaDialog", path: "src\pages\Trainings.tsx",
+        output_mode: "content")
+  ⎿  Found 17 lines (ctrl+o to expand)
+
+● The code is there. Let me verify the component file exists:
+
+● Bash(ls -la "C:/Users/Personal/OneDrive/Documents/GitHub/pixel-perfect-replica
+      /src/components/trainings/ManageAgendaDialog.tsx" 2>&1)
+  ⎿ -rw-r--r-- 1 Personal 197121 18474 Dec 26 02:31 C:/Users/Personal/OneDr
+    ive/Documents/GitHub/pixel-perfect-replica/src/components/trainings/Man
+    ageAgendaDialog.tsx
+
+
+
+● The file exists. The agenda feature is accessed through the training dropdown menu. Here's how to find it:
+
+  1. Go to Trainings page (/trainings)
+  2. Click the ⋮ (three dots) menu button on any training row
+  3. Look for "គ្រប់គ្រងកម្មវិធី" (Manage Agenda) - it should be after "មើលការចូលរួម" (View Attendance)
+
+  Let me check if there might be a hot reload issue - try refreshing the page. Also let me verify the frontend compiled correctly:
+
+● Read(~\AppData\Local\Temp\claude\C--Users-Personal-OneDrive-Documents-GitHub-p
+      ixel-perfect-replica\tasks\b86d3b2.output)
+  ⎿  Read 15 lines
+
+● The frontend is running. Please try:
+
+  1. Hard refresh the browser: Ctrl + Shift + R (or Cmd + Shift + R on Mac)
+  2. Go to /trainings page
+  3. Click the ⋮ menu on any training
+
+  The menu should show these options (in order):
+  - មើលព័ត៌មានលម្អិត (View Details)
+  - កែសម្រួល (Edit)
+  - គ្រប់គ្រងអ្នកចូលរួម (Manage Participants)
+  - មើលការចូលរួម (View Attendance)
+  - គ្រប់គ្រងកម្មវិធី (Manage Agenda) ← This one
+  - គ្រប់គ្រងឯកសារ (Manage Materials)
+  - ចែករំលែកតំណចុះឈ្មោះ (Share Enrollment Link)
+  - ...
+
+  If you still don't see it, can you tell me what options you see in the dropdown menu? There might be a caching issue.
+
+> i want to challenge about how our project can support Admin or coordinator
+ to support participants enrollment or record attendance_records for 4 
+transaction a day from the first training start date to training end date. 
+and another features transfer participants from wrong training session to 
+correct training session along with their attendance records as well. tell 
+me what you understand 
+
+● Let me explain my understanding of your requirements:
+
+  Feature 1: Bulk Attendance Recording
+
+  Current State:
+  - The AttendanceRecord model already supports 4 transactions per day:
+    - morning_in - Morning check-in
+    - morning_out - Morning check-out
+    - afternoon_in - Afternoon check-in
+    - afternoon_out - Afternoon check-out
+
+  What You Need:
+  - Admin/Coordinator can batch record attendance for all enrolled participants
+  - For each day from training_start_date to training_end_date
+  - UI to mark attendance (Present/Absent/Late/Excused) with timestamps
+  - Possibly a grid view: rows = participants, columns = days × 4 sessions
+
+  ---
+  Feature 2: Participant Transfer
+
+  Scenario:
+  - A participant was enrolled in Training A (wrong session)
+  - Need to transfer them to Training B (correct session)
+  - All their attendance records from Training A should move to Training B
+
+  What This Involves:
+  1. Update BeneficiaryTraining.training_id from A → B
+  2. Update all AttendanceRecord.training_id from A → B for that beneficiary
+  3. Handle conflicts (what if dates don't match between trainings?)
+
+  ---
+  Questions for Clarification:
+
+  1. Attendance Grid: Do you want a calendar/grid view where coordinator can see all days and mark attendance for each participant?
+  2. Transfer Rules:
+    - Should transfer only work if Training B has overlapping dates?
+    - Or should we transfer attendance records even if dates differ (map Day 1 → Day 1)?
+    - What about capacity limits on the destination training?
+  3. Partial Transfer: Can a participant be transferred mid-training (keeping some attendance in A, starting fresh in B)?
+
+  Is my understanding correct? Should I proceed with planning the implementation?
+
+> Questions for Clarification:
+ 1. Attendance Grid: Do you want a calendar/grid view where coordinator can 
+see all days and mark attendance for each participant? - yes
+  2. Transfer Rules:
+    - Or should we transfer attendance records even if dates differ (map Day
+ 1 → Day 1)? - yes
+    - What about capacity limits on the destination training? - no need 
+limit just open
+  3. Partial Transfer: Can a participant be transferred mid-training ? - 
+fully flexible manage without restrictions 
+
+● I understand. Let me plan this implementation.
+                                                                   
+● Entered plan mode
+  Claude is now exploring and designing an implementation approach.
+
+● Reading Plan(~\.claude\plans\fluttering-churning-peach.md)
+  ⎿  Read 218 lines
+
+● 2 Explore agents finished (ctrl+o to expand)
+   ├─ Explore attendance system · 15 tool uses · 46.8k tokens
+   │  ⎿  Done
+   └─ Explore enrollment/transfer patterns · 17 tool uses · 40.0k tokens
+      ⎿  Done
+
+● I now have a complete understanding of the codebase. Let me design the implementation plan for these two features.
+
+● Updated plan
+  ⎿  /plan to preview
+
+● Let me fix some typos in the plan:
+  ⎿  API Error: Claude's response exceeded the 32000 output token maximum. To 
+     configure this behavior, set the CLAUDE_CODE_MAX_OUTPUT_TOKENS environment 
+     variable.
+
+
+

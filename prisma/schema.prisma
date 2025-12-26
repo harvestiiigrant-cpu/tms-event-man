@@ -76,8 +76,9 @@ model Beneficiary {
   updated_by String?
 
   // Relations
-  trainings         BeneficiaryTraining[]
+  trainings          BeneficiaryTraining[]
   attendance_records AttendanceRecord[]
+  survey_responses   SurveyResponse[]
 
   @@map("beneficiaries")
 }
@@ -144,6 +145,10 @@ model Training {
   // Relations
   beneficiary_trainings BeneficiaryTraining[]
   attendance_records    AttendanceRecord[]
+  agendas               TrainingAgenda[]
+  material_links        TrainingMaterialLink[]
+  survey_links          TrainingSurveyLink[]
+  survey_responses      SurveyResponse[]
 
   @@map("trainings")
 }
@@ -364,4 +369,294 @@ model TrainingLevelConfig {
   updated_by String?
 
   @@map("training_levels")
+}
+
+// Beneficiary Positions (Dynamic)
+model BeneficiaryPosition {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name_en     String
+  name_km     String
+  description String? @db.Text
+  is_active   Boolean @default(true)
+  sort_order  Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("beneficiary_positions")
+}
+
+// Beneficiary Departments/Subjects (Dynamic)
+model BeneficiaryDepartment {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name_en     String
+  name_km     String
+  description String? @db.Text
+  is_active   Boolean @default(true)
+  sort_order  Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("beneficiary_departments")
+}
+
+// Training Agenda Items (per-training, copied on cascade)
+model TrainingAgenda {
+  id          String @id @default(cuid())
+  training_id String
+
+  // Scheduling
+  day_number Int    // Day 1, Day 2, etc.
+  start_time String // "08:30" format
+  end_time   String // "10:30" format
+
+  // Content (bilingual)
+  topic_en       String
+  topic_km       String
+  description_en String? @db.Text
+  description_km String? @db.Text
+
+  // Instructor
+  instructor_name    String?
+  instructor_name_km String?
+
+  // Ordering
+  sort_order Int @default(0)
+
+  // Status
+  is_deleted Boolean @default(false)
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  // Relations
+  training Training @relation(fields: [training_id], references: [id], onDelete: Cascade)
+
+  @@index([training_id])
+  @@map("training_agendas")
+}
+
+// Training Materials Library (central repository, many-to-many with trainings)
+model TrainingMaterial {
+  id String @id @default(cuid())
+
+  // Content (bilingual)
+  title_en       String
+  title_km       String
+  description_en String? @db.Text
+  description_km String? @db.Text
+
+  // Material Source
+  material_type String  // "FILE" | "URL"
+  file_url      String? // For FILE type: path to uploaded file
+  external_url  String? // For URL type: external link
+  file_name     String? // Original filename for downloads
+  file_size     Int?    // Size in bytes
+  mime_type     String? // e.g., "application/pdf"
+
+  // Categorization
+  category String? // e.g., "HANDOUT", "VIDEO", "REFERENCE"
+
+  // Visibility
+  is_active  Boolean @default(true)
+  is_deleted Boolean @default(false)
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  // Relations
+  training_links TrainingMaterialLink[]
+
+  @@map("training_materials")
+}
+
+// Junction table for Training <-> Material (many-to-many)
+model TrainingMaterialLink {
+  id          String @id @default(cuid())
+  training_id String
+  material_id String
+
+  // Link-specific settings
+  sort_order  Int     @default(0)
+  is_required Boolean @default(false) // Required reading/viewing
+
+  // Audit
+  linked_at DateTime @default(now())
+  linked_by String?
+
+  // Relations
+  training Training         @relation(fields: [training_id], references: [id], onDelete: Cascade)
+  material TrainingMaterial @relation(fields: [material_id], references: [id], onDelete: Cascade)
+
+  @@unique([training_id, material_id])
+  @@index([training_id])
+  @@index([material_id])
+  @@map("training_material_links")
+}
+
+// ============================================
+// Survey & Test System
+// ============================================
+
+// Survey Library (reusable surveys and tests)
+model Survey {
+  id                          String   @id @default(cuid())
+  title_en                    String
+  title_km                    String
+  description_en              String?  @db.Text
+  description_km              String?  @db.Text
+  survey_type                 SurveyType
+  is_template                 Boolean  @default(false)
+  is_required                 Boolean  @default(false)
+  passing_score               Int?
+  time_limit                  Int?
+  allow_retake                Boolean  @default(false)
+  max_attempts                Int?
+  show_results_to_beneficiary Boolean  @default(true)
+  show_correct_answers        Boolean  @default(false)
+  available_from              DateTime?
+  available_until             DateTime?
+  is_active                   Boolean  @default(true)
+  created_at                  DateTime @default(now())
+  updated_at                  DateTime @updatedAt
+  created_by                  String?
+  updated_by                  String?
+  questions                   SurveyQuestion[]
+  training_links              TrainingSurveyLink[]
+  responses                   SurveyResponse[]
+
+  @@map("surveys")
+}
+
+enum SurveyType {
+  PRE_TEST
+  POST_TEST
+  FEEDBACK
+  EVALUATION
+  COMMON_TEST
+}
+
+// Junction: Training <-> Survey
+model TrainingSurveyLink {
+  id              String       @id @default(cuid())
+  training_id     String
+  survey_id       String
+  timing          SurveyTiming
+  is_required     Boolean      @default(false)
+  sort_order      Int          @default(0)
+  custom_deadline DateTime?
+  training        Training     @relation(fields: [training_id], references: [id], onDelete: Cascade)
+  survey          Survey       @relation(fields: [survey_id], references: [id], onDelete: Cascade)
+  linked_at       DateTime     @default(now())
+  linked_by       String?
+
+  @@unique([training_id, survey_id])
+  @@index([training_id])
+  @@index([survey_id])
+  @@map("training_survey_links")
+}
+
+enum SurveyTiming {
+  BEFORE_TRAINING
+  DURING_TRAINING
+  AFTER_TRAINING
+}
+
+// Survey questions
+model SurveyQuestion {
+  id               String       @id @default(cuid())
+  survey_id        String
+  question_text_en String       @db.Text
+  question_text_km String       @db.Text
+  help_text_en     String?      @db.Text
+  help_text_km     String?      @db.Text
+  question_type    QuestionType
+  is_required      Boolean      @default(true)
+  sort_order       Int          @default(0)
+  points           Int?
+  correct_answer   String?      @db.Text
+  options_en       String[]
+  options_km       String[]
+  scale_min        Int?
+  scale_max        Int?
+  scale_labels_en  String[]
+  scale_labels_km  String[]
+  survey           Survey       @relation(fields: [survey_id], references: [id], onDelete: Cascade)
+  answers          SurveyQuestionResponse[]
+  created_at       DateTime     @default(now())
+  updated_at       DateTime     @updatedAt
+
+  @@index([survey_id])
+  @@map("survey_questions")
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  MULTIPLE_SELECT
+  TRUE_FALSE
+  LIKERT_SCALE
+  RATING
+  SHORT_TEXT
+  LONG_TEXT
+}
+
+// Participant survey responses
+model SurveyResponse {
+  id                  String   @id @default(cuid())
+  survey_id           String
+  beneficiary_id      String
+  training_id         String
+  started_at          DateTime?
+  submitted_at        DateTime?
+  is_complete         Boolean  @default(false)
+  attempt_number      Int      @default(1)
+  total_score         Float?
+  max_score           Float?
+  percentage          Float?
+  passed              Boolean?
+  time_spent_seconds  Int?
+  survey              Survey   @relation(fields: [survey_id], references: [id], onDelete: Cascade)
+  beneficiary         Beneficiary @relation(fields: [beneficiary_id], references: [teacher_id])
+  training            Training @relation(fields: [training_id], references: [id])
+  question_responses  SurveyQuestionResponse[]
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+
+  @@unique([survey_id, beneficiary_id, training_id, attempt_number])
+  @@index([survey_id])
+  @@index([beneficiary_id])
+  @@index([training_id])
+  @@map("survey_responses")
+}
+
+// Individual question answers
+model SurveyQuestionResponse {
+  id            String   @id @default(cuid())
+  response_id   String
+  question_id   String
+  answer_value  String   @db.Text
+  answer_text   String?  @db.Text
+  points_earned Float?
+  is_correct    Boolean?
+  response      SurveyResponse @relation(fields: [response_id], references: [id], onDelete: Cascade)
+  question      SurveyQuestion @relation(fields: [question_id], references: [id], onDelete: Cascade)
+  answered_at   DateTime @default(now())
+
+  @@unique([response_id, question_id])
+  @@index([response_id])
+  @@index([question_id])
+  @@map("survey_question_responses")
 }

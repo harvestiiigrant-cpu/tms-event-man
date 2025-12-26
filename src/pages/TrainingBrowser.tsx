@@ -1,5 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,7 +32,6 @@ import {
 } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { mockTrainings } from '@/data/mockData';
 import { CompactBrandHeader } from '@/components/branding/BrandHeader';
 
 // Categories with icons and colors
@@ -60,9 +61,15 @@ export default function TrainingBrowser() {
   const [sortBy, setSortBy] = useState<string>('date');
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  // Available trainings
-  const availableTrainings = mockTrainings.filter(
-    (t) => t.training_status === 'ONGOING' || t.training_status === 'DRAFT'
+  // Fetch published trainings
+  const { data: allTrainings = [] } = useQuery({
+    queryKey: ['trainings-public'],
+    queryFn: api.trainings.getAll,
+  });
+
+  // Available trainings (published and ongoing/draft)
+  const availableTrainings = allTrainings.filter(
+    (t: any) => t.is_published && (t.training_status === 'ONGOING' || t.training_status === 'DRAFT')
   );
 
   // Apply filters

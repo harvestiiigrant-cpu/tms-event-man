@@ -161,3 +161,313 @@ export const TRAINING_LEVELS: { code: TrainingLevel; name_en: string; name_km: s
     description_km: 'ការបណ្តុះបណ្តាលចែកចាយក្នុងសាលារៀនច្រើន'
   },
 ];
+
+// Training Agenda (per-training schedule items)
+export interface TrainingAgenda {
+  id: string;
+  training_id: string;
+  day_number: number;
+  start_time: string;
+  end_time: string;
+  topic_en: string;
+  topic_km: string;
+  description_en?: string;
+  description_km?: string;
+  instructor_name?: string;
+  instructor_name_km?: string;
+  sort_order: number;
+  is_deleted: boolean;
+  created_at: string;
+  updated_at: string;
+  created_by?: string;
+  updated_by?: string;
+}
+
+// Training Material (central library item)
+export type MaterialType = 'FILE' | 'URL';
+
+export interface TrainingMaterial {
+  id: string;
+  title_en: string;
+  title_km: string;
+  description_en?: string;
+  description_km?: string;
+  material_type: MaterialType;
+  file_url?: string;
+  external_url?: string;
+  file_name?: string;
+  file_size?: number;
+  mime_type?: string;
+  category?: string;
+  is_active: boolean;
+  is_deleted: boolean;
+  created_at: string;
+  updated_at: string;
+  created_by?: string;
+  updated_by?: string;
+  linked_trainings_count?: number;
+}
+
+// Training-Material Link (junction for many-to-many)
+export interface TrainingMaterialLink {
+  id: string;
+  training_id: string;
+  material_id: string;
+  sort_order: number;
+  is_required: boolean;
+  linked_at: string;
+  linked_by?: string;
+  material?: TrainingMaterial;
+}
+
+// Material Categories
+export type MaterialCategory = 'HANDOUT' | 'PRESENTATION' | 'VIDEO' | 'REFERENCE' | 'TEMPLATE';
+
+export const MATERIAL_CATEGORIES: { code: MaterialCategory; name_en: string; name_km: string }[] = [
+  { code: 'HANDOUT', name_en: 'Handout', name_km: 'ឯកសារចែក' },
+  { code: 'PRESENTATION', name_en: 'Presentation', name_km: 'បទបង្ហាញ' },
+  { code: 'VIDEO', name_en: 'Video', name_km: 'វីដេអូ' },
+  { code: 'REFERENCE', name_en: 'Reference', name_km: 'ឯកសារយោង' },
+  { code: 'TEMPLATE', name_en: 'Template', name_km: 'គំរូ' },
+];
+
+// ============================================
+// Attendance Grid Types
+// ============================================
+
+export type SessionAttendanceStatus = 'PRESENT' | 'ABSENT' | 'LATE' | 'EXCUSED';
+
+export interface AttendanceGridDay {
+  day_number: number;
+  date: string;
+}
+
+export interface AttendanceGridRecord {
+  id?: string;
+  morning_in?: string | null;
+  morning_out?: string | null;
+  afternoon_in?: string | null;
+  afternoon_out?: string | null;
+  status: SessionAttendanceStatus;
+}
+
+export interface AttendanceGridParticipant {
+  beneficiary_id: string;
+  name: string;
+  name_english?: string;
+  teacher_id: string;
+  training_role: string;
+  attendance: Record<string, AttendanceGridRecord>; // date -> record
+}
+
+export interface AttendanceGridData {
+  training: {
+    id: string;
+    training_code: string;
+    training_name: string;
+    training_name_english?: string;
+    training_start_date: string;
+    training_end_date: string;
+    training_status: string;
+  };
+  days: AttendanceGridDay[];
+  participants: AttendanceGridParticipant[];
+}
+
+export interface BulkAttendanceRecord {
+  beneficiary_id: string;
+  date: string;
+  morning_in?: string | null;
+  morning_out?: string | null;
+  afternoon_in?: string | null;
+  afternoon_out?: string | null;
+  session_attendance_status: SessionAttendanceStatus;
+}
+
+export interface BulkAttendanceRequest {
+  training_id: string;
+  records: BulkAttendanceRecord[];
+  manual_entry_reason?: string;
+}
+
+// ============================================
+// Transfer Types
+// ============================================
+
+export interface TransferRequest {
+  beneficiary_id: string;
+  source_training_id: string;
+  target_training_id: string;
+}
+
+export interface TransferDayMapping {
+  day_number: number;
+  source_date: string;
+  target_date: string;
+  will_transfer: boolean;
+}
+
+export interface TransferPreview {
+  participant: {
+    name: string;
+    name_english?: string;
+    teacher_id: string;
+  };
+  source_training: {
+    id: string;
+    training_code: string;
+    training_name: string;
+    training_name_english?: string;
+    start_date: string;
+    end_date: string;
+  };
+  target_training: {
+    id: string;
+    training_code: string;
+    training_name: string;
+    training_name_english?: string;
+    start_date: string;
+    end_date: string;
+  };
+  attendance_records_count: number;
+  records_that_will_transfer: number;
+  day_mapping: TransferDayMapping[];
+}
+
+export interface TransferResult {
+  message: string;
+  transferred_attendance_records: number;
+  total_original_records: number;
+}
+
+export interface AvailableTraining {
+  id: string;
+  training_code: string;
+  training_name: string;
+  training_name_english?: string;
+  training_start_date: string;
+  training_end_date: string;
+  training_status: string;
+  max_participants: number;
+  current_participants: number;
+}
+
+// ============================================
+// Survey & Test Types
+// ============================================
+
+export type SurveyType = 'PRE_TEST' | 'POST_TEST' | 'FEEDBACK' | 'EVALUATION' | 'COMMON_TEST';
+export type SurveyTiming = 'BEFORE_TRAINING' | 'DURING_TRAINING' | 'AFTER_TRAINING';
+export type QuestionType = 'MULTIPLE_CHOICE' | 'MULTIPLE_SELECT' | 'TRUE_FALSE' | 'LIKERT_SCALE' | 'RATING' | 'SHORT_TEXT' | 'LONG_TEXT';
+
+export interface Survey {
+  id: string;
+  title_en: string;
+  title_km: string;
+  description_en?: string;
+  description_km?: string;
+  survey_type: SurveyType;
+  is_template: boolean;
+  is_required: boolean;
+  passing_score?: number;
+  time_limit?: number;
+  allow_retake: boolean;
+  max_attempts?: number;
+  show_results_to_beneficiary: boolean;
+  show_correct_answers: boolean;
+  available_from?: string;
+  available_until?: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  created_by?: string;
+  updated_by?: string;
+  questions?: SurveyQuestion[];
+  _count?: {
+    questions: number;
+    responses: number;
+  };
+}
+
+export interface SurveyQuestion {
+  id: string;
+  survey_id: string;
+  question_text_en: string;
+  question_text_km: string;
+  help_text_en?: string;
+  help_text_km?: string;
+  question_type: QuestionType;
+  is_required: boolean;
+  sort_order: number;
+  points?: number;
+  correct_answer?: string;
+  options_en: string[];
+  options_km: string[];
+  scale_min?: number;
+  scale_max?: number;
+  scale_labels_en: string[];
+  scale_labels_km: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SurveyResponse {
+  id: string;
+  survey_id: string;
+  beneficiary_id: string;
+  training_id: string;
+  started_at?: string;
+  submitted_at?: string;
+  is_complete: boolean;
+  attempt_number: number;
+  total_score?: number;
+  max_score?: number;
+  percentage?: number;
+  passed?: boolean;
+  time_spent_seconds?: number;
+  created_at: string;
+  updated_at: string;
+  question_responses?: SurveyQuestionResponse[];
+}
+
+export interface SurveyQuestionResponse {
+  id: string;
+  response_id: string;
+  question_id: string;
+  answer_value: string;
+  answer_text?: string;
+  points_earned?: number;
+  is_correct?: boolean;
+  answered_at: string;
+}
+
+export interface TrainingSurveyLink {
+  id: string;
+  training_id: string;
+  survey_id: string;
+  timing: SurveyTiming;
+  is_required: boolean;
+  sort_order: number;
+  custom_deadline?: string;
+  linked_at: string;
+  linked_by?: string;
+  survey?: Survey;
+}
+
+export const SURVEY_TYPES: { value: SurveyType; label_en: string; label_km: string }[] = [
+  { value: 'PRE_TEST', label_en: 'Pre-Training Test', label_km: 'តេស្តមុនបណ្តុះបណ្តាល' },
+  { value: 'POST_TEST', label_en: 'Post-Training Test', label_km: 'តេស្តបន្ទាប់ពីបណ្តុះបណ្តាល' },
+  { value: 'FEEDBACK', label_en: 'Feedback Survey', label_km: 'ការស្ទង់មតិកែលម្អ' },
+  { value: 'EVALUATION', label_en: 'Skills Evaluation', label_km: 'ការវាយតម្លៃជំនាញ' },
+  { value: 'COMMON_TEST', label_en: 'Common Test', label_km: 'តេស្តទូទៅ' },
+];
+
+export const QUESTION_TYPES: { value: QuestionType; label_en: string; label_km: string }[] = [
+  { value: 'MULTIPLE_CHOICE', label_en: 'Multiple Choice', label_km: 'ពហុជ្រើសរើស' },
+  { value: 'MULTIPLE_SELECT', label_en: 'Multiple Select', label_km: 'ជ្រើសរើសច្រើន' },
+  { value: 'TRUE_FALSE', label_en: 'True/False', label_km: 'ពិត/មិនពិត' },
+  { value: 'LIKERT_SCALE', label_en: 'Likert Scale (1-5)', label_km: 'មាត្រដ្ឋានតម្លៃ (១-៥)' },
+  { value: 'RATING', label_en: 'Star Rating', label_km: 'ផ្កាយវាយតម្លៃ' },
+  { value: 'SHORT_TEXT', label_en: 'Short Answer', label_km: 'ចម្លើយខ្លី' },
+  { value: 'LONG_TEXT', label_en: 'Essay/Long Answer', label_km: 'ចម្លើយវែង' },
+];

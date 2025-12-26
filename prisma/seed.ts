@@ -26,6 +26,14 @@ async function main() {
 
   // Clear existing data (in correct order due to foreign keys)
   console.log('🗑️  Clearing existing data...');
+  await prisma.surveyQuestionResponse.deleteMany();
+  await prisma.surveyResponse.deleteMany();
+  await prisma.surveyQuestion.deleteMany();
+  await prisma.trainingSurveyLink.deleteMany();
+  await prisma.survey.deleteMany();
+  await prisma.trainingMaterialLink.deleteMany();
+  await prisma.trainingMaterial.deleteMany();
+  await prisma.trainingAgenda.deleteMany();
   await prisma.attendanceRecord.deleteMany();
   await prisma.beneficiaryTraining.deleteMany();
   await prisma.training.deleteMany();
@@ -35,6 +43,8 @@ async function main() {
   await prisma.trainingCategory.deleteMany();
   await prisma.trainingTypeConfig.deleteMany();
   await prisma.trainingLevelConfig.deleteMany();
+  await prisma.beneficiaryPosition.deleteMany();
+  await prisma.beneficiaryDepartment.deleteMany();
 
   // Seed System Settings
   console.log('⚙️  Seeding system settings...');
@@ -280,6 +290,35 @@ async function main() {
         color: '#3b82f6',
         sort_order: 3,
       },
+    ],
+  });
+
+  // Seed Beneficiary Positions
+  console.log('👤 Seeding beneficiary positions...');
+  await prisma.beneficiaryPosition.createMany({
+    data: [
+      { code: 'TEACHER', name_en: 'Teacher', name_km: 'គ្រូបង្រៀន', sort_order: 1 },
+      { code: 'SENIOR_TEACHER', name_en: 'Senior Teacher', name_km: 'គ្រូបង្រៀនជាន់ខ្ពស់', sort_order: 2 },
+      { code: 'DEPUTY_PRINCIPAL', name_en: 'Deputy Principal', name_km: 'នាយករងសាលា', sort_order: 3 },
+      { code: 'PRINCIPAL', name_en: 'Principal', name_km: 'នាយកសាលា', sort_order: 4 },
+      { code: 'DIRECTOR', name_en: 'Director', name_km: 'នាយក', sort_order: 5 },
+      { code: 'COORDINATOR', name_en: 'Coordinator', name_km: 'អ្នកសម្របសម្រួល', sort_order: 6 },
+    ],
+  });
+
+  // Seed Beneficiary Departments/Subjects
+  console.log('🏢 Seeding beneficiary departments...');
+  await prisma.beneficiaryDepartment.createMany({
+    data: [
+      { code: 'KHMER', name_en: 'Khmer Language', name_km: 'ភាសាខ្មែរ', sort_order: 1 },
+      { code: 'MATH', name_en: 'Mathematics', name_km: 'គណិតវិទ្យា', sort_order: 2 },
+      { code: 'SCIENCE', name_en: 'Science', name_km: 'វិទ្យាសាស្ត្រ', sort_order: 3 },
+      { code: 'SOCIAL_STUDIES', name_en: 'Social Studies', name_km: 'សិក្សាសង្គម', sort_order: 4 },
+      { code: 'ENGLISH', name_en: 'English Language', name_km: 'ភាសាអង់គ្លេស', sort_order: 5 },
+      { code: 'PHYSICAL_ED', name_en: 'Physical Education', name_km: 'អប់រំកាយ', sort_order: 6 },
+      { code: 'ART', name_en: 'Arts', name_km: 'សិល្បៈ', sort_order: 7 },
+      { code: 'IT', name_en: 'Information Technology', name_km: 'បច្ចេកវិទ្យាព័ត៌មាន', sort_order: 8 },
+      { code: 'GENERAL', name_en: 'General/Multiple Subjects', name_km: 'ទូទៅ/ច្រើនមុខវិជ្ជា', sort_order: 9 },
     ],
   });
 
@@ -776,6 +815,8 @@ async function main() {
   console.log('  - 5 training categories created (Khmer, Math, IT, Pedagogy, Leadership)');
   console.log('  - 3 training types created (Workshop, Course, Seminar)');
   console.log('  - 3 training levels created (National, Provincial, Cluster)');
+  console.log('  - 6 beneficiary positions created');
+  console.log('  - 9 beneficiary departments created');
   console.log('  - 3 users created (admin, superadmin, teacher001)');
   console.log('  - 8 beneficiaries created (3 original + 5 from mockData)');
   console.log('  - 7 trainings created (ONGOING, DRAFT, COMPLETED, CANCELLED statuses)');

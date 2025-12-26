@@ -7,10 +7,13 @@ import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { User, Bell, Shield, Database, Globe, Type, Settings2 } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { User, Bell, Shield, Database, Globe, Type, Settings2, Briefcase, Building2 } from 'lucide-react';
 import { useFont, KHMER_FONTS } from '@/contexts/FontContext';
 import { useState } from 'react';
-import { TRAINING_CATEGORIES, TRAINING_TYPES } from '@/types/training';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
 import type { TrainingCategory, TrainingType } from '@/types/training';
 import {
   Table,
@@ -28,55 +31,241 @@ import { useAuth } from '@/contexts/AuthContext';
 export default function Settings() {
   const { khmerFont, setKhmerFont } = useFont();
   const { user } = useAuth();
-  const [categories, setCategories] = useState<Array<{ code: TrainingCategory; name_en: string; name_km: string }>>(
-    TRAINING_CATEGORIES
-  );
-  const [types, setTypes] = useState<Array<{ code: TrainingType; name_en: string; name_km: string }>>(
-    TRAINING_TYPES
-  );
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [profileData, setProfileData] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+  });
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
 
-  // Category CRUD operations
+  // Fetch categories
+  const { data: categories = [] } = useQuery({
+    queryKey: ['categories'],
+    queryFn: api.categories.getAll,
+  });
+
+  // Fetch types
+  const { data: types = [] } = useQuery({
+    queryKey: ['types'],
+    queryFn: api.types.getAll,
+  });
+
+  // Fetch positions
+  const { data: positions = [] } = useQuery({
+    queryKey: ['positions'],
+    queryFn: api.positions.getAll,
+  });
+
+  // Fetch departments
+  const { data: departments = [] } = useQuery({
+    queryKey: ['departments'],
+    queryFn: api.departments.getAll,
+  });
+
+  // Profile update mutation
+  const profileMutation = useMutation({
+    mutationFn: (data: { name: string; email: string; phone: string }) =>
+      api.auth.updateProfile(data),
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានធ្វើបច្ចុប្បន្នភាពព័ត៌មានផ្ទាល់ខ្លួនដោយជោគជ័យ' });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  // Password change mutation
+  const passwordMutation = useMutation({
+    mutationFn: (data: { currentPassword: string; newPassword: string }) =>
+      api.auth.changePassword(data),
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានផ្លាស់ប្តូរពាក្យសម្ងាត់ដោយជោគជ័យ' });
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  // Category mutations
+  const createCategoryMutation = useMutation({
+    mutationFn: api.categories.create,
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានបង្កើតប្រភេទថ្មី' });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  const updateCategoryMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: any }) => api.categories.update(id, data),
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានធ្វើបច្ចុប្បន្នភាពប្រភេទ' });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  const deleteCategoryMutation = useMutation({
+    mutationFn: api.categories.delete,
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានលុបប្រភេទ' });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  // Type mutations
+  const createTypeMutation = useMutation({
+    mutationFn: api.types.create,
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានបង្កើតប្រភេទថ្មី' });
+      queryClient.invalidateQueries({ queryKey: ['types'] });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  const updateTypeMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: any }) => api.types.update(id, data),
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានធ្វើបច្ចុប្បន្នភាពប្រភេទ' });
+      queryClient.invalidateQueries({ queryKey: ['types'] });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  const deleteTypeMutation = useMutation({
+    mutationFn: api.types.delete,
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានលុបប្រភេទ' });
+      queryClient.invalidateQueries({ queryKey: ['types'] });
+    },
+    onError: (error: any) => {
+      toast({ title: 'កំហុស', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  // Handlers
   const handleCreateCategory = (data: { code: string; name_en: string; name_km: string }) => {
-    // TODO: Replace with actual API call
-    const newCategory = { ...data, code: data.code as TrainingCategory };
-    setCategories([...categories, newCategory]);
-    console.log('Create category:', data);
+    createCategoryMutation.mutate(data);
   };
 
-  const handleUpdateCategory = (oldCode: TrainingCategory, data: { code: string; name_en: string; name_km: string }) => {
-    // TODO: Replace with actual API call
-    setCategories(categories.map(cat =>
-      cat.code === oldCode ? { ...data, code: data.code as TrainingCategory } : cat
-    ));
-    console.log('Update category:', oldCode, data);
+  const handleUpdateCategory = (category: any, data: { code: string; name_en: string; name_km: string }) => {
+    updateCategoryMutation.mutate({ id: category.id, data });
   };
 
-  const handleDeleteCategory = (code: TrainingCategory) => {
-    // TODO: Replace with actual API call
-    setCategories(categories.filter(cat => cat.code !== code));
-    console.log('Delete category:', code);
+  const handleDeleteCategory = (category: any) => {
+    deleteCategoryMutation.mutate(category.id);
   };
 
-  // Type CRUD operations
   const handleCreateType = (data: { code: string; name_en: string; name_km: string }) => {
-    // TODO: Replace with actual API call
-    const newType = { ...data, code: data.code as TrainingType };
-    setTypes([...types, newType]);
-    console.log('Create type:', data);
+    createTypeMutation.mutate(data);
   };
 
-  const handleUpdateType = (oldCode: TrainingType, data: { code: string; name_en: string; name_km: string }) => {
-    // TODO: Replace with actual API call
-    setTypes(types.map(t =>
-      t.code === oldCode ? { ...data, code: data.code as TrainingType } : t
-    ));
-    console.log('Update type:', oldCode, data);
+  const handleUpdateType = (type: any, data: { code: string; name_en: string; name_km: string }) => {
+    updateTypeMutation.mutate({ id: type.id, data });
   };
 
-  const handleDeleteType = (code: TrainingType) => {
-    // TODO: Replace with actual API call
-    setTypes(types.filter(t => t.code !== code));
-    console.log('Delete type:', code);
+  const handleDeleteType = (type: any) => {
+    deleteTypeMutation.mutate(type.id);
+  };
+
+  // Position mutations (same pattern as categories/types)
+  const createPositionMutation = useMutation({
+    mutationFn: api.positions.create,
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានបង្កើតមុខតំណែង' });
+      queryClient.invalidateQueries({ queryKey: ['positions'] });
+    },
+    onError: (error: any) => toast({ title: 'កំហុស', description: error.message, variant: 'destructive' }),
+  });
+
+  const updatePositionMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: any }) => api.positions.update(id, data),
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានធ្វើបច្ចុប្បន្នភាព' });
+      queryClient.invalidateQueries({ queryKey: ['positions'] });
+    },
+    onError: (error: any) => toast({ title: 'កំហុស', description: error.message, variant: 'destructive' }),
+  });
+
+  const deletePositionMutation = useMutation({
+    mutationFn: api.positions.delete,
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានលុប' });
+      queryClient.invalidateQueries({ queryKey: ['positions'] });
+    },
+    onError: (error: any) => toast({ title: 'កំហុស', description: error.message, variant: 'destructive' }),
+  });
+
+  // Department mutations
+  const createDepartmentMutation = useMutation({
+    mutationFn: api.departments.create,
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានបង្កើតនាយកដ្ឋាន' });
+      queryClient.invalidateQueries({ queryKey: ['departments'] });
+    },
+    onError: (error: any) => toast({ title: 'កំហុស', description: error.message, variant: 'destructive' }),
+  });
+
+  const updateDepartmentMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: any }) => api.departments.update(id, data),
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានធ្វើបច្ចុប្បន្នភាព' });
+      queryClient.invalidateQueries({ queryKey: ['departments'] });
+    },
+    onError: (error: any) => toast({ title: 'កំហុស', description: error.message, variant: 'destructive' }),
+  });
+
+  const deleteDepartmentMutation = useMutation({
+    mutationFn: api.departments.delete,
+    onSuccess: () => {
+      toast({ title: 'ជោគជ័យ', description: 'បានលុប' });
+      queryClient.invalidateQueries({ queryKey: ['departments'] });
+    },
+    onError: (error: any) => toast({ title: 'កំហុស', description: error.message, variant: 'destructive' }),
+  });
+
+  // Position handlers
+  const handleCreatePosition = (data: any) => createPositionMutation.mutate(data);
+  const handleUpdatePosition = (position: any, data: any) => updatePositionMutation.mutate({ id: position.id, data });
+  const handleDeletePosition = (position: any) => deletePositionMutation.mutate(position.id);
+
+  // Department handlers
+  const handleCreateDepartment = (data: any) => createDepartmentMutation.mutate(data);
+  const handleUpdateDepartment = (dept: any, data: any) => updateDepartmentMutation.mutate({ id: dept.id, data });
+  const handleDeleteDepartment = (dept: any) => deleteDepartmentMutation.mutate(dept.id);
+
+  const handleProfileSave = () => {
+    profileMutation.mutate(profileData);
+  };
+
+  const handlePasswordChange = () => {
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast({ title: 'កំហុស', description: 'ពាក្យសម្ងាត់ថ្មីមិនត្រូវគ្នា', variant: 'destructive' });
+      return;
+    }
+    passwordMutation.mutate({
+      currentPassword: passwordData.currentPassword,
+      newPassword: passwordData.newPassword,
+    });
   };
 
   const getRoleName = (role: string) => {
@@ -92,7 +281,29 @@ export default function Settings() {
 
   return (
     <DashboardLayout title="ការកំណត់" subtitle="គ្រប់គ្រងគណនី និងចំណូលចិត្តរបស់អ្នក">
-      <div className="grid gap-4 lg:gap-6 lg:grid-cols-3">
+      <Tabs defaultValue="profile" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+          <TabsTrigger value="profile" className="gap-2">
+            <User className="h-4 w-4" />
+            <span className="hidden sm:inline">គណនី</span>
+          </TabsTrigger>
+          <TabsTrigger value="system" className="gap-2">
+            <Settings2 className="h-4 w-4" />
+            <span className="hidden sm:inline">ប្រព័ន្ធ</span>
+          </TabsTrigger>
+          <TabsTrigger value="references" className="gap-2">
+            <Database className="h-4 w-4" />
+            <span className="hidden sm:inline">ឯកសារយោង</span>
+          </TabsTrigger>
+          <TabsTrigger value="security" className="gap-2">
+            <Shield className="h-4 w-4" />
+            <span className="hidden sm:inline">សុវត្ថិភាព</span>
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Profile & Account Tab */}
+        <TabsContent value="profile" className="space-y-4">
+          <div className="grid gap-4 lg:gap-6 lg:grid-cols-3">
         {/* Profile Section */}
         <Card className="lg:col-span-2">
           <CardHeader className="pb-3 lg:pb-6">
@@ -127,15 +338,28 @@ export default function Settings() {
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="name">ឈ្មោះពេញ</Label>
-                <Input id="name" defaultValue={user?.name} />
+                <Input
+                  id="name"
+                  value={profileData.name}
+                  onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">អ៊ីមែល</Label>
-                <Input id="email" type="email" defaultValue={user?.email} />
+                <Input
+                  id="email"
+                  type="email"
+                  value={profileData.email}
+                  onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="phone">លេខទូរស័ព្ទ</Label>
-                <Input id="phone" defaultValue="+855 12 345 678" />
+                <Input
+                  id="phone"
+                  value={profileData.phone}
+                  onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="role">តួនាទី</Label>
@@ -144,7 +368,9 @@ export default function Settings() {
             </div>
 
             <div className="flex justify-end">
-              <Button>រក្សាទុកការផ្លាស់ប្តូរ</Button>
+              <Button onClick={handleProfileSave} disabled={profileMutation.isPending}>
+                {profileMutation.isPending ? 'កំពុងរក្សាទុក...' : 'រក្សាទុកការផ្លាស់ប្តូរ'}
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -263,49 +489,184 @@ export default function Settings() {
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="current-password">ពាក្យសម្ងាត់បច្ចុប្បន្ន</Label>
-                <Input id="current-password" type="password" />
+                <Input
+                  id="current-password"
+                  type="password"
+                  value={passwordData.currentPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                />
               </div>
               <div className="hidden sm:block"></div>
               <div className="space-y-2">
                 <Label htmlFor="new-password">ពាក្យសម្ងាត់ថ្មី</Label>
-                <Input id="new-password" type="password" />
+                <Input
+                  id="new-password"
+                  type="password"
+                  value={passwordData.newPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="confirm-password">បញ្ជាក់ពាក្យសម្ងាត់</Label>
-                <Input id="confirm-password" type="password" />
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  value={passwordData.confirmPassword}
+                  onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                />
               </div>
             </div>
 
             <div className="flex justify-end">
-              <Button variant="outline">ធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់</Button>
+              <Button
+                variant="outline"
+                onClick={handlePasswordChange}
+                disabled={passwordMutation.isPending}
+              >
+                {passwordMutation.isPending ? 'កំពុងធ្វើបច្ចុប្បន្នភាព...' : 'ធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់'}
+              </Button>
             </div>
           </CardContent>
         </Card>
+          </div>
+        </TabsContent>
 
-        {/* System Info */}
-        <Card>
-          <CardHeader className="pb-3 lg:pb-6">
-            <CardTitle className="flex items-center gap-2 text-sm lg:text-base">
-              <Database className="h-4 w-4 text-primary" />
-              ព័ត៌មានប្រព័ន្ធ
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-xs lg:text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">កំណែ</span>
-              <span className="font-medium">1.0.0</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">ធ្វើបច្ចុប្បន្នភាពចុងក្រោយ</span>
-              <span className="font-medium">ធ្នូ ២៣, ២០២៥</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">មូលដ្ឋានទិន្នន័យ</span>
-              <span className="font-medium text-primary">បានភ្ជាប់</span>
-            </div>
-          </CardContent>
-        </Card>
+        {/* System Settings Tab */}
+        <TabsContent value="system" className="space-y-4">
+          <div className="grid gap-4 lg:gap-6 lg:grid-cols-3">
+            <Card className="lg:col-span-2">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bell className="h-5 w-5 text-primary" />
+                  ការជូនដំណឹង
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium">ការជូនដំណឹងអ៊ីមែល</p>
+                    <p className="text-xs text-muted-foreground">ទទួលបានព័ត៌មានថ្មីៗតាមអ៊ីមែល</p>
+                  </div>
+                  <Switch defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium">ការរំលឹកបណ្តុះបណ្តាល</p>
+                    <p className="text-xs text-muted-foreground">មុនពេលបណ្តុះបណ្តាលចាប់ផ្តើម</p>
+                  </div>
+                  <Switch defaultChecked />
+                </div>
+              </CardContent>
+            </Card>
 
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Globe className="h-5 w-5 text-primary" />
+                  ភាសា និងពុម្ពអក្សរ
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>ពុម្ពអក្សរខ្មែរ</Label>
+                  <Select value={khmerFont} onValueChange={setKhmerFont}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {KHMER_FONTS.map((font) => (
+                        <SelectItem key={font.value} value={font.value} style={{ fontFamily: font.value }}>
+                          {font.labelKm}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="rounded-lg border bg-muted/30 p-4">
+                  <p className="text-sm text-muted-foreground mb-2">មើលជាមុន៖</p>
+                  <p className="text-lg" style={{ fontFamily: khmerFont }}>វគ្គបណ្តុះបណ្តាលគ្រូបង្រៀន</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="lg:col-span-3">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Database className="h-5 w-5 text-primary" />
+                  ព័ត៌មានប្រព័ន្ធ
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-4 sm:grid-cols-3">
+                <div className="flex justify-between sm:flex-col">
+                  <span className="text-sm text-muted-foreground">កំណែ</span>
+                  <span className="font-medium">1.0.0</span>
+                </div>
+                <div className="flex justify-between sm:flex-col">
+                  <span className="text-sm text-muted-foreground">ធ្វើបច្ចុប្បន្នភាពចុងក្រោយ</span>
+                  <span className="font-medium">ធ្នូ ២៣, ២០២៥</span>
+                </div>
+                <div className="flex justify-between sm:flex-col">
+                  <span className="text-sm text-muted-foreground">មូលដ្ឋានទិន្នន័យ</span>
+                  <span className="font-medium text-primary">បានភ្ជាប់</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* Security Tab */}
+        <TabsContent value="security" className="space-y-4">
+          <Card className="max-w-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-primary" />
+                ផ្លាស់ប្តូរពាក្យសម្ងាត់
+              </CardTitle>
+              <CardDescription>
+                គ្រប់គ្រងពាក្យសម្ងាត់ និងការកំណត់សុវត្ថិភាពរបស់អ្នក
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2 sm:col-span-2">
+                  <Label htmlFor="sec-current-password">ពាក្យសម្ងាត់បច្ចុប្បន្ន</Label>
+                  <Input
+                    id="sec-current-password"
+                    type="password"
+                    value={passwordData.currentPassword}
+                    onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sec-new-password">ពាក្យសម្ងាត់ថ្មី</Label>
+                  <Input
+                    id="sec-new-password"
+                    type="password"
+                    value={passwordData.newPassword}
+                    onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sec-confirm-password">បញ្ជាក់ពាក្យសម្ងាត់</Label>
+                  <Input
+                    id="sec-confirm-password"
+                    type="password"
+                    value={passwordData.confirmPassword}
+                    onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <Button onClick={handlePasswordChange} disabled={passwordMutation.isPending}>
+                  {passwordMutation.isPending ? 'កំពុងធ្វើបច្ចុប្បន្នភាព...' : 'ធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់'}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Reference Data Tab */}
+        <TabsContent value="references" className="space-y-4">
         {/* Training Categories Management */}
         <Card className="lg:col-span-3">
           <CardHeader className="pb-3 lg:pb-6">
@@ -351,12 +712,12 @@ export default function Settings() {
                               <CategoryFormDialog
                                 mode="edit"
                                 category={category}
-                                onSave={(data) => handleUpdateCategory(category.code, data)}
+                                onSave={(data) => handleUpdateCategory(category, data)}
                               />
                               <DeleteConfirmDialog
                                 itemType="category"
                                 itemName={category.name_km}
-                                onConfirm={() => handleDeleteCategory(category.code)}
+                                onConfirm={() => handleDeleteCategory(category)}
                               />
                             </div>
                           </TableCell>
@@ -376,12 +737,12 @@ export default function Settings() {
                           <CategoryFormDialog
                             mode="edit"
                             category={category}
-                            onSave={(data) => handleUpdateCategory(category.code, data)}
+                            onSave={(data) => handleUpdateCategory(category, data)}
                           />
                           <DeleteConfirmDialog
                             itemType="category"
                             itemName={category.name_km}
-                            onConfirm={() => handleDeleteCategory(category.code)}
+                            onConfirm={() => handleDeleteCategory(category)}
                           />
                         </div>
                       </div>
@@ -426,12 +787,12 @@ export default function Settings() {
                               <TypeFormDialog
                                 mode="edit"
                                 type={type}
-                                onSave={(data) => handleUpdateType(type.code, data)}
+                                onSave={(data) => handleUpdateType(type, data)}
                               />
                               <DeleteConfirmDialog
                                 itemType="type"
                                 itemName={type.name_km}
-                                onConfirm={() => handleDeleteType(type.code)}
+                                onConfirm={() => handleDeleteType(type)}
                               />
                             </div>
                           </TableCell>
@@ -451,12 +812,12 @@ export default function Settings() {
                           <TypeFormDialog
                             mode="edit"
                             type={type}
-                            onSave={(data) => handleUpdateType(type.code, data)}
+                            onSave={(data) => handleUpdateType(type, data)}
                           />
                           <DeleteConfirmDialog
                             itemType="type"
                             itemName={type.name_km}
-                            onConfirm={() => handleDeleteType(type.code)}
+                            onConfirm={() => handleDeleteType(type)}
                           />
                         </div>
                       </div>
@@ -478,12 +839,111 @@ export default function Settings() {
 
             <div className="mt-4 lg:mt-6 rounded-lg border border-blue-200 bg-blue-50 p-3 lg:p-4 dark:border-blue-900 dark:bg-blue-950">
               <p className="text-xs lg:text-sm text-blue-800 dark:text-blue-200">
-                <strong>ចំណាំ៖</strong> ការផ្លាស់ប្តូរដែលធ្វើនៅទីនេះត្រូវបានរក្សាទុកក្នុងអង្គចងចាំរបស org រឺសាប្រព័ន្ធ។ ដើម្បីរក្សាទុកក្នុងមូលដ្ឋានទិន្នន័យ សូមប្រាកដថា API endpoints របស់អ្នកត្រូវបានភ្ជាប់សម្រាប់ការគ្រប់គ្រងប្រភេទ និងប្រភេទ។
+                <strong>ចំណាំ៖</strong> ការផ្លាស់ប្តូរដែលធ្វើនៅទីនេះត្រូវបានរក្សាទុកក្នុងមូលដ្ឋានទិន្នន័យ។
               </p>
             </div>
           </CardContent>
         </Card>
-      </div>
+
+        {/* Beneficiary Positions & Departments */}
+        <Card className="lg:col-span-3">
+          <CardHeader className="pb-3 lg:pb-6">
+            <div className="flex items-center gap-2">
+              <Settings2 className="h-4 w-4 lg:h-5 lg:w-5 text-primary" />
+              <CardTitle className="text-base lg:text-lg">មុខតំណែង និងនាយកដ្ឋានអ្នកទទួលផល</CardTitle>
+            </div>
+            <CardDescription className="text-xs lg:text-sm">
+              គ្រប់គ្រងមុខតំណែង និងនាយកដ្ឋានសម្រាប់គ្រូបង្រៀន (អ្នកគ្រប់គ្រងជាន់ខ្ពស់ និងអ្នកគ្រប់គ្រង)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 lg:gap-6 lg:grid-cols-2">
+              {/* Positions */}
+              <div className="space-y-3 lg:space-y-4">
+                <h3 className="text-xs lg:text-sm font-medium">មុខតំណែង</h3>
+                <div className="rounded-md border">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>កូដ</TableHead>
+                        <TableHead>អង់គ្លេស</TableHead>
+                        <TableHead>ខ្មែរ</TableHead>
+                        <TableHead className="w-[100px]">សកម្មភាព</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {positions.map((position: any) => (
+                        <TableRow key={position.code}>
+                          <TableCell className="font-mono text-xs">{position.code}</TableCell>
+                          <TableCell>{position.name_en}</TableCell>
+                          <TableCell>{position.name_km}</TableCell>
+                          <TableCell>
+                            <div className="flex gap-1">
+                              <CategoryFormDialog
+                                mode="edit"
+                                category={position}
+                                onSave={(data) => handleUpdatePosition(position, data)}
+                              />
+                              <DeleteConfirmDialog
+                                itemType="position"
+                                itemName={position.name_km}
+                                onConfirm={() => handleDeletePosition(position)}
+                              />
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+                <CategoryFormDialog mode="create" onSave={handleCreatePosition} />
+              </div>
+
+              {/* Departments */}
+              <div className="space-y-3 lg:space-y-4">
+                <h3 className="text-xs lg:text-sm font-medium">នាយកដ្ឋាន/មុខវិជ្ជា</h3>
+                <div className="rounded-md border">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>កូដ</TableHead>
+                        <TableHead>អង់គ្លេស</TableHead>
+                        <TableHead>ខ្មែរ</TableHead>
+                        <TableHead className="w-[100px]">សកម្មភាព</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {departments.map((dept: any) => (
+                        <TableRow key={dept.code}>
+                          <TableCell className="font-mono text-xs">{dept.code}</TableCell>
+                          <TableCell>{dept.name_en}</TableCell>
+                          <TableCell>{dept.name_km}</TableCell>
+                          <TableCell>
+                            <div className="flex gap-1">
+                              <CategoryFormDialog
+                                mode="edit"
+                                category={dept}
+                                onSave={(data) => handleUpdateDepartment(dept, data)}
+                              />
+                              <DeleteConfirmDialog
+                                itemType="department"
+                                itemName={dept.name_km}
+                                onConfirm={() => handleDeleteDepartment(dept)}
+                              />
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+                <CategoryFormDialog mode="create" onSave={handleCreateDepartment} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        </TabsContent>
+      </Tabs>
     </DashboardLayout>
   );
 }

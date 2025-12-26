@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Trainings from "./pages/Trainings";
+import Materials from "./pages/Materials";
+import Surveys from "./pages/Surveys";
 import Beneficiaries from "./pages/Beneficiaries";
 import Attendance from "./pages/Attendance";
 import Settings from "./pages/Settings";
@@ -18,6 +20,9 @@ import AttendanceCheckin from "./pages/portal/AttendanceCheckin";
 import TrainingHistory from "./pages/portal/TrainingHistory";
 import AttendanceHistory from "./pages/portal/AttendanceHistory";
 import BeneficiaryProfile from "./pages/portal/BeneficiaryProfile";
+import MySurveys from "./pages/portal/MySurveys";
+import TakeSurvey from "./pages/portal/TakeSurvey";
+import SurveyResults from "./pages/portal/SurveyResults";
 import { SidebarProvider } from "@/contexts/SidebarContext";
 import { FontProvider } from "@/contexts/FontContext";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -63,6 +68,22 @@ const App = () => (
                   element={
                     <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
                       <Trainings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/materials"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <Materials />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/surveys"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <Surveys />
                     </ProtectedRoute>
                   }
                 />
@@ -145,6 +166,30 @@ const App = () => (
                   element={
                     <ProtectedRoute allowedRoles={['BENEFICIARY']}>
                       <BeneficiaryProfile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/surveys"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <MySurveys />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/surveys/:surveyId/take"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <TakeSurvey />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/portal/surveys/:surveyId/results"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <SurveyResults />
                     </ProtectedRoute>
                   }
                 />

@@ -43,6 +43,16 @@ export const api = {
       body: JSON.stringify({ token }),
     }),
     getMe: () => api.fetch('/auth/me'),
+    updateProfile: (data: { name?: string; email?: string; phone?: string; profile_image_url?: string }) =>
+      api.fetch('/auth/profile', {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      }),
+    changePassword: (data: { currentPassword: string; newPassword: string }) =>
+      api.fetch('/auth/password', {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      }),
   },
 
   // Trainings
@@ -128,5 +138,263 @@ export const api = {
     delete: (id: string) => api.fetch(`/attendance/${id}`, {
       method: 'DELETE',
     }),
+    // Attendance Grid
+    getGrid: (trainingId: string) => api.fetch(`/attendance/grid/${trainingId}`),
+    bulkUpdate: (data: { training_id: string; records: any[]; manual_entry_reason?: string }) =>
+      api.fetch('/attendance/bulk', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+  },
+
+  // Participant Transfers
+  transfers: {
+    preview: (data: { beneficiary_id: string; source_training_id: string; target_training_id: string }) =>
+      api.fetch('/transfers/preview', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    execute: (data: { beneficiary_id: string; source_training_id: string; target_training_id: string }) =>
+      api.fetch('/transfers/participant', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    getAvailableTrainings: (excludeTrainingId?: string) => {
+      const query = excludeTrainingId ? `?exclude_training_id=${excludeTrainingId}` : '';
+      return api.fetch(`/transfers/available-trainings${query}`);
+    },
+  },
+
+  // Training Agendas
+  agendas: {
+    getByTraining: (trainingId: string) => api.fetch(`/trainings/${trainingId}/agendas`),
+    create: (trainingId: string, data: any) => api.fetch(`/trainings/${trainingId}/agendas`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    update: (id: string, data: any) => api.fetch(`/agendas/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+    delete: (id: string) => api.fetch(`/agendas/${id}`, {
+      method: 'DELETE',
+    }),
+    bulkUpdate: (trainingId: string, agendas: any[]) => api.fetch(`/trainings/${trainingId}/agendas/bulk`, {
+      method: 'POST',
+      body: JSON.stringify({ agendas }),
+    }),
+    copyFrom: (trainingId: string, sourceTrainingId: string) =>
+      api.fetch(`/trainings/${trainingId}/agendas/copy-from/${sourceTrainingId}`, {
+        method: 'POST',
+      }),
+  },
+
+  // Training Materials Library
+  materials: {
+    getAll: (params?: { category?: string; search?: string }) => {
+      const searchParams = new URLSearchParams();
+      if (params?.category) searchParams.append('category', params.category);
+      if (params?.search) searchParams.append('search', params.search);
+      const query = searchParams.toString() ? `?${searchParams}` : '';
+      return api.fetch(`/materials${query}`);
+    },
+    getById: (id: string) => api.fetch(`/materials/${id}`),
+    create: (data: any) => api.fetch('/materials', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    upload: async (file: File, metadata: any) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('metadata', JSON.stringify(metadata));
+
+      const token = getAuthToken();
+      const response = await fetch(`${API_URL}/materials/upload`, {
+        method: 'POST',
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Upload failed');
+      }
+
+      return response.json();
+    },
+    update: (id: string, data: any) => api.fetch(`/materials/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+    delete: (id: string) => api.fetch(`/materials/${id}`, {
+      method: 'DELETE',
+    }),
+
+    // Training-Material linking
+    getByTraining: (trainingId: string) => api.fetch(`/trainings/${trainingId}/materials`),
+    linkToTraining: (trainingId: string, materialIds: string[]) =>
+      api.fetch(`/trainings/${trainingId}/materials`, {
+        method: 'POST',
+        body: JSON.stringify({ materialIds }),
+      }),
+    unlinkFromTraining: (trainingId: string, materialId: string) =>
+      api.fetch(`/trainings/${trainingId}/materials/${materialId}`, {
+        method: 'DELETE',
+      }),
+    reorderInTraining: (trainingId: string, orderedIds: string[]) =>
+      api.fetch(`/trainings/${trainingId}/materials/reorder`, {
+        method: 'PUT',
+        body: JSON.stringify({ orderedIds }),
+      }),
+    copyFrom: (trainingId: string, sourceTrainingId: string) =>
+      api.fetch(`/trainings/${trainingId}/materials/copy-from/${sourceTrainingId}`, {
+        method: 'POST',
+      }),
+  },
+
+  // Training Categories
+  categories: {
+    getAll: () => api.fetch('/categories'),
+    create: (data: { code: string; name_en: string; name_km: string; description?: string; icon?: string; color?: string }) =>
+      api.fetch('/categories', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    update: (id: string, data: { code: string; name_en: string; name_km: string; description?: string; icon?: string; color?: string }) =>
+      api.fetch(`/categories/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      }),
+    delete: (id: string) => api.fetch(`/categories/${id}`, {
+      method: 'DELETE',
+    }),
+  },
+
+  // Training Types
+  types: {
+    getAll: () => api.fetch('/types'),
+    create: (data: { code: string; name_en: string; name_km: string; description?: string }) =>
+      api.fetch('/types', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    update: (id: string, data: { code: string; name_en: string; name_km: string; description?: string }) =>
+      api.fetch(`/types/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      }),
+    delete: (id: string) => api.fetch(`/types/${id}`, {
+      method: 'DELETE',
+    }),
+  },
+
+  // Beneficiary Positions
+  positions: {
+    getAll: () => api.fetch('/positions'),
+    create: (data: { code: string; name_en: string; name_km: string; description?: string }) =>
+      api.fetch('/positions', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    update: (id: string, data: { code: string; name_en: string; name_km: string; description?: string }) =>
+      api.fetch(`/positions/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      }),
+    delete: (id: string) => api.fetch(`/positions/${id}`, {
+      method: 'DELETE',
+    }),
+  },
+
+  // Beneficiary Departments
+  departments: {
+    getAll: () => api.fetch('/departments'),
+    create: (data: { code: string; name_en: string; name_km: string; description?: string }) =>
+      api.fetch('/departments', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    update: (id: string, data: { code: string; name_en: string; name_km: string; description?: string }) =>
+      api.fetch(`/departments/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      }),
+    delete: (id: string) => api.fetch(`/departments/${id}`, {
+      method: 'DELETE',
+    }),
+  },
+
+  // Surveys & Tests
+  surveys: {
+    getAll: (params?: { type?: string; search?: string }) => {
+      const searchParams = new URLSearchParams();
+      if (params?.type) searchParams.append('type', params.type);
+      if (params?.search) searchParams.append('search', params.search);
+      const query = searchParams.toString() ? `?${searchParams}` : '';
+      return api.fetch(`/surveys${query}`);
+    },
+    getById: (id: string) => api.fetch(`/surveys/${id}`),
+    create: (data: any) =>
+      api.fetch('/surveys', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    update: (id: string, data: any) =>
+      api.fetch(`/surveys/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      }),
+    delete: (id: string) =>
+      api.fetch(`/surveys/${id}`, {
+        method: 'DELETE',
+      }),
+
+    // Questions
+    addQuestion: (surveyId: string, data: any) =>
+      api.fetch(`/surveys/${surveyId}/questions`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    updateQuestion: (surveyId: string, questionId: string, data: any) =>
+      api.fetch(`/surveys/${surveyId}/questions/${questionId}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      }),
+    deleteQuestion: (surveyId: string, questionId: string) =>
+      api.fetch(`/surveys/${surveyId}/questions/${questionId}`, {
+        method: 'DELETE',
+      }),
+
+    // Training linking
+    getByTraining: (trainingId: string) =>
+      api.fetch(`/surveys/trainings/${trainingId}/surveys`),
+    attachToTraining: (trainingId: string, data: { survey_id: string; timing: string; is_required?: boolean }) =>
+      api.fetch(`/surveys/trainings/${trainingId}/surveys`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    detachFromTraining: (trainingId: string, linkId: string) =>
+      api.fetch(`/surveys/trainings/${trainingId}/surveys/${linkId}`, {
+        method: 'DELETE',
+      }),
+
+    // Responses
+    getResponses: (surveyId: string, trainingId?: string) => {
+      const query = trainingId ? `?training_id=${trainingId}` : '';
+      return api.fetch(`/surveys/${surveyId}/responses${query}`);
+    },
+    startSurvey: (surveyId: string, beneficiaryId: string, trainingId: string) =>
+      api.fetch(`/surveys/${surveyId}/start/${beneficiaryId}?training_id=${trainingId}`),
+    submitResponse: (surveyId: string, data: any) =>
+      api.fetch(`/surveys/${surveyId}/responses`, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+    getResults: (surveyId: string, trainingId?: string) => {
+      const query = trainingId ? `?training_id=${trainingId}` : '';
+      return api.fetch(`/surveys/${surveyId}/results${query}`);
+    },
+    getBeneficiarySurveys: (beneficiaryId: string) =>
+      api.fetch(`/surveys/beneficiaries/${beneficiaryId}/surveys`),
   },
 };

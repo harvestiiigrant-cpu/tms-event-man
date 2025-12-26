@@ -32,6 +32,9 @@ import { EditTrainingDialog } from '@/components/trainings/EditTrainingDialog';
 import { ManageParticipantsDialog } from '@/components/trainings/ManageParticipantsDialog';
 import { ViewAttendanceDialog } from '@/components/trainings/ViewAttendanceDialog';
 import { CancelTrainingDialog } from '@/components/trainings/CancelTrainingDialog';
+import { ManageAgendaDialog } from '@/components/trainings/ManageAgendaDialog';
+import { AttachMaterialsDialog } from '@/components/trainings/AttachMaterialsDialog';
+import { AttendanceGridDialog } from '@/components/trainings/AttendanceGridDialog';
 import { SmartPagination } from '@/components/ui/smart-pagination';
 import { BulkActionToolbar } from '@/components/ui/bulk-action-toolbar';
 import { useSelection } from '@/hooks/use-selection';
@@ -52,6 +55,9 @@ import {
   ClipboardList,
   XCircle,
   GraduationCap,
+  ListTodo,
+  FileText,
+  Grid3x3,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -330,6 +336,34 @@ export default function Trainings() {
                           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                             <ClipboardList className="mr-2 h-4 w-4" />
                             មើលការចូលរួម
+                          </DropdownMenuItem>
+                        }
+                      />
+                      <AttendanceGridDialog
+                        training={training}
+                        trigger={
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <Grid3x3 className="mr-2 h-4 w-4" />
+                            គ្រប់គ្រងវត្តមាន
+                          </DropdownMenuItem>
+                        }
+                      />
+                      <DropdownMenuSeparator />
+                      <ManageAgendaDialog
+                        training={training}
+                        trigger={
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <ListTodo className="mr-2 h-4 w-4" />
+                            គ្រប់គ្រងកម្មវិធី
+                          </DropdownMenuItem>
+                        }
+                      />
+                      <AttachMaterialsDialog
+                        training={training}
+                        trigger={
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <FileText className="mr-2 h-4 w-4" />
+                            គ្រប់គ្រងឯកសារ
                           </DropdownMenuItem>
                         }
                       />
@@ -613,6 +647,34 @@ export default function Trainings() {
                               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                                 <ClipboardList className="mr-2 h-4 w-4" />
                                 មើលការចូលរួម
+                              </DropdownMenuItem>
+                            }
+                          />
+                          <AttendanceGridDialog
+                            training={training}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <Grid3x3 className="mr-2 h-4 w-4" />
+                                គ្រប់គ្រងវត្តមាន
+                              </DropdownMenuItem>
+                            }
+                          />
+                          <DropdownMenuSeparator />
+                          <ManageAgendaDialog
+                            training={training}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <ListTodo className="mr-2 h-4 w-4" />
+                                គ្រប់គ្រងកម្មវិធី
+                              </DropdownMenuItem>
+                            }
+                          />
+                          <AttachMaterialsDialog
+                            training={training}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <FileText className="mr-2 h-4 w-4" />
+                                គ្រប់គ្រងឯកសារ
                               </DropdownMenuItem>
                             }
                           />
