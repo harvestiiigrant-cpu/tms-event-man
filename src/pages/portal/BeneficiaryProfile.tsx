@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
+import geoService, { type Province, type District, type Commune, type Village, type School } from '@/services/geoService';
 import { BeneficiaryPortalLayout } from '@/components/layout/BeneficiaryPortalLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Camera, Save, User, School, MapPin, Phone, Mail, Loader2 } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Camera, Save, User, School, MapPin, Phone, Mail, Loader2, Search } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { uploadProfileImage, uploadSignatureImage } from '@/lib/uploadUtils';
 
@@ -23,13 +25,39 @@ export default function BeneficiaryProfile() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState<any>({});
+  const [profileData, setProfileData] = useState<any>({
+    name: '',
+    name_english: '',
+    phone: '',
+    email: '',
+    sex: '',
+    position: '',
+    subject: '',
+    school: '',
+    school_id: '',
+    province_name: '',
+    district_name: '',
+    commune_name: '',
+    village_name: '',
+  });
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [signatureImage, setSignatureImage] = useState<string | null>(null);
   const [uploadingProfile, setUploadingProfile] = useState(false);
   const [uploadingSignature, setUploadingSignature] = useState(false);
   const profileImageInputRef = useRef<HTMLInputElement>(null);
   const signatureInputRef = useRef<HTMLInputElement>(null);
+
+  // Geography cascading state
+  const [provinces, setProvinces] = useState<Province[]>([]);
+  const [districts, setDistricts] = useState<District[]>([]);
+  const [communes, setCommunes] = useState<Commune[]>([]);
+  const [villages, setVillages] = useState<Village[]>([]);
+  const [schools, setSchools] = useState<School[]>([]);
+  const [selectedProvinceId, setSelectedProvinceId] = useState<number | null>(null);
+  const [selectedDistrictId, setSelectedDistrictId] = useState<number | null>(null);
+  const [selectedCommuneId, setSelectedCommuneId] = useState<number | null>(null);
+  const [selectedVillageId, setSelectedVillageId] = useState<number | null>(null);
+  const [schoolSearch, setSchoolSearch] = useState('');
 
   // Fetch beneficiary data
   const { data: beneficiary, isLoading } = useQuery({
@@ -51,14 +79,166 @@ export default function BeneficiaryProfile() {
     },
   });
 
-  // Initialize profile data from fetched beneficiary
+  // Load provinces on mount
+  useEffect(() => {
+    geoService.getProvinces().then(setProvinces);
+  }, []);
+
+  // Initialize profile data and geography from fetched beneficiary
   useEffect(() => {
     if (beneficiary) {
-      setProfileData(beneficiary);
-      setProfileImage(beneficiary.profile_image_url);
-      setSignatureImage(beneficiary.signature_url);
+      setProfileData({
+        name: beneficiary.name || '',
+        name_english: beneficiary.name_english || '',
+        phone: beneficiary.phone || '',
+        email: beneficiary.email || '',
+        sex: beneficiary.sex || '',
+        position: beneficiary.position || '',
+        subject: beneficiary.subject || '',
+        school: beneficiary.school || '',
+        school_id: beneficiary.school_id || '',
+        province_name: beneficiary.province_name || '',
+        district_name: beneficiary.district_name || '',
+        commune_name: beneficiary.commune_name || '',
+        village_name: beneficiary.village_name || '',
+        teacher_id: beneficiary.teacher_id || '',
+        grade: beneficiary.grade || '',
+        role: beneficiary.role || '',
+      });
+      setProfileImage(beneficiary.profile_image_url || null);
+      setSignatureImage(beneficiary.signature_url || null);
+
+      // Load existing geography data
+      if (beneficiary.province_name || beneficiary.district_name) {
+        geoService.findLocationByName(
+          beneficiary.province_name,
+          beneficiary.district_name,
+          beneficiary.commune_name,
+          beneficiary.village_name
+        ).then(async (ids) => {
+          if (ids.provinceId) {
+            setSelectedProvinceId(ids.provinceId);
+            const dists = await geoService.getDistricts(ids.provinceId);
+            setDistricts(dists);
+          }
+          if (ids.districtId) {
+            setSelectedDistrictId(ids.districtId);
+            const [comms, schs] = await Promise.all([
+              geoService.getCommunes(ids.districtId),
+              geoService.getSchoolsByDistrict(ids.districtId),
+            ]);
+            setCommunes(comms);
+            setSchools(schs);
+          }
+          if (ids.communeId) {
+            setSelectedCommuneId(ids.communeId);
+            const vills = await geoService.getVillages(ids.communeId);
+            setVillages(vills);
+          }
+          if (ids.villageId) {
+            setSelectedVillageId(ids.villageId);
+          }
+        });
+      }
     }
   }, [beneficiary]);
+
+  // Cascading handlers
+  const handleProvinceChange = async (provinceId: number) => {
+    setSelectedProvinceId(provinceId);
+    const province = provinces.find((p) => p.id === provinceId);
+    setProfileData({ ...profileData, province_name: province?.province_name_kh || '' });
+
+    // Clear dependent selections
+    setSelectedDistrictId(null);
+    setSelectedCommuneId(null);
+    setSelectedVillageId(null);
+    setDistricts([]);
+    setCommunes([]);
+    setVillages([]);
+    setSchools([]);
+    setProfileData({
+      ...profileData,
+      province_name: province?.province_name_kh || '',
+      district_name: '',
+      commune_name: '',
+      village_name: '',
+      school: '',
+    });
+
+    // Load districts
+    if (provinceId) {
+      const dists = await geoService.getDistricts(provinceId);
+      setDistricts(dists);
+    }
+  };
+
+  const handleDistrictChange = async (districtId: number) => {
+    setSelectedDistrictId(districtId);
+    const district = districts.find((d) => d.id === districtId);
+    setProfileData({ ...profileData, district_name: district?.district_name_kh || '' });
+
+    // Clear dependent selections
+    setSelectedCommuneId(null);
+    setSelectedVillageId(null);
+    setCommunes([]);
+    setVillages([]);
+    setProfileData({
+      ...profileData,
+      district_name: district?.district_name_kh || '',
+      commune_name: '',
+      village_name: '',
+      school: '',
+    });
+
+    // CRITICAL: Load BOTH communes AND schools
+    if (districtId) {
+      const [comms, schs] = await Promise.all([
+        geoService.getCommunes(districtId),
+        geoService.getSchoolsByDistrict(districtId),
+      ]);
+      setCommunes(comms);
+      setSchools(schs);
+    }
+  };
+
+  const handleCommuneChange = async (communeId: number) => {
+    setSelectedCommuneId(communeId);
+    const commune = communes.find((c) => c.id === communeId);
+    setProfileData({ ...profileData, commune_name: commune?.commune_name_kh || '' });
+
+    // Clear dependent selections
+    setSelectedVillageId(null);
+    setVillages([]);
+    setProfileData({
+      ...profileData,
+      commune_name: commune?.commune_name_kh || '',
+      village_name: '',
+    });
+
+    // Load villages
+    if (communeId) {
+      const vills = await geoService.getVillages(communeId);
+      setVillages(vills);
+    }
+  };
+
+  const handleVillageChange = (villageId: number) => {
+    setSelectedVillageId(villageId);
+    const village = villages.find((v) => v.id === villageId);
+    setProfileData({ ...profileData, village_name: village?.village_name_kh || '' });
+  };
+
+  const handleSchoolChange = (schoolId: number) => {
+    const school = schools.find((s) => s.schoolId === schoolId);
+    if (school) {
+      setProfileData((prev) => ({
+        ...prev,
+        school: school.name,
+        school_id: school.code,
+      }));
+    }
+  };
 
   const handleProfileImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -79,9 +259,14 @@ export default function BeneficiaryProfile() {
           profile_image_url: result.url!,
         }));
 
+        // Auto-save to database immediately
+        await updateMutation.mutateAsync({
+          profile_image_url: result.url,
+        });
+
         toast({
-          title: 'រូបថតបានផ្ទុកឡើង',
-          description: 'រូបថតប្រវត្តិរូបបានផ្ទុកឡើងដោយជោគជ័យ។',
+          title: 'រូបថតបានរក្សាទុក',
+          description: 'រូបថតប្រវត្តិរូបបានរក្សាទុកក្នុងប្រព័ន្ធ។',
         });
       } else {
         toast({
@@ -120,9 +305,14 @@ export default function BeneficiaryProfile() {
           signature_url: result.url!,
         }));
 
+        // Auto-save to database immediately
+        await updateMutation.mutateAsync({
+          signature_url: result.url,
+        });
+
         toast({
-          title: 'ហត្ថលេខាបានផ្ទុកឡើង',
-          description: 'ហត្ថលេខាបានផ្ទុកឡើងដោយជោគជ័យ។',
+          title: 'ហត្ថលេខាបានរក្សាទុក',
+          description: 'ហត្ថលេខាបានរក្សាទុកក្នុងប្រព័ន្ធ។',
         });
       } else {
         toast({
@@ -143,10 +333,23 @@ export default function BeneficiaryProfile() {
   };
 
   const handleSave = () => {
+    // Only include fields that exist in Beneficiary model
     const dataToUpdate = {
-      ...profileData,
-      profile_image_url: profileImage,
-      signature_url: signatureImage,
+      name: profileData.name,
+      name_english: profileData.name_english,
+      phone: profileData.phone,
+      sex: profileData.sex,
+      position: profileData.position,
+      subject: profileData.subject,
+      school: profileData.school,
+      school_id: profileData.school_id,
+      province_name: profileData.province_name,
+      district_name: profileData.district_name,
+      commune_name: profileData.commune_name,
+      village_name: profileData.village_name,
+      grade: profileData.grade ? parseInt(profileData.grade) : null,
+      profile_image_url: profileImage || profileData.profile_image_url,
+      signature_url: signatureImage || profileData.signature_url,
     };
     updateMutation.mutate(dataToUpdate);
   };
@@ -160,6 +363,16 @@ export default function BeneficiaryProfile() {
     setIsEditing(false);
   };
 
+  if (isLoading) {
+    return (
+      <BeneficiaryPortalLayout>
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </BeneficiaryPortalLayout>
+    );
+  }
+
   return (
     <BeneficiaryPortalLayout>
       <div className="space-y-4">
@@ -172,7 +385,7 @@ export default function BeneficiaryProfile() {
                 <Avatar className="h-28 w-28 border-4 border-card shadow-lg">
                   <AvatarImage src={profileImage || profileData.profile_image_url} alt={profileData.name} />
                   <AvatarFallback className="text-4xl bg-primary text-primary-foreground">
-                    {profileData.name.charAt(0)}
+                    {profileData.name?.charAt(0) || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 {isEditing && (
@@ -320,16 +533,6 @@ export default function BeneficiaryProfile() {
                   className="h-12"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="school" className="text-xs">សាលារៀន</Label>
-                <Input
-                  id="school"
-                  value={profileData.school}
-                  disabled
-                  className="bg-muted h-12"
-                />
-                <p className="text-xs text-muted-foreground">លេខសម្គាល់សាលា: {profileData.school_id}</p>
-              </div>
             </div>
           </CardContent>
         </Card>
@@ -345,24 +548,167 @@ export default function BeneficiaryProfile() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
                   <Label className="text-xs">ខេត្ត/រាជធានី</Label>
-                  <Input value={profileData.province_name} disabled className="bg-muted h-12" />
+                  {isEditing ? (
+                    <Select
+                      value={selectedProvinceId?.toString() || ''}
+                      onValueChange={(value) => handleProvinceChange(parseInt(value))}
+                    >
+                      <SelectTrigger className="h-12">
+                        <SelectValue placeholder="ជ្រើសរើសខេត្ត..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {provinces.map((province) => (
+                          <SelectItem key={province.id} value={province.id.toString()}>
+                            {province.province_name_kh}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Input value={profileData.province_name} disabled className="bg-muted h-12" />
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs">ស្រុក/ខណ្ឌ</Label>
-                  <Input value={profileData.district_name} disabled className="bg-muted h-12" />
+                  {isEditing ? (
+                    <Select
+                      value={selectedDistrictId?.toString() || ''}
+                      onValueChange={(value) => handleDistrictChange(parseInt(value))}
+                      disabled={!selectedProvinceId}
+                    >
+                      <SelectTrigger className="h-12">
+                        <SelectValue placeholder="ជ្រើសរើសស្រុក..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {districts.map((district) => (
+                          <SelectItem key={district.id} value={district.id.toString()}>
+                            {district.district_name_kh}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Input value={profileData.district_name} disabled className="bg-muted h-12" />
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs">ឃុំ/សង្កាត់</Label>
-                  <Input value={profileData.commune_name} disabled className="bg-muted h-12" />
+                  {isEditing ? (
+                    <Select
+                      value={selectedCommuneId?.toString() || ''}
+                      onValueChange={(value) => handleCommuneChange(parseInt(value))}
+                      disabled={!selectedDistrictId}
+                    >
+                      <SelectTrigger className="h-12">
+                        <SelectValue placeholder="ជ្រើសរើសឃុំ..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {communes.map((commune) => (
+                          <SelectItem key={commune.id} value={commune.id.toString()}>
+                            {commune.commune_name_kh}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Input value={profileData.commune_name} disabled className="bg-muted h-12" />
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs">ភូមិ</Label>
-                  <Input value={profileData.village_name} disabled className="bg-muted h-12" />
+                  {isEditing ? (
+                    <Select
+                      value={selectedVillageId?.toString() || ''}
+                      onValueChange={(value) => handleVillageChange(parseInt(value))}
+                      disabled={!selectedCommuneId}
+                    >
+                      <SelectTrigger className="h-12">
+                        <SelectValue placeholder="ជ្រើសរើសភូមិ..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {villages.map((village) => (
+                          <SelectItem key={village.id} value={village.id.toString()}>
+                            {village.village_name_kh}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Input value={profileData.village_name} disabled className="bg-muted h-12" />
+                  )}
                 </div>
               </div>
-              <p className="text-xs text-muted-foreground">
-                ព័ត៌មានទីតាំងត្រូវបានគ្រប់គ្រងដោយអ្នកគ្រប់គ្រងប្រព័ន្ធ
-              </p>
+
+              {/* School Field - Under Geography */}
+              <div className="space-y-2 pt-2">
+                <Label className="text-xs">សាលារៀន</Label>
+                {isEditing ? (
+                  <div className="space-y-2">
+                    {profileData.school && (
+                      <div className="flex items-center justify-between p-3 bg-primary/5 border border-primary/20 rounded-lg">
+                        <div>
+                          <p className="font-medium text-sm">{profileData.school}</p>
+                          <p className="text-xs text-muted-foreground">លេខសម្គាល់: {profileData.school_id}</p>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setProfileData((prev) => ({ ...prev, school: '', school_id: '' }))}
+                        >
+                          ផ្លាស់ប្តូរ
+                        </Button>
+                      </div>
+                    )}
+                    <div className="relative">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="ស្វែងរកសាលា..."
+                        value={schoolSearch}
+                        onChange={(e) => setSchoolSearch(e.target.value)}
+                        className="pl-9 h-10"
+                        disabled={!selectedDistrictId || !!profileData.school}
+                      />
+                    </div>
+                    <ScrollArea className="h-[200px] rounded-md border">
+                      {schools
+                        .filter((school) =>
+                          school.name.toLowerCase().includes(schoolSearch.toLowerCase()) ||
+                          school.code.toLowerCase().includes(schoolSearch.toLowerCase())
+                        )
+                        .map((school) => (
+                          <div
+                            key={school.schoolId}
+                            onClick={() => {
+                              handleSchoolChange(school.schoolId);
+                              setSchoolSearch('');
+                            }}
+                            className="px-3 py-2 hover:bg-muted cursor-pointer border-b last:border-b-0"
+                          >
+                            <p className="font-medium text-sm">{school.name}</p>
+                            <p className="text-xs text-muted-foreground">{school.code}</p>
+                          </div>
+                        ))}
+                      {schools.length === 0 && selectedDistrictId && (
+                        <div className="px-3 py-8 text-center text-sm text-muted-foreground">
+                          គ្មានសាលាក្នុងស្រុកនេះ
+                        </div>
+                      )}
+                      {!selectedDistrictId && (
+                        <div className="px-3 py-8 text-center text-sm text-muted-foreground">
+                          សូមជ្រើសរើសស្រុក/ខណ្ឌជាមុនសិន
+                        </div>
+                      )}
+                    </ScrollArea>
+                  </div>
+                ) : (
+                  <div>
+                    <Input value={profileData.school} disabled className="bg-muted h-12" />
+                    {profileData.school_id && (
+                      <p className="text-xs text-muted-foreground mt-1">លេខសម្គាល់: {profileData.school_id}</p>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -2,8 +2,11 @@ import express from 'express';
 import prisma from '../db';
 import { hashPassword, verifyPassword } from '../utils/auth';
 import { generateToken } from '../utils/jwt';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
 // POST /api/auth/login - User login
 router.post('/login', async (req, res) => {
@@ -124,13 +127,9 @@ router.post('/verify', async (req, res) => {
       return res.status(400).json({ error: 'Token is required' });
     }
 
-    // We'll let the authenticateToken middleware handle this
-    // But for this endpoint, we need to verify manually
-    const jwt = require('jsonwebtoken');
-    const secret = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-
+    // Verify token manually for this endpoint
     try {
-      const decoded = jwt.verify(token, secret);
+      const decoded = jwt.verify(token, JWT_SECRET);
       res.json({ valid: true, user: decoded });
     } catch (error) {
       res.status(401).json({ valid: false, error: 'Invalid or expired token' });
@@ -152,10 +151,7 @@ router.get('/me', async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const jwt = require('jsonwebtoken');
-    const secret = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-
-    const decoded = jwt.verify(token, secret) as any;
+    const decoded = jwt.verify(token, JWT_SECRET) as any;
 
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
@@ -171,6 +167,8 @@ router.get('/me', async (req, res) => {
         school: true,
         school_id: true,
         province_name: true,
+        theme_preference: true,
+        khmer_font: true,
         created_at: true,
       },
     });
@@ -196,14 +194,15 @@ router.put('/profile', async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const jwt = require('jsonwebtoken');
-    const secret = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-    const decoded = jwt.verify(token, secret) as any;
+    const decoded = jwt.verify(token, JWT_SECRET) as any;
 
-    const { name, email, phone, profile_image_url } = req.body;
+    const { name, email, phone, profile_image_url, theme_preference, khmer_font } = req.body;
 
-    // Check if email is being changed and if it's already taken
-    if (email) {
+    // Build update data object with only provided fields
+    const updateData: any = {};
+    if (name !== undefined && name !== null) updateData.name = name;
+    if (email !== undefined && email !== null) {
+      // Check if email is being changed and if it's already taken
       const existingUser = await prisma.user.findFirst({
         where: {
           email,
@@ -214,16 +213,16 @@ router.put('/profile', async (req, res) => {
       if (existingUser) {
         return res.status(400).json({ error: 'Email already in use' });
       }
+      updateData.email = email;
     }
+    if (phone !== undefined && phone !== null) updateData.phone = phone;
+    if (profile_image_url !== undefined && profile_image_url !== null) updateData.profile_image_url = profile_image_url;
+    if (theme_preference !== undefined && theme_preference !== null) updateData.theme_preference = theme_preference;
+    if (khmer_font !== undefined && khmer_font !== null) updateData.khmer_font = khmer_font;
 
     const updatedUser = await prisma.user.update({
       where: { id: decoded.userId },
-      data: {
-        name,
-        email,
-        phone,
-        profile_image_url,
-      },
+      data: updateData,
       select: {
         id: true,
         username: true,
@@ -236,13 +235,19 @@ router.put('/profile', async (req, res) => {
         school: true,
         school_id: true,
         province_name: true,
+        theme_preference: true,
+        khmer_font: true,
       },
     });
 
     res.json(updatedUser);
   } catch (error) {
     console.error('Profile update error:', error);
-    res.status(500).json({ error: 'Failed to update profile' });
+    console.error('Error details:', error instanceof Error ? error.message : error);
+    res.status(500).json({
+      error: 'Failed to update profile',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });
 
@@ -256,9 +261,7 @@ router.put('/password', async (req, res) => {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const jwt = require('jsonwebtoken');
-    const secret = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-    const decoded = jwt.verify(token, secret) as any;
+    const decoded = jwt.verify(token, JWT_SECRET) as any;
 
     const { currentPassword, newPassword } = req.body;
 

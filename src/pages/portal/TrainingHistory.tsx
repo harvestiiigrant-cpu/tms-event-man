@@ -86,7 +86,7 @@ export default function TrainingHistory() {
           <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
             <CardContent className="p-4 text-center">
               <BookOpen className="h-6 w-6 text-primary mx-auto mb-2" />
-              <p className="text-2xl font-bold text-primary">{mockTrainingHistory.length}</p>
+              <p className="text-2xl font-bold text-primary">{enrolledTrainings.length}</p>
               <p className="text-xs text-muted-foreground">សរុប</p>
             </CardContent>
           </Card>

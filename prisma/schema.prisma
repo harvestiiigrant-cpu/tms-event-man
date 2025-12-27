@@ -27,6 +27,10 @@ model User {
   school_id     String?
   province_name String?
 
+  // User preferences (persisted across devices)
+  theme_preference String? @default("light")  // "light" | "dark" | "system"
+  khmer_font       String? @default("Suwannaphum")  // Selected Khmer font
+
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

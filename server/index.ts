@@ -16,6 +16,7 @@ import positionRoutes from './routes/positions';
 import departmentRoutes from './routes/departments';
 import surveyRoutes from './routes/surveys';
 import surveyResponseRoutes from './routes/survey-responses';
+import uploadRoutes from './routes/upload';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -57,6 +58,7 @@ app.use('/api/positions', positionRoutes);  // Beneficiary positions management
 app.use('/api/departments', departmentRoutes);  // Beneficiary departments management
 app.use('/api/surveys', surveyRoutes);  // Survey and test management
 app.use('/api/surveys', surveyResponseRoutes);  // Survey responses and results
+app.use('/api/upload', uploadRoutes);  // File uploads (profiles, signatures)
 
 // Health check
 app.get('/health', (req, res) => {

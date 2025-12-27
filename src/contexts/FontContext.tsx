@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { api } from '@/lib/api';
 
 export type KhmerFont = 'Suwannaphum' | 'Taprom' | 'Battambang' | 'Bayon' | 'Bokor' | 'Content' | 'Dangrek' | 'Fasthand' | 'Freehand' | 'Kantumruy' | 'Khmer' | 'Koulen' | 'Metal' | 'Moul' | 'Moulpali' | 'Nokora' | 'Odor Mean Chey' | 'Preahvihear' | 'Siemreap' | 'Suwannaphum';
 
@@ -49,9 +50,16 @@ export function FontProvider({ children }: { children: ReactNode }) {
     document.documentElement.style.setProperty('--font-serif', fontSerif);
   }, [khmerFont]);
 
-  const setKhmerFont = (font: KhmerFont) => {
+  const setKhmerFont = async (font: KhmerFont) => {
     setKhmerFontState(font);
     localStorage.setItem('khmerFont', font);
+
+    // Save to database
+    try {
+      await api.auth.updateProfile({ khmer_font: font });
+    } catch (error) {
+      console.error('Failed to save font preference:', error);
+    }
   };
 
   return (

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { api } from '@/lib/api';
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -59,9 +60,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => {
+  const setTheme = async (newTheme: Theme) => {
     setThemeState(newTheme);
     localStorage.setItem('theme', newTheme);
+
+    // Save to database
+    try {
+      await api.auth.updateProfile({ theme_preference: newTheme });
+    } catch (error) {
+      console.error('Failed to save theme preference:', error);
+    }
   };
 
   return (

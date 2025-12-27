@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useFont, KHMER_FONTS } from '@/contexts/FontContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -30,7 +32,17 @@ import {
   Home,
   X,
   Clock,
+  Moon,
+  Sun,
+  Type,
 } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface BeneficiaryPortalLayoutProps {
   children: React.ReactNode;
@@ -74,6 +86,8 @@ export function BeneficiaryPortalLayout({ children, title, subtitle }: Beneficia
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const { khmerFont, setKhmerFont } = useFont();
   const [notifications, setNotifications] = useState(mockNotifications);
   const [notificationOpen, setNotificationOpen] = useState(false);
 
@@ -244,6 +258,37 @@ export function BeneficiaryPortalLayout({ children, title, subtitle }: Beneficia
                       <span>មើលប្រវត្តិរូប</span>
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+                    {theme === 'dark' ? (
+                      <Sun className="mr-2 h-4 w-4" />
+                    ) : (
+                      <Moon className="mr-2 h-4 w-4" />
+                    )}
+                    <span>{theme === 'dark' ? 'ពន្លឺ' : 'ងងឹត'}</span>
+                  </DropdownMenuItem>
+                  <div className="px-2 py-2">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Type className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">ពុម្ពអក្សរ</span>
+                    </div>
+                    <Select value={khmerFont} onValueChange={setKhmerFont}>
+                      <SelectTrigger className="h-8 w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {KHMER_FONTS.map((font) => (
+                          <SelectItem
+                            key={font.value}
+                            value={font.value}
+                            style={{ fontFamily: font.value }}
+                          >
+                            {font.labelKm}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
                     <LogOut className="mr-2 h-4 w-4" />

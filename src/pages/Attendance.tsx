@@ -38,22 +38,22 @@ type AttendanceStatus = 'PRESENT' | 'ABSENT' | 'LATE' | 'EXCUSED';
 
 const statusConfig: Record<AttendanceStatus, { label: string; icon: typeof CheckCircle2; className: string }> = {
   PRESENT: {
-    label: 'Present',
+    label: 'មានវត្តមាន',
     icon: CheckCircle2,
     className: 'bg-primary/10 text-primary',
   },
   ABSENT: {
-    label: 'Absent',
+    label: 'អវត្តមាន',
     icon: XCircle,
     className: 'bg-destructive/10 text-destructive',
   },
   LATE: {
-    label: 'Late',
+    label: 'មកយឺត',
     icon: Clock,
     className: 'bg-accent text-accent-foreground',
   },
   EXCUSED: {
-    label: 'Excused',
+    label: 'មានច្បាប់',
     icon: AlertCircle,
     className: 'bg-muted text-muted-foreground',
   },
@@ -92,24 +92,31 @@ export default function Attendance() {
   const enrolledBeneficiaries = enrollments.map((enrollment: any) => enrollment.beneficiary);
   const filteredRecords = attendanceRecords;
 
+  // Calculate session statistics
+  const totalEnrolled = enrolledBeneficiaries.length;
+  const morningInCount = attendanceRecords.filter((r: any) => r.morning_in).length;
+  const morningOutCount = attendanceRecords.filter((r: any) => r.morning_out).length;
+  const afternoonInCount = attendanceRecords.filter((r: any) => r.afternoon_in).length;
+  const afternoonOutCount = attendanceRecords.filter((r: any) => r.afternoon_out).length;
+
   return (
-    <DashboardLayout title="Attendance" subtitle="Track daily attendance records">
+    <DashboardLayout title="ការចូលរួម" subtitle="តាមដានកំណត់ត្រាវត្តមានប្រចាំថ្ងៃ">
       {/* Filters */}
       <Card className="mb-6">
         <CardContent className="pt-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="flex-1">
               <label className="mb-1.5 block text-sm font-medium text-foreground">
-                Select Training
+                ជ្រើសរើសការបណ្តុះបណ្តាល
               </label>
               <Select value={selectedTraining} onValueChange={setSelectedTraining}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Choose a training" />
+                  <SelectValue placeholder="ជ្រើសរើសការបណ្តុះបណ្តាល..." />
                 </SelectTrigger>
                 <SelectContent>
                   {ongoingTrainings.map((training) => (
                     <SelectItem key={training.id} value={training.id}>
-                      {training.training_name_english} ({training.training_code})
+                      {training.training_name} ({training.training_code})
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -117,7 +124,7 @@ export default function Attendance() {
             </div>
             <div>
               <label className="mb-1.5 block text-sm font-medium text-foreground">
-                Date
+                កាលបរិច្ឆេទ
               </label>
               <Popover>
                 <PopoverTrigger asChild>
@@ -139,7 +146,7 @@ export default function Attendance() {
             <div className="sm:self-end">
               <Button variant="outline">
                 <Download className="mr-2 h-4 w-4" />
-                Export
+                នាំចេញ
               </Button>
             </div>
           </div>
@@ -152,12 +159,12 @@ export default function Attendance() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Morning In</p>
+                <p className="text-sm text-muted-foreground">ព្រឹក-ចូល</p>
                 <p className="text-xs text-muted-foreground">7:00 - 8:30 AM</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-foreground">38</p>
-                <p className="text-xs text-muted-foreground">/ 42 checked in</p>
+                <p className="text-2xl font-bold text-foreground">{morningInCount}</p>
+                <p className="text-xs text-muted-foreground">/ {totalEnrolled} បានចូល</p>
               </div>
             </div>
           </CardContent>
@@ -166,12 +173,12 @@ export default function Attendance() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Morning Out</p>
+                <p className="text-sm text-muted-foreground">ព្រឹក-ចេញ</p>
                 <p className="text-xs text-muted-foreground">11:30 AM - 12:30 PM</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-foreground">36</p>
-                <p className="text-xs text-muted-foreground">/ 42 checked out</p>
+                <p className="text-2xl font-bold text-foreground">{morningOutCount}</p>
+                <p className="text-xs text-muted-foreground">/ {totalEnrolled} បានចេញ</p>
               </div>
             </div>
           </CardContent>
@@ -180,12 +187,12 @@ export default function Attendance() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Afternoon In</p>
+                <p className="text-sm text-muted-foreground">រសៀល-ចូល</p>
                 <p className="text-xs text-muted-foreground">1:00 - 2:00 PM</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-foreground">35</p>
-                <p className="text-xs text-muted-foreground">/ 42 checked in</p>
+                <p className="text-2xl font-bold text-foreground">{afternoonInCount}</p>
+                <p className="text-xs text-muted-foreground">/ {totalEnrolled} បានចូល</p>
               </div>
             </div>
           </CardContent>
@@ -194,12 +201,12 @@ export default function Attendance() {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Afternoon Out</p>
+                <p className="text-sm text-muted-foreground">រសៀល-ចេញ</p>
                 <p className="text-xs text-muted-foreground">5:00 - 6:00 PM</p>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-foreground">34</p>
-                <p className="text-xs text-muted-foreground">/ 42 checked out</p>
+                <p className="text-2xl font-bold text-foreground">{afternoonOutCount}</p>
+                <p className="text-xs text-muted-foreground">/ {totalEnrolled} បានចេញ</p>
               </div>
             </div>
           </CardContent>
@@ -209,7 +216,7 @@ export default function Attendance() {
       {/* Attendance Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Attendance Records</CardTitle>
+          <CardTitle>កំណត់ត្រាវត្តមាន</CardTitle>
           <CardDescription>
             {format(selectedDate, 'EEEE, MMMM d, yyyy')}
           </CardDescription>
@@ -219,12 +226,12 @@ export default function Attendance() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Participant</TableHead>
-                  <TableHead className="text-center">Morning In</TableHead>
-                  <TableHead className="text-center">Morning Out</TableHead>
-                  <TableHead className="text-center">Afternoon In</TableHead>
-                  <TableHead className="text-center">Afternoon Out</TableHead>
-                  <TableHead className="text-center">Status</TableHead>
+                  <TableHead>អ្នកចូលរួម</TableHead>
+                  <TableHead className="text-center">ព្រឹក-ចូល</TableHead>
+                  <TableHead className="text-center">ព្រឹក-ចេញ</TableHead>
+                  <TableHead className="text-center">រសៀល-ចូល</TableHead>
+                  <TableHead className="text-center">រសៀល-ចេញ</TableHead>
+                  <TableHead className="text-center">ស្ថានភាព</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

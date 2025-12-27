@@ -74,10 +74,7 @@ export function fileToDataURL(file: File): Promise<string> {
 }
 
 /**
- * Upload profile image
- *
- * DEVELOPMENT: Returns data URL for immediate preview
- * PRODUCTION: Upload to server/cloud and return URL path
+ * Upload profile image to server
  */
 export async function uploadProfileImage(
   file: File,
@@ -91,19 +88,17 @@ export async function uploadProfileImage(
       return { success: false, error: validation.error };
     }
 
-    // DEVELOPMENT MODE: Use data URL
-    // TODO: In production, replace with actual server upload
-    const dataURL = await fileToDataURL(file);
-
-    // PRODUCTION MODE (Commented out - implement when backend is ready):
-    /*
+    // Upload to server
     const formData = new FormData();
     formData.append('photo', file);
-    formData.append('userId', userId);
-    formData.append('folder', options.folder || 'profiles');
 
-    const response = await fetch('/api/upload/profile-image', {
+    const token = localStorage.getItem('auth');
+    const authToken = token ? JSON.parse(token).token : null;
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
+    const response = await fetch(`${API_URL}/upload/profile-image`, {
       method: 'POST',
+      headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {},
       body: formData,
     });
 
@@ -116,13 +111,6 @@ export async function uploadProfileImage(
       success: true,
       url: result.url, // e.g., '/uploads/profiles/user-123-1703567890.jpg'
     };
-    */
-
-    // For now, return data URL (development mode)
-    return {
-      success: true,
-      url: dataURL,
-    };
   } catch (error) {
     return {
       success: false,
@@ -132,17 +120,50 @@ export async function uploadProfileImage(
 }
 
 /**
- * Upload signature image
+ * Upload signature image to server
  */
 export async function uploadSignatureImage(
   file: File,
   userId: string
 ): Promise<UploadResult> {
-  return uploadProfileImage(file, userId, {
-    maxSizeMB: 2,
-    allowedTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'],
-    folder: 'signatures',
-  });
+  try {
+    const validation = validateFile(file, {
+      maxSizeMB: 2,
+      allowedTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'],
+    });
+
+    if (!validation.valid) {
+      return { success: false, error: validation.error };
+    }
+
+    const formData = new FormData();
+    formData.append('signature', file);
+
+    const token = localStorage.getItem('auth');
+    const authToken = token ? JSON.parse(token).token : null;
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
+    const response = await fetch(`${API_URL}/upload/signature`, {
+      method: 'POST',
+      headers: authToken ? { 'Authorization': `Bearer ${authToken}` } : {},
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Upload failed');
+    }
+
+    const result = await response.json();
+    return {
+      success: true,
+      url: result.url,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Upload failed',
+    };
+  }
 }
 
 /**

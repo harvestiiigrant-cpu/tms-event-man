@@ -72,12 +72,14 @@ export function ManageAgendaDialog({ training, trigger }: ManageAgendaDialogProp
 
   // Initialize agendas when data is loaded
   useEffect(() => {
-    if (existingAgendas.length > 0) {
-      setAgendas(existingAgendas.map((a: TrainingAgenda) => ({ ...a })));
-    } else {
-      setAgendas([]);
+    if (open && existingAgendas) {
+      if (existingAgendas.length > 0) {
+        setAgendas(existingAgendas.map((a: TrainingAgenda) => ({ ...a })));
+      } else {
+        setAgendas([]);
+      }
     }
-  }, [existingAgendas]);
+  }, [open]); // Only when dialog opens
 
   // Expand first day by default
   useEffect(() => {

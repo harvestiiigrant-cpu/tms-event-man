@@ -38,7 +38,8 @@ export default function Login() {
   const onSubmit = async (data: LoginFormValues) => {
     try {
       setError(null);
-      await login(data.username, data.password);
+      // Trim whitespace from username and password
+      await login(data.username.trim(), data.password.trim());
 
       // Get user from localStorage to determine redirect
       const storedUser = localStorage.getItem('auth_user');

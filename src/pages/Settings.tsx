@@ -10,10 +10,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { User, Bell, Shield, Database, Globe, Type, Settings2, Briefcase, Building2 } from 'lucide-react';
 import { useFont, KHMER_FONTS } from '@/contexts/FontContext';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
+import { uploadProfileImage } from '@/lib/uploadUtils';
 import type { TrainingCategory, TrainingType } from '@/types/training';
 import {
   Table,
@@ -33,6 +34,8 @@ export default function Settings() {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const profileImageRef = useRef<HTMLInputElement>(null);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [profileData, setProfileData] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -268,6 +271,37 @@ export default function Settings() {
     });
   };
 
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingPhoto(true);
+    try {
+      const result = await uploadProfileImage(file, user?.id || '');
+      if (result.success && result.url) {
+        const updatedUser = await profileMutation.mutateAsync({ profile_image_url: result.url });
+
+        // Update AuthContext user state
+        const storedAuth = localStorage.getItem('auth');
+        if (storedAuth) {
+          const auth = JSON.parse(storedAuth);
+          auth.user = updatedUser;
+          localStorage.setItem('auth', JSON.stringify(auth));
+          localStorage.setItem('auth_user', JSON.stringify(updatedUser));
+
+          // Force page reload to update all avatar components
+          window.location.reload();
+        }
+
+        toast({ title: 'ជោគជ័យ', description: 'រូបថតប្រវត្តិរូបបានរក្សាទុក' });
+      }
+    } catch (error) {
+      toast({ title: 'កំហុស', description: 'បរាជ័យក្នុងការផ្ទុករូបថត', variant: 'destructive' });
+    } finally {
+      setUploadingPhoto(false);
+    }
+  };
+
   const getRoleName = (role: string) => {
     switch (role) {
       case 'SUPER_ADMIN':
@@ -324,11 +358,23 @@ export default function Settings() {
                 </AvatarFallback>
               </Avatar>
               <div className="text-center sm:text-left">
-                <Button variant="outline" size="sm">
-                  ប្តូររូបភាព
+                <input
+                  ref={profileImageRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  className="hidden"
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => profileImageRef.current?.click()}
+                  disabled={uploadingPhoto}
+                >
+                  {uploadingPhoto ? 'កំពុងផ្ទុក...' : 'ប្តូររូបភាព'}
                 </Button>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  JPG, PNG ឬ GIF។ ទំហំអតិបរមា 2MB។
+                  JPG, PNG ឬ GIF។ ទំហំអតិបរមា 5MB។
                 </p>
               </div>
             </div>

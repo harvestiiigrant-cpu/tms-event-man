@@ -30,7 +30,6 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import "@/utils/authDebug"; // Load debug utilities
 
 const queryClient = new QueryClient();
 

@@ -155,6 +155,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
   }
 
   /* Fix main content area background in dark mode */

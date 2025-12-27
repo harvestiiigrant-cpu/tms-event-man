@@ -99,10 +99,86 @@ router.delete('/:id', authenticateToken, async (req, res) => {
   }
 });
 
-// POST /api/beneficiaries/bulk-import - CSV/Excel import
-router.post('/bulk-import', authenticateToken, async (req, res) => {
-  // TODO: Implement CSV parsing and bulk insert
-  res.status(501).json({ error: 'Bulk import not yet implemented' });
+// POST /api/beneficiaries/bulk-import - Bulk import beneficiaries
+router.post('/bulk-import', authenticateToken, requireRole('ADMIN', 'SUPER_ADMIN'), async (req, res) => {
+  try {
+    const { beneficiaries } = req.body;
+
+    if (!Array.isArray(beneficiaries) || beneficiaries.length === 0) {
+      return res.status(400).json({ error: 'Invalid or empty beneficiaries array' });
+    }
+
+    const userId = req.user?.userId;
+    const results = { created: 0, updated: 0, errors: [] as any[] };
+
+    for (const ben of beneficiaries) {
+      try {
+        const existing = await prisma.beneficiary.findUnique({
+          where: { teacher_id: ben.teacher_id },
+        });
+
+        if (existing) {
+          // Update existing
+          await prisma.beneficiary.update({
+            where: { teacher_id: ben.teacher_id },
+            data: {
+              name: ben.name,
+              name_english: ben.name_english,
+              phone: ben.phone,
+              sex: ben.sex,
+              province_name: ben.province_name,
+              district_name: ben.district_name,
+              commune_name: ben.commune_name,
+              village_name: ben.village_name,
+              school: ben.school,
+              school_id: ben.school_id,
+              position: ben.position,
+              subject: ben.subject,
+              grade: ben.grade,
+              updated_by: userId,
+            },
+          });
+          results.updated++;
+        } else {
+          // Create new
+          await prisma.beneficiary.create({
+            data: {
+              teacher_id: ben.teacher_id,
+              name: ben.name,
+              name_english: ben.name_english,
+              phone: ben.phone,
+              sex: ben.sex,
+              province_name: ben.province_name,
+              district_name: ben.district_name,
+              commune_name: ben.commune_name,
+              village_name: ben.village_name,
+              school: ben.school,
+              school_id: ben.school_id,
+              position: ben.position,
+              subject: ben.subject,
+              grade: ben.grade,
+              status: 'ACTIVE',
+              created_by: userId,
+            },
+          });
+          results.created++;
+        }
+      } catch (error: any) {
+        results.errors.push({
+          teacher_id: ben.teacher_id,
+          error: error.message,
+        });
+      }
+    }
+
+    res.json({
+      message: `Import completed: ${results.created} created, ${results.updated} updated, ${results.errors.length} errors`,
+      ...results,
+    });
+  } catch (error) {
+    console.error('Error bulk importing beneficiaries:', error);
+    res.status(500).json({ error: 'Failed to bulk import beneficiaries' });
+  }
 });
 
 // POST /api/beneficiaries/bulk-delete - Bulk soft delete beneficiaries
