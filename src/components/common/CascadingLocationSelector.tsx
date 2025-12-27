@@ -99,19 +99,6 @@ export function CascadingLocationSelector({
     }
   };
 
-  const handleProvinceClear = () => {
-    setSelectedProvinceId(null);
-    setSelectedDistrictId(null);
-    setDistricts([]);
-    onProvinceChange(null, '');
-    onDistrictChange(null, '');
-  };
-
-  const handleDistrictClear = () => {
-    setSelectedDistrictId(null);
-    onDistrictChange(null, '');
-  };
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {/* Province Selector */}
@@ -120,7 +107,7 @@ export function CascadingLocationSelector({
           {provinceLabel} {required && '*'}
         </Label>
         <Select
-          value={selectedProvinceId?.toString() || ''}
+          value={selectedProvinceId?.toString() || undefined}
           onValueChange={handleProvinceChange}
           disabled={isLoadingProvinces}
         >
@@ -128,11 +115,6 @@ export function CascadingLocationSelector({
             <SelectValue placeholder={isLoadingProvinces ? 'កំពុងផ្ទុក...' : 'ជ្រើសរើសខេត្ត/ក្រុង'} />
           </SelectTrigger>
           <SelectContent>
-            {selectedProvinceId && (
-              <SelectItem value="" onClick={handleProvinceClear}>
-                -- សម្អាតការជ្រើសរើស --
-              </SelectItem>
-            )}
             {provinces.map((province) => (
               <SelectItem key={province.id} value={province.id.toString()}>
                 {province.province_name_kh}
@@ -148,7 +130,7 @@ export function CascadingLocationSelector({
           {districtLabel} {required && '*'}
         </Label>
         <Select
-          value={selectedDistrictId?.toString() || ''}
+          value={selectedDistrictId?.toString() || undefined}
           onValueChange={handleDistrictChange}
           disabled={!selectedProvinceId || isLoadingDistricts}
         >
@@ -164,11 +146,6 @@ export function CascadingLocationSelector({
             />
           </SelectTrigger>
           <SelectContent>
-            {selectedDistrictId && (
-              <SelectItem value="" onClick={handleDistrictClear}>
-                -- សម្អាតការជ្រើសរើស --
-              </SelectItem>
-            )}
             {districts.map((district) => (
               <SelectItem key={district.id} value={district.id.toString()}>
                 {district.district_name_kh}
