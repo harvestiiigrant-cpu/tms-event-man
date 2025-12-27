@@ -27,6 +27,7 @@ import { EventFormatBadge } from '@/components/events/EventFormatBadge';
 import { CreateEventDialog } from '@/components/events/CreateEventDialog';
 import { EditEventDialog } from '@/components/events/EditEventDialog';
 import { EventDetailsDialog } from '@/components/events/EventDetailsDialog';
+import { ManageSessionsDialog } from '@/components/events/ManageSessionsDialog';
 import { SmartPagination } from '@/components/ui/smart-pagination';
 import { BulkActionToolbar } from '@/components/ui/bulk-action-toolbar';
 import { useSelection } from '@/hooks/use-selection';
@@ -44,6 +45,7 @@ import {
   Pencil,
   XCircle,
   CalendarDays,
+  ListTodo,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -304,6 +306,15 @@ export default function Events() {
                         <Users className="mr-2 h-4 w-4" />
                         គ្រប់គ្រងអ្នកចុះឈ្មោះ
                       </DropdownMenuItem>
+                      <ManageSessionsDialog
+                        event={event}
+                        trigger={
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <ListTodo className="mr-2 h-4 w-4" />
+                            គ្រប់គ្រងវគ្គសិក្សា
+                          </DropdownMenuItem>
+                        }
+                      />
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={() => deleteMutation.mutate(event.id)}>
                         <XCircle className="mr-2 h-4 w-4" />
@@ -544,6 +555,15 @@ export default function Events() {
                             <Users className="mr-2 h-4 w-4" />
                             គ្រប់គ្រងអ្នកចុះឈ្មោះ
                           </DropdownMenuItem>
+                          <ManageSessionsDialog
+                            event={event}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <ListTodo className="mr-2 h-4 w-4" />
+                                គ្រប់គ្រងវគ្គសិក្សា
+                              </DropdownMenuItem>
+                            }
+                          />
                           <DropdownMenuSeparator />
                           <DropdownMenuItem onClick={() => deleteMutation.mutate(event.id)}>
                             <XCircle className="mr-2 h-4 w-4" />

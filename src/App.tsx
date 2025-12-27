@@ -14,6 +14,9 @@ import Settings from "./pages/Settings";
 import PublicEnrollment from "./pages/PublicEnrollment";
 import EnrollmentLanding from "./pages/EnrollmentLanding";
 import TrainingBrowser from "./pages/TrainingBrowser";
+import EventsBrowser from "./pages/EventsBrowser";
+import PublicEventDetails from "./pages/PublicEventDetails";
+import PublicEventRegistration from "./pages/PublicEventRegistration";
 import NotFound from "./pages/NotFound";
 import MyTrainings from "./pages/portal/MyTrainings";
 import TrainingDetails from "./pages/portal/TrainingDetails";
@@ -53,6 +56,11 @@ const App = () => (
                 <Route path="/enroll/start" element={<EnrollmentLanding />} />
                 <Route path="/trainings/browse" element={<TrainingBrowser />} />
                 <Route path="/enroll" element={<PublicEnrollment />} />
+
+                {/* Public Event Discovery & Registration */}
+                <Route path="/events/browse" element={<EventsBrowser />} />
+                <Route path="/events/:eventId/details" element={<PublicEventDetails />} />
+                <Route path="/events/:eventId/register" element={<PublicEventRegistration />} />
 
                 {/* Admin Dashboard Routes - Protected */}
                 <Route
