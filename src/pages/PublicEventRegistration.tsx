@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
+import { CascadingLocationSelector } from '@/components/common/CascadingLocationSelector';
 import { EventStatusBadge } from '@/components/events/EventStatusBadge';
 import { EventTypeBadge } from '@/components/events/EventTypeBadge';
 import { EventFormatBadge } from '@/components/events/EventFormatBadge';
@@ -42,7 +43,7 @@ export default function PublicEventRegistration() {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [registrationCode, setRegistrationCode] = useState('');
 
-  const { register, handleSubmit, formState: { errors } } = useForm<RegistrationFormData>();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<RegistrationFormData>();
 
   // Fetch event details
   const { data: event, isLoading } = useQuery({
@@ -311,24 +312,18 @@ export default function PublicEventRegistration() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="attendee_province">ខេត្ត/ក្រុង</Label>
-                    <Input
-                      id="attendee_province"
-                      {...register('attendee_province')}
-                      placeholder="ខេត្តរបស់អ្នក"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="attendee_district">ស្រុក/ខណ្ឌ</Label>
-                    <Input
-                      id="attendee_district"
-                      {...register('attendee_district')}
-                      placeholder="ស្រុករបស់អ្នក"
-                    />
-                  </div>
+                <div className="space-y-4">
+                  <h4 className="font-medium text-sm">ទីតាំងរបស់អ្នក</h4>
+                  <CascadingLocationSelector
+                    onProvinceChange={(provinceId, provinceName) => {
+                      setValue('attendee_province', provinceName);
+                    }}
+                    onDistrictChange={(districtId, districtName) => {
+                      setValue('attendee_district', districtName);
+                    }}
+                    provinceLabel="ខេត្ត/ក្រុង"
+                    districtLabel="ស្រុក/ខណ្ឌ"
+                  />
                 </div>
               </div>
 

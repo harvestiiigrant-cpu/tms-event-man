@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { toast } from '@/hooks/use-toast';
+import { CascadingLocationSelector } from '@/components/common/CascadingLocationSelector';
 import { EVENT_TYPES, EVENT_FORMATS } from '@/types/event';
 import type { Event, EventType, EventFormat, EventStatus } from '@/types/event';
 
@@ -263,45 +264,26 @@ export function CreateEventDialog({ children }: CreateEventDialogProps) {
             <div className="space-y-4">
               <h3 className="font-semibold">ទីតាំង</h3>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="event_location">ទីតាំង</Label>
-                  <Input
-                    id="event_location"
-                    {...register('event_location')}
-                    placeholder="រាជធានីភ្នំពេញ"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="event_venue">កន្លែង</Label>
-                  <Input
-                    id="event_venue"
-                    {...register('event_venue')}
-                    placeholder="សណ្ឋាគារ..."
-                  />
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="event_venue">កន្លែងរៀបចំព្រឹត្តិការណ៍</Label>
+                <Input
+                  id="event_venue"
+                  {...register('event_venue')}
+                  placeholder="សណ្ឋាគារ, មជ្ឈមណ្ឌលសន្និសីទ, សាលប្រជុំ..."
+                />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="province_name">ខេត្ត/ក្រុង</Label>
-                  <Input
-                    id="province_name"
-                    {...register('province_name')}
-                    placeholder="រាជធានីភ្នំពេញ"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="district_name">ស្រុក/ខណ្ឌ</Label>
-                  <Input
-                    id="district_name"
-                    {...register('district_name')}
-                    placeholder="ខណ្ឌដូនពេញ"
-                  />
-                </div>
-              </div>
+              <CascadingLocationSelector
+                onProvinceChange={(provinceId, provinceName) => {
+                  setValue('province_name', provinceName);
+                  setValue('event_location', provinceName);
+                }}
+                onDistrictChange={(districtId, districtName) => {
+                  setValue('district_name', districtName);
+                }}
+                provinceLabel="ខេត្ត/ក្រុង"
+                districtLabel="ស្រុក/ខណ្ឌ"
+              />
             </div>
           )}
 
