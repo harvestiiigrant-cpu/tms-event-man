@@ -34,7 +34,8 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
     if (user.role === 'BENEFICIARY') {
       return <Navigate to="/portal/trainings" replace />;
     }
-    return <Navigate to="/" replace />;
+    // Admin users trying to access beneficiary portal
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;

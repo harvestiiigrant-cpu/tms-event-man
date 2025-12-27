@@ -21,11 +21,18 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
-  const { login, isLoading } = useAuth();
+  const { login, isLoading, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+
+  // Redirect if already logged in
+  if (isAuthenticated && user) {
+    const redirectPath = getDefaultRedirectPath(user.role);
+    navigate(redirectPath, { replace: true });
+    return null;
+  }
 
   const {
     register,
@@ -42,9 +49,10 @@ export default function Login() {
       await login(data.username.trim(), data.password.trim());
 
       // Get user from localStorage to determine redirect
-      const storedUser = localStorage.getItem('auth_user');
-      if (storedUser) {
-        const user = JSON.parse(storedUser);
+      const storedAuth = localStorage.getItem('auth');
+      if (storedAuth) {
+        const auth = JSON.parse(storedAuth);
+        const user = auth.user;
         const redirectPath = location.state?.from || getDefaultRedirectPath(user.role);
 
         toast({

@@ -53,11 +53,18 @@ const registerSchema = z.object({
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function Register() {
-  const { register: registerUser, isLoading } = useAuth();
+  const { register: registerUser, isLoading, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Redirect if already logged in
+  if (isAuthenticated && user) {
+    const redirectPath = getDefaultRedirectPath(user.role);
+    navigate(redirectPath, { replace: true });
+    return null;
+  }
 
   const {
     register,
@@ -89,8 +96,8 @@ export default function Register() {
       });
 
       toast({
-        title: 'Registration Successful',
-        description: 'Your account has been created successfully!',
+        title: 'ចុះឈ្មោះជោគជ័យ',
+        description: 'គណនីរបស់អ្នកត្រូវបានបង្កើតដោយជោគជ័យ!',
       });
 
       const redirectPath = getDefaultRedirectPath(data.role as UserRole);
