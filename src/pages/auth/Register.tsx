@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -60,11 +60,12 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Redirect if already logged in
-  if (isAuthenticated && user) {
-    const redirectPath = getDefaultRedirectPath(user.role);
-    navigate(redirectPath, { replace: true });
-    return null;
-  }
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const redirectPath = getDefaultRedirectPath(user.role);
+      navigate(redirectPath, { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const {
     register,
@@ -110,15 +111,15 @@ export default function Register() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/5 p-4">
       <div className="w-full max-w-2xl space-y-6">
-        {/* Back to Login */}
+        {/* Back to Home */}
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => navigate('/login')}
+          onClick={() => navigate('/')}
           className="mb-4"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          ត្រលប់ទៅការចូល
+          ត្រឡប់ទៅទំព័រដើម
         </Button>
 
         {/* Official Branding */}

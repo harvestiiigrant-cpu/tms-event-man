@@ -50,7 +50,7 @@ export function Sidebar({ isMobileMenuOpen = false, onMobileMenuClose }: Sidebar
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
     onMobileMenuClose?.();
   };
 

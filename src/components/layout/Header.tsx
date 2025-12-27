@@ -13,6 +13,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/contexts/AuthContext';
 import { ThemeToggle } from '@/components/settings/ThemeToggle';
+import { NotificationPanel } from '@/components/common/NotificationPanel';
 
 interface HeaderProps {
   title: string;
@@ -26,7 +27,7 @@ export function Header({ title, subtitle, onMobileMenuToggle }: HeaderProps) {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   const getRoleName = (role: string) => {
@@ -81,12 +82,7 @@ export function Header({ title, subtitle, onMobileMenuToggle }: HeaderProps) {
         </Button>
 
         {/* Notifications */}
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
-          <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground">
-            3
-          </span>
-        </Button>
+        <NotificationPanel variant="button" />
 
         {/* User Menu */}
         <DropdownMenu>

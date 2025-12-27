@@ -1,6 +1,7 @@
 import express from 'express';
 import prisma from '../db';
 import { authenticateToken } from '../middleware/auth';
+import { createNotification, getUserIdByUsername } from '../utils/notificationService';
 
 const router = express.Router();
 
@@ -65,6 +66,30 @@ router.post('/', async (req, res) => {
             current_participants: { increment: 1 },
           },
         });
+
+        // Send notification to beneficiary about successful enrollment
+        try {
+          const user = await prisma.user.findUnique({
+            where: { teacher_id: beneficiary_id },
+            select: { id: true },
+          });
+          
+          if (user) {
+            await createNotification({
+              user_id: user.id,
+              title: 'ការចុះឈ្មោះជោគជ័យ',
+              message: `អ្នកត្រូវបានចុះឈ្មោះចូលរួមកម្មវិធីបណ្តុះបណ្តាល ${training.training_name} ដោយជោគជ័យ`,
+              type: 'SUCCESS',
+              priority: 'NORMAL',
+              related_entity_type: 'training',
+              related_entity_id: training_id,
+              action_url: `/portal/trainings`,
+            });
+          }
+        } catch (notifError) {
+          console.error('Failed to send notification:', notifError);
+          // Don't fail enrollment if notification fails
+        }
 
         return enrollment;
       })

@@ -21,6 +21,7 @@ import eventRoutes from './routes/events';
 import eventSessionRoutes from './routes/event-sessions';
 import eventRegistrationRoutes from './routes/event-registrations';
 import eventSpeakerRoutes from './routes/event-speakers';
+import notificationRoutes from './routes/notifications';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -67,6 +68,7 @@ app.use('/api/events', eventRoutes);  // Event management
 app.use('/api/event-sessions', eventSessionRoutes);  // Event session management
 app.use('/api/event-registrations', eventRegistrationRoutes);  // Event registration management
 app.use('/api/event-speakers', eventSpeakerRoutes);  // Event speaker management
+app.use('/api/notifications', notificationRoutes);  // Notification system
 
 // Health check
 app.get('/health', (req, res) => {

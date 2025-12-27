@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useFont, KHMER_FONTS } from '@/contexts/FontContext';
+import { formatDistanceToNow } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -88,23 +91,54 @@ export function BeneficiaryPortalLayout({ children, title, subtitle }: Beneficia
   const { user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
   const { khmerFont, setKhmerFont } = useFont();
-  const [notifications, setNotifications] = useState(mockNotifications);
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+  // Fetch real notifications from API
+  const { data: notifications = [] } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: () => api.notifications.getAll({ limit: 50 }),
+    refetchInterval: 30000, // Refresh every 30 seconds
+  });
+
+  const { data: unreadData } = useQuery({
+    queryKey: ['notifications-unread-count'],
+    queryFn: () => api.notifications.getUnreadCount(),
+    refetchInterval: 30000,
+  });
+
+  const unreadCount = unreadData?.count || 0;
+
+  // Mark as read mutation
+  const markAsReadMutation = useMutation({
+    mutationFn: (id: string) => api.notifications.markAsRead(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
+      queryClient.invalidateQueries({ queryKey: ['notifications-unread-count'] });
+    },
+  });
+
+  // Mark all as read mutation
+  const markAllAsReadMutation = useMutation({
+    mutationFn: () => api.notifications.markAllAsRead(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
+      queryClient.invalidateQueries({ queryKey: ['notifications-unread-count'] });
+    },
+  });
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   const markAsRead = (id: string) => {
-    setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n));
+    markAsReadMutation.mutate(id);
   };
 
   const markAllAsRead = () => {
-    setNotifications(notifications.map(n => ({ ...n, read: true })));
+    markAllAsReadMutation.mutate();
   };
-
-  const unreadCount = notifications.filter(n => !n.read).length;
 
   // Get current route for bottom nav and page title
   const currentPath = location.pathname;
@@ -199,7 +233,7 @@ export function BeneficiaryPortalLayout({ children, title, subtitle }: Beneficia
                           onClick={() => markAsRead(notification.id)}
                           className={cn(
                             'p-4 rounded-xl border cursor-pointer transition-all hover:shadow-md',
-                            notification.read
+                            notification.is_read
                               ? 'bg-background border-border'
                               : 'bg-primary/5 border-primary/20'
                           )}
@@ -208,14 +242,14 @@ export function BeneficiaryPortalLayout({ children, title, subtitle }: Beneficia
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-1">
                                 <h4 className="font-semibold text-sm">{notification.title}</h4>
-                                {!notification.read && (
+                                {!notification.is_read && (
                                   <div className="h-2 w-2 rounded-full bg-primary" />
                                 )}
                               </div>
                               <p className="text-sm text-muted-foreground mb-2">{notification.message}</p>
                               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                                 <Clock className="h-3 w-3" />
-                                <span>{notification.time}</span>
+                                <span>{formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}</span>
                               </div>
                             </div>
                           </div>

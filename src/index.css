@@ -160,7 +160,7 @@ All colors MUST be HSL.
 
   /* Fix main content area background in dark mode */
   .dark main {
-    background-color: hsl(0 0% 12%);
+    background-color: hsl(222 47% 8%);
     min-height: calc(100vh - 4rem);
   }
 
@@ -168,7 +168,7 @@ All colors MUST be HSL.
   .dark body,
   .dark #root {
     min-height: 100vh;
-    background-color: hsl(0 0% 12%);
+    background-color: hsl(222 47% 8%);
   }
 
   /* Recharts dark mode compatibility */

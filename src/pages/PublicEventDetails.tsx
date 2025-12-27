@@ -15,6 +15,7 @@ import {
   Clock,
   Video,
   ArrowLeft,
+  ArrowRight,
   User,
   MessageSquare,
   Link2,

@@ -515,4 +515,28 @@ export const api = {
       method: 'DELETE',
     }),
   },
+
+  // Notifications
+  notifications: {
+    getAll: (params?: { limit?: number; unreadOnly?: boolean }) => {
+      const searchParams = new URLSearchParams();
+      if (params?.limit) searchParams.append('limit', params.limit.toString());
+      if (params?.unreadOnly) searchParams.append('unreadOnly', 'true');
+      const query = searchParams.toString() ? `?${searchParams}` : '';
+      return api.fetch(`/notifications${query}`);
+    },
+    getUnreadCount: () => api.fetch('/notifications/unread-count'),
+    markAsRead: (id: string) => api.fetch(`/notifications/${id}/read`, {
+      method: 'PUT',
+    }),
+    markAllAsRead: () => api.fetch('/notifications/mark-all-read', {
+      method: 'PUT',
+    }),
+    delete: (id: string) => api.fetch(`/notifications/${id}`, {
+      method: 'DELETE',
+    }),
+    clearAll: () => api.fetch('/notifications', {
+      method: 'DELETE',
+    }),
+  },
 };
