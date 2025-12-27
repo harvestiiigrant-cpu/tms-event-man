@@ -58,6 +58,7 @@ import {
   ListTodo,
   FileText,
   Grid3x3,
+  Download,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -68,6 +69,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { format } from 'date-fns';
+import { exportTrainingParticipants } from '@/utils/exportTrainingParticipants';
 
 export default function Trainings() {
   const queryClient = useQueryClient();
@@ -207,6 +209,30 @@ export default function Trainings() {
     setPageSize(newSize);
     setPage(1);
     selection.deselectAll();
+  };
+
+  const handleExportParticipants = async (training: Training) => {
+    try {
+      toast({
+        title: 'កំពុងរៀបចំ',
+        description: 'កំពុងរៀបចំឯកសារ Excel សូមរង់ចាំ...',
+      });
+
+      const exportData = await api.trainings.getExportData(training.id);
+      await exportTrainingParticipants(exportData);
+
+      toast({
+        title: 'ជោគជ័យ',
+        description: 'បាននាំចេញឯកសារដោយជោគជ័យ',
+      });
+    } catch (error) {
+      console.error('Export error:', error);
+      toast({
+        title: 'បរាជ័យ',
+        description: 'មានបញ្ហាក្នុងការនាំចេញឯកសារ',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -367,6 +393,11 @@ export default function Trainings() {
                           </DropdownMenuItem>
                         }
                       />
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => handleExportParticipants(training)}>
+                        <Download className="mr-2 h-4 w-4" />
+                        នាំចេញអ្នកចូលរួម
+                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <ShareEnrollmentLink
                         training={training}
@@ -678,6 +709,11 @@ export default function Trainings() {
                               </DropdownMenuItem>
                             }
                           />
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={() => handleExportParticipants(training)}>
+                            <Download className="mr-2 h-4 w-4" />
+                            នាំចេញអ្នកចូលរួម
+                          </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <ShareEnrollmentLink
                             training={training}

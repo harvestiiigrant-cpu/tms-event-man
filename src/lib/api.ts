@@ -43,7 +43,14 @@ export const api = {
       body: JSON.stringify({ token }),
     }),
     getMe: () => api.fetch('/auth/me'),
-    updateProfile: (data: { name?: string; email?: string; phone?: string; profile_image_url?: string }) =>
+    updateProfile: (data: {
+      name?: string;
+      email?: string;
+      phone?: string;
+      profile_image_url?: string;
+      theme_preference?: string;
+      khmer_font?: string;
+    }) =>
       api.fetch('/auth/profile', {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -76,6 +83,7 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ ids }),
     }),
+    getExportData: (id: string) => api.fetch(`/trainings/${id}/export-participants`),
   },
 
   // Beneficiaries

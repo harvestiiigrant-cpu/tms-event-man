@@ -192,4 +192,57 @@ router.get('/available/:beneficiaryId', authenticateToken, async (req, res) => {
   }
 });
 
+// GET /api/trainings/:id/export-participants - Export participants with attendance records
+router.get('/:id/export-participants', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Get training details
+    const training = await prisma.training.findUnique({
+      where: { id },
+      include: {
+        beneficiary_trainings: {
+          include: {
+            beneficiary: true,
+          },
+        },
+        attendance_records: {
+          orderBy: {
+            date: 'asc',
+          },
+        },
+      },
+    });
+
+    if (!training) {
+      return res.status(404).json({ error: 'Training not found' });
+    }
+
+    // Get all attendance records grouped by beneficiary and date
+    const attendanceByBeneficiary = new Map();
+
+    training.attendance_records.forEach((record) => {
+      if (!attendanceByBeneficiary.has(record.beneficiary_id)) {
+        attendanceByBeneficiary.set(record.beneficiary_id, []);
+      }
+      attendanceByBeneficiary.get(record.beneficiary_id).push(record);
+    });
+
+    // Build export data
+    const exportData = {
+      training,
+      participants: training.beneficiary_trainings.map((enrollment) => ({
+        ...enrollment,
+        beneficiary: enrollment.beneficiary,
+        attendanceRecords: attendanceByBeneficiary.get(enrollment.beneficiary_id) || [],
+      })),
+    };
+
+    res.json(exportData);
+  } catch (error) {
+    console.error('Error fetching export data:', error);
+    res.status(500).json({ error: 'Failed to fetch export data' });
+  }
+});
+
 export default router;
