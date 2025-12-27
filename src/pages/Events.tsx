@@ -25,6 +25,8 @@ import { EventStatusBadge } from '@/components/events/EventStatusBadge';
 import { EventTypeBadge } from '@/components/events/EventTypeBadge';
 import { EventFormatBadge } from '@/components/events/EventFormatBadge';
 import { CreateEventDialog } from '@/components/events/CreateEventDialog';
+import { EditEventDialog } from '@/components/events/EditEventDialog';
+import { EventDetailsDialog } from '@/components/events/EventDetailsDialog';
 import { SmartPagination } from '@/components/ui/smart-pagination';
 import { BulkActionToolbar } from '@/components/ui/bulk-action-toolbar';
 import { useSelection } from '@/hooks/use-selection';
@@ -280,14 +282,24 @@ export default function Events() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>សកម្មភាព</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <Eye className="mr-2 h-4 w-4" />
-                        មើលព័ត៌មានលម្អិត
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Pencil className="mr-2 h-4 w-4" />
-                        កែសម្រួល
-                      </DropdownMenuItem>
+                      <EventDetailsDialog
+                        event={event}
+                        trigger={
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <Eye className="mr-2 h-4 w-4" />
+                            មើលព័ត៌មានលម្អិត
+                          </DropdownMenuItem>
+                        }
+                      />
+                      <EditEventDialog
+                        event={event}
+                        trigger={
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <Pencil className="mr-2 h-4 w-4" />
+                            កែសម្រួល
+                          </DropdownMenuItem>
+                        }
+                      />
                       <DropdownMenuItem>
                         <Users className="mr-2 h-4 w-4" />
                         គ្រប់គ្រងអ្នកចុះឈ្មោះ
@@ -510,14 +522,24 @@ export default function Events() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>សកម្មភាព</DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <Eye className="mr-2 h-4 w-4" />
-                            មើលព័ត៌មានលម្អិត
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Pencil className="mr-2 h-4 w-4" />
-                            កែសម្រួល
-                          </DropdownMenuItem>
+                          <EventDetailsDialog
+                            event={event}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <Eye className="mr-2 h-4 w-4" />
+                                មើលព័ត៌មានលម្អិត
+                              </DropdownMenuItem>
+                            }
+                          />
+                          <EditEventDialog
+                            event={event}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <Pencil className="mr-2 h-4 w-4" />
+                                កែសម្រួល
+                              </DropdownMenuItem>
+                            }
+                          />
                           <DropdownMenuItem>
                             <Users className="mr-2 h-4 w-4" />
                             គ្រប់គ្រងអ្នកចុះឈ្មោះ
