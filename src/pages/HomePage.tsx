@@ -115,9 +115,9 @@ export default function HomePage() {
   const ctaSection = useScrollAnimation();
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-screen bg-background">
       {/* Hero Section - Fully Animated */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/70 min-h-screen flex items-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-primary/70 min-h-[100vh] flex items-center pb-20">
         {/* Animated Background Elements with Parallax */}
         <div className="absolute inset-0 overflow-hidden">
           <div
@@ -151,8 +151,8 @@ export default function HomePage() {
         </div>
 
         {/* Navigation Bar - Slide down animation */}
-        <nav className="absolute top-0 left-0 right-0 z-20 animate-in slide-in-from-top duration-1000">
-          <div className="container mx-auto px-4 py-6">
+        <nav className="absolute top-0 left-0 right-0 z-20 backdrop-blur-sm bg-black/10">
+          <div className="container mx-auto px-4 py-6 animate-in slide-in-from-top duration-1000">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left duration-1000">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-2xl hover:scale-110 transition-transform duration-300">
@@ -193,8 +193,8 @@ export default function HomePage() {
         </nav>
 
         {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 container mx-auto px-4 pt-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
             {/* Left Content - Fade in from left */}
             <div className="text-white space-y-8 animate-in fade-in slide-in-from-left duration-1000 delay-300">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 hover:bg-white/30 transition-all cursor-default">
