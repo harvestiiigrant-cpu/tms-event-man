@@ -141,7 +141,7 @@ export function getDefaultRedirectPath(role: UserRole): string {
   switch (role) {
     case 'ADMIN':
     case 'SUPER_ADMIN':
-      return '/';
+      return '/dashboard';
     case 'BENEFICIARY':
       return '/portal/trainings';
     default:
