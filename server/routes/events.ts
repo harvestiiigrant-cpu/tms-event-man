@@ -165,8 +165,6 @@ router.get('/:id/public', async (req, res) => {
     const event = await prisma.event.findUnique({
       where: {
         id: req.params.id,
-        is_published: true,
-        is_deleted: false,
       },
       include: {
         sessions: {
@@ -219,8 +217,8 @@ router.get('/:id/public', async (req, res) => {
       },
     });
 
-    if (!event) {
-      return res.status(404).json({ error: 'Event not found' });
+    if (!event || event.is_deleted || !event.is_published) {
+      return res.status(404).json({ error: 'Event not found or not published' });
     }
 
     res.json(event);
