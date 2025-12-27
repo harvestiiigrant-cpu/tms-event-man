@@ -12,6 +12,7 @@ import {
   X,
   FileText,
   ClipboardList,
+  CalendarDays,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,6 +31,7 @@ interface SidebarProps {
 const navItems = [
   { path: '/', label: 'ផ្ទាំងគ្រប់គ្រង', labelEn: 'Dashboard', icon: LayoutDashboard },
   { path: '/trainings', label: 'ការបណ្តុះបណ្តាល', labelEn: 'Trainings', icon: GraduationCap },
+  { path: '/events', label: 'ព្រឹត្តិការណ៍', labelEn: 'Events', icon: CalendarDays },
   { path: '/materials', label: 'បណ្ណាល័យឯកសារ', labelEn: 'Materials', icon: FileText },
   { path: '/surveys', label: 'ការស្ទង់មតិ និងតេស្ត', labelEn: 'Surveys & Tests', icon: ClipboardList },
   { path: '/beneficiaries', label: 'អ្នកទទួលផល', labelEn: 'Beneficiaries', icon: Users },

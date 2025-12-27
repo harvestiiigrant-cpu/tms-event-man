@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Trainings from "./pages/Trainings";
+import Events from "./pages/Events";
 import Materials from "./pages/Materials";
 import Surveys from "./pages/Surveys";
 import Beneficiaries from "./pages/Beneficiaries";
@@ -67,6 +68,14 @@ const App = () => (
                   element={
                     <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
                       <Trainings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/events"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <Events />
                     </ProtectedRoute>
                   }
                 />
