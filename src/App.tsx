@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard";
 import Trainings from "./pages/Trainings";
 import Events from "./pages/Events";
@@ -48,6 +49,9 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <Routes>
+                {/* Public Home Page */}
+                <Route path="/" element={<HomePage />} />
+
                 {/* Public Auth Routes */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -64,7 +68,7 @@ const App = () => (
 
                 {/* Admin Dashboard Routes - Protected */}
                 <Route
-                  path="/"
+                  path="/dashboard"
                   element={
                     <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
                       <Dashboard />

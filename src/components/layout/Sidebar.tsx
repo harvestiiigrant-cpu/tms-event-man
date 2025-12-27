@@ -29,7 +29,7 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { path: '/', label: 'ផ្ទាំងគ្រប់គ្រង', labelEn: 'Dashboard', icon: LayoutDashboard },
+  { path: '/dashboard', label: 'ផ្ទាំងគ្រប់គ្រង', labelEn: 'Dashboard', icon: LayoutDashboard },
   { path: '/trainings', label: 'ការបណ្តុះបណ្តាល', labelEn: 'Trainings', icon: GraduationCap },
   { path: '/events', label: 'ព្រឹត្តិការណ៍', labelEn: 'Events', icon: CalendarDays },
   { path: '/materials', label: 'បណ្ណាល័យឯកសារ', labelEn: 'Materials', icon: FileText },
