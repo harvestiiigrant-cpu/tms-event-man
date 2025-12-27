@@ -24,6 +24,7 @@ import {
 import { EventStatusBadge } from '@/components/events/EventStatusBadge';
 import { EventTypeBadge } from '@/components/events/EventTypeBadge';
 import { EventFormatBadge } from '@/components/events/EventFormatBadge';
+import { CreateEventDialog } from '@/components/events/CreateEventDialog';
 import { SmartPagination } from '@/components/ui/smart-pagination';
 import { BulkActionToolbar } from '@/components/ui/bulk-action-toolbar';
 import { useSelection } from '@/hooks/use-selection';
@@ -103,6 +104,38 @@ export default function Events() {
   // Selection hook for bulk operations
   const selection = useSelection<Event>(paginatedEvents);
 
+  // Delete single event mutation
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => api.events.delete(id),
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ['events'] });
+      const previousEvents = queryClient.getQueryData<Event[]>(['events']);
+      queryClient.setQueryData<Event[]>(['events'], (old) =>
+        old?.filter((e) => e.id !== id) || []
+      );
+      return { previousEvents };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousEvents) {
+        queryClient.setQueryData(['events'], context.previousEvents);
+      }
+      toast({
+        title: 'បរាជ័យ',
+        description: 'មានបញ្ហាក្នុងការលុប',
+        variant: 'destructive',
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: 'ជោគជ័យ',
+        description: 'បានលុបព្រឹត្តិការណ៍ដោយជោគជ័យ',
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['events'] });
+    },
+  });
+
   // Bulk delete mutation
   const bulkDeleteMutation = useMutation({
     mutationFn: (ids: string[]) => api.events.bulkDelete(ids),
@@ -161,10 +194,12 @@ export default function Events() {
           <CardContent className="p-4 space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold">ព្រឹត្តិការណ៍ទាំងអស់</h2>
-              <Button size="sm">
-                <Plus className="mr-1 h-4 w-4" />
-                បង្កើតថ្មី
-              </Button>
+              <CreateEventDialog>
+                <Button size="sm">
+                  <Plus className="mr-1 h-4 w-4" />
+                  បង្កើតថ្មី
+                </Button>
+              </CreateEventDialog>
             </div>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -258,7 +293,7 @@ export default function Events() {
                         គ្រប់គ្រងអ្នកចុះឈ្មោះ
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => deleteMutation.mutate(event.id)}>
                         <XCircle className="mr-2 h-4 w-4" />
                         លុបចោល
                       </DropdownMenuItem>
@@ -318,10 +353,12 @@ export default function Events() {
       <Card className="hidden lg:block">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>ព្រឹត្តិការណ៍ទាំងអស់</CardTitle>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            បង្កើតព្រឹត្តិការណ៍
-          </Button>
+          <CreateEventDialog>
+            <Button>
+              <Plus className="mr-2 h-4 w-4" />
+              បង្កើតព្រឹត្តិការណ៍
+            </Button>
+          </CreateEventDialog>
         </CardHeader>
         <CardContent>
           {/* Filters */}
@@ -486,7 +523,7 @@ export default function Events() {
                             គ្រប់គ្រងអ្នកចុះឈ្មោះ
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => deleteMutation.mutate(event.id)}>
                             <XCircle className="mr-2 h-4 w-4" />
                             លុបចោល
                           </DropdownMenuItem>
