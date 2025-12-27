@@ -405,4 +405,114 @@ export const api = {
     getBeneficiarySurveys: (beneficiaryId: string) =>
       api.fetch(`/surveys/beneficiaries/${beneficiaryId}/surveys`),
   },
+
+  // Events
+  events: {
+    getAll: () => api.fetch('/events'),
+    getPublic: () => api.fetch('/events/public'),
+    getById: (id: string) => api.fetch(`/events/${id}`),
+    getByIdPublic: (id: string) => api.fetch(`/events/${id}/public`),
+    create: (data: any) => api.fetch('/events', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    update: (id: string, data: any) => api.fetch(`/events/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+    delete: (id: string) => api.fetch(`/events/${id}`, {
+      method: 'DELETE',
+    }),
+    bulkDelete: (ids: string[]) => api.fetch('/events/bulk-delete', {
+      method: 'POST',
+      body: JSON.stringify({ ids }),
+    }),
+    getExportData: (id: string) => api.fetch(`/events/${id}/export-participants`),
+  },
+
+  // Event Sessions
+  eventSessions: {
+    getByEvent: (eventId: string) => api.fetch(`/event-sessions/event/${eventId}`),
+    getById: (id: string) => api.fetch(`/event-sessions/${id}`),
+    create: (data: any) => api.fetch('/event-sessions', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    update: (id: string, data: any) => api.fetch(`/event-sessions/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+    delete: (id: string) => api.fetch(`/event-sessions/${id}`, {
+      method: 'DELETE',
+    }),
+    bulkCreate: (sessions: any[]) => api.fetch('/event-sessions/bulk', {
+      method: 'POST',
+      body: JSON.stringify({ sessions }),
+    }),
+    addSpeaker: (sessionId: string, speakerId: string, role?: string) =>
+      api.fetch(`/event-sessions/${sessionId}/speakers`, {
+        method: 'POST',
+        body: JSON.stringify({ speaker_id: speakerId, role }),
+      }),
+    removeSpeaker: (sessionId: string, speakerId: string) =>
+      api.fetch(`/event-sessions/${sessionId}/speakers/${speakerId}`, {
+        method: 'DELETE',
+      }),
+  },
+
+  // Event Registrations
+  eventRegistrations: {
+    getByEvent: (eventId: string) => api.fetch(`/event-registrations/event/${eventId}`),
+    getById: (id: string) => api.fetch(`/event-registrations/${id}`),
+    getByCode: (code: string) => api.fetch(`/event-registrations/code/${code}`),
+    registerPublic: (data: any) => api.fetch('/event-registrations/public', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    create: (data: any) => api.fetch('/event-registrations', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    update: (id: string, data: any) => api.fetch(`/event-registrations/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+    approve: (id: string, userId: string) => api.fetch(`/event-registrations/${id}/approve`, {
+      method: 'PUT',
+      body: JSON.stringify({ userId }),
+    }),
+    reject: (id: string, userId: string) => api.fetch(`/event-registrations/${id}/reject`, {
+      method: 'PUT',
+      body: JSON.stringify({ userId }),
+    }),
+    cancel: (id: string) => api.fetch(`/event-registrations/${id}`, {
+      method: 'DELETE',
+    }),
+    addSession: (registrationId: string, sessionId: string) =>
+      api.fetch(`/event-registrations/${registrationId}/sessions`, {
+        method: 'POST',
+        body: JSON.stringify({ session_id: sessionId }),
+      }),
+    removeSession: (registrationId: string, sessionId: string) =>
+      api.fetch(`/event-registrations/${registrationId}/sessions/${sessionId}`, {
+        method: 'DELETE',
+      }),
+  },
+
+  // Event Speakers
+  eventSpeakers: {
+    getByEvent: (eventId: string) => api.fetch(`/event-speakers/event/${eventId}`),
+    getById: (id: string) => api.fetch(`/event-speakers/${id}`),
+    create: (data: any) => api.fetch('/event-speakers', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+    update: (id: string, data: any) => api.fetch(`/event-speakers/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
+    delete: (id: string) => api.fetch(`/event-speakers/${id}`, {
+      method: 'DELETE',
+    }),
+  },
 };

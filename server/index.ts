@@ -17,6 +17,10 @@ import departmentRoutes from './routes/departments';
 import surveyRoutes from './routes/surveys';
 import surveyResponseRoutes from './routes/survey-responses';
 import uploadRoutes from './routes/upload';
+import eventRoutes from './routes/events';
+import eventSessionRoutes from './routes/event-sessions';
+import eventRegistrationRoutes from './routes/event-registrations';
+import eventSpeakerRoutes from './routes/event-speakers';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -59,6 +63,10 @@ app.use('/api/departments', departmentRoutes);  // Beneficiary departments manag
 app.use('/api/surveys', surveyRoutes);  // Survey and test management
 app.use('/api/surveys', surveyResponseRoutes);  // Survey responses and results
 app.use('/api/upload', uploadRoutes);  // File uploads (profiles, signatures)
+app.use('/api/events', eventRoutes);  // Event management
+app.use('/api/event-sessions', eventSessionRoutes);  // Event session management
+app.use('/api/event-registrations', eventRegistrationRoutes);  // Event registration management
+app.use('/api/event-speakers', eventSpeakerRoutes);  // Event speaker management
 
 // Health check
 app.get('/health', (req, res) => {
