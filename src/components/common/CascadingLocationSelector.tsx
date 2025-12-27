@@ -30,8 +30,8 @@ export function CascadingLocationSelector({
 }: CascadingLocationSelectorProps) {
   const [provinces, setProvinces] = useState<Province[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
-  const [selectedProvinceId, setSelectedProvinceId] = useState<number | null>(null);
-  const [selectedDistrictId, setSelectedDistrictId] = useState<number | null>(null);
+  const [selectedProvinceId, setSelectedProvinceId] = useState<string>('');
+  const [selectedDistrictId, setSelectedDistrictId] = useState<string>('');
   const [isLoadingProvinces, setIsLoadingProvinces] = useState(true);
   const [isLoadingDistricts, setIsLoadingDistricts] = useState(false);
 
@@ -49,7 +49,7 @@ export function CascadingLocationSelector({
           (p) => p.province_name_kh === selectedProvinceName || p.province_name_en === selectedProvinceName
         );
         if (province) {
-          setSelectedProvinceId(province.id);
+          setSelectedProvinceId(province.id.toString());
           loadDistricts(province.id);
         }
       }
@@ -70,18 +70,27 @@ export function CascadingLocationSelector({
         (d) => d.district_name_kh === selectedDistrictName || d.district_name_en === selectedDistrictName
       );
       if (district) {
-        setSelectedDistrictId(district.id);
+        setSelectedDistrictId(district.id.toString());
       }
     }
   };
 
   const handleProvinceChange = (value: string) => {
+    if (!value) {
+      setSelectedProvinceId('');
+      setSelectedDistrictId('');
+      setDistricts([]);
+      onProvinceChange(null, '');
+      onDistrictChange(null, '');
+      return;
+    }
+
     const provinceId = parseInt(value);
     const province = provinces.find((p) => p.id === provinceId);
 
     if (province) {
-      setSelectedProvinceId(provinceId);
-      setSelectedDistrictId(null);
+      setSelectedProvinceId(value);
+      setSelectedDistrictId('');
       setDistricts([]);
       onProvinceChange(provinceId, province.province_name_kh);
       onDistrictChange(null, '');
@@ -90,11 +99,17 @@ export function CascadingLocationSelector({
   };
 
   const handleDistrictChange = (value: string) => {
+    if (!value) {
+      setSelectedDistrictId('');
+      onDistrictChange(null, '');
+      return;
+    }
+
     const districtId = parseInt(value);
     const district = districts.find((d) => d.id === districtId);
 
     if (district) {
-      setSelectedDistrictId(districtId);
+      setSelectedDistrictId(value);
       onDistrictChange(districtId, district.district_name_kh);
     }
   };
@@ -107,7 +122,7 @@ export function CascadingLocationSelector({
           {provinceLabel} {required && '*'}
         </Label>
         <Select
-          value={selectedProvinceId?.toString() || undefined}
+          value={selectedProvinceId}
           onValueChange={handleProvinceChange}
           disabled={isLoadingProvinces}
         >
@@ -130,7 +145,7 @@ export function CascadingLocationSelector({
           {districtLabel} {required && '*'}
         </Label>
         <Select
-          value={selectedDistrictId?.toString() || undefined}
+          value={selectedDistrictId}
           onValueChange={handleDistrictChange}
           disabled={!selectedProvinceId || isLoadingDistricts}
         >
