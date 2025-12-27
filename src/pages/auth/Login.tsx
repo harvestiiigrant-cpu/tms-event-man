@@ -48,8 +48,8 @@ export default function Login() {
         const redirectPath = location.state?.from || getDefaultRedirectPath(user.role);
 
         toast({
-          title: 'Login Successful',
-          description: `Welcome back, ${user.name}!`,
+          title: 'ចូលប្រើប្រាស់ជោគជ័យ',
+          description: `សូមស្វាគមន៍ ${user.name}!`,
         });
 
         navigate(redirectPath, { replace: true });
