@@ -19,8 +19,8 @@ pipeline {
         // DEPLOY_USER = credentials('deploy-user')
         // DEPLOY_KEY = credentials('deploy-ssh-key')
 
-        // Node configuration
-        NODE_ENV = "${env.BRANCH_NAME == 'main' ? 'production' : 'development'}"
+        // Node configuration - default to development if branch name is not available
+        NODE_ENV = "${env.BRANCH_NAME ? (env.BRANCH_NAME == 'main' ? 'production' : 'development') : 'development'}"
 
         // Container names
         DB_CONTAINER = 'plp_tms_db'
@@ -172,7 +172,7 @@ pipeline {
             when {
                 allOf {
                     expression { params.DEPLOYMENT_ENV == 'development' }
-                    expression { env.BRANCH_NAME == 'develop' }
+                    expression { env.BRANCH_NAME ? env.BRANCH_NAME == 'develop' : true }
                 }
             }
             steps {
@@ -206,7 +206,7 @@ pipeline {
             when {
                 allOf {
                     expression { params.DEPLOYMENT_ENV == 'production' }
-                    expression { env.BRANCH_NAME == 'main' }
+                    expression { env.BRANCH_NAME ? env.BRANCH_NAME == 'main' : false }
                 }
             }
             steps {
