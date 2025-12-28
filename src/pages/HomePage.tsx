@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { Event } from '@/types/event';
+import { AlertCircle } from 'lucide-react';
 import {
   GraduationCap,
   CalendarDays,
@@ -88,7 +89,7 @@ export default function HomePage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Fetch upcoming events for preview
-  const { data: upcomingEvents = [] } = useQuery({
+  const { data: upcomingEvents = [], isLoading, isError, error } = useQuery({
     queryKey: ['events-upcoming'],
     queryFn: api.events.getPublic,
   });
@@ -433,45 +434,59 @@ export default function HomePage() {
       </section>
 
       {/* Upcoming Events Section - Slide in Animation */}
-      {featuredEvents.length > 0 && (
-        <section className="py-20 bg-background" ref={eventsSection.ref}>
-          <div className="container mx-auto px-4">
-            <div className={`text-center mb-12 transition-all duration-1000 ${eventsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <Badge className="mb-4 text-sm px-4 py-1">ព្រឹត្តិការណ៍នាពេលខាងមុខ</Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                ចូលរួមជាមួយពួកយើង
-              </h2>
-              <p className="text-xl text-muted-foreground">
-                ព្រឹត្តិការណ៍ដែលកំពុងបើកចុះឈ្មោះ
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {featuredEvents.map((event: Event, index: number) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  delay={index * 200}
-                  isVisible={eventsSection.isVisible}
-                  onClick={() => navigate(`/events/${event.id}/details`)}
-                />
-              ))}
-            </div>
-
-            <div className={`text-center mt-12 transition-all duration-1000 delay-500 ${eventsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => navigate('/events/browse')}
-                className="group hover:scale-105 transition-all"
-              >
-                មើលព្រឹត្តិការណ៍ទាំងអស់
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </div>
+      <section className="py-20 bg-background" ref={eventsSection.ref}>
+        <div className="container mx-auto px-4">
+          <div className={`text-center mb-12 transition-all duration-1000 ${eventsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <Badge className="mb-4 text-sm px-4 py-1">ព្រឹត្តិការណ៍នាពេលខាងមុខ</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              ចូលរួមជាមួយពួកយើង
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              ព្រឹត្តិការណ៍ដែលកំពុងបើកចុះឈ្មោះ
+            </p>
           </div>
-        </section>
-      )}
+      
+          {isLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <p className="text-muted-foreground">កំពុងផ្ទុកព្រឹត្តិការណ៍...</p>
+            </div>
+          ) : isError ? (
+            <div className="flex justify-center items-center h-64">
+              <p className="text-destructive">មានបញ្ហាក្នុងការផ្ទុកព្រឹត្តិការណ៍: {(error as Error)?.message || 'មិនស្គាល់បញ្ហា'}</p>
+            </div>
+          ) : featuredEvents.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {featuredEvents.map((event: Event, index: number) => (
+                  <EventCard
+                    key={event.id}
+                    event={event}
+                    delay={index * 200}
+                    isVisible={eventsSection.isVisible}
+                    onClick={() => navigate(`/events/${event.id}/details`) }
+                  />
+                ))}
+              </div>
+      
+              <div className={`text-center mt-12 transition-all duration-1000 delay-500 ${eventsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => navigate('/events/browse')}
+                  className="group hover:scale-105 transition-all"
+                >
+                  មើលព្រឹត្តិការណ៍ទាំងអស់
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </>
+          ) : (
+            <div className="flex justify-center items-center h-64">
+              <p className="text-muted-foreground">មិនមានព្រឹត្តិការណ៍ណាមួយកំពុងបើកចុះឈ្មោះទេនាពេលបច្ចុប្បន្ន</p>
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* CTA Section - Animated */}
       <section className="py-20 bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/5" ref={ctaSection.ref}>
