@@ -20,7 +20,7 @@ pipeline {
         // DEPLOY_KEY = credentials('deploy-ssh-key')
 
         // Node configuration
-        NODE_ENV = "${BRANCH_NAME == 'main' ? 'production' : 'development'}"
+        NODE_ENV = "${env.BRANCH_NAME == 'main' ? 'production' : 'development'}"
 
         // Container names
         DB_CONTAINER = 'plp_tms_db'
@@ -170,8 +170,10 @@ pipeline {
 
         stage('Deploy to Development') {
             when {
-                expression { params.DEPLOYMENT_ENV == 'development' }
-                branch 'develop'
+                allOf {
+                    expression { params.DEPLOYMENT_ENV == 'development' }
+                    expression { env.BRANCH_NAME == 'develop' }
+                }
             }
             steps {
                 script {
@@ -202,8 +204,10 @@ pipeline {
 
         stage('Deploy to Production') {
             when {
-                expression { params.DEPLOYMENT_ENV == 'production' }
-                branch 'main'
+                allOf {
+                    expression { params.DEPLOYMENT_ENV == 'production' }
+                    expression { env.BRANCH_NAME == 'main' }
+                }
             }
             steps {
                 script {
@@ -322,10 +326,21 @@ pipeline {
                 node {
                     sh '''
                         echo "Collecting debug information..."
-                        docker ps -a || true
-                        docker logs ${DB_CONTAINER} 2>&1 | tail -50 || true
-                        docker logs ${BACKEND_CONTAINER} 2>&1 | tail -50 || true
-                        docker logs ${FRONTEND_CONTAINER} 2>&1 | tail -50 || true
+                        # Check if Docker is available and accessible
+                        if command -v docker &> /dev/null; then
+                            if docker ps &> /dev/null; then
+                                echo "Docker is accessible"
+                                docker ps -a || true
+                                docker logs ${DB_CONTAINER} 2>&1 | tail -50 || true
+                                docker logs ${BACKEND_CONTAINER} 2>&1 | tail -50 || true
+                                docker logs ${FRONTEND_CONTAINER} 2>&1 | tail -50 || true
+                            else
+                                echo "Docker daemon is not accessible to Jenkins user"
+                                echo "Please add Jenkins user to docker group: sudo usermod -aG docker jenkins"
+                            fi
+                        else
+                            echo "Docker is not installed or not in PATH"
+                        fi
                     '''
                 }
             }
