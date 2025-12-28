@@ -1,0 +1,1159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// User Authentication
+model User {
+  id                String   @id @default(cuid())
+  username          String   @unique
+  email             String   @unique
+  password          String
+  role              UserRole
+  name              String
+  phone             String?
+  profile_image_url String?
+
+  // Beneficiary-specific fields (for role = BENEFICIARY)
+  teacher_id    String?
+  school        String?
+  school_id     String?
+  province_name String?
+
+  // User preferences (persisted across devices)
+  theme_preference String? @default("light") // "light" | "dark" | "system"
+  khmer_font       String? @default("Suwannaphum") // Selected Khmer font
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  notifications Notification[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  SUPER_ADMIN
+  BENEFICIARY
+}
+
+// Beneficiary (Teacher) Model
+model Beneficiary {
+  teacher_id   String  @id
+  name         String
+  name_english String?
+  phone        String?
+  sex          Sex?
+  role         String?
+  passcode     String?
+
+  // Location
+  province_name String?
+  district_name String?
+  commune_name  String?
+  village_name  String?
+
+  // School Info
+  school    String?
+  school_id String?
+  position  String?
+  subject   String?
+  grade     Int?
+
+  // Profile
+  profile_image_url String?
+  signature_url     String?
+  status            BeneficiaryStatus
+  is_deleted        Boolean           @default(false)
+  profile_completed Boolean           @default(false)
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  // Relations
+  trainings                BeneficiaryTraining[]
+  attendance_records       AttendanceRecord[]
+  survey_responses         SurveyResponse[]
+  event_registrations      EventRegistration[]
+  event_attendance_records EventAttendanceRecord[]
+
+  @@map("beneficiaries")
+}
+
+enum Sex {
+  M
+  F
+}
+
+enum BeneficiaryStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// Training Model
+model Training {
+  id                    String  @id @default(cuid())
+  training_code         String  @unique
+  training_name         String
+  training_name_english String?
+  training_description  String? @db.Text
+
+  // Training Details
+  training_type     TrainingType?
+  training_category String?
+  training_level    TrainingLevel?
+  training_status   TrainingStatus
+
+  // Dates
+  training_start_date   DateTime
+  training_end_date     DateTime
+  registration_deadline DateTime?
+
+  // Location
+  training_location String
+  training_venue    String?
+  venue_latitude    Float?
+  venue_longitude   Float?
+  geofence_radius   Int     @default(100)
+
+  province_name   String?
+  district_name   String?
+  commune_name    String?
+  school_name     String?
+  cluster_schools String[]
+
+  // Participants
+  max_participants     Int
+  current_participants Int @default(0)
+
+  // Features
+  qr_code_data                 String?
+  gps_validation_required      Boolean @default(false)
+  geofence_validation_required Boolean @default(false)
+  is_published                 Boolean @default(false)
+
+  // Audit
+  training_is_deleted Boolean  @default(false)
+  training_created_by String?
+  training_updated_by String?
+  training_created_at DateTime @default(now())
+  training_updated_at DateTime @updatedAt
+
+  // Relations
+  beneficiary_trainings BeneficiaryTraining[]
+  attendance_records    AttendanceRecord[]
+  agendas               TrainingAgenda[]
+  material_links        TrainingMaterialLink[]
+  survey_links          TrainingSurveyLink[]
+  survey_responses      SurveyResponse[]
+
+  @@map("trainings")
+}
+
+enum TrainingType {
+  WORKSHOP
+  COURSE
+  SEMINAR
+}
+
+enum TrainingLevel {
+  NATIONAL
+  PROVINCIAL
+  CLUSTER
+}
+
+enum TrainingStatus {
+  DRAFT
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+// ============================================
+// EVENT MANAGEMENT SYSTEM
+// ============================================
+
+// Event Model (Hybrid with Training)
+model Event {
+  id                 String  @id @default(cuid())
+  event_code         String  @unique
+  event_name         String
+  event_name_english String?
+  event_description  String? @db.Text
+
+  // Event Type & Category
+  event_type     EventType
+  event_category String?
+  event_format   EventFormat @default(IN_PERSON)
+  event_status   EventStatus
+
+  // Dates & Time
+  event_start_date      DateTime
+  event_end_date        DateTime
+  registration_deadline DateTime?
+  registration_start    DateTime?
+
+  // Location (Physical)
+  event_location  String?
+  event_venue     String?
+  venue_latitude  Float?
+  venue_longitude Float?
+  geofence_radius Int     @default(100)
+
+  province_name String?
+  district_name String?
+
+  // Virtual Event
+  virtual_platform    String? // "Zoom", "Teams", "Google Meet"
+  virtual_meeting_url String?
+  virtual_meeting_id  String?
+  virtual_passcode    String?
+
+  // Capacity & Registration
+  max_attendees             Int
+  current_attendees         Int     @default(0)
+  allow_public_registration Boolean @default(true)
+  requires_approval         Boolean @default(false)
+
+  // Multi-track/Session Support
+  is_multi_track Boolean @default(false)
+
+  // Features
+  qr_code_data                 String?
+  gps_validation_required      Boolean @default(false)
+  geofence_validation_required Boolean @default(false)
+  is_published                 Boolean @default(false)
+
+  // Event Image/Banner
+  banner_image_url String?
+
+  // Tags for discovery
+  tags String[] @default([])
+
+  // Audit
+  is_deleted Boolean  @default(false)
+  created_by String?
+  updated_by String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  sessions           EventSession[]
+  registrations      EventRegistration[]
+  attendance_records EventAttendanceRecord[]
+  speakers           EventSpeaker[]
+  material_links     EventMaterialLink[]
+
+  @@map("events")
+}
+
+enum EventType {
+  CONFERENCE
+  WORKSHOP
+  SEMINAR
+  WEBINAR
+  MEETING
+  CEREMONY
+  TRAINING
+  NETWORKING
+  EXHIBITION
+  OTHER
+}
+
+enum EventFormat {
+  IN_PERSON
+  VIRTUAL
+  HYBRID
+}
+
+enum EventStatus {
+  DRAFT
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+// Event Session (for multi-track events)
+model EventSession {
+  id           String @id @default(cuid())
+  event_id     String
+  session_code String @unique
+
+  // Session Info
+  session_name         String
+  session_name_english String?
+  session_description  String? @db.Text
+
+  // Scheduling
+  session_date       DateTime
+  session_start_time DateTime
+  session_end_time   DateTime
+
+  // Location (can differ from main event)
+  session_location String?
+  session_room     String?
+  venue_latitude   Float?
+  venue_longitude  Float?
+
+  // Virtual
+  virtual_meeting_url String?
+
+  // Track/Category
+  track_name  String? // "Technical Track", "Business Track"
+  track_color String? // Hex color for UI
+
+  // Capacity
+  max_attendees     Int
+  current_attendees Int @default(0)
+
+  // Session Type
+  session_type SessionType @default(PRESENTATION)
+
+  // Status
+  is_cancelled Boolean @default(false)
+  is_deleted   Boolean @default(false)
+
+  // Ordering
+  sort_order Int @default(0)
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  // Relations
+  event                 Event                      @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  session_registrations EventSessionRegistration[]
+  speakers              EventSessionSpeaker[]
+
+  @@index([event_id])
+  @@map("event_sessions")
+}
+
+enum SessionType {
+  PRESENTATION
+  WORKSHOP
+  PANEL_DISCUSSION
+  KEYNOTE
+  BREAKOUT_SESSION
+  Q_AND_A
+  NETWORKING
+  BREAK
+  MEAL
+}
+
+// Event Registration (Public & Beneficiary)
+model EventRegistration {
+  id                String @id @default(cuid())
+  event_id          String
+  registration_code String @unique
+
+  // Attendee Info (can be beneficiary or public)
+  beneficiary_id String? // NULL if public attendee
+
+  // Public Attendee Details (if not beneficiary)
+  attendee_name         String?
+  attendee_name_english String?
+  attendee_email        String?
+  attendee_phone        String?
+  attendee_organization String?
+  attendee_position     String?
+  attendee_province     String?
+  attendee_district     String?
+
+  // Registration Details
+  registration_date   DateTime
+  registration_method RegistrationMethod
+  registration_source String? // "QR", "WEB", "ADMIN"
+
+  // Status
+  registration_status RegistrationStatus
+  approval_status     ApprovalStatus     @default(PENDING)
+  approved_by         String?
+  approved_at         DateTime?
+
+  // Attendance
+  check_in_time     DateTime?
+  check_out_time    DateTime?
+  attendance_status String? // "ATTENDED", "NO_SHOW"
+
+  // Role at Event
+  attendee_role AttendeeRole @default(PARTICIPANT)
+
+  // Special Requirements
+  dietary_requirements String?
+  accessibility_needs  String?
+  special_requests     String? @db.Text
+
+  // QR Code for check-in
+  qr_code_data String?
+
+  // Audit
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  event                 Event                      @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  beneficiary           Beneficiary?               @relation(fields: [beneficiary_id], references: [teacher_id])
+  session_registrations EventSessionRegistration[]
+
+  @@index([event_id])
+  @@index([beneficiary_id])
+  @@map("event_registrations")
+}
+
+enum RegistrationStatus {
+  REGISTERED
+  CONFIRMED
+  CANCELLED
+  WAITLISTED
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AttendeeRole {
+  PARTICIPANT
+  SPEAKER
+  PANELIST
+  MODERATOR
+  ORGANIZER
+  VOLUNTEER
+  VIP
+  SPONSOR
+  MEDIA
+}
+
+// Session Registration (many-to-many: Registrations <-> Sessions)
+model EventSessionRegistration {
+  id              String @id @default(cuid())
+  registration_id String
+  session_id      String
+
+  // Registration Details
+  registered_at DateTime @default(now())
+
+  // Attendance
+  checked_in    Boolean   @default(false)
+  check_in_time DateTime?
+
+  // Relations
+  registration EventRegistration @relation(fields: [registration_id], references: [id], onDelete: Cascade)
+  session      EventSession      @relation(fields: [session_id], references: [id], onDelete: Cascade)
+
+  @@unique([registration_id, session_id])
+  @@index([registration_id])
+  @@index([session_id])
+  @@map("event_session_registrations")
+}
+
+// Event Attendance Records (similar to training attendance)
+model EventAttendanceRecord {
+  id       String @id @default(cuid())
+  event_id String
+
+  // Attendee (beneficiary or registration)
+  beneficiary_id  String?
+  registration_id String?
+
+  // Attendance Date
+  date DateTime @db.Date
+
+  // Time Tracking
+  morning_in    DateTime?
+  morning_out   DateTime?
+  afternoon_in  DateTime?
+  afternoon_out DateTime?
+
+  // Status
+  attendance_status SessionAttendanceStatus
+
+  // Manual Entry
+  manual_entry          Boolean @default(false)
+  manual_marked_by      String?
+  manual_marked_by_name String?
+  manual_entry_reason   String?
+
+  // GPS Location
+  location_lat      Float?
+  location_lng      Float?
+  location_accuracy Float?
+
+  // Device Info
+  device String?
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  event       Event        @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  beneficiary Beneficiary? @relation(fields: [beneficiary_id], references: [teacher_id])
+
+  @@unique([event_id, beneficiary_id, date])
+  @@index([event_id])
+  @@index([beneficiary_id])
+  @@map("event_attendance_records")
+}
+
+// Event Speakers
+model EventSpeaker {
+  id       String @id @default(cuid())
+  event_id String
+
+  // Speaker Info
+  speaker_name         String
+  speaker_name_english String?
+  speaker_title        String? // "Dr.", "Prof."
+  speaker_position     String?
+  speaker_organization String?
+  speaker_bio          String? @db.Text
+  speaker_photo_url    String?
+  speaker_email        String?
+  speaker_phone        String?
+
+  // Social
+  linkedin_url String?
+  twitter_url  String?
+  website_url  String?
+
+  // Speaker Type
+  speaker_type SpeakerType @default(SPEAKER)
+
+  // Featured
+  is_keynote_speaker Boolean @default(false)
+  is_featured        Boolean @default(false)
+
+  // Ordering
+  sort_order Int @default(0)
+
+  // Audit
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  event    Event                 @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  sessions EventSessionSpeaker[]
+
+  @@index([event_id])
+  @@map("event_speakers")
+}
+
+enum SpeakerType {
+  SPEAKER
+  PANELIST
+  MODERATOR
+  FACILITATOR
+  TRAINER
+}
+
+// Junction: Session <-> Speaker
+model EventSessionSpeaker {
+  id         String @id @default(cuid())
+  session_id String
+  speaker_id String
+
+  // Role in this specific session
+  role String? // "Presenter", "Co-presenter", "Moderator"
+
+  // Audit
+  created_at DateTime @default(now())
+
+  // Relations
+  session EventSession @relation(fields: [session_id], references: [id], onDelete: Cascade)
+  speaker EventSpeaker @relation(fields: [speaker_id], references: [id], onDelete: Cascade)
+
+  @@unique([session_id, speaker_id])
+  @@index([session_id])
+  @@index([speaker_id])
+  @@map("event_session_speakers")
+}
+
+// Event Material Links (reuse TrainingMaterial)
+model EventMaterialLink {
+  id          String @id @default(cuid())
+  event_id    String
+  material_id String
+
+  // Link settings
+  sort_order  Int     @default(0)
+  is_required Boolean @default(false)
+
+  // Audit
+  linked_at DateTime @default(now())
+  linked_by String?
+
+  // Relations
+  event    Event            @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  material TrainingMaterial @relation(fields: [material_id], references: [id], onDelete: Cascade)
+
+  @@unique([event_id, material_id])
+  @@index([event_id])
+  @@index([material_id])
+  @@map("event_material_links")
+}
+
+// Enrollment/Registration
+model BeneficiaryTraining {
+  beneficiary_training_id String @id @default(cuid())
+  beneficiary_id          String
+  training_id             String
+
+  // Registration
+  registration_date   DateTime
+  registration_method RegistrationMethod?
+
+  // Attendance
+  attendance_status     AttendanceStatus
+  attendance_percentage Float?
+  training_role         TrainingRole
+  enrollment_type       String
+
+  // Certificate
+  certificate_issued     Boolean   @default(false)
+  certificate_number     String?
+  certificate_issue_date DateTime?
+
+  // Feedback
+  feedback_submitted Boolean @default(false)
+  feedback_score     Float?
+  feedback_comments  String? @db.Text
+
+  // Audit
+  beneficiary_training_status     String
+  beneficiary_training_created_at DateTime @default(now())
+  beneficiary_training_updated_at DateTime @updatedAt
+
+  // Relations
+  beneficiary Beneficiary @relation(fields: [beneficiary_id], references: [teacher_id])
+  training    Training    @relation(fields: [training_id], references: [id])
+
+  @@unique([beneficiary_id, training_id])
+  @@map("beneficiary_trainings")
+}
+
+enum RegistrationMethod {
+  QR
+  MANUAL
+  IMPORT
+}
+
+enum AttendanceStatus {
+  REGISTERED
+  ATTENDED
+  COMPLETED
+  DROPPED
+}
+
+enum TrainingRole {
+  PARTICIPANT
+  TRAINER
+  COORDINATOR
+}
+
+// Attendance Records
+model AttendanceRecord {
+  id             String   @id @default(cuid())
+  training_id    String
+  beneficiary_id String
+  date           DateTime @db.Date
+
+  // Time Tracking (4 sessions per day)
+  morning_in    DateTime?
+  morning_out   DateTime?
+  afternoon_in  DateTime?
+  afternoon_out DateTime?
+
+  // Status
+  session_attendance_status SessionAttendanceStatus
+
+  // Manual Entry
+  manual_entry          Boolean @default(false)
+  manual_marked_by      String?
+  manual_marked_by_name String?
+  manual_entry_reason   String?
+
+  // GPS Location
+  location_lat      Float?
+  location_lng      Float?
+  location_accuracy Float?
+
+  // Device Info
+  device String?
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  beneficiary Beneficiary @relation(fields: [beneficiary_id], references: [teacher_id])
+  training    Training    @relation(fields: [training_id], references: [id])
+
+  @@unique([training_id, beneficiary_id, date])
+  @@map("attendance_records")
+}
+
+enum SessionAttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+// System Settings
+model SystemSettings {
+  id    String      @id @default(cuid())
+  key   String      @unique
+  value String
+  type  SettingType
+
+  category    String? // e.g., "general", "appearance", "localization"
+  label       String?
+  description String?
+
+  // For dropdown/select options
+  options String[] @default([])
+
+  is_public Boolean @default(false) // Can be accessed without authentication
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  updated_by String?
+
+  @@map("system_settings")
+}
+
+enum SettingType {
+  STRING
+  NUMBER
+  BOOLEAN
+  JSON
+  SELECT
+}
+
+// Training Categories (Dynamic)
+model TrainingCategory {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name_en     String
+  name_km     String
+  description String? @db.Text
+  icon        String?
+  color       String? // Hex color for UI
+  is_active   Boolean @default(true)
+  sort_order  Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("training_categories")
+}
+
+// Training Types (Dynamic)
+model TrainingTypeConfig {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name_en     String
+  name_km     String
+  description String? @db.Text
+  icon        String?
+  color       String? // Hex color for UI
+  is_active   Boolean @default(true)
+  sort_order  Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("training_types")
+}
+
+// Training Levels (Dynamic)
+model TrainingLevelConfig {
+  id             String  @id @default(cuid())
+  code           String  @unique
+  name_en        String
+  name_km        String
+  description_en String? @db.Text
+  description_km String? @db.Text
+  icon           String?
+  color          String? // Hex color for UI
+  is_active      Boolean @default(true)
+  sort_order     Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("training_levels")
+}
+
+// Beneficiary Positions (Dynamic)
+model BeneficiaryPosition {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name_en     String
+  name_km     String
+  description String? @db.Text
+  is_active   Boolean @default(true)
+  sort_order  Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("beneficiary_positions")
+}
+
+// Beneficiary Departments/Subjects (Dynamic)
+model BeneficiaryDepartment {
+  id          String  @id @default(cuid())
+  code        String  @unique
+  name_en     String
+  name_km     String
+  description String? @db.Text
+  is_active   Boolean @default(true)
+  sort_order  Int     @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  @@map("beneficiary_departments")
+}
+
+// Training Agenda Items (per-training, copied on cascade)
+model TrainingAgenda {
+  id          String @id @default(cuid())
+  training_id String
+
+  // Scheduling
+  day_number Int // Day 1, Day 2, etc.
+  start_time String // "08:30" format
+  end_time   String // "10:30" format
+
+  // Content (bilingual)
+  topic_en       String
+  topic_km       String
+  description_en String? @db.Text
+  description_km String? @db.Text
+
+  // Instructor
+  instructor_name    String?
+  instructor_name_km String?
+
+  // Ordering
+  sort_order Int @default(0)
+
+  // Status
+  is_deleted Boolean @default(false)
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  // Relations
+  training Training @relation(fields: [training_id], references: [id], onDelete: Cascade)
+
+  @@index([training_id])
+  @@map("training_agendas")
+}
+
+// Training Materials Library (central repository, many-to-many with trainings)
+model TrainingMaterial {
+  id String @id @default(cuid())
+
+  // Content (bilingual)
+  title_en       String
+  title_km       String
+  description_en String? @db.Text
+  description_km String? @db.Text
+
+  // Material Source
+  material_type String // "FILE" | "URL"
+  file_url      String? // For FILE type: path to uploaded file
+  external_url  String? // For URL type: external link
+  file_name     String? // Original filename for downloads
+  file_size     Int? // Size in bytes
+  mime_type     String? // e.g., "application/pdf"
+
+  // Categorization
+  category String? // e.g., "HANDOUT", "VIDEO", "REFERENCE"
+
+  // Visibility
+  is_active  Boolean @default(true)
+  is_deleted Boolean @default(false)
+
+  // Audit
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  created_by String?
+  updated_by String?
+
+  // Relations
+  training_links TrainingMaterialLink[]
+  event_links    EventMaterialLink[]
+
+  @@map("training_materials")
+}
+
+// Junction table for Training <-> Material (many-to-many)
+model TrainingMaterialLink {
+  id          String @id @default(cuid())
+  training_id String
+  material_id String
+
+  // Link-specific settings
+  sort_order  Int     @default(0)
+  is_required Boolean @default(false) // Required reading/viewing
+
+  // Audit
+  linked_at DateTime @default(now())
+  linked_by String?
+
+  // Relations
+  training Training         @relation(fields: [training_id], references: [id], onDelete: Cascade)
+  material TrainingMaterial @relation(fields: [material_id], references: [id], onDelete: Cascade)
+
+  @@unique([training_id, material_id])
+  @@index([training_id])
+  @@index([material_id])
+  @@map("training_material_links")
+}
+
+// ============================================
+// Survey & Test System
+// ============================================
+
+// Survey Library (reusable surveys and tests)
+model Survey {
+  id                          String               @id @default(cuid())
+  title_en                    String
+  title_km                    String
+  description_en              String?              @db.Text
+  description_km              String?              @db.Text
+  survey_type                 SurveyType
+  is_template                 Boolean              @default(false)
+  is_required                 Boolean              @default(false)
+  passing_score               Int?
+  time_limit                  Int?
+  allow_retake                Boolean              @default(false)
+  max_attempts                Int?
+  show_results_to_beneficiary Boolean              @default(true)
+  show_correct_answers        Boolean              @default(false)
+  available_from              DateTime?
+  available_until             DateTime?
+  is_active                   Boolean              @default(true)
+  created_at                  DateTime             @default(now())
+  updated_at                  DateTime             @updatedAt
+  created_by                  String?
+  updated_by                  String?
+  questions                   SurveyQuestion[]
+  training_links              TrainingSurveyLink[]
+  responses                   SurveyResponse[]
+
+  @@map("surveys")
+}
+
+enum SurveyType {
+  PRE_TEST
+  POST_TEST
+  FEEDBACK
+  EVALUATION
+  COMMON_TEST
+}
+
+// Junction: Training <-> Survey
+model TrainingSurveyLink {
+  id              String       @id @default(cuid())
+  training_id     String
+  survey_id       String
+  timing          SurveyTiming
+  is_required     Boolean      @default(false)
+  sort_order      Int          @default(0)
+  custom_deadline DateTime?
+  training        Training     @relation(fields: [training_id], references: [id], onDelete: Cascade)
+  survey          Survey       @relation(fields: [survey_id], references: [id], onDelete: Cascade)
+  linked_at       DateTime     @default(now())
+  linked_by       String?
+
+  @@unique([training_id, survey_id])
+  @@index([training_id])
+  @@index([survey_id])
+  @@map("training_survey_links")
+}
+
+enum SurveyTiming {
+  BEFORE_TRAINING
+  DURING_TRAINING
+  AFTER_TRAINING
+}
+
+// Survey questions
+model SurveyQuestion {
+  id               String                   @id @default(cuid())
+  survey_id        String
+  question_text_en String                   @db.Text
+  question_text_km String                   @db.Text
+  help_text_en     String?                  @db.Text
+  help_text_km     String?                  @db.Text
+  question_type    QuestionType
+  is_required      Boolean                  @default(true)
+  sort_order       Int                      @default(0)
+  points           Int?
+  correct_answer   String?                  @db.Text
+  options_en       String[]
+  options_km       String[]
+  scale_min        Int?
+  scale_max        Int?
+  scale_labels_en  String[]
+  scale_labels_km  String[]
+  survey           Survey                   @relation(fields: [survey_id], references: [id], onDelete: Cascade)
+  answers          SurveyQuestionResponse[]
+  created_at       DateTime                 @default(now())
+  updated_at       DateTime                 @updatedAt
+
+  @@index([survey_id])
+  @@map("survey_questions")
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  MULTIPLE_SELECT
+  TRUE_FALSE
+  LIKERT_SCALE
+  RATING
+  SHORT_TEXT
+  LONG_TEXT
+}
+
+// Participant survey responses
+model SurveyResponse {
+  id                 String                   @id @default(cuid())
+  survey_id          String
+  beneficiary_id     String
+  training_id        String
+  started_at         DateTime?
+  submitted_at       DateTime?
+  is_complete        Boolean                  @default(false)
+  attempt_number     Int                      @default(1)
+  total_score        Float?
+  max_score          Float?
+  percentage         Float?
+  passed             Boolean?
+  time_spent_seconds Int?
+  survey             Survey                   @relation(fields: [survey_id], references: [id], onDelete: Cascade)
+  beneficiary        Beneficiary              @relation(fields: [beneficiary_id], references: [teacher_id])
+  training           Training                 @relation(fields: [training_id], references: [id])
+  question_responses SurveyQuestionResponse[]
+  created_at         DateTime                 @default(now())
+  updated_at         DateTime                 @updatedAt
+
+  @@unique([survey_id, beneficiary_id, training_id, attempt_number])
+  @@index([survey_id])
+  @@index([beneficiary_id])
+  @@index([training_id])
+  @@map("survey_responses")
+}
+
+// Individual question answers
+model SurveyQuestionResponse {
+  id            String         @id @default(cuid())
+  response_id   String
+  question_id   String
+  answer_value  String         @db.Text
+  answer_text   String?        @db.Text
+  points_earned Float?
+  is_correct    Boolean?
+  response      SurveyResponse @relation(fields: [response_id], references: [id], onDelete: Cascade)
+  question      SurveyQuestion @relation(fields: [question_id], references: [id], onDelete: Cascade)
+  answered_at   DateTime       @default(now())
+
+  @@unique([response_id, question_id])
+  @@index([response_id])
+  @@index([question_id])
+  @@map("survey_question_responses")
+}
+
+// ============================================
+// NOTIFICATION SYSTEM
+// ============================================
+
+// Notification Model
+model Notification {
+  id       String               @id @default(cuid())
+  user_id  String
+  title    String
+  message  String               @db.Text
+  type     NotificationType     @default(INFO)
+  priority NotificationPriority @default(NORMAL)
+
+  // Metadata
+  related_entity_type String? // "training", "event", "survey", etc.
+  related_entity_id   String? // ID of the related entity
+  action_url          String? // Deep link to related page
+
+  // Status
+  is_read    Boolean   @default(false)
+  read_at    DateTime?
+  is_deleted Boolean   @default(false)
+
+  // Timestamps
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@index([user_id, is_read])
+  @@index([created_at])
+  @@map("notifications")
+}
+
+enum NotificationType {
+  INFO // General information
+  SUCCESS // Success messages
+  WARNING // Warnings
+  ERROR // Errors
+  TRAINING // Training-related
+  EVENT // Event-related
+  SURVEY // Survey-related
+  ATTENDANCE // Attendance-related
+  CERTIFICATE // Certificate-related
+  SYSTEM // System notifications
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
