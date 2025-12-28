@@ -55,9 +55,6 @@ services:
       - ./prisma:/app/prisma
       - /app/node_modules
     command: npm run server
-    profiles:
-      - backend
-      - full
 
   # Frontend - React/Vite (Development)
   frontend:
@@ -84,8 +81,7 @@ services:
       - /app/node_modules
     command: npm run dev
     profiles:
-      - frontend
-      - full
+      - dev
 
   # Production Frontend - with Nginx
   frontend-prod:
@@ -99,13 +95,14 @@ services:
     ports:
       - "2000:80"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_started
     networks:
       - plp_network
     environment:
       - NODE_ENV=production
-    profiles:
-      - production
 
   # pgAdmin for database management (optional)
   pgadmin:
