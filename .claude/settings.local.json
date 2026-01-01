@@ -30,7 +30,12 @@
       "Bash(npm run build:*)",
       "Bash(npm run dev:all:*)",
       "Bash(dir:*)",
-      "WebFetch(domain:edtechcambodia.org)"
+      "WebFetch(domain:edtechcambodia.org)",
+      "Bash(taskkill:*)",
+      "Bash(npx tsx:*)",
+      "WebSearch",
+      "WebFetch(domain:docs.cloud.google.com)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }

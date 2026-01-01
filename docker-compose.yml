@@ -4,7 +4,7 @@ version: '3.8'
 # Fixed Port Configuration:
 # - Frontend (Nginx):  2000
 # - Backend (Express): 2001
-# - PostgreSQL:        5433 (external) / 5432 (internal)
+# - PostgreSQL:        5432 (external) / 5432 (internal)
 # - pgAdmin:           5050
 # ===========================================
 
@@ -15,17 +15,17 @@ services:
     container_name: plp_tms_db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-san_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-san_password}
-      POSTGRES_DB: ${POSTGRES_DB:-san_training_app}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-training_event_web}
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - plp_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-san_user} -d ${POSTGRES_DB:-san_training_app}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-training_event_web}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -45,7 +45,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-san_user}:${POSTGRES_PASSWORD:-san_password}@postgres:5432/${POSTGRES_DB:-san_training_app}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-training_event_web}
       - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
       - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-7d}
     networks:

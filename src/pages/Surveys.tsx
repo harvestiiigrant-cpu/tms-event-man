@@ -25,6 +25,10 @@ import { useToast } from '@/hooks/use-toast';
 import { SURVEY_TYPES } from '@/types/training';
 import type { Survey, SurveyType } from '@/types/training';
 import { CreateSurveyDialog } from '@/components/surveys/CreateSurveyDialog';
+import { SurveyDetailDialog } from '@/components/surveys/SurveyDetailDialog';
+import { SurveyEditDialog } from '@/components/surveys/SurveyEditDialog';
+import { SurveyResultsDialog } from '@/components/surveys/SurveyResultsDialog';
+import { SurveyPreviewDialog } from '@/components/surveys/SurveyPreviewDialog';
 import {
   Plus,
   Search,
@@ -35,6 +39,7 @@ import {
   ClipboardList,
   BarChart3,
   FileText,
+  PlayCircle,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -67,6 +72,11 @@ export default function Surveys() {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState<string>('all');
+  const [detailOpen, setDetailOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [resultsOpen, setResultsOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [selectedSurveyId, setSelectedSurveyId] = useState<string>('');
 
   // Fetch surveys
   const { data: surveys = [], isLoading } = useQuery<Survey[]>({
@@ -195,15 +205,39 @@ export default function Surveys() {
                           <DropdownMenuContent align="end">
                             <DropdownMenuLabel>សកម្មភាព</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedSurveyId(survey.id);
+                                setDetailOpen(true);
+                              }}
+                            >
                               <Eye className="mr-2 h-4 w-4" />
                               មើលព័ត៌មានលម្អិត
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedSurveyId(survey.id);
+                                setPreviewOpen(true);
+                              }}
+                            >
+                              <PlayCircle className="mr-2 h-4 w-4" />
+                              មើលជាមុន & ធ្វើតេស្ត
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedSurveyId(survey.id);
+                                setEditOpen(true);
+                              }}
+                            >
                               <Pencil className="mr-2 h-4 w-4" />
                               កែសម្រួល
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedSurveyId(survey.id);
+                                setResultsOpen(true);
+                              }}
+                            >
                               <BarChart3 className="mr-2 h-4 w-4" />
                               មើលលទ្ធផល
                             </DropdownMenuItem>
@@ -226,6 +260,42 @@ export default function Surveys() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Detail Dialog */}
+      {selectedSurveyId && (
+        <SurveyDetailDialog
+          surveyId={selectedSurveyId}
+          open={detailOpen}
+          onOpenChange={setDetailOpen}
+        />
+      )}
+
+      {/* Edit Dialog */}
+      {selectedSurveyId && (
+        <SurveyEditDialog
+          surveyId={selectedSurveyId}
+          open={editOpen}
+          onOpenChange={setEditOpen}
+        />
+      )}
+
+      {/* Results Dialog */}
+      {selectedSurveyId && (
+        <SurveyResultsDialog
+          surveyId={selectedSurveyId}
+          open={resultsOpen}
+          onOpenChange={setResultsOpen}
+        />
+      )}
+
+      {/* Preview Dialog */}
+      {selectedSurveyId && (
+        <SurveyPreviewDialog
+          surveyId={selectedSurveyId}
+          open={previewOpen}
+          onOpenChange={setPreviewOpen}
+        />
+      )}
     </DashboardLayout>
   );
 }

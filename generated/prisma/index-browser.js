@@ -133,10 +133,10 @@ exports.Prisma.UserScalarFieldEnum = {
   school: 'school',
   school_id: 'school_id',
   province_name: 'province_name',
-  theme_preference: 'theme_preference',
-  khmer_font: 'khmer_font',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  khmer_font: 'khmer_font',
+  theme_preference: 'theme_preference'
 };
 
 exports.Prisma.BeneficiaryScalarFieldEnum = {
@@ -655,6 +655,18 @@ exports.Prisma.SurveyQuestionResponseScalarFieldEnum = {
   answered_at: 'answered_at'
 };
 
+exports.Prisma.TelegramUserScalarFieldEnum = {
+  id: 'id',
+  telegram_id: 'telegram_id',
+  teacher_id: 'teacher_id',
+  username: 'username',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  language_code: 'language_code',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.NotificationScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
@@ -899,6 +911,7 @@ exports.Prisma.ModelName = {
   SurveyQuestion: 'SurveyQuestion',
   SurveyResponse: 'SurveyResponse',
   SurveyQuestionResponse: 'SurveyQuestionResponse',
+  TelegramUser: 'TelegramUser',
   Notification: 'Notification'
 };
 

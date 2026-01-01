@@ -149,6 +149,11 @@ export type SurveyResponse = $Result.DefaultSelection<Prisma.$SurveyResponsePayl
  */
 export type SurveyQuestionResponse = $Result.DefaultSelection<Prisma.$SurveyQuestionResponsePayload>
 /**
+ * Model TelegramUser
+ * 
+ */
+export type TelegramUser = $Result.DefaultSelection<Prisma.$TelegramUserPayload>
+/**
  * Model Notification
  * 
  */
@@ -900,6 +905,16 @@ export class PrismaClient<
   get surveyQuestionResponse(): Prisma.SurveyQuestionResponseDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.telegramUser`: Exposes CRUD operations for the **TelegramUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TelegramUsers
+    * const telegramUsers = await prisma.telegramUser.findMany()
+    * ```
+    */
+  get telegramUser(): Prisma.TelegramUserDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
     * Example usage:
     * ```ts
@@ -1369,6 +1384,7 @@ export namespace Prisma {
     SurveyQuestion: 'SurveyQuestion',
     SurveyResponse: 'SurveyResponse',
     SurveyQuestionResponse: 'SurveyQuestionResponse',
+    TelegramUser: 'TelegramUser',
     Notification: 'Notification'
   };
 
@@ -1385,7 +1401,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "beneficiary" | "training" | "event" | "eventSession" | "eventRegistration" | "eventSessionRegistration" | "eventAttendanceRecord" | "eventSpeaker" | "eventSessionSpeaker" | "eventMaterialLink" | "beneficiaryTraining" | "attendanceRecord" | "systemSettings" | "trainingCategory" | "trainingTypeConfig" | "trainingLevelConfig" | "beneficiaryPosition" | "beneficiaryDepartment" | "trainingAgenda" | "trainingMaterial" | "trainingMaterialLink" | "survey" | "trainingSurveyLink" | "surveyQuestion" | "surveyResponse" | "surveyQuestionResponse" | "notification"
+      modelProps: "user" | "beneficiary" | "training" | "event" | "eventSession" | "eventRegistration" | "eventSessionRegistration" | "eventAttendanceRecord" | "eventSpeaker" | "eventSessionSpeaker" | "eventMaterialLink" | "beneficiaryTraining" | "attendanceRecord" | "systemSettings" | "trainingCategory" | "trainingTypeConfig" | "trainingLevelConfig" | "beneficiaryPosition" | "beneficiaryDepartment" | "trainingAgenda" | "trainingMaterial" | "trainingMaterialLink" | "survey" | "trainingSurveyLink" | "surveyQuestion" | "surveyResponse" | "surveyQuestionResponse" | "telegramUser" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3387,6 +3403,80 @@ export namespace Prisma {
           }
         }
       }
+      TelegramUser: {
+        payload: Prisma.$TelegramUserPayload<ExtArgs>
+        fields: Prisma.TelegramUserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TelegramUserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TelegramUserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>
+          }
+          findFirst: {
+            args: Prisma.TelegramUserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TelegramUserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>
+          }
+          findMany: {
+            args: Prisma.TelegramUserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>[]
+          }
+          create: {
+            args: Prisma.TelegramUserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>
+          }
+          createMany: {
+            args: Prisma.TelegramUserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TelegramUserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>[]
+          }
+          delete: {
+            args: Prisma.TelegramUserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>
+          }
+          update: {
+            args: Prisma.TelegramUserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>
+          }
+          deleteMany: {
+            args: Prisma.TelegramUserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TelegramUserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TelegramUserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>[]
+          }
+          upsert: {
+            args: Prisma.TelegramUserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TelegramUserPayload>
+          }
+          aggregate: {
+            args: Prisma.TelegramUserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTelegramUser>
+          }
+          groupBy: {
+            args: Prisma.TelegramUserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TelegramUserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TelegramUserCountArgs<ExtArgs>
+            result: $Utils.Optional<TelegramUserCountAggregateOutputType> | number
+          }
+        }
+      }
       Notification: {
         payload: Prisma.$NotificationPayload<ExtArgs>
         fields: Prisma.NotificationFieldRefs
@@ -3596,6 +3686,7 @@ export namespace Prisma {
     surveyQuestion?: SurveyQuestionOmit
     surveyResponse?: SurveyResponseOmit
     surveyQuestionResponse?: SurveyQuestionResponseOmit
+    telegramUser?: TelegramUserOmit
     notification?: NotificationOmit
   }
 
@@ -3708,19 +3799,19 @@ export namespace Prisma {
    */
 
   export type BeneficiaryCountOutputType = {
-    trainings: number
     attendance_records: number
-    survey_responses: number
-    event_registrations: number
+    trainings: number
     event_attendance_records: number
+    event_registrations: number
+    survey_responses: number
   }
 
   export type BeneficiaryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    trainings?: boolean | BeneficiaryCountOutputTypeCountTrainingsArgs
     attendance_records?: boolean | BeneficiaryCountOutputTypeCountAttendance_recordsArgs
-    survey_responses?: boolean | BeneficiaryCountOutputTypeCountSurvey_responsesArgs
-    event_registrations?: boolean | BeneficiaryCountOutputTypeCountEvent_registrationsArgs
+    trainings?: boolean | BeneficiaryCountOutputTypeCountTrainingsArgs
     event_attendance_records?: boolean | BeneficiaryCountOutputTypeCountEvent_attendance_recordsArgs
+    event_registrations?: boolean | BeneficiaryCountOutputTypeCountEvent_registrationsArgs
+    survey_responses?: boolean | BeneficiaryCountOutputTypeCountSurvey_responsesArgs
   }
 
   // Custom InputTypes
@@ -3737,13 +3828,6 @@ export namespace Prisma {
   /**
    * BeneficiaryCountOutputType without action
    */
-  export type BeneficiaryCountOutputTypeCountTrainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BeneficiaryTrainingWhereInput
-  }
-
-  /**
-   * BeneficiaryCountOutputType without action
-   */
   export type BeneficiaryCountOutputTypeCountAttendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AttendanceRecordWhereInput
   }
@@ -3751,8 +3835,15 @@ export namespace Prisma {
   /**
    * BeneficiaryCountOutputType without action
    */
-  export type BeneficiaryCountOutputTypeCountSurvey_responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SurveyResponseWhereInput
+  export type BeneficiaryCountOutputTypeCountTrainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BeneficiaryTrainingWhereInput
+  }
+
+  /**
+   * BeneficiaryCountOutputType without action
+   */
+  export type BeneficiaryCountOutputTypeCountEvent_attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventAttendanceRecordWhereInput
   }
 
   /**
@@ -3765,8 +3856,8 @@ export namespace Prisma {
   /**
    * BeneficiaryCountOutputType without action
    */
-  export type BeneficiaryCountOutputTypeCountEvent_attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EventAttendanceRecordWhereInput
+  export type BeneficiaryCountOutputTypeCountSurvey_responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SurveyResponseWhereInput
   }
 
 
@@ -3775,21 +3866,21 @@ export namespace Prisma {
    */
 
   export type TrainingCountOutputType = {
-    beneficiary_trainings: number
     attendance_records: number
+    beneficiary_trainings: number
+    survey_responses: number
     agendas: number
     material_links: number
     survey_links: number
-    survey_responses: number
   }
 
   export type TrainingCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    beneficiary_trainings?: boolean | TrainingCountOutputTypeCountBeneficiary_trainingsArgs
     attendance_records?: boolean | TrainingCountOutputTypeCountAttendance_recordsArgs
+    beneficiary_trainings?: boolean | TrainingCountOutputTypeCountBeneficiary_trainingsArgs
+    survey_responses?: boolean | TrainingCountOutputTypeCountSurvey_responsesArgs
     agendas?: boolean | TrainingCountOutputTypeCountAgendasArgs
     material_links?: boolean | TrainingCountOutputTypeCountMaterial_linksArgs
     survey_links?: boolean | TrainingCountOutputTypeCountSurvey_linksArgs
-    survey_responses?: boolean | TrainingCountOutputTypeCountSurvey_responsesArgs
   }
 
   // Custom InputTypes
@@ -3806,6 +3897,13 @@ export namespace Prisma {
   /**
    * TrainingCountOutputType without action
    */
+  export type TrainingCountOutputTypeCountAttendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AttendanceRecordWhereInput
+  }
+
+  /**
+   * TrainingCountOutputType without action
+   */
   export type TrainingCountOutputTypeCountBeneficiary_trainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BeneficiaryTrainingWhereInput
   }
@@ -3813,8 +3911,8 @@ export namespace Prisma {
   /**
    * TrainingCountOutputType without action
    */
-  export type TrainingCountOutputTypeCountAttendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AttendanceRecordWhereInput
+  export type TrainingCountOutputTypeCountSurvey_responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SurveyResponseWhereInput
   }
 
   /**
@@ -3838,32 +3936,25 @@ export namespace Prisma {
     where?: TrainingSurveyLinkWhereInput
   }
 
-  /**
-   * TrainingCountOutputType without action
-   */
-  export type TrainingCountOutputTypeCountSurvey_responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SurveyResponseWhereInput
-  }
-
 
   /**
    * Count Type EventCountOutputType
    */
 
   export type EventCountOutputType = {
-    sessions: number
-    registrations: number
     attendance_records: number
-    speakers: number
     material_links: number
+    registrations: number
+    sessions: number
+    speakers: number
   }
 
   export type EventCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sessions?: boolean | EventCountOutputTypeCountSessionsArgs
-    registrations?: boolean | EventCountOutputTypeCountRegistrationsArgs
     attendance_records?: boolean | EventCountOutputTypeCountAttendance_recordsArgs
-    speakers?: boolean | EventCountOutputTypeCountSpeakersArgs
     material_links?: boolean | EventCountOutputTypeCountMaterial_linksArgs
+    registrations?: boolean | EventCountOutputTypeCountRegistrationsArgs
+    sessions?: boolean | EventCountOutputTypeCountSessionsArgs
+    speakers?: boolean | EventCountOutputTypeCountSpeakersArgs
   }
 
   // Custom InputTypes
@@ -3880,8 +3971,15 @@ export namespace Prisma {
   /**
    * EventCountOutputType without action
    */
-  export type EventCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EventSessionWhereInput
+  export type EventCountOutputTypeCountAttendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventAttendanceRecordWhereInput
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountMaterial_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventMaterialLinkWhereInput
   }
 
   /**
@@ -3894,8 +3992,8 @@ export namespace Prisma {
   /**
    * EventCountOutputType without action
    */
-  export type EventCountOutputTypeCountAttendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EventAttendanceRecordWhereInput
+  export type EventCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventSessionWhereInput
   }
 
   /**
@@ -3903,13 +4001,6 @@ export namespace Prisma {
    */
   export type EventCountOutputTypeCountSpeakersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EventSpeakerWhereInput
-  }
-
-  /**
-   * EventCountOutputType without action
-   */
-  export type EventCountOutputTypeCountMaterial_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EventMaterialLinkWhereInput
   }
 
 
@@ -4020,13 +4111,13 @@ export namespace Prisma {
    */
 
   export type TrainingMaterialCountOutputType = {
-    training_links: number
     event_links: number
+    training_links: number
   }
 
   export type TrainingMaterialCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    training_links?: boolean | TrainingMaterialCountOutputTypeCountTraining_linksArgs
     event_links?: boolean | TrainingMaterialCountOutputTypeCountEvent_linksArgs
+    training_links?: boolean | TrainingMaterialCountOutputTypeCountTraining_linksArgs
   }
 
   // Custom InputTypes
@@ -4043,15 +4134,15 @@ export namespace Prisma {
   /**
    * TrainingMaterialCountOutputType without action
    */
-  export type TrainingMaterialCountOutputTypeCountTraining_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TrainingMaterialLinkWhereInput
+  export type TrainingMaterialCountOutputTypeCountEvent_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventMaterialLinkWhereInput
   }
 
   /**
    * TrainingMaterialCountOutputType without action
    */
-  export type TrainingMaterialCountOutputTypeCountEvent_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EventMaterialLinkWhereInput
+  export type TrainingMaterialCountOutputTypeCountTraining_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrainingMaterialLinkWhereInput
   }
 
 
@@ -4061,14 +4152,14 @@ export namespace Prisma {
 
   export type SurveyCountOutputType = {
     questions: number
-    training_links: number
     responses: number
+    training_links: number
   }
 
   export type SurveyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     questions?: boolean | SurveyCountOutputTypeCountQuestionsArgs
-    training_links?: boolean | SurveyCountOutputTypeCountTraining_linksArgs
     responses?: boolean | SurveyCountOutputTypeCountResponsesArgs
+    training_links?: boolean | SurveyCountOutputTypeCountTraining_linksArgs
   }
 
   // Custom InputTypes
@@ -4092,15 +4183,15 @@ export namespace Prisma {
   /**
    * SurveyCountOutputType without action
    */
-  export type SurveyCountOutputTypeCountTraining_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TrainingSurveyLinkWhereInput
+  export type SurveyCountOutputTypeCountResponsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SurveyResponseWhereInput
   }
 
   /**
    * SurveyCountOutputType without action
    */
-  export type SurveyCountOutputTypeCountResponsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SurveyResponseWhereInput
+  export type SurveyCountOutputTypeCountTraining_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrainingSurveyLinkWhereInput
   }
 
 
@@ -4193,10 +4284,10 @@ export namespace Prisma {
     school: string | null
     school_id: string | null
     province_name: string | null
-    theme_preference: string | null
-    khmer_font: string | null
     created_at: Date | null
     updated_at: Date | null
+    khmer_font: string | null
+    theme_preference: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -4212,10 +4303,10 @@ export namespace Prisma {
     school: string | null
     school_id: string | null
     province_name: string | null
-    theme_preference: string | null
-    khmer_font: string | null
     created_at: Date | null
     updated_at: Date | null
+    khmer_font: string | null
+    theme_preference: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -4231,10 +4322,10 @@ export namespace Prisma {
     school: number
     school_id: number
     province_name: number
-    theme_preference: number
-    khmer_font: number
     created_at: number
     updated_at: number
+    khmer_font: number
+    theme_preference: number
     _all: number
   }
 
@@ -4252,10 +4343,10 @@ export namespace Prisma {
     school?: true
     school_id?: true
     province_name?: true
-    theme_preference?: true
-    khmer_font?: true
     created_at?: true
     updated_at?: true
+    khmer_font?: true
+    theme_preference?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -4271,10 +4362,10 @@ export namespace Prisma {
     school?: true
     school_id?: true
     province_name?: true
-    theme_preference?: true
-    khmer_font?: true
     created_at?: true
     updated_at?: true
+    khmer_font?: true
+    theme_preference?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -4290,10 +4381,10 @@ export namespace Prisma {
     school?: true
     school_id?: true
     province_name?: true
-    theme_preference?: true
-    khmer_font?: true
     created_at?: true
     updated_at?: true
+    khmer_font?: true
+    theme_preference?: true
     _all?: true
   }
 
@@ -4382,10 +4473,10 @@ export namespace Prisma {
     school: string | null
     school_id: string | null
     province_name: string | null
-    theme_preference: string | null
-    khmer_font: string | null
     created_at: Date
     updated_at: Date
+    khmer_font: string | null
+    theme_preference: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -4418,10 +4509,10 @@ export namespace Prisma {
     school?: boolean
     school_id?: boolean
     province_name?: boolean
-    theme_preference?: boolean
-    khmer_font?: boolean
     created_at?: boolean
     updated_at?: boolean
+    khmer_font?: boolean
+    theme_preference?: boolean
     notifications?: boolean | User$notificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -4439,10 +4530,10 @@ export namespace Prisma {
     school?: boolean
     school_id?: boolean
     province_name?: boolean
-    theme_preference?: boolean
-    khmer_font?: boolean
     created_at?: boolean
     updated_at?: boolean
+    khmer_font?: boolean
+    theme_preference?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4458,10 +4549,10 @@ export namespace Prisma {
     school?: boolean
     school_id?: boolean
     province_name?: boolean
-    theme_preference?: boolean
-    khmer_font?: boolean
     created_at?: boolean
     updated_at?: boolean
+    khmer_font?: boolean
+    theme_preference?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -4477,13 +4568,13 @@ export namespace Prisma {
     school?: boolean
     school_id?: boolean
     province_name?: boolean
-    theme_preference?: boolean
-    khmer_font?: boolean
     created_at?: boolean
     updated_at?: boolean
+    khmer_font?: boolean
+    theme_preference?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "role" | "name" | "phone" | "profile_image_url" | "teacher_id" | "school" | "school_id" | "province_name" | "theme_preference" | "khmer_font" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "role" | "name" | "phone" | "profile_image_url" | "teacher_id" | "school" | "school_id" | "province_name" | "created_at" | "updated_at" | "khmer_font" | "theme_preference", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notifications?: boolean | User$notificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -4509,10 +4600,10 @@ export namespace Prisma {
       school: string | null
       school_id: string | null
       province_name: string | null
-      theme_preference: string | null
-      khmer_font: string | null
       created_at: Date
       updated_at: Date
+      khmer_font: string | null
+      theme_preference: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -4949,10 +5040,10 @@ export namespace Prisma {
     readonly school: FieldRef<"User", 'String'>
     readonly school_id: FieldRef<"User", 'String'>
     readonly province_name: FieldRef<"User", 'String'>
-    readonly theme_preference: FieldRef<"User", 'String'>
-    readonly khmer_font: FieldRef<"User", 'String'>
     readonly created_at: FieldRef<"User", 'DateTime'>
     readonly updated_at: FieldRef<"User", 'DateTime'>
+    readonly khmer_font: FieldRef<"User", 'String'>
+    readonly theme_preference: FieldRef<"User", 'String'>
   }
     
 
@@ -5741,11 +5832,12 @@ export namespace Prisma {
     updated_at?: boolean
     created_by?: boolean
     updated_by?: boolean
-    trainings?: boolean | Beneficiary$trainingsArgs<ExtArgs>
     attendance_records?: boolean | Beneficiary$attendance_recordsArgs<ExtArgs>
-    survey_responses?: boolean | Beneficiary$survey_responsesArgs<ExtArgs>
-    event_registrations?: boolean | Beneficiary$event_registrationsArgs<ExtArgs>
+    trainings?: boolean | Beneficiary$trainingsArgs<ExtArgs>
     event_attendance_records?: boolean | Beneficiary$event_attendance_recordsArgs<ExtArgs>
+    event_registrations?: boolean | Beneficiary$event_registrationsArgs<ExtArgs>
+    survey_responses?: boolean | Beneficiary$survey_responsesArgs<ExtArgs>
+    telegram_user?: boolean | Beneficiary$telegram_userArgs<ExtArgs>
     _count?: boolean | BeneficiaryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["beneficiary"]>
 
@@ -5835,11 +5927,12 @@ export namespace Prisma {
 
   export type BeneficiaryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"teacher_id" | "name" | "name_english" | "phone" | "sex" | "role" | "passcode" | "province_name" | "district_name" | "commune_name" | "village_name" | "school" | "school_id" | "position" | "subject" | "grade" | "profile_image_url" | "signature_url" | "status" | "is_deleted" | "profile_completed" | "created_at" | "updated_at" | "created_by" | "updated_by", ExtArgs["result"]["beneficiary"]>
   export type BeneficiaryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    trainings?: boolean | Beneficiary$trainingsArgs<ExtArgs>
     attendance_records?: boolean | Beneficiary$attendance_recordsArgs<ExtArgs>
-    survey_responses?: boolean | Beneficiary$survey_responsesArgs<ExtArgs>
-    event_registrations?: boolean | Beneficiary$event_registrationsArgs<ExtArgs>
+    trainings?: boolean | Beneficiary$trainingsArgs<ExtArgs>
     event_attendance_records?: boolean | Beneficiary$event_attendance_recordsArgs<ExtArgs>
+    event_registrations?: boolean | Beneficiary$event_registrationsArgs<ExtArgs>
+    survey_responses?: boolean | Beneficiary$survey_responsesArgs<ExtArgs>
+    telegram_user?: boolean | Beneficiary$telegram_userArgs<ExtArgs>
     _count?: boolean | BeneficiaryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BeneficiaryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5848,11 +5941,12 @@ export namespace Prisma {
   export type $BeneficiaryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Beneficiary"
     objects: {
-      trainings: Prisma.$BeneficiaryTrainingPayload<ExtArgs>[]
       attendance_records: Prisma.$AttendanceRecordPayload<ExtArgs>[]
-      survey_responses: Prisma.$SurveyResponsePayload<ExtArgs>[]
-      event_registrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
+      trainings: Prisma.$BeneficiaryTrainingPayload<ExtArgs>[]
       event_attendance_records: Prisma.$EventAttendanceRecordPayload<ExtArgs>[]
+      event_registrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
+      survey_responses: Prisma.$SurveyResponsePayload<ExtArgs>[]
+      telegram_user: Prisma.$TelegramUserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       teacher_id: string
@@ -6274,11 +6368,12 @@ export namespace Prisma {
    */
   export interface Prisma__BeneficiaryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    trainings<T extends Beneficiary$trainingsArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$trainingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BeneficiaryTrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     attendance_records<T extends Beneficiary$attendance_recordsArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$attendance_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    survey_responses<T extends Beneficiary$survey_responsesArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$survey_responsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    event_registrations<T extends Beneficiary$event_registrationsArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$event_registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    trainings<T extends Beneficiary$trainingsArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$trainingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BeneficiaryTrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     event_attendance_records<T extends Beneficiary$event_attendance_recordsArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$event_attendance_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    event_registrations<T extends Beneficiary$event_registrationsArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$event_registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    survey_responses<T extends Beneficiary$survey_responsesArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$survey_responsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    telegram_user<T extends Beneficiary$telegram_userArgs<ExtArgs> = {}>(args?: Subset<T, Beneficiary$telegram_userArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6721,30 +6816,6 @@ export namespace Prisma {
   }
 
   /**
-   * Beneficiary.trainings
-   */
-  export type Beneficiary$trainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the BeneficiaryTraining
-     */
-    select?: BeneficiaryTrainingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the BeneficiaryTraining
-     */
-    omit?: BeneficiaryTrainingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BeneficiaryTrainingInclude<ExtArgs> | null
-    where?: BeneficiaryTrainingWhereInput
-    orderBy?: BeneficiaryTrainingOrderByWithRelationInput | BeneficiaryTrainingOrderByWithRelationInput[]
-    cursor?: BeneficiaryTrainingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: BeneficiaryTrainingScalarFieldEnum | BeneficiaryTrainingScalarFieldEnum[]
-  }
-
-  /**
    * Beneficiary.attendance_records
    */
   export type Beneficiary$attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6769,27 +6840,51 @@ export namespace Prisma {
   }
 
   /**
-   * Beneficiary.survey_responses
+   * Beneficiary.trainings
    */
-  export type Beneficiary$survey_responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Beneficiary$trainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SurveyResponse
+     * Select specific fields to fetch from the BeneficiaryTraining
      */
-    select?: SurveyResponseSelect<ExtArgs> | null
+    select?: BeneficiaryTrainingSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SurveyResponse
+     * Omit specific fields from the BeneficiaryTraining
      */
-    omit?: SurveyResponseOmit<ExtArgs> | null
+    omit?: BeneficiaryTrainingOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SurveyResponseInclude<ExtArgs> | null
-    where?: SurveyResponseWhereInput
-    orderBy?: SurveyResponseOrderByWithRelationInput | SurveyResponseOrderByWithRelationInput[]
-    cursor?: SurveyResponseWhereUniqueInput
+    include?: BeneficiaryTrainingInclude<ExtArgs> | null
+    where?: BeneficiaryTrainingWhereInput
+    orderBy?: BeneficiaryTrainingOrderByWithRelationInput | BeneficiaryTrainingOrderByWithRelationInput[]
+    cursor?: BeneficiaryTrainingWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: SurveyResponseScalarFieldEnum | SurveyResponseScalarFieldEnum[]
+    distinct?: BeneficiaryTrainingScalarFieldEnum | BeneficiaryTrainingScalarFieldEnum[]
+  }
+
+  /**
+   * Beneficiary.event_attendance_records
+   */
+  export type Beneficiary$event_attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAttendanceRecord
+     */
+    select?: EventAttendanceRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAttendanceRecord
+     */
+    omit?: EventAttendanceRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAttendanceRecordInclude<ExtArgs> | null
+    where?: EventAttendanceRecordWhereInput
+    orderBy?: EventAttendanceRecordOrderByWithRelationInput | EventAttendanceRecordOrderByWithRelationInput[]
+    cursor?: EventAttendanceRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventAttendanceRecordScalarFieldEnum | EventAttendanceRecordScalarFieldEnum[]
   }
 
   /**
@@ -6817,27 +6912,46 @@ export namespace Prisma {
   }
 
   /**
-   * Beneficiary.event_attendance_records
+   * Beneficiary.survey_responses
    */
-  export type Beneficiary$event_attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Beneficiary$survey_responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the EventAttendanceRecord
+     * Select specific fields to fetch from the SurveyResponse
      */
-    select?: EventAttendanceRecordSelect<ExtArgs> | null
+    select?: SurveyResponseSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the EventAttendanceRecord
+     * Omit specific fields from the SurveyResponse
      */
-    omit?: EventAttendanceRecordOmit<ExtArgs> | null
+    omit?: SurveyResponseOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EventAttendanceRecordInclude<ExtArgs> | null
-    where?: EventAttendanceRecordWhereInput
-    orderBy?: EventAttendanceRecordOrderByWithRelationInput | EventAttendanceRecordOrderByWithRelationInput[]
-    cursor?: EventAttendanceRecordWhereUniqueInput
+    include?: SurveyResponseInclude<ExtArgs> | null
+    where?: SurveyResponseWhereInput
+    orderBy?: SurveyResponseOrderByWithRelationInput | SurveyResponseOrderByWithRelationInput[]
+    cursor?: SurveyResponseWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: EventAttendanceRecordScalarFieldEnum | EventAttendanceRecordScalarFieldEnum[]
+    distinct?: SurveyResponseScalarFieldEnum | SurveyResponseScalarFieldEnum[]
+  }
+
+  /**
+   * Beneficiary.telegram_user
+   */
+  export type Beneficiary$telegram_userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    where?: TelegramUserWhereInput
   }
 
   /**
@@ -7293,12 +7407,12 @@ export namespace Prisma {
     training_updated_by?: boolean
     training_created_at?: boolean
     training_updated_at?: boolean
-    beneficiary_trainings?: boolean | Training$beneficiary_trainingsArgs<ExtArgs>
     attendance_records?: boolean | Training$attendance_recordsArgs<ExtArgs>
+    beneficiary_trainings?: boolean | Training$beneficiary_trainingsArgs<ExtArgs>
+    survey_responses?: boolean | Training$survey_responsesArgs<ExtArgs>
     agendas?: boolean | Training$agendasArgs<ExtArgs>
     material_links?: boolean | Training$material_linksArgs<ExtArgs>
     survey_links?: boolean | Training$survey_linksArgs<ExtArgs>
-    survey_responses?: boolean | Training$survey_responsesArgs<ExtArgs>
     _count?: boolean | TrainingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["training"]>
 
@@ -7412,12 +7526,12 @@ export namespace Prisma {
 
   export type TrainingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "training_code" | "training_name" | "training_name_english" | "training_description" | "training_type" | "training_category" | "training_level" | "training_status" | "training_start_date" | "training_end_date" | "registration_deadline" | "training_location" | "training_venue" | "venue_latitude" | "venue_longitude" | "geofence_radius" | "province_name" | "district_name" | "commune_name" | "school_name" | "cluster_schools" | "max_participants" | "current_participants" | "qr_code_data" | "gps_validation_required" | "geofence_validation_required" | "is_published" | "training_is_deleted" | "training_created_by" | "training_updated_by" | "training_created_at" | "training_updated_at", ExtArgs["result"]["training"]>
   export type TrainingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    beneficiary_trainings?: boolean | Training$beneficiary_trainingsArgs<ExtArgs>
     attendance_records?: boolean | Training$attendance_recordsArgs<ExtArgs>
+    beneficiary_trainings?: boolean | Training$beneficiary_trainingsArgs<ExtArgs>
+    survey_responses?: boolean | Training$survey_responsesArgs<ExtArgs>
     agendas?: boolean | Training$agendasArgs<ExtArgs>
     material_links?: boolean | Training$material_linksArgs<ExtArgs>
     survey_links?: boolean | Training$survey_linksArgs<ExtArgs>
-    survey_responses?: boolean | Training$survey_responsesArgs<ExtArgs>
     _count?: boolean | TrainingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TrainingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -7426,12 +7540,12 @@ export namespace Prisma {
   export type $TrainingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Training"
     objects: {
-      beneficiary_trainings: Prisma.$BeneficiaryTrainingPayload<ExtArgs>[]
       attendance_records: Prisma.$AttendanceRecordPayload<ExtArgs>[]
+      beneficiary_trainings: Prisma.$BeneficiaryTrainingPayload<ExtArgs>[]
+      survey_responses: Prisma.$SurveyResponsePayload<ExtArgs>[]
       agendas: Prisma.$TrainingAgendaPayload<ExtArgs>[]
       material_links: Prisma.$TrainingMaterialLinkPayload<ExtArgs>[]
       survey_links: Prisma.$TrainingSurveyLinkPayload<ExtArgs>[]
-      survey_responses: Prisma.$SurveyResponsePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7861,12 +7975,12 @@ export namespace Prisma {
    */
   export interface Prisma__TrainingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    beneficiary_trainings<T extends Training$beneficiary_trainingsArgs<ExtArgs> = {}>(args?: Subset<T, Training$beneficiary_trainingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BeneficiaryTrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     attendance_records<T extends Training$attendance_recordsArgs<ExtArgs> = {}>(args?: Subset<T, Training$attendance_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    beneficiary_trainings<T extends Training$beneficiary_trainingsArgs<ExtArgs> = {}>(args?: Subset<T, Training$beneficiary_trainingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BeneficiaryTrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    survey_responses<T extends Training$survey_responsesArgs<ExtArgs> = {}>(args?: Subset<T, Training$survey_responsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     agendas<T extends Training$agendasArgs<ExtArgs> = {}>(args?: Subset<T, Training$agendasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingAgendaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     material_links<T extends Training$material_linksArgs<ExtArgs> = {}>(args?: Subset<T, Training$material_linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingMaterialLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     survey_links<T extends Training$survey_linksArgs<ExtArgs> = {}>(args?: Subset<T, Training$survey_linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingSurveyLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    survey_responses<T extends Training$survey_responsesArgs<ExtArgs> = {}>(args?: Subset<T, Training$survey_responsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8317,6 +8431,30 @@ export namespace Prisma {
   }
 
   /**
+   * Training.attendance_records
+   */
+  export type Training$attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AttendanceRecord
+     */
+    select?: AttendanceRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AttendanceRecord
+     */
+    omit?: AttendanceRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AttendanceRecordInclude<ExtArgs> | null
+    where?: AttendanceRecordWhereInput
+    orderBy?: AttendanceRecordOrderByWithRelationInput | AttendanceRecordOrderByWithRelationInput[]
+    cursor?: AttendanceRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AttendanceRecordScalarFieldEnum | AttendanceRecordScalarFieldEnum[]
+  }
+
+  /**
    * Training.beneficiary_trainings
    */
   export type Training$beneficiary_trainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8341,27 +8479,27 @@ export namespace Prisma {
   }
 
   /**
-   * Training.attendance_records
+   * Training.survey_responses
    */
-  export type Training$attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Training$survey_responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the AttendanceRecord
+     * Select specific fields to fetch from the SurveyResponse
      */
-    select?: AttendanceRecordSelect<ExtArgs> | null
+    select?: SurveyResponseSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the AttendanceRecord
+     * Omit specific fields from the SurveyResponse
      */
-    omit?: AttendanceRecordOmit<ExtArgs> | null
+    omit?: SurveyResponseOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AttendanceRecordInclude<ExtArgs> | null
-    where?: AttendanceRecordWhereInput
-    orderBy?: AttendanceRecordOrderByWithRelationInput | AttendanceRecordOrderByWithRelationInput[]
-    cursor?: AttendanceRecordWhereUniqueInput
+    include?: SurveyResponseInclude<ExtArgs> | null
+    where?: SurveyResponseWhereInput
+    orderBy?: SurveyResponseOrderByWithRelationInput | SurveyResponseOrderByWithRelationInput[]
+    cursor?: SurveyResponseWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: AttendanceRecordScalarFieldEnum | AttendanceRecordScalarFieldEnum[]
+    distinct?: SurveyResponseScalarFieldEnum | SurveyResponseScalarFieldEnum[]
   }
 
   /**
@@ -8434,30 +8572,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TrainingSurveyLinkScalarFieldEnum | TrainingSurveyLinkScalarFieldEnum[]
-  }
-
-  /**
-   * Training.survey_responses
-   */
-  export type Training$survey_responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SurveyResponse
-     */
-    select?: SurveyResponseSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SurveyResponse
-     */
-    omit?: SurveyResponseOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SurveyResponseInclude<ExtArgs> | null
-    where?: SurveyResponseWhereInput
-    orderBy?: SurveyResponseOrderByWithRelationInput | SurveyResponseOrderByWithRelationInput[]
-    cursor?: SurveyResponseWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SurveyResponseScalarFieldEnum | SurveyResponseScalarFieldEnum[]
   }
 
   /**
@@ -8969,11 +9083,11 @@ export namespace Prisma {
     updated_by?: boolean
     created_at?: boolean
     updated_at?: boolean
-    sessions?: boolean | Event$sessionsArgs<ExtArgs>
-    registrations?: boolean | Event$registrationsArgs<ExtArgs>
     attendance_records?: boolean | Event$attendance_recordsArgs<ExtArgs>
-    speakers?: boolean | Event$speakersArgs<ExtArgs>
     material_links?: boolean | Event$material_linksArgs<ExtArgs>
+    registrations?: boolean | Event$registrationsArgs<ExtArgs>
+    sessions?: boolean | Event$sessionsArgs<ExtArgs>
+    speakers?: boolean | Event$speakersArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
@@ -9108,11 +9222,11 @@ export namespace Prisma {
 
   export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "event_code" | "event_name" | "event_name_english" | "event_description" | "event_type" | "event_category" | "event_format" | "event_status" | "event_start_date" | "event_end_date" | "registration_deadline" | "registration_start" | "event_location" | "event_venue" | "venue_latitude" | "venue_longitude" | "geofence_radius" | "province_name" | "district_name" | "virtual_platform" | "virtual_meeting_url" | "virtual_meeting_id" | "virtual_passcode" | "max_attendees" | "current_attendees" | "allow_public_registration" | "requires_approval" | "is_multi_track" | "qr_code_data" | "gps_validation_required" | "geofence_validation_required" | "is_published" | "banner_image_url" | "tags" | "is_deleted" | "created_by" | "updated_by" | "created_at" | "updated_at", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sessions?: boolean | Event$sessionsArgs<ExtArgs>
-    registrations?: boolean | Event$registrationsArgs<ExtArgs>
     attendance_records?: boolean | Event$attendance_recordsArgs<ExtArgs>
-    speakers?: boolean | Event$speakersArgs<ExtArgs>
     material_links?: boolean | Event$material_linksArgs<ExtArgs>
+    registrations?: boolean | Event$registrationsArgs<ExtArgs>
+    sessions?: boolean | Event$sessionsArgs<ExtArgs>
+    speakers?: boolean | Event$speakersArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -9121,11 +9235,11 @@ export namespace Prisma {
   export type $EventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Event"
     objects: {
-      sessions: Prisma.$EventSessionPayload<ExtArgs>[]
-      registrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
       attendance_records: Prisma.$EventAttendanceRecordPayload<ExtArgs>[]
-      speakers: Prisma.$EventSpeakerPayload<ExtArgs>[]
       material_links: Prisma.$EventMaterialLinkPayload<ExtArgs>[]
+      registrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
+      sessions: Prisma.$EventSessionPayload<ExtArgs>[]
+      speakers: Prisma.$EventSpeakerPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9562,11 +9676,11 @@ export namespace Prisma {
    */
   export interface Prisma__EventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    sessions<T extends Event$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Event$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    registrations<T extends Event$registrationsArgs<ExtArgs> = {}>(args?: Subset<T, Event$registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     attendance_records<T extends Event$attendance_recordsArgs<ExtArgs> = {}>(args?: Subset<T, Event$attendance_recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    speakers<T extends Event$speakersArgs<ExtArgs> = {}>(args?: Subset<T, Event$speakersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventSpeakerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     material_links<T extends Event$material_linksArgs<ExtArgs> = {}>(args?: Subset<T, Event$material_linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventMaterialLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    registrations<T extends Event$registrationsArgs<ExtArgs> = {}>(args?: Subset<T, Event$registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sessions<T extends Event$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Event$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    speakers<T extends Event$speakersArgs<ExtArgs> = {}>(args?: Subset<T, Event$speakersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventSpeakerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10024,27 +10138,51 @@ export namespace Prisma {
   }
 
   /**
-   * Event.sessions
+   * Event.attendance_records
    */
-  export type Event$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Event$attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the EventSession
+     * Select specific fields to fetch from the EventAttendanceRecord
      */
-    select?: EventSessionSelect<ExtArgs> | null
+    select?: EventAttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the EventSession
+     * Omit specific fields from the EventAttendanceRecord
      */
-    omit?: EventSessionOmit<ExtArgs> | null
+    omit?: EventAttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EventSessionInclude<ExtArgs> | null
-    where?: EventSessionWhereInput
-    orderBy?: EventSessionOrderByWithRelationInput | EventSessionOrderByWithRelationInput[]
-    cursor?: EventSessionWhereUniqueInput
+    include?: EventAttendanceRecordInclude<ExtArgs> | null
+    where?: EventAttendanceRecordWhereInput
+    orderBy?: EventAttendanceRecordOrderByWithRelationInput | EventAttendanceRecordOrderByWithRelationInput[]
+    cursor?: EventAttendanceRecordWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: EventSessionScalarFieldEnum | EventSessionScalarFieldEnum[]
+    distinct?: EventAttendanceRecordScalarFieldEnum | EventAttendanceRecordScalarFieldEnum[]
+  }
+
+  /**
+   * Event.material_links
+   */
+  export type Event$material_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventMaterialLink
+     */
+    select?: EventMaterialLinkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventMaterialLink
+     */
+    omit?: EventMaterialLinkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventMaterialLinkInclude<ExtArgs> | null
+    where?: EventMaterialLinkWhereInput
+    orderBy?: EventMaterialLinkOrderByWithRelationInput | EventMaterialLinkOrderByWithRelationInput[]
+    cursor?: EventMaterialLinkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventMaterialLinkScalarFieldEnum | EventMaterialLinkScalarFieldEnum[]
   }
 
   /**
@@ -10072,27 +10210,27 @@ export namespace Prisma {
   }
 
   /**
-   * Event.attendance_records
+   * Event.sessions
    */
-  export type Event$attendance_recordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Event$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the EventAttendanceRecord
+     * Select specific fields to fetch from the EventSession
      */
-    select?: EventAttendanceRecordSelect<ExtArgs> | null
+    select?: EventSessionSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the EventAttendanceRecord
+     * Omit specific fields from the EventSession
      */
-    omit?: EventAttendanceRecordOmit<ExtArgs> | null
+    omit?: EventSessionOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EventAttendanceRecordInclude<ExtArgs> | null
-    where?: EventAttendanceRecordWhereInput
-    orderBy?: EventAttendanceRecordOrderByWithRelationInput | EventAttendanceRecordOrderByWithRelationInput[]
-    cursor?: EventAttendanceRecordWhereUniqueInput
+    include?: EventSessionInclude<ExtArgs> | null
+    where?: EventSessionWhereInput
+    orderBy?: EventSessionOrderByWithRelationInput | EventSessionOrderByWithRelationInput[]
+    cursor?: EventSessionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: EventAttendanceRecordScalarFieldEnum | EventAttendanceRecordScalarFieldEnum[]
+    distinct?: EventSessionScalarFieldEnum | EventSessionScalarFieldEnum[]
   }
 
   /**
@@ -10117,30 +10255,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EventSpeakerScalarFieldEnum | EventSpeakerScalarFieldEnum[]
-  }
-
-  /**
-   * Event.material_links
-   */
-  export type Event$material_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EventMaterialLink
-     */
-    select?: EventMaterialLinkSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EventMaterialLink
-     */
-    omit?: EventMaterialLinkOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EventMaterialLinkInclude<ExtArgs> | null
-    where?: EventMaterialLinkWhereInput
-    orderBy?: EventMaterialLinkOrderByWithRelationInput | EventMaterialLinkOrderByWithRelationInput[]
-    cursor?: EventMaterialLinkWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: EventMaterialLinkScalarFieldEnum | EventMaterialLinkScalarFieldEnum[]
   }
 
   /**
@@ -10544,9 +10658,9 @@ export namespace Prisma {
     updated_at?: boolean
     created_by?: boolean
     updated_by?: boolean
-    event?: boolean | EventDefaultArgs<ExtArgs>
     session_registrations?: boolean | EventSession$session_registrationsArgs<ExtArgs>
     speakers?: boolean | EventSession$speakersArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
     _count?: boolean | EventSessionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["eventSession"]>
 
@@ -10641,9 +10755,9 @@ export namespace Prisma {
 
   export type EventSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "event_id" | "session_code" | "session_name" | "session_name_english" | "session_description" | "session_date" | "session_start_time" | "session_end_time" | "session_location" | "session_room" | "venue_latitude" | "venue_longitude" | "virtual_meeting_url" | "track_name" | "track_color" | "max_attendees" | "current_attendees" | "session_type" | "is_cancelled" | "is_deleted" | "sort_order" | "created_at" | "updated_at" | "created_by" | "updated_by", ExtArgs["result"]["eventSession"]>
   export type EventSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    event?: boolean | EventDefaultArgs<ExtArgs>
     session_registrations?: boolean | EventSession$session_registrationsArgs<ExtArgs>
     speakers?: boolean | EventSession$speakersArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
     _count?: boolean | EventSessionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventSessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10656,9 +10770,9 @@ export namespace Prisma {
   export type $EventSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EventSession"
     objects: {
-      event: Prisma.$EventPayload<ExtArgs>
       session_registrations: Prisma.$EventSessionRegistrationPayload<ExtArgs>[]
       speakers: Prisma.$EventSessionSpeakerPayload<ExtArgs>[]
+      event: Prisma.$EventPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11081,9 +11195,9 @@ export namespace Prisma {
    */
   export interface Prisma__EventSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     session_registrations<T extends EventSession$session_registrationsArgs<ExtArgs> = {}>(args?: Subset<T, EventSession$session_registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventSessionRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     speakers<T extends EventSession$speakersArgs<ExtArgs> = {}>(args?: Subset<T, EventSession$speakersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventSessionSpeakerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11965,8 +12079,8 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: boolean
     updated_at?: boolean
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventRegistration$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
     session_registrations?: boolean | EventRegistration$session_registrationsArgs<ExtArgs>
     _count?: boolean | EventRegistrationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["eventRegistration"]>
@@ -12002,8 +12116,8 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: boolean
     updated_at?: boolean
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventRegistration$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["eventRegistration"]>
 
   export type EventRegistrationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12037,8 +12151,8 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: boolean
     updated_at?: boolean
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventRegistration$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["eventRegistration"]>
 
   export type EventRegistrationSelectScalar = {
@@ -12076,25 +12190,25 @@ export namespace Prisma {
 
   export type EventRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "event_id" | "registration_code" | "beneficiary_id" | "attendee_name" | "attendee_name_english" | "attendee_email" | "attendee_phone" | "attendee_organization" | "attendee_position" | "attendee_province" | "attendee_district" | "registration_date" | "registration_method" | "registration_source" | "registration_status" | "approval_status" | "approved_by" | "approved_at" | "check_in_time" | "check_out_time" | "attendance_status" | "attendee_role" | "dietary_requirements" | "accessibility_needs" | "special_requests" | "qr_code_data" | "is_deleted" | "created_at" | "updated_at", ExtArgs["result"]["eventRegistration"]>
   export type EventRegistrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventRegistration$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
     session_registrations?: boolean | EventRegistration$session_registrationsArgs<ExtArgs>
     _count?: boolean | EventRegistrationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventRegistrationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventRegistration$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }
   export type EventRegistrationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventRegistration$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }
 
   export type $EventRegistrationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EventRegistration"
     objects: {
-      event: Prisma.$EventPayload<ExtArgs>
       beneficiary: Prisma.$BeneficiaryPayload<ExtArgs> | null
+      event: Prisma.$EventPayload<ExtArgs>
       session_registrations: Prisma.$EventSessionRegistrationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -12522,8 +12636,8 @@ export namespace Prisma {
    */
   export interface Prisma__EventRegistrationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     beneficiary<T extends EventRegistration$beneficiaryArgs<ExtArgs> = {}>(args?: Subset<T, EventRegistration$beneficiaryArgs<ExtArgs>>): Prisma__BeneficiaryClient<$Result.GetResult<Prisma.$BeneficiaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     session_registrations<T extends EventRegistration$session_registrationsArgs<ExtArgs> = {}>(args?: Subset<T, EventRegistration$session_registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventSessionRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -14446,8 +14560,8 @@ export namespace Prisma {
     device?: boolean
     created_at?: boolean
     updated_at?: boolean
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventAttendanceRecord$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["eventAttendanceRecord"]>
 
   export type EventAttendanceRecordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14471,8 +14585,8 @@ export namespace Prisma {
     device?: boolean
     created_at?: boolean
     updated_at?: boolean
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventAttendanceRecord$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["eventAttendanceRecord"]>
 
   export type EventAttendanceRecordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14496,8 +14610,8 @@ export namespace Prisma {
     device?: boolean
     created_at?: boolean
     updated_at?: boolean
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventAttendanceRecord$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["eventAttendanceRecord"]>
 
   export type EventAttendanceRecordSelectScalar = {
@@ -14525,23 +14639,23 @@ export namespace Prisma {
 
   export type EventAttendanceRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "event_id" | "beneficiary_id" | "registration_id" | "date" | "morning_in" | "morning_out" | "afternoon_in" | "afternoon_out" | "attendance_status" | "manual_entry" | "manual_marked_by" | "manual_marked_by_name" | "manual_entry_reason" | "location_lat" | "location_lng" | "location_accuracy" | "device" | "created_at" | "updated_at", ExtArgs["result"]["eventAttendanceRecord"]>
   export type EventAttendanceRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventAttendanceRecord$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }
   export type EventAttendanceRecordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventAttendanceRecord$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }
   export type EventAttendanceRecordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    event?: boolean | EventDefaultArgs<ExtArgs>
     beneficiary?: boolean | EventAttendanceRecord$beneficiaryArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
   }
 
   export type $EventAttendanceRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EventAttendanceRecord"
     objects: {
-      event: Prisma.$EventPayload<ExtArgs>
       beneficiary: Prisma.$BeneficiaryPayload<ExtArgs> | null
+      event: Prisma.$EventPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -14958,8 +15072,8 @@ export namespace Prisma {
    */
   export interface Prisma__EventAttendanceRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     beneficiary<T extends EventAttendanceRecord$beneficiaryArgs<ExtArgs> = {}>(args?: Subset<T, EventAttendanceRecord$beneficiaryArgs<ExtArgs>>): Prisma__BeneficiaryClient<$Result.GetResult<Prisma.$BeneficiaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15768,8 +15882,8 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: boolean
     updated_at?: boolean
-    event?: boolean | EventDefaultArgs<ExtArgs>
     sessions?: boolean | EventSpeaker$sessionsArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
     _count?: boolean | EventSpeakerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["eventSpeaker"]>
 
@@ -15849,8 +15963,8 @@ export namespace Prisma {
 
   export type EventSpeakerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "event_id" | "speaker_name" | "speaker_name_english" | "speaker_title" | "speaker_position" | "speaker_organization" | "speaker_bio" | "speaker_photo_url" | "speaker_email" | "speaker_phone" | "linkedin_url" | "twitter_url" | "website_url" | "speaker_type" | "is_keynote_speaker" | "is_featured" | "sort_order" | "is_deleted" | "created_at" | "updated_at", ExtArgs["result"]["eventSpeaker"]>
   export type EventSpeakerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    event?: boolean | EventDefaultArgs<ExtArgs>
     sessions?: boolean | EventSpeaker$sessionsArgs<ExtArgs>
+    event?: boolean | EventDefaultArgs<ExtArgs>
     _count?: boolean | EventSpeakerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EventSpeakerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15863,8 +15977,8 @@ export namespace Prisma {
   export type $EventSpeakerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EventSpeaker"
     objects: {
-      event: Prisma.$EventPayload<ExtArgs>
       sessions: Prisma.$EventSessionSpeakerPayload<ExtArgs>[]
+      event: Prisma.$EventPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16282,8 +16396,8 @@ export namespace Prisma {
    */
   export interface Prisma__EventSpeakerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     sessions<T extends EventSpeaker$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, EventSpeaker$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventSessionSpeakerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -29789,8 +29903,8 @@ export namespace Prisma {
     updated_at?: boolean
     created_by?: boolean
     updated_by?: boolean
-    training_links?: boolean | TrainingMaterial$training_linksArgs<ExtArgs>
     event_links?: boolean | TrainingMaterial$event_linksArgs<ExtArgs>
+    training_links?: boolean | TrainingMaterial$training_linksArgs<ExtArgs>
     _count?: boolean | TrainingMaterialCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trainingMaterial"]>
 
@@ -29859,8 +29973,8 @@ export namespace Prisma {
 
   export type TrainingMaterialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_en" | "title_km" | "description_en" | "description_km" | "material_type" | "file_url" | "external_url" | "file_name" | "file_size" | "mime_type" | "category" | "is_active" | "is_deleted" | "created_at" | "updated_at" | "created_by" | "updated_by", ExtArgs["result"]["trainingMaterial"]>
   export type TrainingMaterialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    training_links?: boolean | TrainingMaterial$training_linksArgs<ExtArgs>
     event_links?: boolean | TrainingMaterial$event_linksArgs<ExtArgs>
+    training_links?: boolean | TrainingMaterial$training_linksArgs<ExtArgs>
     _count?: boolean | TrainingMaterialCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TrainingMaterialIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -29869,8 +29983,8 @@ export namespace Prisma {
   export type $TrainingMaterialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TrainingMaterial"
     objects: {
-      training_links: Prisma.$TrainingMaterialLinkPayload<ExtArgs>[]
       event_links: Prisma.$EventMaterialLinkPayload<ExtArgs>[]
+      training_links: Prisma.$TrainingMaterialLinkPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -30285,8 +30399,8 @@ export namespace Prisma {
    */
   export interface Prisma__TrainingMaterialClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    training_links<T extends TrainingMaterial$training_linksArgs<ExtArgs> = {}>(args?: Subset<T, TrainingMaterial$training_linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingMaterialLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     event_links<T extends TrainingMaterial$event_linksArgs<ExtArgs> = {}>(args?: Subset<T, TrainingMaterial$event_linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventMaterialLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    training_links<T extends TrainingMaterial$training_linksArgs<ExtArgs> = {}>(args?: Subset<T, TrainingMaterial$training_linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingMaterialLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -30722,30 +30836,6 @@ export namespace Prisma {
   }
 
   /**
-   * TrainingMaterial.training_links
-   */
-  export type TrainingMaterial$training_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrainingMaterialLink
-     */
-    select?: TrainingMaterialLinkSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrainingMaterialLink
-     */
-    omit?: TrainingMaterialLinkOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrainingMaterialLinkInclude<ExtArgs> | null
-    where?: TrainingMaterialLinkWhereInput
-    orderBy?: TrainingMaterialLinkOrderByWithRelationInput | TrainingMaterialLinkOrderByWithRelationInput[]
-    cursor?: TrainingMaterialLinkWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TrainingMaterialLinkScalarFieldEnum | TrainingMaterialLinkScalarFieldEnum[]
-  }
-
-  /**
    * TrainingMaterial.event_links
    */
   export type TrainingMaterial$event_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -30767,6 +30857,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EventMaterialLinkScalarFieldEnum | EventMaterialLinkScalarFieldEnum[]
+  }
+
+  /**
+   * TrainingMaterial.training_links
+   */
+  export type TrainingMaterial$training_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrainingMaterialLink
+     */
+    select?: TrainingMaterialLinkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrainingMaterialLink
+     */
+    omit?: TrainingMaterialLinkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingMaterialLinkInclude<ExtArgs> | null
+    where?: TrainingMaterialLinkWhereInput
+    orderBy?: TrainingMaterialLinkOrderByWithRelationInput | TrainingMaterialLinkOrderByWithRelationInput[]
+    cursor?: TrainingMaterialLinkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TrainingMaterialLinkScalarFieldEnum | TrainingMaterialLinkScalarFieldEnum[]
   }
 
   /**
@@ -31002,8 +31116,8 @@ export namespace Prisma {
     is_required?: boolean
     linked_at?: boolean
     linked_by?: boolean
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     material?: boolean | TrainingMaterialDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trainingMaterialLink"]>
 
   export type TrainingMaterialLinkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -31014,8 +31128,8 @@ export namespace Prisma {
     is_required?: boolean
     linked_at?: boolean
     linked_by?: boolean
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     material?: boolean | TrainingMaterialDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trainingMaterialLink"]>
 
   export type TrainingMaterialLinkSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -31026,8 +31140,8 @@ export namespace Prisma {
     is_required?: boolean
     linked_at?: boolean
     linked_by?: boolean
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     material?: boolean | TrainingMaterialDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trainingMaterialLink"]>
 
   export type TrainingMaterialLinkSelectScalar = {
@@ -31042,23 +31156,23 @@ export namespace Prisma {
 
   export type TrainingMaterialLinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "training_id" | "material_id" | "sort_order" | "is_required" | "linked_at" | "linked_by", ExtArgs["result"]["trainingMaterialLink"]>
   export type TrainingMaterialLinkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     material?: boolean | TrainingMaterialDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }
   export type TrainingMaterialLinkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     material?: boolean | TrainingMaterialDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }
   export type TrainingMaterialLinkIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     material?: boolean | TrainingMaterialDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }
 
   export type $TrainingMaterialLinkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TrainingMaterialLink"
     objects: {
-      training: Prisma.$TrainingPayload<ExtArgs>
       material: Prisma.$TrainingMaterialPayload<ExtArgs>
+      training: Prisma.$TrainingPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -31462,8 +31576,8 @@ export namespace Prisma {
    */
   export interface Prisma__TrainingMaterialLinkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    training<T extends TrainingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrainingDefaultArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     material<T extends TrainingMaterialDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrainingMaterialDefaultArgs<ExtArgs>>): Prisma__TrainingMaterialClient<$Result.GetResult<Prisma.$TrainingMaterialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    training<T extends TrainingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrainingDefaultArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -32249,8 +32363,8 @@ export namespace Prisma {
     created_by?: boolean
     updated_by?: boolean
     questions?: boolean | Survey$questionsArgs<ExtArgs>
-    training_links?: boolean | Survey$training_linksArgs<ExtArgs>
     responses?: boolean | Survey$responsesArgs<ExtArgs>
+    training_links?: boolean | Survey$training_linksArgs<ExtArgs>
     _count?: boolean | SurveyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["survey"]>
 
@@ -32329,8 +32443,8 @@ export namespace Prisma {
   export type SurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_en" | "title_km" | "description_en" | "description_km" | "survey_type" | "is_template" | "is_required" | "passing_score" | "time_limit" | "allow_retake" | "max_attempts" | "show_results_to_beneficiary" | "show_correct_answers" | "available_from" | "available_until" | "is_active" | "created_at" | "updated_at" | "created_by" | "updated_by", ExtArgs["result"]["survey"]>
   export type SurveyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     questions?: boolean | Survey$questionsArgs<ExtArgs>
-    training_links?: boolean | Survey$training_linksArgs<ExtArgs>
     responses?: boolean | Survey$responsesArgs<ExtArgs>
+    training_links?: boolean | Survey$training_linksArgs<ExtArgs>
     _count?: boolean | SurveyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SurveyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -32340,8 +32454,8 @@ export namespace Prisma {
     name: "Survey"
     objects: {
       questions: Prisma.$SurveyQuestionPayload<ExtArgs>[]
-      training_links: Prisma.$TrainingSurveyLinkPayload<ExtArgs>[]
       responses: Prisma.$SurveyResponsePayload<ExtArgs>[]
+      training_links: Prisma.$TrainingSurveyLinkPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -32760,8 +32874,8 @@ export namespace Prisma {
   export interface Prisma__SurveyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     questions<T extends Survey$questionsArgs<ExtArgs> = {}>(args?: Subset<T, Survey$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurveyQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    training_links<T extends Survey$training_linksArgs<ExtArgs> = {}>(args?: Subset<T, Survey$training_linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingSurveyLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     responses<T extends Survey$responsesArgs<ExtArgs> = {}>(args?: Subset<T, Survey$responsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    training_links<T extends Survey$training_linksArgs<ExtArgs> = {}>(args?: Subset<T, Survey$training_linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingSurveyLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -33224,30 +33338,6 @@ export namespace Prisma {
   }
 
   /**
-   * Survey.training_links
-   */
-  export type Survey$training_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TrainingSurveyLink
-     */
-    select?: TrainingSurveyLinkSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TrainingSurveyLink
-     */
-    omit?: TrainingSurveyLinkOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TrainingSurveyLinkInclude<ExtArgs> | null
-    where?: TrainingSurveyLinkWhereInput
-    orderBy?: TrainingSurveyLinkOrderByWithRelationInput | TrainingSurveyLinkOrderByWithRelationInput[]
-    cursor?: TrainingSurveyLinkWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TrainingSurveyLinkScalarFieldEnum | TrainingSurveyLinkScalarFieldEnum[]
-  }
-
-  /**
    * Survey.responses
    */
   export type Survey$responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -33269,6 +33359,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SurveyResponseScalarFieldEnum | SurveyResponseScalarFieldEnum[]
+  }
+
+  /**
+   * Survey.training_links
+   */
+  export type Survey$training_linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrainingSurveyLink
+     */
+    select?: TrainingSurveyLinkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrainingSurveyLink
+     */
+    omit?: TrainingSurveyLinkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingSurveyLinkInclude<ExtArgs> | null
+    where?: TrainingSurveyLinkWhereInput
+    orderBy?: TrainingSurveyLinkOrderByWithRelationInput | TrainingSurveyLinkOrderByWithRelationInput[]
+    cursor?: TrainingSurveyLinkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TrainingSurveyLinkScalarFieldEnum | TrainingSurveyLinkScalarFieldEnum[]
   }
 
   /**
@@ -33520,8 +33634,8 @@ export namespace Prisma {
     custom_deadline?: boolean
     linked_at?: boolean
     linked_by?: boolean
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     survey?: boolean | SurveyDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trainingSurveyLink"]>
 
   export type TrainingSurveyLinkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -33534,8 +33648,8 @@ export namespace Prisma {
     custom_deadline?: boolean
     linked_at?: boolean
     linked_by?: boolean
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     survey?: boolean | SurveyDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trainingSurveyLink"]>
 
   export type TrainingSurveyLinkSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -33548,8 +33662,8 @@ export namespace Prisma {
     custom_deadline?: boolean
     linked_at?: boolean
     linked_by?: boolean
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     survey?: boolean | SurveyDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trainingSurveyLink"]>
 
   export type TrainingSurveyLinkSelectScalar = {
@@ -33566,23 +33680,23 @@ export namespace Prisma {
 
   export type TrainingSurveyLinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "training_id" | "survey_id" | "timing" | "is_required" | "sort_order" | "custom_deadline" | "linked_at" | "linked_by", ExtArgs["result"]["trainingSurveyLink"]>
   export type TrainingSurveyLinkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     survey?: boolean | SurveyDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }
   export type TrainingSurveyLinkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     survey?: boolean | SurveyDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }
   export type TrainingSurveyLinkIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     survey?: boolean | SurveyDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
   }
 
   export type $TrainingSurveyLinkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TrainingSurveyLink"
     objects: {
-      training: Prisma.$TrainingPayload<ExtArgs>
       survey: Prisma.$SurveyPayload<ExtArgs>
+      training: Prisma.$TrainingPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -33988,8 +34102,8 @@ export namespace Prisma {
    */
   export interface Prisma__TrainingSurveyLinkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    training<T extends TrainingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrainingDefaultArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     survey<T extends SurveyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SurveyDefaultArgs<ExtArgs>>): Prisma__SurveyClient<$Result.GetResult<Prisma.$SurveyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    training<T extends TrainingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrainingDefaultArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -34748,8 +34862,8 @@ export namespace Prisma {
     scale_labels_km?: boolean
     created_at?: boolean
     updated_at?: boolean
-    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     answers?: boolean | SurveyQuestion$answersArgs<ExtArgs>
+    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     _count?: boolean | SurveyQuestionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["surveyQuestion"]>
 
@@ -34823,8 +34937,8 @@ export namespace Prisma {
 
   export type SurveyQuestionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "survey_id" | "question_text_en" | "question_text_km" | "help_text_en" | "help_text_km" | "question_type" | "is_required" | "sort_order" | "points" | "correct_answer" | "options_en" | "options_km" | "scale_min" | "scale_max" | "scale_labels_en" | "scale_labels_km" | "created_at" | "updated_at", ExtArgs["result"]["surveyQuestion"]>
   export type SurveyQuestionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     answers?: boolean | SurveyQuestion$answersArgs<ExtArgs>
+    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     _count?: boolean | SurveyQuestionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SurveyQuestionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -34837,8 +34951,8 @@ export namespace Prisma {
   export type $SurveyQuestionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SurveyQuestion"
     objects: {
-      survey: Prisma.$SurveyPayload<ExtArgs>
       answers: Prisma.$SurveyQuestionResponsePayload<ExtArgs>[]
+      survey: Prisma.$SurveyPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -35254,8 +35368,8 @@ export namespace Prisma {
    */
   export interface Prisma__SurveyQuestionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    survey<T extends SurveyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SurveyDefaultArgs<ExtArgs>>): Prisma__SurveyClient<$Result.GetResult<Prisma.$SurveyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     answers<T extends SurveyQuestion$answersArgs<ExtArgs> = {}>(args?: Subset<T, SurveyQuestion$answersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurveyQuestionResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    survey<T extends SurveyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SurveyDefaultArgs<ExtArgs>>): Prisma__SurveyClient<$Result.GetResult<Prisma.$SurveyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -36036,10 +36150,10 @@ export namespace Prisma {
     time_spent_seconds?: boolean
     created_at?: boolean
     updated_at?: boolean
-    survey?: boolean | SurveyDefaultArgs<ExtArgs>
-    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     question_responses?: boolean | SurveyResponse$question_responsesArgs<ExtArgs>
+    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+    survey?: boolean | SurveyDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
     _count?: boolean | SurveyResponseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["surveyResponse"]>
 
@@ -36059,8 +36173,8 @@ export namespace Prisma {
     time_spent_seconds?: boolean
     created_at?: boolean
     updated_at?: boolean
-    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     training?: boolean | TrainingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["surveyResponse"]>
 
@@ -36080,8 +36194,8 @@ export namespace Prisma {
     time_spent_seconds?: boolean
     created_at?: boolean
     updated_at?: boolean
-    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     training?: boolean | TrainingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["surveyResponse"]>
 
@@ -36105,30 +36219,30 @@ export namespace Prisma {
 
   export type SurveyResponseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "survey_id" | "beneficiary_id" | "training_id" | "started_at" | "submitted_at" | "is_complete" | "attempt_number" | "total_score" | "max_score" | "percentage" | "passed" | "time_spent_seconds" | "created_at" | "updated_at", ExtArgs["result"]["surveyResponse"]>
   export type SurveyResponseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    survey?: boolean | SurveyDefaultArgs<ExtArgs>
-    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
-    training?: boolean | TrainingDefaultArgs<ExtArgs>
     question_responses?: boolean | SurveyResponse$question_responsesArgs<ExtArgs>
+    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+    survey?: boolean | SurveyDefaultArgs<ExtArgs>
+    training?: boolean | TrainingDefaultArgs<ExtArgs>
     _count?: boolean | SurveyResponseCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SurveyResponseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     training?: boolean | TrainingDefaultArgs<ExtArgs>
   }
   export type SurveyResponseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+    survey?: boolean | SurveyDefaultArgs<ExtArgs>
     training?: boolean | TrainingDefaultArgs<ExtArgs>
   }
 
   export type $SurveyResponsePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SurveyResponse"
     objects: {
-      survey: Prisma.$SurveyPayload<ExtArgs>
-      beneficiary: Prisma.$BeneficiaryPayload<ExtArgs>
-      training: Prisma.$TrainingPayload<ExtArgs>
       question_responses: Prisma.$SurveyQuestionResponsePayload<ExtArgs>[]
+      beneficiary: Prisma.$BeneficiaryPayload<ExtArgs>
+      survey: Prisma.$SurveyPayload<ExtArgs>
+      training: Prisma.$TrainingPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -36540,10 +36654,10 @@ export namespace Prisma {
    */
   export interface Prisma__SurveyResponseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    survey<T extends SurveyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SurveyDefaultArgs<ExtArgs>>): Prisma__SurveyClient<$Result.GetResult<Prisma.$SurveyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    beneficiary<T extends BeneficiaryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BeneficiaryDefaultArgs<ExtArgs>>): Prisma__BeneficiaryClient<$Result.GetResult<Prisma.$BeneficiaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    training<T extends TrainingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrainingDefaultArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     question_responses<T extends SurveyResponse$question_responsesArgs<ExtArgs> = {}>(args?: Subset<T, SurveyResponse$question_responsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurveyQuestionResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    beneficiary<T extends BeneficiaryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BeneficiaryDefaultArgs<ExtArgs>>): Prisma__BeneficiaryClient<$Result.GetResult<Prisma.$BeneficiaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    survey<T extends SurveyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SurveyDefaultArgs<ExtArgs>>): Prisma__SurveyClient<$Result.GetResult<Prisma.$SurveyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    training<T extends TrainingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TrainingDefaultArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -37248,8 +37362,8 @@ export namespace Prisma {
     points_earned?: boolean
     is_correct?: boolean
     answered_at?: boolean
-    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
     question?: boolean | SurveyQuestionDefaultArgs<ExtArgs>
+    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["surveyQuestionResponse"]>
 
   export type SurveyQuestionResponseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -37261,8 +37375,8 @@ export namespace Prisma {
     points_earned?: boolean
     is_correct?: boolean
     answered_at?: boolean
-    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
     question?: boolean | SurveyQuestionDefaultArgs<ExtArgs>
+    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["surveyQuestionResponse"]>
 
   export type SurveyQuestionResponseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -37274,8 +37388,8 @@ export namespace Prisma {
     points_earned?: boolean
     is_correct?: boolean
     answered_at?: boolean
-    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
     question?: boolean | SurveyQuestionDefaultArgs<ExtArgs>
+    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["surveyQuestionResponse"]>
 
   export type SurveyQuestionResponseSelectScalar = {
@@ -37291,23 +37405,23 @@ export namespace Prisma {
 
   export type SurveyQuestionResponseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "response_id" | "question_id" | "answer_value" | "answer_text" | "points_earned" | "is_correct" | "answered_at", ExtArgs["result"]["surveyQuestionResponse"]>
   export type SurveyQuestionResponseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
     question?: boolean | SurveyQuestionDefaultArgs<ExtArgs>
+    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
   }
   export type SurveyQuestionResponseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
     question?: boolean | SurveyQuestionDefaultArgs<ExtArgs>
+    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
   }
   export type SurveyQuestionResponseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
     question?: boolean | SurveyQuestionDefaultArgs<ExtArgs>
+    response?: boolean | SurveyResponseDefaultArgs<ExtArgs>
   }
 
   export type $SurveyQuestionResponsePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SurveyQuestionResponse"
     objects: {
-      response: Prisma.$SurveyResponsePayload<ExtArgs>
       question: Prisma.$SurveyQuestionPayload<ExtArgs>
+      response: Prisma.$SurveyResponsePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -37712,8 +37826,8 @@ export namespace Prisma {
    */
   export interface Prisma__SurveyQuestionResponseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    response<T extends SurveyResponseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SurveyResponseDefaultArgs<ExtArgs>>): Prisma__SurveyResponseClient<$Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     question<T extends SurveyQuestionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SurveyQuestionDefaultArgs<ExtArgs>>): Prisma__SurveyQuestionClient<$Result.GetResult<Prisma.$SurveyQuestionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    response<T extends SurveyResponseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SurveyResponseDefaultArgs<ExtArgs>>): Prisma__SurveyResponseClient<$Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -38162,6 +38276,1150 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SurveyQuestionResponseInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TelegramUser
+   */
+
+  export type AggregateTelegramUser = {
+    _count: TelegramUserCountAggregateOutputType | null
+    _avg: TelegramUserAvgAggregateOutputType | null
+    _sum: TelegramUserSumAggregateOutputType | null
+    _min: TelegramUserMinAggregateOutputType | null
+    _max: TelegramUserMaxAggregateOutputType | null
+  }
+
+  export type TelegramUserAvgAggregateOutputType = {
+    telegram_id: number | null
+  }
+
+  export type TelegramUserSumAggregateOutputType = {
+    telegram_id: bigint | null
+  }
+
+  export type TelegramUserMinAggregateOutputType = {
+    id: string | null
+    telegram_id: bigint | null
+    teacher_id: string | null
+    username: string | null
+    first_name: string | null
+    last_name: string | null
+    language_code: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type TelegramUserMaxAggregateOutputType = {
+    id: string | null
+    telegram_id: bigint | null
+    teacher_id: string | null
+    username: string | null
+    first_name: string | null
+    last_name: string | null
+    language_code: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type TelegramUserCountAggregateOutputType = {
+    id: number
+    telegram_id: number
+    teacher_id: number
+    username: number
+    first_name: number
+    last_name: number
+    language_code: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type TelegramUserAvgAggregateInputType = {
+    telegram_id?: true
+  }
+
+  export type TelegramUserSumAggregateInputType = {
+    telegram_id?: true
+  }
+
+  export type TelegramUserMinAggregateInputType = {
+    id?: true
+    telegram_id?: true
+    teacher_id?: true
+    username?: true
+    first_name?: true
+    last_name?: true
+    language_code?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type TelegramUserMaxAggregateInputType = {
+    id?: true
+    telegram_id?: true
+    teacher_id?: true
+    username?: true
+    first_name?: true
+    last_name?: true
+    language_code?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type TelegramUserCountAggregateInputType = {
+    id?: true
+    telegram_id?: true
+    teacher_id?: true
+    username?: true
+    first_name?: true
+    last_name?: true
+    language_code?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type TelegramUserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TelegramUser to aggregate.
+     */
+    where?: TelegramUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TelegramUsers to fetch.
+     */
+    orderBy?: TelegramUserOrderByWithRelationInput | TelegramUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TelegramUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TelegramUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TelegramUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TelegramUsers
+    **/
+    _count?: true | TelegramUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TelegramUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TelegramUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TelegramUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TelegramUserMaxAggregateInputType
+  }
+
+  export type GetTelegramUserAggregateType<T extends TelegramUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateTelegramUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTelegramUser[P]>
+      : GetScalarType<T[P], AggregateTelegramUser[P]>
+  }
+
+
+
+
+  export type TelegramUserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TelegramUserWhereInput
+    orderBy?: TelegramUserOrderByWithAggregationInput | TelegramUserOrderByWithAggregationInput[]
+    by: TelegramUserScalarFieldEnum[] | TelegramUserScalarFieldEnum
+    having?: TelegramUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TelegramUserCountAggregateInputType | true
+    _avg?: TelegramUserAvgAggregateInputType
+    _sum?: TelegramUserSumAggregateInputType
+    _min?: TelegramUserMinAggregateInputType
+    _max?: TelegramUserMaxAggregateInputType
+  }
+
+  export type TelegramUserGroupByOutputType = {
+    id: string
+    telegram_id: bigint
+    teacher_id: string
+    username: string | null
+    first_name: string | null
+    last_name: string | null
+    language_code: string | null
+    created_at: Date
+    updated_at: Date
+    _count: TelegramUserCountAggregateOutputType | null
+    _avg: TelegramUserAvgAggregateOutputType | null
+    _sum: TelegramUserSumAggregateOutputType | null
+    _min: TelegramUserMinAggregateOutputType | null
+    _max: TelegramUserMaxAggregateOutputType | null
+  }
+
+  type GetTelegramUserGroupByPayload<T extends TelegramUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TelegramUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TelegramUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TelegramUserGroupByOutputType[P]>
+            : GetScalarType<T[P], TelegramUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TelegramUserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    telegram_id?: boolean
+    teacher_id?: boolean
+    username?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    language_code?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["telegramUser"]>
+
+  export type TelegramUserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    telegram_id?: boolean
+    teacher_id?: boolean
+    username?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    language_code?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["telegramUser"]>
+
+  export type TelegramUserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    telegram_id?: boolean
+    teacher_id?: boolean
+    username?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    language_code?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["telegramUser"]>
+
+  export type TelegramUserSelectScalar = {
+    id?: boolean
+    telegram_id?: boolean
+    teacher_id?: boolean
+    username?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    language_code?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type TelegramUserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "telegram_id" | "teacher_id" | "username" | "first_name" | "last_name" | "language_code" | "created_at" | "updated_at", ExtArgs["result"]["telegramUser"]>
+  export type TelegramUserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+  }
+  export type TelegramUserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+  }
+  export type TelegramUserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    beneficiary?: boolean | BeneficiaryDefaultArgs<ExtArgs>
+  }
+
+  export type $TelegramUserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TelegramUser"
+    objects: {
+      beneficiary: Prisma.$BeneficiaryPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      telegram_id: bigint
+      teacher_id: string
+      username: string | null
+      first_name: string | null
+      last_name: string | null
+      language_code: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["telegramUser"]>
+    composites: {}
+  }
+
+  type TelegramUserGetPayload<S extends boolean | null | undefined | TelegramUserDefaultArgs> = $Result.GetResult<Prisma.$TelegramUserPayload, S>
+
+  type TelegramUserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TelegramUserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TelegramUserCountAggregateInputType | true
+    }
+
+  export interface TelegramUserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TelegramUser'], meta: { name: 'TelegramUser' } }
+    /**
+     * Find zero or one TelegramUser that matches the filter.
+     * @param {TelegramUserFindUniqueArgs} args - Arguments to find a TelegramUser
+     * @example
+     * // Get one TelegramUser
+     * const telegramUser = await prisma.telegramUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TelegramUserFindUniqueArgs>(args: SelectSubset<T, TelegramUserFindUniqueArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TelegramUser that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TelegramUserFindUniqueOrThrowArgs} args - Arguments to find a TelegramUser
+     * @example
+     * // Get one TelegramUser
+     * const telegramUser = await prisma.telegramUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TelegramUserFindUniqueOrThrowArgs>(args: SelectSubset<T, TelegramUserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TelegramUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TelegramUserFindFirstArgs} args - Arguments to find a TelegramUser
+     * @example
+     * // Get one TelegramUser
+     * const telegramUser = await prisma.telegramUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TelegramUserFindFirstArgs>(args?: SelectSubset<T, TelegramUserFindFirstArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TelegramUser that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TelegramUserFindFirstOrThrowArgs} args - Arguments to find a TelegramUser
+     * @example
+     * // Get one TelegramUser
+     * const telegramUser = await prisma.telegramUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TelegramUserFindFirstOrThrowArgs>(args?: SelectSubset<T, TelegramUserFindFirstOrThrowArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TelegramUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TelegramUserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TelegramUsers
+     * const telegramUsers = await prisma.telegramUser.findMany()
+     * 
+     * // Get first 10 TelegramUsers
+     * const telegramUsers = await prisma.telegramUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const telegramUserWithIdOnly = await prisma.telegramUser.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TelegramUserFindManyArgs>(args?: SelectSubset<T, TelegramUserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TelegramUser.
+     * @param {TelegramUserCreateArgs} args - Arguments to create a TelegramUser.
+     * @example
+     * // Create one TelegramUser
+     * const TelegramUser = await prisma.telegramUser.create({
+     *   data: {
+     *     // ... data to create a TelegramUser
+     *   }
+     * })
+     * 
+     */
+    create<T extends TelegramUserCreateArgs>(args: SelectSubset<T, TelegramUserCreateArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TelegramUsers.
+     * @param {TelegramUserCreateManyArgs} args - Arguments to create many TelegramUsers.
+     * @example
+     * // Create many TelegramUsers
+     * const telegramUser = await prisma.telegramUser.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TelegramUserCreateManyArgs>(args?: SelectSubset<T, TelegramUserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TelegramUsers and returns the data saved in the database.
+     * @param {TelegramUserCreateManyAndReturnArgs} args - Arguments to create many TelegramUsers.
+     * @example
+     * // Create many TelegramUsers
+     * const telegramUser = await prisma.telegramUser.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TelegramUsers and only return the `id`
+     * const telegramUserWithIdOnly = await prisma.telegramUser.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TelegramUserCreateManyAndReturnArgs>(args?: SelectSubset<T, TelegramUserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TelegramUser.
+     * @param {TelegramUserDeleteArgs} args - Arguments to delete one TelegramUser.
+     * @example
+     * // Delete one TelegramUser
+     * const TelegramUser = await prisma.telegramUser.delete({
+     *   where: {
+     *     // ... filter to delete one TelegramUser
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TelegramUserDeleteArgs>(args: SelectSubset<T, TelegramUserDeleteArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TelegramUser.
+     * @param {TelegramUserUpdateArgs} args - Arguments to update one TelegramUser.
+     * @example
+     * // Update one TelegramUser
+     * const telegramUser = await prisma.telegramUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TelegramUserUpdateArgs>(args: SelectSubset<T, TelegramUserUpdateArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TelegramUsers.
+     * @param {TelegramUserDeleteManyArgs} args - Arguments to filter TelegramUsers to delete.
+     * @example
+     * // Delete a few TelegramUsers
+     * const { count } = await prisma.telegramUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TelegramUserDeleteManyArgs>(args?: SelectSubset<T, TelegramUserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TelegramUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TelegramUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TelegramUsers
+     * const telegramUser = await prisma.telegramUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TelegramUserUpdateManyArgs>(args: SelectSubset<T, TelegramUserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TelegramUsers and returns the data updated in the database.
+     * @param {TelegramUserUpdateManyAndReturnArgs} args - Arguments to update many TelegramUsers.
+     * @example
+     * // Update many TelegramUsers
+     * const telegramUser = await prisma.telegramUser.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TelegramUsers and only return the `id`
+     * const telegramUserWithIdOnly = await prisma.telegramUser.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TelegramUserUpdateManyAndReturnArgs>(args: SelectSubset<T, TelegramUserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TelegramUser.
+     * @param {TelegramUserUpsertArgs} args - Arguments to update or create a TelegramUser.
+     * @example
+     * // Update or create a TelegramUser
+     * const telegramUser = await prisma.telegramUser.upsert({
+     *   create: {
+     *     // ... data to create a TelegramUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TelegramUser we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TelegramUserUpsertArgs>(args: SelectSubset<T, TelegramUserUpsertArgs<ExtArgs>>): Prisma__TelegramUserClient<$Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TelegramUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TelegramUserCountArgs} args - Arguments to filter TelegramUsers to count.
+     * @example
+     * // Count the number of TelegramUsers
+     * const count = await prisma.telegramUser.count({
+     *   where: {
+     *     // ... the filter for the TelegramUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends TelegramUserCountArgs>(
+      args?: Subset<T, TelegramUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TelegramUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TelegramUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TelegramUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TelegramUserAggregateArgs>(args: Subset<T, TelegramUserAggregateArgs>): Prisma.PrismaPromise<GetTelegramUserAggregateType<T>>
+
+    /**
+     * Group by TelegramUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TelegramUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TelegramUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TelegramUserGroupByArgs['orderBy'] }
+        : { orderBy?: TelegramUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TelegramUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTelegramUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TelegramUser model
+   */
+  readonly fields: TelegramUserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TelegramUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TelegramUserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    beneficiary<T extends BeneficiaryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BeneficiaryDefaultArgs<ExtArgs>>): Prisma__BeneficiaryClient<$Result.GetResult<Prisma.$BeneficiaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TelegramUser model
+   */
+  interface TelegramUserFieldRefs {
+    readonly id: FieldRef<"TelegramUser", 'String'>
+    readonly telegram_id: FieldRef<"TelegramUser", 'BigInt'>
+    readonly teacher_id: FieldRef<"TelegramUser", 'String'>
+    readonly username: FieldRef<"TelegramUser", 'String'>
+    readonly first_name: FieldRef<"TelegramUser", 'String'>
+    readonly last_name: FieldRef<"TelegramUser", 'String'>
+    readonly language_code: FieldRef<"TelegramUser", 'String'>
+    readonly created_at: FieldRef<"TelegramUser", 'DateTime'>
+    readonly updated_at: FieldRef<"TelegramUser", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TelegramUser findUnique
+   */
+  export type TelegramUserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * Filter, which TelegramUser to fetch.
+     */
+    where: TelegramUserWhereUniqueInput
+  }
+
+  /**
+   * TelegramUser findUniqueOrThrow
+   */
+  export type TelegramUserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * Filter, which TelegramUser to fetch.
+     */
+    where: TelegramUserWhereUniqueInput
+  }
+
+  /**
+   * TelegramUser findFirst
+   */
+  export type TelegramUserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * Filter, which TelegramUser to fetch.
+     */
+    where?: TelegramUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TelegramUsers to fetch.
+     */
+    orderBy?: TelegramUserOrderByWithRelationInput | TelegramUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TelegramUsers.
+     */
+    cursor?: TelegramUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TelegramUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TelegramUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TelegramUsers.
+     */
+    distinct?: TelegramUserScalarFieldEnum | TelegramUserScalarFieldEnum[]
+  }
+
+  /**
+   * TelegramUser findFirstOrThrow
+   */
+  export type TelegramUserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * Filter, which TelegramUser to fetch.
+     */
+    where?: TelegramUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TelegramUsers to fetch.
+     */
+    orderBy?: TelegramUserOrderByWithRelationInput | TelegramUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TelegramUsers.
+     */
+    cursor?: TelegramUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TelegramUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TelegramUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TelegramUsers.
+     */
+    distinct?: TelegramUserScalarFieldEnum | TelegramUserScalarFieldEnum[]
+  }
+
+  /**
+   * TelegramUser findMany
+   */
+  export type TelegramUserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * Filter, which TelegramUsers to fetch.
+     */
+    where?: TelegramUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TelegramUsers to fetch.
+     */
+    orderBy?: TelegramUserOrderByWithRelationInput | TelegramUserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TelegramUsers.
+     */
+    cursor?: TelegramUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TelegramUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TelegramUsers.
+     */
+    skip?: number
+    distinct?: TelegramUserScalarFieldEnum | TelegramUserScalarFieldEnum[]
+  }
+
+  /**
+   * TelegramUser create
+   */
+  export type TelegramUserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TelegramUser.
+     */
+    data: XOR<TelegramUserCreateInput, TelegramUserUncheckedCreateInput>
+  }
+
+  /**
+   * TelegramUser createMany
+   */
+  export type TelegramUserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TelegramUsers.
+     */
+    data: TelegramUserCreateManyInput | TelegramUserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TelegramUser createManyAndReturn
+   */
+  export type TelegramUserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * The data used to create many TelegramUsers.
+     */
+    data: TelegramUserCreateManyInput | TelegramUserCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TelegramUser update
+   */
+  export type TelegramUserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TelegramUser.
+     */
+    data: XOR<TelegramUserUpdateInput, TelegramUserUncheckedUpdateInput>
+    /**
+     * Choose, which TelegramUser to update.
+     */
+    where: TelegramUserWhereUniqueInput
+  }
+
+  /**
+   * TelegramUser updateMany
+   */
+  export type TelegramUserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TelegramUsers.
+     */
+    data: XOR<TelegramUserUpdateManyMutationInput, TelegramUserUncheckedUpdateManyInput>
+    /**
+     * Filter which TelegramUsers to update
+     */
+    where?: TelegramUserWhereInput
+    /**
+     * Limit how many TelegramUsers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TelegramUser updateManyAndReturn
+   */
+  export type TelegramUserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * The data used to update TelegramUsers.
+     */
+    data: XOR<TelegramUserUpdateManyMutationInput, TelegramUserUncheckedUpdateManyInput>
+    /**
+     * Filter which TelegramUsers to update
+     */
+    where?: TelegramUserWhereInput
+    /**
+     * Limit how many TelegramUsers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TelegramUser upsert
+   */
+  export type TelegramUserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TelegramUser to update in case it exists.
+     */
+    where: TelegramUserWhereUniqueInput
+    /**
+     * In case the TelegramUser found by the `where` argument doesn't exist, create a new TelegramUser with this data.
+     */
+    create: XOR<TelegramUserCreateInput, TelegramUserUncheckedCreateInput>
+    /**
+     * In case the TelegramUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TelegramUserUpdateInput, TelegramUserUncheckedUpdateInput>
+  }
+
+  /**
+   * TelegramUser delete
+   */
+  export type TelegramUserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
+    /**
+     * Filter which TelegramUser to delete.
+     */
+    where: TelegramUserWhereUniqueInput
+  }
+
+  /**
+   * TelegramUser deleteMany
+   */
+  export type TelegramUserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TelegramUsers to delete
+     */
+    where?: TelegramUserWhereInput
+    /**
+     * Limit how many TelegramUsers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TelegramUser without action
+   */
+  export type TelegramUserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TelegramUser
+     */
+    select?: TelegramUserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TelegramUser
+     */
+    omit?: TelegramUserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelegramUserInclude<ExtArgs> | null
   }
 
 
@@ -39367,10 +40625,10 @@ export namespace Prisma {
     school: 'school',
     school_id: 'school_id',
     province_name: 'province_name',
-    theme_preference: 'theme_preference',
-    khmer_font: 'khmer_font',
     created_at: 'created_at',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    khmer_font: 'khmer_font',
+    theme_preference: 'theme_preference'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -39970,6 +41228,21 @@ export namespace Prisma {
   export type SurveyQuestionResponseScalarFieldEnum = (typeof SurveyQuestionResponseScalarFieldEnum)[keyof typeof SurveyQuestionResponseScalarFieldEnum]
 
 
+  export const TelegramUserScalarFieldEnum: {
+    id: 'id',
+    telegram_id: 'telegram_id',
+    teacher_id: 'teacher_id',
+    username: 'username',
+    first_name: 'first_name',
+    last_name: 'last_name',
+    language_code: 'language_code',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type TelegramUserScalarFieldEnum = (typeof TelegramUserScalarFieldEnum)[keyof typeof TelegramUserScalarFieldEnum]
+
+
   export const NotificationScalarFieldEnum: {
     id: 'id',
     user_id: 'user_id',
@@ -40391,6 +41664,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt[]'
+   */
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+    
+
+
+  /**
    * Reference to a field of type 'NotificationType'
    */
   export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
@@ -40437,10 +41724,10 @@ export namespace Prisma {
     school?: StringNullableFilter<"User"> | string | null
     school_id?: StringNullableFilter<"User"> | string | null
     province_name?: StringNullableFilter<"User"> | string | null
-    theme_preference?: StringNullableFilter<"User"> | string | null
-    khmer_font?: StringNullableFilter<"User"> | string | null
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
+    khmer_font?: StringNullableFilter<"User"> | string | null
+    theme_preference?: StringNullableFilter<"User"> | string | null
     notifications?: NotificationListRelationFilter
   }
 
@@ -40457,10 +41744,10 @@ export namespace Prisma {
     school?: SortOrderInput | SortOrder
     school_id?: SortOrderInput | SortOrder
     province_name?: SortOrderInput | SortOrder
-    theme_preference?: SortOrderInput | SortOrder
-    khmer_font?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    khmer_font?: SortOrderInput | SortOrder
+    theme_preference?: SortOrderInput | SortOrder
     notifications?: NotificationOrderByRelationAggregateInput
   }
 
@@ -40480,10 +41767,10 @@ export namespace Prisma {
     school?: StringNullableFilter<"User"> | string | null
     school_id?: StringNullableFilter<"User"> | string | null
     province_name?: StringNullableFilter<"User"> | string | null
-    theme_preference?: StringNullableFilter<"User"> | string | null
-    khmer_font?: StringNullableFilter<"User"> | string | null
     created_at?: DateTimeFilter<"User"> | Date | string
     updated_at?: DateTimeFilter<"User"> | Date | string
+    khmer_font?: StringNullableFilter<"User"> | string | null
+    theme_preference?: StringNullableFilter<"User"> | string | null
     notifications?: NotificationListRelationFilter
   }, "id" | "username" | "email">
 
@@ -40500,10 +41787,10 @@ export namespace Prisma {
     school?: SortOrderInput | SortOrder
     school_id?: SortOrderInput | SortOrder
     province_name?: SortOrderInput | SortOrder
-    theme_preference?: SortOrderInput | SortOrder
-    khmer_font?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    khmer_font?: SortOrderInput | SortOrder
+    theme_preference?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -40525,10 +41812,10 @@ export namespace Prisma {
     school?: StringNullableWithAggregatesFilter<"User"> | string | null
     school_id?: StringNullableWithAggregatesFilter<"User"> | string | null
     province_name?: StringNullableWithAggregatesFilter<"User"> | string | null
-    theme_preference?: StringNullableWithAggregatesFilter<"User"> | string | null
-    khmer_font?: StringNullableWithAggregatesFilter<"User"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    khmer_font?: StringNullableWithAggregatesFilter<"User"> | string | null
+    theme_preference?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type BeneficiaryWhereInput = {
@@ -40560,11 +41847,12 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Beneficiary"> | Date | string
     created_by?: StringNullableFilter<"Beneficiary"> | string | null
     updated_by?: StringNullableFilter<"Beneficiary"> | string | null
-    trainings?: BeneficiaryTrainingListRelationFilter
     attendance_records?: AttendanceRecordListRelationFilter
-    survey_responses?: SurveyResponseListRelationFilter
-    event_registrations?: EventRegistrationListRelationFilter
+    trainings?: BeneficiaryTrainingListRelationFilter
     event_attendance_records?: EventAttendanceRecordListRelationFilter
+    event_registrations?: EventRegistrationListRelationFilter
+    survey_responses?: SurveyResponseListRelationFilter
+    telegram_user?: XOR<TelegramUserNullableScalarRelationFilter, TelegramUserWhereInput> | null
   }
 
   export type BeneficiaryOrderByWithRelationInput = {
@@ -40593,11 +41881,12 @@ export namespace Prisma {
     updated_at?: SortOrder
     created_by?: SortOrderInput | SortOrder
     updated_by?: SortOrderInput | SortOrder
-    trainings?: BeneficiaryTrainingOrderByRelationAggregateInput
     attendance_records?: AttendanceRecordOrderByRelationAggregateInput
-    survey_responses?: SurveyResponseOrderByRelationAggregateInput
-    event_registrations?: EventRegistrationOrderByRelationAggregateInput
+    trainings?: BeneficiaryTrainingOrderByRelationAggregateInput
     event_attendance_records?: EventAttendanceRecordOrderByRelationAggregateInput
+    event_registrations?: EventRegistrationOrderByRelationAggregateInput
+    survey_responses?: SurveyResponseOrderByRelationAggregateInput
+    telegram_user?: TelegramUserOrderByWithRelationInput
   }
 
   export type BeneficiaryWhereUniqueInput = Prisma.AtLeast<{
@@ -40629,11 +41918,12 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Beneficiary"> | Date | string
     created_by?: StringNullableFilter<"Beneficiary"> | string | null
     updated_by?: StringNullableFilter<"Beneficiary"> | string | null
-    trainings?: BeneficiaryTrainingListRelationFilter
     attendance_records?: AttendanceRecordListRelationFilter
-    survey_responses?: SurveyResponseListRelationFilter
-    event_registrations?: EventRegistrationListRelationFilter
+    trainings?: BeneficiaryTrainingListRelationFilter
     event_attendance_records?: EventAttendanceRecordListRelationFilter
+    event_registrations?: EventRegistrationListRelationFilter
+    survey_responses?: SurveyResponseListRelationFilter
+    telegram_user?: XOR<TelegramUserNullableScalarRelationFilter, TelegramUserWhereInput> | null
   }, "teacher_id">
 
   export type BeneficiaryOrderByWithAggregationInput = {
@@ -40737,12 +42027,12 @@ export namespace Prisma {
     training_updated_by?: StringNullableFilter<"Training"> | string | null
     training_created_at?: DateTimeFilter<"Training"> | Date | string
     training_updated_at?: DateTimeFilter<"Training"> | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingListRelationFilter
     attendance_records?: AttendanceRecordListRelationFilter
+    beneficiary_trainings?: BeneficiaryTrainingListRelationFilter
+    survey_responses?: SurveyResponseListRelationFilter
     agendas?: TrainingAgendaListRelationFilter
     material_links?: TrainingMaterialLinkListRelationFilter
     survey_links?: TrainingSurveyLinkListRelationFilter
-    survey_responses?: SurveyResponseListRelationFilter
   }
 
   export type TrainingOrderByWithRelationInput = {
@@ -40779,12 +42069,12 @@ export namespace Prisma {
     training_updated_by?: SortOrderInput | SortOrder
     training_created_at?: SortOrder
     training_updated_at?: SortOrder
-    beneficiary_trainings?: BeneficiaryTrainingOrderByRelationAggregateInput
     attendance_records?: AttendanceRecordOrderByRelationAggregateInput
+    beneficiary_trainings?: BeneficiaryTrainingOrderByRelationAggregateInput
+    survey_responses?: SurveyResponseOrderByRelationAggregateInput
     agendas?: TrainingAgendaOrderByRelationAggregateInput
     material_links?: TrainingMaterialLinkOrderByRelationAggregateInput
     survey_links?: TrainingSurveyLinkOrderByRelationAggregateInput
-    survey_responses?: SurveyResponseOrderByRelationAggregateInput
   }
 
   export type TrainingWhereUniqueInput = Prisma.AtLeast<{
@@ -40824,12 +42114,12 @@ export namespace Prisma {
     training_updated_by?: StringNullableFilter<"Training"> | string | null
     training_created_at?: DateTimeFilter<"Training"> | Date | string
     training_updated_at?: DateTimeFilter<"Training"> | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingListRelationFilter
     attendance_records?: AttendanceRecordListRelationFilter
+    beneficiary_trainings?: BeneficiaryTrainingListRelationFilter
+    survey_responses?: SurveyResponseListRelationFilter
     agendas?: TrainingAgendaListRelationFilter
     material_links?: TrainingMaterialLinkListRelationFilter
     survey_links?: TrainingSurveyLinkListRelationFilter
-    survey_responses?: SurveyResponseListRelationFilter
   }, "id" | "training_code">
 
   export type TrainingOrderByWithAggregationInput = {
@@ -40956,11 +42246,11 @@ export namespace Prisma {
     updated_by?: StringNullableFilter<"Event"> | string | null
     created_at?: DateTimeFilter<"Event"> | Date | string
     updated_at?: DateTimeFilter<"Event"> | Date | string
-    sessions?: EventSessionListRelationFilter
-    registrations?: EventRegistrationListRelationFilter
     attendance_records?: EventAttendanceRecordListRelationFilter
-    speakers?: EventSpeakerListRelationFilter
     material_links?: EventMaterialLinkListRelationFilter
+    registrations?: EventRegistrationListRelationFilter
+    sessions?: EventSessionListRelationFilter
+    speakers?: EventSpeakerListRelationFilter
   }
 
   export type EventOrderByWithRelationInput = {
@@ -41004,11 +42294,11 @@ export namespace Prisma {
     updated_by?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    sessions?: EventSessionOrderByRelationAggregateInput
-    registrations?: EventRegistrationOrderByRelationAggregateInput
     attendance_records?: EventAttendanceRecordOrderByRelationAggregateInput
-    speakers?: EventSpeakerOrderByRelationAggregateInput
     material_links?: EventMaterialLinkOrderByRelationAggregateInput
+    registrations?: EventRegistrationOrderByRelationAggregateInput
+    sessions?: EventSessionOrderByRelationAggregateInput
+    speakers?: EventSpeakerOrderByRelationAggregateInput
   }
 
   export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -41055,11 +42345,11 @@ export namespace Prisma {
     updated_by?: StringNullableFilter<"Event"> | string | null
     created_at?: DateTimeFilter<"Event"> | Date | string
     updated_at?: DateTimeFilter<"Event"> | Date | string
-    sessions?: EventSessionListRelationFilter
-    registrations?: EventRegistrationListRelationFilter
     attendance_records?: EventAttendanceRecordListRelationFilter
-    speakers?: EventSpeakerListRelationFilter
     material_links?: EventMaterialLinkListRelationFilter
+    registrations?: EventRegistrationListRelationFilter
+    sessions?: EventSessionListRelationFilter
+    speakers?: EventSpeakerListRelationFilter
   }, "id" | "event_code">
 
   export type EventOrderByWithAggregationInput = {
@@ -41186,9 +42476,9 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"EventSession"> | Date | string
     created_by?: StringNullableFilter<"EventSession"> | string | null
     updated_by?: StringNullableFilter<"EventSession"> | string | null
-    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     session_registrations?: EventSessionRegistrationListRelationFilter
     speakers?: EventSessionSpeakerListRelationFilter
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
   }
 
   export type EventSessionOrderByWithRelationInput = {
@@ -41218,9 +42508,9 @@ export namespace Prisma {
     updated_at?: SortOrder
     created_by?: SortOrderInput | SortOrder
     updated_by?: SortOrderInput | SortOrder
-    event?: EventOrderByWithRelationInput
     session_registrations?: EventSessionRegistrationOrderByRelationAggregateInput
     speakers?: EventSessionSpeakerOrderByRelationAggregateInput
+    event?: EventOrderByWithRelationInput
   }
 
   export type EventSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -41253,9 +42543,9 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"EventSession"> | Date | string
     created_by?: StringNullableFilter<"EventSession"> | string | null
     updated_by?: StringNullableFilter<"EventSession"> | string | null
-    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     session_registrations?: EventSessionRegistrationListRelationFilter
     speakers?: EventSessionSpeakerListRelationFilter
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
   }, "id" | "session_code">
 
   export type EventSessionOrderByWithAggregationInput = {
@@ -41358,8 +42648,8 @@ export namespace Prisma {
     is_deleted?: BoolFilter<"EventRegistration"> | boolean
     created_at?: DateTimeFilter<"EventRegistration"> | Date | string
     updated_at?: DateTimeFilter<"EventRegistration"> | Date | string
-    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     beneficiary?: XOR<BeneficiaryNullableScalarRelationFilter, BeneficiaryWhereInput> | null
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     session_registrations?: EventSessionRegistrationListRelationFilter
   }
 
@@ -41394,8 +42684,8 @@ export namespace Prisma {
     is_deleted?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    event?: EventOrderByWithRelationInput
     beneficiary?: BeneficiaryOrderByWithRelationInput
+    event?: EventOrderByWithRelationInput
     session_registrations?: EventSessionRegistrationOrderByRelationAggregateInput
   }
 
@@ -41433,8 +42723,8 @@ export namespace Prisma {
     is_deleted?: BoolFilter<"EventRegistration"> | boolean
     created_at?: DateTimeFilter<"EventRegistration"> | Date | string
     updated_at?: DateTimeFilter<"EventRegistration"> | Date | string
-    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     beneficiary?: XOR<BeneficiaryNullableScalarRelationFilter, BeneficiaryWhereInput> | null
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     session_registrations?: EventSessionRegistrationListRelationFilter
   }, "id" | "registration_code">
 
@@ -41598,8 +42888,8 @@ export namespace Prisma {
     device?: StringNullableFilter<"EventAttendanceRecord"> | string | null
     created_at?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
     updated_at?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
-    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     beneficiary?: XOR<BeneficiaryNullableScalarRelationFilter, BeneficiaryWhereInput> | null
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
   }
 
   export type EventAttendanceRecordOrderByWithRelationInput = {
@@ -41623,8 +42913,8 @@ export namespace Prisma {
     device?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    event?: EventOrderByWithRelationInput
     beneficiary?: BeneficiaryOrderByWithRelationInput
+    event?: EventOrderByWithRelationInput
   }
 
   export type EventAttendanceRecordWhereUniqueInput = Prisma.AtLeast<{
@@ -41652,8 +42942,8 @@ export namespace Prisma {
     device?: StringNullableFilter<"EventAttendanceRecord"> | string | null
     created_at?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
     updated_at?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
-    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     beneficiary?: XOR<BeneficiaryNullableScalarRelationFilter, BeneficiaryWhereInput> | null
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
   }, "id" | "event_id_beneficiary_id_date">
 
   export type EventAttendanceRecordOrderByWithAggregationInput = {
@@ -41735,8 +43025,8 @@ export namespace Prisma {
     is_deleted?: BoolFilter<"EventSpeaker"> | boolean
     created_at?: DateTimeFilter<"EventSpeaker"> | Date | string
     updated_at?: DateTimeFilter<"EventSpeaker"> | Date | string
-    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     sessions?: EventSessionSpeakerListRelationFilter
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
   }
 
   export type EventSpeakerOrderByWithRelationInput = {
@@ -41761,8 +43051,8 @@ export namespace Prisma {
     is_deleted?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    event?: EventOrderByWithRelationInput
     sessions?: EventSessionSpeakerOrderByRelationAggregateInput
+    event?: EventOrderByWithRelationInput
   }
 
   export type EventSpeakerWhereUniqueInput = Prisma.AtLeast<{
@@ -41790,8 +43080,8 @@ export namespace Prisma {
     is_deleted?: BoolFilter<"EventSpeaker"> | boolean
     created_at?: DateTimeFilter<"EventSpeaker"> | Date | string
     updated_at?: DateTimeFilter<"EventSpeaker"> | Date | string
-    event?: XOR<EventScalarRelationFilter, EventWhereInput>
     sessions?: EventSessionSpeakerListRelationFilter
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
   }, "id">
 
   export type EventSpeakerOrderByWithAggregationInput = {
@@ -42918,8 +44208,8 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"TrainingMaterial"> | Date | string
     created_by?: StringNullableFilter<"TrainingMaterial"> | string | null
     updated_by?: StringNullableFilter<"TrainingMaterial"> | string | null
-    training_links?: TrainingMaterialLinkListRelationFilter
     event_links?: EventMaterialLinkListRelationFilter
+    training_links?: TrainingMaterialLinkListRelationFilter
   }
 
   export type TrainingMaterialOrderByWithRelationInput = {
@@ -42941,8 +44231,8 @@ export namespace Prisma {
     updated_at?: SortOrder
     created_by?: SortOrderInput | SortOrder
     updated_by?: SortOrderInput | SortOrder
-    training_links?: TrainingMaterialLinkOrderByRelationAggregateInput
     event_links?: EventMaterialLinkOrderByRelationAggregateInput
+    training_links?: TrainingMaterialLinkOrderByRelationAggregateInput
   }
 
   export type TrainingMaterialWhereUniqueInput = Prisma.AtLeast<{
@@ -42967,8 +44257,8 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"TrainingMaterial"> | Date | string
     created_by?: StringNullableFilter<"TrainingMaterial"> | string | null
     updated_by?: StringNullableFilter<"TrainingMaterial"> | string | null
-    training_links?: TrainingMaterialLinkListRelationFilter
     event_links?: EventMaterialLinkListRelationFilter
+    training_links?: TrainingMaterialLinkListRelationFilter
   }, "id">
 
   export type TrainingMaterialOrderByWithAggregationInput = {
@@ -43032,8 +44322,8 @@ export namespace Prisma {
     is_required?: BoolFilter<"TrainingMaterialLink"> | boolean
     linked_at?: DateTimeFilter<"TrainingMaterialLink"> | Date | string
     linked_by?: StringNullableFilter<"TrainingMaterialLink"> | string | null
-    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
     material?: XOR<TrainingMaterialScalarRelationFilter, TrainingMaterialWhereInput>
+    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
   }
 
   export type TrainingMaterialLinkOrderByWithRelationInput = {
@@ -43044,8 +44334,8 @@ export namespace Prisma {
     is_required?: SortOrder
     linked_at?: SortOrder
     linked_by?: SortOrderInput | SortOrder
-    training?: TrainingOrderByWithRelationInput
     material?: TrainingMaterialOrderByWithRelationInput
+    training?: TrainingOrderByWithRelationInput
   }
 
   export type TrainingMaterialLinkWhereUniqueInput = Prisma.AtLeast<{
@@ -43060,8 +44350,8 @@ export namespace Prisma {
     is_required?: BoolFilter<"TrainingMaterialLink"> | boolean
     linked_at?: DateTimeFilter<"TrainingMaterialLink"> | Date | string
     linked_by?: StringNullableFilter<"TrainingMaterialLink"> | string | null
-    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
     material?: XOR<TrainingMaterialScalarRelationFilter, TrainingMaterialWhereInput>
+    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
   }, "id" | "training_id_material_id">
 
   export type TrainingMaterialLinkOrderByWithAggregationInput = {
@@ -43118,8 +44408,8 @@ export namespace Prisma {
     created_by?: StringNullableFilter<"Survey"> | string | null
     updated_by?: StringNullableFilter<"Survey"> | string | null
     questions?: SurveyQuestionListRelationFilter
-    training_links?: TrainingSurveyLinkListRelationFilter
     responses?: SurveyResponseListRelationFilter
+    training_links?: TrainingSurveyLinkListRelationFilter
   }
 
   export type SurveyOrderByWithRelationInput = {
@@ -43145,8 +44435,8 @@ export namespace Prisma {
     created_by?: SortOrderInput | SortOrder
     updated_by?: SortOrderInput | SortOrder
     questions?: SurveyQuestionOrderByRelationAggregateInput
-    training_links?: TrainingSurveyLinkOrderByRelationAggregateInput
     responses?: SurveyResponseOrderByRelationAggregateInput
+    training_links?: TrainingSurveyLinkOrderByRelationAggregateInput
   }
 
   export type SurveyWhereUniqueInput = Prisma.AtLeast<{
@@ -43175,8 +44465,8 @@ export namespace Prisma {
     created_by?: StringNullableFilter<"Survey"> | string | null
     updated_by?: StringNullableFilter<"Survey"> | string | null
     questions?: SurveyQuestionListRelationFilter
-    training_links?: TrainingSurveyLinkListRelationFilter
     responses?: SurveyResponseListRelationFilter
+    training_links?: TrainingSurveyLinkListRelationFilter
   }, "id">
 
   export type SurveyOrderByWithAggregationInput = {
@@ -43248,8 +44538,8 @@ export namespace Prisma {
     custom_deadline?: DateTimeNullableFilter<"TrainingSurveyLink"> | Date | string | null
     linked_at?: DateTimeFilter<"TrainingSurveyLink"> | Date | string
     linked_by?: StringNullableFilter<"TrainingSurveyLink"> | string | null
-    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
     survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
+    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
   }
 
   export type TrainingSurveyLinkOrderByWithRelationInput = {
@@ -43262,8 +44552,8 @@ export namespace Prisma {
     custom_deadline?: SortOrderInput | SortOrder
     linked_at?: SortOrder
     linked_by?: SortOrderInput | SortOrder
-    training?: TrainingOrderByWithRelationInput
     survey?: SurveyOrderByWithRelationInput
+    training?: TrainingOrderByWithRelationInput
   }
 
   export type TrainingSurveyLinkWhereUniqueInput = Prisma.AtLeast<{
@@ -43280,8 +44570,8 @@ export namespace Prisma {
     custom_deadline?: DateTimeNullableFilter<"TrainingSurveyLink"> | Date | string | null
     linked_at?: DateTimeFilter<"TrainingSurveyLink"> | Date | string
     linked_by?: StringNullableFilter<"TrainingSurveyLink"> | string | null
-    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
     survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
+    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
   }, "id" | "training_id_survey_id">
 
   export type TrainingSurveyLinkOrderByWithAggregationInput = {
@@ -43339,8 +44629,8 @@ export namespace Prisma {
     scale_labels_km?: StringNullableListFilter<"SurveyQuestion">
     created_at?: DateTimeFilter<"SurveyQuestion"> | Date | string
     updated_at?: DateTimeFilter<"SurveyQuestion"> | Date | string
-    survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
     answers?: SurveyQuestionResponseListRelationFilter
+    survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
   }
 
   export type SurveyQuestionOrderByWithRelationInput = {
@@ -43363,8 +44653,8 @@ export namespace Prisma {
     scale_labels_km?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    survey?: SurveyOrderByWithRelationInput
     answers?: SurveyQuestionResponseOrderByRelationAggregateInput
+    survey?: SurveyOrderByWithRelationInput
   }
 
   export type SurveyQuestionWhereUniqueInput = Prisma.AtLeast<{
@@ -43390,8 +44680,8 @@ export namespace Prisma {
     scale_labels_km?: StringNullableListFilter<"SurveyQuestion">
     created_at?: DateTimeFilter<"SurveyQuestion"> | Date | string
     updated_at?: DateTimeFilter<"SurveyQuestion"> | Date | string
-    survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
     answers?: SurveyQuestionResponseListRelationFilter
+    survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
   }, "id">
 
   export type SurveyQuestionOrderByWithAggregationInput = {
@@ -43465,10 +44755,10 @@ export namespace Prisma {
     time_spent_seconds?: IntNullableFilter<"SurveyResponse"> | number | null
     created_at?: DateTimeFilter<"SurveyResponse"> | Date | string
     updated_at?: DateTimeFilter<"SurveyResponse"> | Date | string
-    survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
-    beneficiary?: XOR<BeneficiaryScalarRelationFilter, BeneficiaryWhereInput>
-    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
     question_responses?: SurveyQuestionResponseListRelationFilter
+    beneficiary?: XOR<BeneficiaryScalarRelationFilter, BeneficiaryWhereInput>
+    survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
+    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
   }
 
   export type SurveyResponseOrderByWithRelationInput = {
@@ -43487,10 +44777,10 @@ export namespace Prisma {
     time_spent_seconds?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-    survey?: SurveyOrderByWithRelationInput
-    beneficiary?: BeneficiaryOrderByWithRelationInput
-    training?: TrainingOrderByWithRelationInput
     question_responses?: SurveyQuestionResponseOrderByRelationAggregateInput
+    beneficiary?: BeneficiaryOrderByWithRelationInput
+    survey?: SurveyOrderByWithRelationInput
+    training?: TrainingOrderByWithRelationInput
   }
 
   export type SurveyResponseWhereUniqueInput = Prisma.AtLeast<{
@@ -43513,10 +44803,10 @@ export namespace Prisma {
     time_spent_seconds?: IntNullableFilter<"SurveyResponse"> | number | null
     created_at?: DateTimeFilter<"SurveyResponse"> | Date | string
     updated_at?: DateTimeFilter<"SurveyResponse"> | Date | string
-    survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
-    beneficiary?: XOR<BeneficiaryScalarRelationFilter, BeneficiaryWhereInput>
-    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
     question_responses?: SurveyQuestionResponseListRelationFilter
+    beneficiary?: XOR<BeneficiaryScalarRelationFilter, BeneficiaryWhereInput>
+    survey?: XOR<SurveyScalarRelationFilter, SurveyWhereInput>
+    training?: XOR<TrainingScalarRelationFilter, TrainingWhereInput>
   }, "id" | "survey_id_beneficiary_id_training_id_attempt_number">
 
   export type SurveyResponseOrderByWithAggregationInput = {
@@ -43575,8 +44865,8 @@ export namespace Prisma {
     points_earned?: FloatNullableFilter<"SurveyQuestionResponse"> | number | null
     is_correct?: BoolNullableFilter<"SurveyQuestionResponse"> | boolean | null
     answered_at?: DateTimeFilter<"SurveyQuestionResponse"> | Date | string
-    response?: XOR<SurveyResponseScalarRelationFilter, SurveyResponseWhereInput>
     question?: XOR<SurveyQuestionScalarRelationFilter, SurveyQuestionWhereInput>
+    response?: XOR<SurveyResponseScalarRelationFilter, SurveyResponseWhereInput>
   }
 
   export type SurveyQuestionResponseOrderByWithRelationInput = {
@@ -43588,8 +44878,8 @@ export namespace Prisma {
     points_earned?: SortOrderInput | SortOrder
     is_correct?: SortOrderInput | SortOrder
     answered_at?: SortOrder
-    response?: SurveyResponseOrderByWithRelationInput
     question?: SurveyQuestionOrderByWithRelationInput
+    response?: SurveyResponseOrderByWithRelationInput
   }
 
   export type SurveyQuestionResponseWhereUniqueInput = Prisma.AtLeast<{
@@ -43605,8 +44895,8 @@ export namespace Prisma {
     points_earned?: FloatNullableFilter<"SurveyQuestionResponse"> | number | null
     is_correct?: BoolNullableFilter<"SurveyQuestionResponse"> | boolean | null
     answered_at?: DateTimeFilter<"SurveyQuestionResponse"> | Date | string
-    response?: XOR<SurveyResponseScalarRelationFilter, SurveyResponseWhereInput>
     question?: XOR<SurveyQuestionScalarRelationFilter, SurveyQuestionWhereInput>
+    response?: XOR<SurveyResponseScalarRelationFilter, SurveyResponseWhereInput>
   }, "id" | "response_id_question_id">
 
   export type SurveyQuestionResponseOrderByWithAggregationInput = {
@@ -43637,6 +44927,83 @@ export namespace Prisma {
     points_earned?: FloatNullableWithAggregatesFilter<"SurveyQuestionResponse"> | number | null
     is_correct?: BoolNullableWithAggregatesFilter<"SurveyQuestionResponse"> | boolean | null
     answered_at?: DateTimeWithAggregatesFilter<"SurveyQuestionResponse"> | Date | string
+  }
+
+  export type TelegramUserWhereInput = {
+    AND?: TelegramUserWhereInput | TelegramUserWhereInput[]
+    OR?: TelegramUserWhereInput[]
+    NOT?: TelegramUserWhereInput | TelegramUserWhereInput[]
+    id?: StringFilter<"TelegramUser"> | string
+    telegram_id?: BigIntFilter<"TelegramUser"> | bigint | number
+    teacher_id?: StringFilter<"TelegramUser"> | string
+    username?: StringNullableFilter<"TelegramUser"> | string | null
+    first_name?: StringNullableFilter<"TelegramUser"> | string | null
+    last_name?: StringNullableFilter<"TelegramUser"> | string | null
+    language_code?: StringNullableFilter<"TelegramUser"> | string | null
+    created_at?: DateTimeFilter<"TelegramUser"> | Date | string
+    updated_at?: DateTimeFilter<"TelegramUser"> | Date | string
+    beneficiary?: XOR<BeneficiaryScalarRelationFilter, BeneficiaryWhereInput>
+  }
+
+  export type TelegramUserOrderByWithRelationInput = {
+    id?: SortOrder
+    telegram_id?: SortOrder
+    teacher_id?: SortOrder
+    username?: SortOrderInput | SortOrder
+    first_name?: SortOrderInput | SortOrder
+    last_name?: SortOrderInput | SortOrder
+    language_code?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    beneficiary?: BeneficiaryOrderByWithRelationInput
+  }
+
+  export type TelegramUserWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    telegram_id?: bigint | number
+    teacher_id?: string
+    AND?: TelegramUserWhereInput | TelegramUserWhereInput[]
+    OR?: TelegramUserWhereInput[]
+    NOT?: TelegramUserWhereInput | TelegramUserWhereInput[]
+    username?: StringNullableFilter<"TelegramUser"> | string | null
+    first_name?: StringNullableFilter<"TelegramUser"> | string | null
+    last_name?: StringNullableFilter<"TelegramUser"> | string | null
+    language_code?: StringNullableFilter<"TelegramUser"> | string | null
+    created_at?: DateTimeFilter<"TelegramUser"> | Date | string
+    updated_at?: DateTimeFilter<"TelegramUser"> | Date | string
+    beneficiary?: XOR<BeneficiaryScalarRelationFilter, BeneficiaryWhereInput>
+  }, "id" | "telegram_id" | "teacher_id">
+
+  export type TelegramUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    telegram_id?: SortOrder
+    teacher_id?: SortOrder
+    username?: SortOrderInput | SortOrder
+    first_name?: SortOrderInput | SortOrder
+    last_name?: SortOrderInput | SortOrder
+    language_code?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: TelegramUserCountOrderByAggregateInput
+    _avg?: TelegramUserAvgOrderByAggregateInput
+    _max?: TelegramUserMaxOrderByAggregateInput
+    _min?: TelegramUserMinOrderByAggregateInput
+    _sum?: TelegramUserSumOrderByAggregateInput
+  }
+
+  export type TelegramUserScalarWhereWithAggregatesInput = {
+    AND?: TelegramUserScalarWhereWithAggregatesInput | TelegramUserScalarWhereWithAggregatesInput[]
+    OR?: TelegramUserScalarWhereWithAggregatesInput[]
+    NOT?: TelegramUserScalarWhereWithAggregatesInput | TelegramUserScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TelegramUser"> | string
+    telegram_id?: BigIntWithAggregatesFilter<"TelegramUser"> | bigint | number
+    teacher_id?: StringWithAggregatesFilter<"TelegramUser"> | string
+    username?: StringNullableWithAggregatesFilter<"TelegramUser"> | string | null
+    first_name?: StringNullableWithAggregatesFilter<"TelegramUser"> | string | null
+    last_name?: StringNullableWithAggregatesFilter<"TelegramUser"> | string | null
+    language_code?: StringNullableWithAggregatesFilter<"TelegramUser"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"TelegramUser"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"TelegramUser"> | Date | string
   }
 
   export type NotificationWhereInput = {
@@ -43752,10 +45119,10 @@ export namespace Prisma {
     school?: string | null
     school_id?: string | null
     province_name?: string | null
-    theme_preference?: string | null
-    khmer_font?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    khmer_font?: string | null
+    theme_preference?: string | null
     notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
@@ -43772,10 +45139,10 @@ export namespace Prisma {
     school?: string | null
     school_id?: string | null
     province_name?: string | null
-    theme_preference?: string | null
-    khmer_font?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    khmer_font?: string | null
+    theme_preference?: string | null
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -43792,10 +45159,10 @@ export namespace Prisma {
     school?: NullableStringFieldUpdateOperationsInput | string | null
     school_id?: NullableStringFieldUpdateOperationsInput | string | null
     province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
-    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
@@ -43812,10 +45179,10 @@ export namespace Prisma {
     school?: NullableStringFieldUpdateOperationsInput | string | null
     school_id?: NullableStringFieldUpdateOperationsInput | string | null
     province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
-    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -43832,10 +45199,10 @@ export namespace Prisma {
     school?: string | null
     school_id?: string | null
     province_name?: string | null
-    theme_preference?: string | null
-    khmer_font?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    khmer_font?: string | null
+    theme_preference?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -43851,10 +45218,10 @@ export namespace Prisma {
     school?: NullableStringFieldUpdateOperationsInput | string | null
     school_id?: NullableStringFieldUpdateOperationsInput | string | null
     province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
-    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -43870,10 +45237,10 @@ export namespace Prisma {
     school?: NullableStringFieldUpdateOperationsInput | string | null
     school_id?: NullableStringFieldUpdateOperationsInput | string | null
     province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
-    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BeneficiaryCreateInput = {
@@ -43902,11 +45269,12 @@ export namespace Prisma {
     updated_at?: Date | string
     created_by?: string | null
     updated_by?: string | null
-    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
     attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
     event_attendance_records?: EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserCreateNestedOneWithoutBeneficiaryInput
   }
 
   export type BeneficiaryUncheckedCreateInput = {
@@ -43935,11 +45303,12 @@ export namespace Prisma {
     updated_at?: Date | string
     created_by?: string | null
     updated_by?: string | null
-    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
     attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
     event_attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserUncheckedCreateNestedOneWithoutBeneficiaryInput
   }
 
   export type BeneficiaryUpdateInput = {
@@ -43968,11 +45337,12 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
     attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
     event_attendance_records?: EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type BeneficiaryUncheckedUpdateInput = {
@@ -44001,11 +45371,12 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
     attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
     event_attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUncheckedUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type BeneficiaryCreateManyInput = {
@@ -44126,12 +45497,12 @@ export namespace Prisma {
     training_updated_by?: string | null
     training_created_at?: Date | string
     training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
     attendance_records?: AttendanceRecordCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
     agendas?: TrainingAgendaCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
   }
 
   export type TrainingUncheckedCreateInput = {
@@ -44168,12 +45539,12 @@ export namespace Prisma {
     training_updated_by?: string | null
     training_created_at?: Date | string
     training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
     attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
     agendas?: TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
   }
 
   export type TrainingUpdateInput = {
@@ -44210,12 +45581,12 @@ export namespace Prisma {
     training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
     attendance_records?: AttendanceRecordUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
     agendas?: TrainingAgendaUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
   }
 
   export type TrainingUncheckedUpdateInput = {
@@ -44252,12 +45623,12 @@ export namespace Prisma {
     training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
     attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
     agendas?: TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
   }
 
   export type TrainingCreateManyInput = {
@@ -44409,11 +45780,11 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionCreateNestedManyWithoutEventInput
-    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
     attendance_records?: EventAttendanceRecordCreateNestedManyWithoutEventInput
-    speakers?: EventSpeakerCreateNestedManyWithoutEventInput
     material_links?: EventMaterialLinkCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
+    sessions?: EventSessionCreateNestedManyWithoutEventInput
+    speakers?: EventSpeakerCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateInput = {
@@ -44457,11 +45828,11 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
-    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
     attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutEventInput
-    speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
     material_links?: EventMaterialLinkUncheckedCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
+    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
+    speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventUpdateInput = {
@@ -44505,11 +45876,11 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUpdateManyWithoutEventNestedInput
-    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
     attendance_records?: EventAttendanceRecordUpdateManyWithoutEventNestedInput
-    speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
     material_links?: EventMaterialLinkUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUpdateManyWithoutEventNestedInput
+    speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateInput = {
@@ -44553,11 +45924,11 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
-    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
     attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutEventNestedInput
-    speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
     material_links?: EventMaterialLinkUncheckedUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
+    speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventCreateManyInput = {
@@ -44715,9 +46086,9 @@ export namespace Prisma {
     updated_at?: Date | string
     created_by?: string | null
     updated_by?: string | null
-    event: EventCreateNestedOneWithoutSessionsInput
     session_registrations?: EventSessionRegistrationCreateNestedManyWithoutSessionInput
     speakers?: EventSessionSpeakerCreateNestedManyWithoutSessionInput
+    event: EventCreateNestedOneWithoutSessionsInput
   }
 
   export type EventSessionUncheckedCreateInput = {
@@ -44777,9 +46148,9 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    event?: EventUpdateOneRequiredWithoutSessionsNestedInput
     session_registrations?: EventSessionRegistrationUpdateManyWithoutSessionNestedInput
     speakers?: EventSessionSpeakerUpdateManyWithoutSessionNestedInput
+    event?: EventUpdateOneRequiredWithoutSessionsNestedInput
   }
 
   export type EventSessionUncheckedUpdateInput = {
@@ -44928,8 +46299,8 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    event: EventCreateNestedOneWithoutRegistrationsInput
     beneficiary?: BeneficiaryCreateNestedOneWithoutEvent_registrationsInput
+    event: EventCreateNestedOneWithoutRegistrationsInput
     session_registrations?: EventSessionRegistrationCreateNestedManyWithoutRegistrationInput
   }
 
@@ -44996,8 +46367,8 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    event?: EventUpdateOneRequiredWithoutRegistrationsNestedInput
     beneficiary?: BeneficiaryUpdateOneWithoutEvent_registrationsNestedInput
+    event?: EventUpdateOneRequiredWithoutRegistrationsNestedInput
     session_registrations?: EventSessionRegistrationUpdateManyWithoutRegistrationNestedInput
   }
 
@@ -45212,8 +46583,8 @@ export namespace Prisma {
     device?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    event: EventCreateNestedOneWithoutAttendance_recordsInput
     beneficiary?: BeneficiaryCreateNestedOneWithoutEvent_attendance_recordsInput
+    event: EventCreateNestedOneWithoutAttendance_recordsInput
   }
 
   export type EventAttendanceRecordUncheckedCreateInput = {
@@ -45258,8 +46629,8 @@ export namespace Prisma {
     device?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    event?: EventUpdateOneRequiredWithoutAttendance_recordsNestedInput
     beneficiary?: BeneficiaryUpdateOneWithoutEvent_attendance_recordsNestedInput
+    event?: EventUpdateOneRequiredWithoutAttendance_recordsNestedInput
   }
 
   export type EventAttendanceRecordUncheckedUpdateInput = {
@@ -45373,8 +46744,8 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    event: EventCreateNestedOneWithoutSpeakersInput
     sessions?: EventSessionSpeakerCreateNestedManyWithoutSpeakerInput
+    event: EventCreateNestedOneWithoutSpeakersInput
   }
 
   export type EventSpeakerUncheckedCreateInput = {
@@ -45423,8 +46794,8 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    event?: EventUpdateOneRequiredWithoutSpeakersNestedInput
     sessions?: EventSessionSpeakerUpdateManyWithoutSpeakerNestedInput
+    event?: EventUpdateOneRequiredWithoutSpeakersNestedInput
   }
 
   export type EventSpeakerUncheckedUpdateInput = {
@@ -46744,8 +48115,8 @@ export namespace Prisma {
     updated_at?: Date | string
     created_by?: string | null
     updated_by?: string | null
-    training_links?: TrainingMaterialLinkCreateNestedManyWithoutMaterialInput
     event_links?: EventMaterialLinkCreateNestedManyWithoutMaterialInput
+    training_links?: TrainingMaterialLinkCreateNestedManyWithoutMaterialInput
   }
 
   export type TrainingMaterialUncheckedCreateInput = {
@@ -46767,8 +48138,8 @@ export namespace Prisma {
     updated_at?: Date | string
     created_by?: string | null
     updated_by?: string | null
-    training_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutMaterialInput
     event_links?: EventMaterialLinkUncheckedCreateNestedManyWithoutMaterialInput
+    training_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutMaterialInput
   }
 
   export type TrainingMaterialUpdateInput = {
@@ -46790,8 +48161,8 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_links?: TrainingMaterialLinkUpdateManyWithoutMaterialNestedInput
     event_links?: EventMaterialLinkUpdateManyWithoutMaterialNestedInput
+    training_links?: TrainingMaterialLinkUpdateManyWithoutMaterialNestedInput
   }
 
   export type TrainingMaterialUncheckedUpdateInput = {
@@ -46813,8 +48184,8 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutMaterialNestedInput
     event_links?: EventMaterialLinkUncheckedUpdateManyWithoutMaterialNestedInput
+    training_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutMaterialNestedInput
   }
 
   export type TrainingMaterialCreateManyInput = {
@@ -46886,8 +48257,8 @@ export namespace Prisma {
     is_required?: boolean
     linked_at?: Date | string
     linked_by?: string | null
-    training: TrainingCreateNestedOneWithoutMaterial_linksInput
     material: TrainingMaterialCreateNestedOneWithoutTraining_linksInput
+    training: TrainingCreateNestedOneWithoutMaterial_linksInput
   }
 
   export type TrainingMaterialLinkUncheckedCreateInput = {
@@ -46906,8 +48277,8 @@ export namespace Prisma {
     is_required?: BoolFieldUpdateOperationsInput | boolean
     linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
     linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training?: TrainingUpdateOneRequiredWithoutMaterial_linksNestedInput
     material?: TrainingMaterialUpdateOneRequiredWithoutTraining_linksNestedInput
+    training?: TrainingUpdateOneRequiredWithoutMaterial_linksNestedInput
   }
 
   export type TrainingMaterialLinkUncheckedUpdateInput = {
@@ -46971,8 +48342,8 @@ export namespace Prisma {
     created_by?: string | null
     updated_by?: string | null
     questions?: SurveyQuestionCreateNestedManyWithoutSurveyInput
-    training_links?: TrainingSurveyLinkCreateNestedManyWithoutSurveyInput
     responses?: SurveyResponseCreateNestedManyWithoutSurveyInput
+    training_links?: TrainingSurveyLinkCreateNestedManyWithoutSurveyInput
   }
 
   export type SurveyUncheckedCreateInput = {
@@ -46998,8 +48369,8 @@ export namespace Prisma {
     created_by?: string | null
     updated_by?: string | null
     questions?: SurveyQuestionUncheckedCreateNestedManyWithoutSurveyInput
-    training_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutSurveyInput
     responses?: SurveyResponseUncheckedCreateNestedManyWithoutSurveyInput
+    training_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutSurveyInput
   }
 
   export type SurveyUpdateInput = {
@@ -47025,8 +48396,8 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     questions?: SurveyQuestionUpdateManyWithoutSurveyNestedInput
-    training_links?: TrainingSurveyLinkUpdateManyWithoutSurveyNestedInput
     responses?: SurveyResponseUpdateManyWithoutSurveyNestedInput
+    training_links?: TrainingSurveyLinkUpdateManyWithoutSurveyNestedInput
   }
 
   export type SurveyUncheckedUpdateInput = {
@@ -47052,8 +48423,8 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     questions?: SurveyQuestionUncheckedUpdateManyWithoutSurveyNestedInput
-    training_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyNestedInput
     responses?: SurveyResponseUncheckedUpdateManyWithoutSurveyNestedInput
+    training_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyNestedInput
   }
 
   export type SurveyCreateManyInput = {
@@ -47136,8 +48507,8 @@ export namespace Prisma {
     custom_deadline?: Date | string | null
     linked_at?: Date | string
     linked_by?: string | null
-    training: TrainingCreateNestedOneWithoutSurvey_linksInput
     survey: SurveyCreateNestedOneWithoutTraining_linksInput
+    training: TrainingCreateNestedOneWithoutSurvey_linksInput
   }
 
   export type TrainingSurveyLinkUncheckedCreateInput = {
@@ -47160,8 +48531,8 @@ export namespace Prisma {
     custom_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
     linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training?: TrainingUpdateOneRequiredWithoutSurvey_linksNestedInput
     survey?: SurveyUpdateOneRequiredWithoutTraining_linksNestedInput
+    training?: TrainingUpdateOneRequiredWithoutSurvey_linksNestedInput
   }
 
   export type TrainingSurveyLinkUncheckedUpdateInput = {
@@ -47229,8 +48600,8 @@ export namespace Prisma {
     scale_labels_km?: SurveyQuestionCreatescale_labels_kmInput | string[]
     created_at?: Date | string
     updated_at?: Date | string
-    survey: SurveyCreateNestedOneWithoutQuestionsInput
     answers?: SurveyQuestionResponseCreateNestedManyWithoutQuestionInput
+    survey: SurveyCreateNestedOneWithoutQuestionsInput
   }
 
   export type SurveyQuestionUncheckedCreateInput = {
@@ -47275,8 +48646,8 @@ export namespace Prisma {
     scale_labels_km?: SurveyQuestionUpdatescale_labels_kmInput | string[]
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    survey?: SurveyUpdateOneRequiredWithoutQuestionsNestedInput
     answers?: SurveyQuestionResponseUpdateManyWithoutQuestionNestedInput
+    survey?: SurveyUpdateOneRequiredWithoutQuestionsNestedInput
   }
 
   export type SurveyQuestionUncheckedUpdateInput = {
@@ -47380,10 +48751,10 @@ export namespace Prisma {
     time_spent_seconds?: number | null
     created_at?: Date | string
     updated_at?: Date | string
-    survey: SurveyCreateNestedOneWithoutResponsesInput
-    beneficiary: BeneficiaryCreateNestedOneWithoutSurvey_responsesInput
-    training: TrainingCreateNestedOneWithoutSurvey_responsesInput
     question_responses?: SurveyQuestionResponseCreateNestedManyWithoutResponseInput
+    beneficiary: BeneficiaryCreateNestedOneWithoutSurvey_responsesInput
+    survey: SurveyCreateNestedOneWithoutResponsesInput
+    training: TrainingCreateNestedOneWithoutSurvey_responsesInput
   }
 
   export type SurveyResponseUncheckedCreateInput = {
@@ -47418,10 +48789,10 @@ export namespace Prisma {
     time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    survey?: SurveyUpdateOneRequiredWithoutResponsesNestedInput
-    beneficiary?: BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput
-    training?: TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput
     question_responses?: SurveyQuestionResponseUpdateManyWithoutResponseNestedInput
+    beneficiary?: BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput
+    survey?: SurveyUpdateOneRequiredWithoutResponsesNestedInput
+    training?: TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput
   }
 
   export type SurveyResponseUncheckedUpdateInput = {
@@ -47501,8 +48872,8 @@ export namespace Prisma {
     points_earned?: number | null
     is_correct?: boolean | null
     answered_at?: Date | string
-    response: SurveyResponseCreateNestedOneWithoutQuestion_responsesInput
     question: SurveyQuestionCreateNestedOneWithoutAnswersInput
+    response: SurveyResponseCreateNestedOneWithoutQuestion_responsesInput
   }
 
   export type SurveyQuestionResponseUncheckedCreateInput = {
@@ -47523,8 +48894,8 @@ export namespace Prisma {
     points_earned?: NullableFloatFieldUpdateOperationsInput | number | null
     is_correct?: NullableBoolFieldUpdateOperationsInput | boolean | null
     answered_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    response?: SurveyResponseUpdateOneRequiredWithoutQuestion_responsesNestedInput
     question?: SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput
+    response?: SurveyResponseUpdateOneRequiredWithoutQuestion_responsesNestedInput
   }
 
   export type SurveyQuestionResponseUncheckedUpdateInput = {
@@ -47567,6 +48938,89 @@ export namespace Prisma {
     points_earned?: NullableFloatFieldUpdateOperationsInput | number | null
     is_correct?: NullableBoolFieldUpdateOperationsInput | boolean | null
     answered_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TelegramUserCreateInput = {
+    id?: string
+    telegram_id: bigint | number
+    username?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    language_code?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    beneficiary: BeneficiaryCreateNestedOneWithoutTelegram_userInput
+  }
+
+  export type TelegramUserUncheckedCreateInput = {
+    id?: string
+    telegram_id: bigint | number
+    teacher_id: string
+    username?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    language_code?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type TelegramUserUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    telegram_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    language_code?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    beneficiary?: BeneficiaryUpdateOneRequiredWithoutTelegram_userNestedInput
+  }
+
+  export type TelegramUserUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    telegram_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    language_code?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TelegramUserCreateManyInput = {
+    id?: string
+    telegram_id: bigint | number
+    teacher_id: string
+    username?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    language_code?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type TelegramUserUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    telegram_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    language_code?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TelegramUserUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    telegram_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    language_code?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NotificationCreateInput = {
@@ -47763,10 +49217,10 @@ export namespace Prisma {
     school?: SortOrder
     school_id?: SortOrder
     province_name?: SortOrder
-    theme_preference?: SortOrder
-    khmer_font?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    khmer_font?: SortOrder
+    theme_preference?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -47782,10 +49236,10 @@ export namespace Prisma {
     school?: SortOrder
     school_id?: SortOrder
     province_name?: SortOrder
-    theme_preference?: SortOrder
-    khmer_font?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    khmer_font?: SortOrder
+    theme_preference?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -47801,10 +49255,10 @@ export namespace Prisma {
     school?: SortOrder
     school_id?: SortOrder
     province_name?: SortOrder
-    theme_preference?: SortOrder
-    khmer_font?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    khmer_font?: SortOrder
+    theme_preference?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -47897,28 +49351,16 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type BeneficiaryTrainingListRelationFilter = {
-    every?: BeneficiaryTrainingWhereInput
-    some?: BeneficiaryTrainingWhereInput
-    none?: BeneficiaryTrainingWhereInput
-  }
-
   export type AttendanceRecordListRelationFilter = {
     every?: AttendanceRecordWhereInput
     some?: AttendanceRecordWhereInput
     none?: AttendanceRecordWhereInput
   }
 
-  export type SurveyResponseListRelationFilter = {
-    every?: SurveyResponseWhereInput
-    some?: SurveyResponseWhereInput
-    none?: SurveyResponseWhereInput
-  }
-
-  export type EventRegistrationListRelationFilter = {
-    every?: EventRegistrationWhereInput
-    some?: EventRegistrationWhereInput
-    none?: EventRegistrationWhereInput
+  export type BeneficiaryTrainingListRelationFilter = {
+    every?: BeneficiaryTrainingWhereInput
+    some?: BeneficiaryTrainingWhereInput
+    none?: BeneficiaryTrainingWhereInput
   }
 
   export type EventAttendanceRecordListRelationFilter = {
@@ -47927,15 +49369,32 @@ export namespace Prisma {
     none?: EventAttendanceRecordWhereInput
   }
 
-  export type BeneficiaryTrainingOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type EventRegistrationListRelationFilter = {
+    every?: EventRegistrationWhereInput
+    some?: EventRegistrationWhereInput
+    none?: EventRegistrationWhereInput
+  }
+
+  export type SurveyResponseListRelationFilter = {
+    every?: SurveyResponseWhereInput
+    some?: SurveyResponseWhereInput
+    none?: SurveyResponseWhereInput
+  }
+
+  export type TelegramUserNullableScalarRelationFilter = {
+    is?: TelegramUserWhereInput | null
+    isNot?: TelegramUserWhereInput | null
   }
 
   export type AttendanceRecordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type SurveyResponseOrderByRelationAggregateInput = {
+  export type BeneficiaryTrainingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EventAttendanceRecordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47943,7 +49402,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type EventAttendanceRecordOrderByRelationAggregateInput = {
+  export type SurveyResponseOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -48394,6 +49853,12 @@ export namespace Prisma {
     not?: NestedEnumEventStatusFilter<$PrismaModel> | $Enums.EventStatus
   }
 
+  export type EventMaterialLinkListRelationFilter = {
+    every?: EventMaterialLinkWhereInput
+    some?: EventMaterialLinkWhereInput
+    none?: EventMaterialLinkWhereInput
+  }
+
   export type EventSessionListRelationFilter = {
     every?: EventSessionWhereInput
     some?: EventSessionWhereInput
@@ -48406,10 +49871,8 @@ export namespace Prisma {
     none?: EventSpeakerWhereInput
   }
 
-  export type EventMaterialLinkListRelationFilter = {
-    every?: EventMaterialLinkWhereInput
-    some?: EventMaterialLinkWhereInput
-    none?: EventMaterialLinkWhereInput
+  export type EventMaterialLinkOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type EventSessionOrderByRelationAggregateInput = {
@@ -48417,10 +49880,6 @@ export namespace Prisma {
   }
 
   export type EventSpeakerOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type EventMaterialLinkOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -48604,11 +50063,6 @@ export namespace Prisma {
     not?: NestedEnumSessionTypeFilter<$PrismaModel> | $Enums.SessionType
   }
 
-  export type EventScalarRelationFilter = {
-    is?: EventWhereInput
-    isNot?: EventWhereInput
-  }
-
   export type EventSessionRegistrationListRelationFilter = {
     every?: EventSessionRegistrationWhereInput
     some?: EventSessionRegistrationWhereInput
@@ -48619,6 +50073,11 @@ export namespace Prisma {
     every?: EventSessionSpeakerWhereInput
     some?: EventSessionSpeakerWhereInput
     none?: EventSessionSpeakerWhereInput
+  }
+
+  export type EventScalarRelationFilter = {
+    is?: EventWhereInput
+    isNot?: EventWhereInput
   }
 
   export type EventSessionRegistrationOrderByRelationAggregateInput = {
@@ -50348,14 +51807,14 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
-  export type SurveyResponseScalarRelationFilter = {
-    is?: SurveyResponseWhereInput
-    isNot?: SurveyResponseWhereInput
-  }
-
   export type SurveyQuestionScalarRelationFilter = {
     is?: SurveyQuestionWhereInput
     isNot?: SurveyQuestionWhereInput
+  }
+
+  export type SurveyResponseScalarRelationFilter = {
+    is?: SurveyResponseWhereInput
+    isNot?: SurveyResponseWhereInput
   }
 
   export type SurveyQuestionResponseResponse_idQuestion_idCompoundUniqueInput = {
@@ -50402,6 +51861,77 @@ export namespace Prisma {
 
   export type SurveyQuestionResponseSumOrderByAggregateInput = {
     points_earned?: SortOrder
+  }
+
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type TelegramUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    telegram_id?: SortOrder
+    teacher_id?: SortOrder
+    username?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    language_code?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type TelegramUserAvgOrderByAggregateInput = {
+    telegram_id?: SortOrder
+  }
+
+  export type TelegramUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    telegram_id?: SortOrder
+    teacher_id?: SortOrder
+    username?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    language_code?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type TelegramUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    telegram_id?: SortOrder
+    teacher_id?: SortOrder
+    username?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    language_code?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type TelegramUserSumOrderByAggregateInput = {
+    telegram_id?: SortOrder
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
   }
 
   export type EnumNotificationTypeFilter<$PrismaModel = never> = {
@@ -50552,13 +52082,6 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
-  export type BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput = {
-    create?: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput> | BeneficiaryTrainingCreateWithoutBeneficiaryInput[] | BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput | BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput[]
-    createMany?: BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope
-    connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-  }
-
   export type AttendanceRecordCreateNestedManyWithoutBeneficiaryInput = {
     create?: XOR<AttendanceRecordCreateWithoutBeneficiaryInput, AttendanceRecordUncheckedCreateWithoutBeneficiaryInput> | AttendanceRecordCreateWithoutBeneficiaryInput[] | AttendanceRecordUncheckedCreateWithoutBeneficiaryInput[]
     connectOrCreate?: AttendanceRecordCreateOrConnectWithoutBeneficiaryInput | AttendanceRecordCreateOrConnectWithoutBeneficiaryInput[]
@@ -50566,18 +52089,11 @@ export namespace Prisma {
     connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
   }
 
-  export type SurveyResponseCreateNestedManyWithoutBeneficiaryInput = {
-    create?: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput> | SurveyResponseCreateWithoutBeneficiaryInput[] | SurveyResponseUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: SurveyResponseCreateOrConnectWithoutBeneficiaryInput | SurveyResponseCreateOrConnectWithoutBeneficiaryInput[]
-    createMany?: SurveyResponseCreateManyBeneficiaryInputEnvelope
-    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-  }
-
-  export type EventRegistrationCreateNestedManyWithoutBeneficiaryInput = {
-    create?: XOR<EventRegistrationCreateWithoutBeneficiaryInput, EventRegistrationUncheckedCreateWithoutBeneficiaryInput> | EventRegistrationCreateWithoutBeneficiaryInput[] | EventRegistrationUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: EventRegistrationCreateOrConnectWithoutBeneficiaryInput | EventRegistrationCreateOrConnectWithoutBeneficiaryInput[]
-    createMany?: EventRegistrationCreateManyBeneficiaryInputEnvelope
-    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+  export type BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput = {
+    create?: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput> | BeneficiaryTrainingCreateWithoutBeneficiaryInput[] | BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput | BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput[]
+    createMany?: BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope
+    connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
   }
 
   export type EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput = {
@@ -50587,11 +52103,24 @@ export namespace Prisma {
     connect?: EventAttendanceRecordWhereUniqueInput | EventAttendanceRecordWhereUniqueInput[]
   }
 
-  export type BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput = {
-    create?: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput> | BeneficiaryTrainingCreateWithoutBeneficiaryInput[] | BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput | BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput[]
-    createMany?: BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope
-    connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+  export type EventRegistrationCreateNestedManyWithoutBeneficiaryInput = {
+    create?: XOR<EventRegistrationCreateWithoutBeneficiaryInput, EventRegistrationUncheckedCreateWithoutBeneficiaryInput> | EventRegistrationCreateWithoutBeneficiaryInput[] | EventRegistrationUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: EventRegistrationCreateOrConnectWithoutBeneficiaryInput | EventRegistrationCreateOrConnectWithoutBeneficiaryInput[]
+    createMany?: EventRegistrationCreateManyBeneficiaryInputEnvelope
+    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+  }
+
+  export type SurveyResponseCreateNestedManyWithoutBeneficiaryInput = {
+    create?: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput> | SurveyResponseCreateWithoutBeneficiaryInput[] | SurveyResponseUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: SurveyResponseCreateOrConnectWithoutBeneficiaryInput | SurveyResponseCreateOrConnectWithoutBeneficiaryInput[]
+    createMany?: SurveyResponseCreateManyBeneficiaryInputEnvelope
+    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+  }
+
+  export type TelegramUserCreateNestedOneWithoutBeneficiaryInput = {
+    create?: XOR<TelegramUserCreateWithoutBeneficiaryInput, TelegramUserUncheckedCreateWithoutBeneficiaryInput>
+    connectOrCreate?: TelegramUserCreateOrConnectWithoutBeneficiaryInput
+    connect?: TelegramUserWhereUniqueInput
   }
 
   export type AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput = {
@@ -50601,11 +52130,18 @@ export namespace Prisma {
     connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
   }
 
-  export type SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput = {
-    create?: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput> | SurveyResponseCreateWithoutBeneficiaryInput[] | SurveyResponseUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: SurveyResponseCreateOrConnectWithoutBeneficiaryInput | SurveyResponseCreateOrConnectWithoutBeneficiaryInput[]
-    createMany?: SurveyResponseCreateManyBeneficiaryInputEnvelope
-    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+  export type BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput = {
+    create?: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput> | BeneficiaryTrainingCreateWithoutBeneficiaryInput[] | BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput | BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput[]
+    createMany?: BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope
+    connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+  }
+
+  export type EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput = {
+    create?: XOR<EventAttendanceRecordCreateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput> | EventAttendanceRecordCreateWithoutBeneficiaryInput[] | EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: EventAttendanceRecordCreateOrConnectWithoutBeneficiaryInput | EventAttendanceRecordCreateOrConnectWithoutBeneficiaryInput[]
+    createMany?: EventAttendanceRecordCreateManyBeneficiaryInputEnvelope
+    connect?: EventAttendanceRecordWhereUniqueInput | EventAttendanceRecordWhereUniqueInput[]
   }
 
   export type EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput = {
@@ -50615,11 +52151,17 @@ export namespace Prisma {
     connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
   }
 
-  export type EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput = {
-    create?: XOR<EventAttendanceRecordCreateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput> | EventAttendanceRecordCreateWithoutBeneficiaryInput[] | EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: EventAttendanceRecordCreateOrConnectWithoutBeneficiaryInput | EventAttendanceRecordCreateOrConnectWithoutBeneficiaryInput[]
-    createMany?: EventAttendanceRecordCreateManyBeneficiaryInputEnvelope
-    connect?: EventAttendanceRecordWhereUniqueInput | EventAttendanceRecordWhereUniqueInput[]
+  export type SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput = {
+    create?: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput> | SurveyResponseCreateWithoutBeneficiaryInput[] | SurveyResponseUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: SurveyResponseCreateOrConnectWithoutBeneficiaryInput | SurveyResponseCreateOrConnectWithoutBeneficiaryInput[]
+    createMany?: SurveyResponseCreateManyBeneficiaryInputEnvelope
+    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+  }
+
+  export type TelegramUserUncheckedCreateNestedOneWithoutBeneficiaryInput = {
+    create?: XOR<TelegramUserCreateWithoutBeneficiaryInput, TelegramUserUncheckedCreateWithoutBeneficiaryInput>
+    connectOrCreate?: TelegramUserCreateOrConnectWithoutBeneficiaryInput
+    connect?: TelegramUserWhereUniqueInput
   }
 
   export type NullableEnumSexFieldUpdateOperationsInput = {
@@ -50642,20 +52184,6 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput = {
-    create?: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput> | BeneficiaryTrainingCreateWithoutBeneficiaryInput[] | BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput | BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput[]
-    upsert?: BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput | BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput[]
-    createMany?: BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope
-    set?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-    disconnect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-    delete?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-    connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-    update?: BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput | BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput[]
-    updateMany?: BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput | BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput[]
-    deleteMany?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
-  }
-
   export type AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput = {
     create?: XOR<AttendanceRecordCreateWithoutBeneficiaryInput, AttendanceRecordUncheckedCreateWithoutBeneficiaryInput> | AttendanceRecordCreateWithoutBeneficiaryInput[] | AttendanceRecordUncheckedCreateWithoutBeneficiaryInput[]
     connectOrCreate?: AttendanceRecordCreateOrConnectWithoutBeneficiaryInput | AttendanceRecordCreateOrConnectWithoutBeneficiaryInput[]
@@ -50670,32 +52198,18 @@ export namespace Prisma {
     deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
   }
 
-  export type SurveyResponseUpdateManyWithoutBeneficiaryNestedInput = {
-    create?: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput> | SurveyResponseCreateWithoutBeneficiaryInput[] | SurveyResponseUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: SurveyResponseCreateOrConnectWithoutBeneficiaryInput | SurveyResponseCreateOrConnectWithoutBeneficiaryInput[]
-    upsert?: SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput | SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput[]
-    createMany?: SurveyResponseCreateManyBeneficiaryInputEnvelope
-    set?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    disconnect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    delete?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    update?: SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput | SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput[]
-    updateMany?: SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput | SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput[]
-    deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
-  }
-
-  export type EventRegistrationUpdateManyWithoutBeneficiaryNestedInput = {
-    create?: XOR<EventRegistrationCreateWithoutBeneficiaryInput, EventRegistrationUncheckedCreateWithoutBeneficiaryInput> | EventRegistrationCreateWithoutBeneficiaryInput[] | EventRegistrationUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: EventRegistrationCreateOrConnectWithoutBeneficiaryInput | EventRegistrationCreateOrConnectWithoutBeneficiaryInput[]
-    upsert?: EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput | EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput[]
-    createMany?: EventRegistrationCreateManyBeneficiaryInputEnvelope
-    set?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    disconnect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    delete?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    update?: EventRegistrationUpdateWithWhereUniqueWithoutBeneficiaryInput | EventRegistrationUpdateWithWhereUniqueWithoutBeneficiaryInput[]
-    updateMany?: EventRegistrationUpdateManyWithWhereWithoutBeneficiaryInput | EventRegistrationUpdateManyWithWhereWithoutBeneficiaryInput[]
-    deleteMany?: EventRegistrationScalarWhereInput | EventRegistrationScalarWhereInput[]
+  export type BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput = {
+    create?: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput> | BeneficiaryTrainingCreateWithoutBeneficiaryInput[] | BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput | BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput[]
+    upsert?: BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput | BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput[]
+    createMany?: BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope
+    set?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+    disconnect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+    delete?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+    connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+    update?: BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput | BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput[]
+    updateMany?: BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput | BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput[]
+    deleteMany?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
   }
 
   export type EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput = {
@@ -50712,18 +52226,42 @@ export namespace Prisma {
     deleteMany?: EventAttendanceRecordScalarWhereInput | EventAttendanceRecordScalarWhereInput[]
   }
 
-  export type BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput = {
-    create?: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput> | BeneficiaryTrainingCreateWithoutBeneficiaryInput[] | BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput | BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput[]
-    upsert?: BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput | BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput[]
-    createMany?: BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope
-    set?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-    disconnect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-    delete?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-    connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
-    update?: BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput | BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput[]
-    updateMany?: BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput | BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput[]
-    deleteMany?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
+  export type EventRegistrationUpdateManyWithoutBeneficiaryNestedInput = {
+    create?: XOR<EventRegistrationCreateWithoutBeneficiaryInput, EventRegistrationUncheckedCreateWithoutBeneficiaryInput> | EventRegistrationCreateWithoutBeneficiaryInput[] | EventRegistrationUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: EventRegistrationCreateOrConnectWithoutBeneficiaryInput | EventRegistrationCreateOrConnectWithoutBeneficiaryInput[]
+    upsert?: EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput | EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput[]
+    createMany?: EventRegistrationCreateManyBeneficiaryInputEnvelope
+    set?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    disconnect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    delete?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    update?: EventRegistrationUpdateWithWhereUniqueWithoutBeneficiaryInput | EventRegistrationUpdateWithWhereUniqueWithoutBeneficiaryInput[]
+    updateMany?: EventRegistrationUpdateManyWithWhereWithoutBeneficiaryInput | EventRegistrationUpdateManyWithWhereWithoutBeneficiaryInput[]
+    deleteMany?: EventRegistrationScalarWhereInput | EventRegistrationScalarWhereInput[]
+  }
+
+  export type SurveyResponseUpdateManyWithoutBeneficiaryNestedInput = {
+    create?: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput> | SurveyResponseCreateWithoutBeneficiaryInput[] | SurveyResponseUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: SurveyResponseCreateOrConnectWithoutBeneficiaryInput | SurveyResponseCreateOrConnectWithoutBeneficiaryInput[]
+    upsert?: SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput | SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput[]
+    createMany?: SurveyResponseCreateManyBeneficiaryInputEnvelope
+    set?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    disconnect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    delete?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    update?: SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput | SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput[]
+    updateMany?: SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput | SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput[]
+    deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
+  }
+
+  export type TelegramUserUpdateOneWithoutBeneficiaryNestedInput = {
+    create?: XOR<TelegramUserCreateWithoutBeneficiaryInput, TelegramUserUncheckedCreateWithoutBeneficiaryInput>
+    connectOrCreate?: TelegramUserCreateOrConnectWithoutBeneficiaryInput
+    upsert?: TelegramUserUpsertWithoutBeneficiaryInput
+    disconnect?: TelegramUserWhereInput | boolean
+    delete?: TelegramUserWhereInput | boolean
+    connect?: TelegramUserWhereUniqueInput
+    update?: XOR<XOR<TelegramUserUpdateToOneWithWhereWithoutBeneficiaryInput, TelegramUserUpdateWithoutBeneficiaryInput>, TelegramUserUncheckedUpdateWithoutBeneficiaryInput>
   }
 
   export type AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput = {
@@ -50740,32 +52278,18 @@ export namespace Prisma {
     deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
   }
 
-  export type SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput = {
-    create?: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput> | SurveyResponseCreateWithoutBeneficiaryInput[] | SurveyResponseUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: SurveyResponseCreateOrConnectWithoutBeneficiaryInput | SurveyResponseCreateOrConnectWithoutBeneficiaryInput[]
-    upsert?: SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput | SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput[]
-    createMany?: SurveyResponseCreateManyBeneficiaryInputEnvelope
-    set?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    disconnect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    delete?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    update?: SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput | SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput[]
-    updateMany?: SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput | SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput[]
-    deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
-  }
-
-  export type EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput = {
-    create?: XOR<EventRegistrationCreateWithoutBeneficiaryInput, EventRegistrationUncheckedCreateWithoutBeneficiaryInput> | EventRegistrationCreateWithoutBeneficiaryInput[] | EventRegistrationUncheckedCreateWithoutBeneficiaryInput[]
-    connectOrCreate?: EventRegistrationCreateOrConnectWithoutBeneficiaryInput | EventRegistrationCreateOrConnectWithoutBeneficiaryInput[]
-    upsert?: EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput | EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput[]
-    createMany?: EventRegistrationCreateManyBeneficiaryInputEnvelope
-    set?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    disconnect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    delete?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    update?: EventRegistrationUpdateWithWhereUniqueWithoutBeneficiaryInput | EventRegistrationUpdateWithWhereUniqueWithoutBeneficiaryInput[]
-    updateMany?: EventRegistrationUpdateManyWithWhereWithoutBeneficiaryInput | EventRegistrationUpdateManyWithWhereWithoutBeneficiaryInput[]
-    deleteMany?: EventRegistrationScalarWhereInput | EventRegistrationScalarWhereInput[]
+  export type BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput = {
+    create?: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput> | BeneficiaryTrainingCreateWithoutBeneficiaryInput[] | BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput | BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput[]
+    upsert?: BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput | BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput[]
+    createMany?: BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope
+    set?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+    disconnect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+    delete?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+    connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
+    update?: BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput | BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput[]
+    updateMany?: BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput | BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput[]
+    deleteMany?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
   }
 
   export type EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput = {
@@ -50782,8 +52306,53 @@ export namespace Prisma {
     deleteMany?: EventAttendanceRecordScalarWhereInput | EventAttendanceRecordScalarWhereInput[]
   }
 
+  export type EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput = {
+    create?: XOR<EventRegistrationCreateWithoutBeneficiaryInput, EventRegistrationUncheckedCreateWithoutBeneficiaryInput> | EventRegistrationCreateWithoutBeneficiaryInput[] | EventRegistrationUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: EventRegistrationCreateOrConnectWithoutBeneficiaryInput | EventRegistrationCreateOrConnectWithoutBeneficiaryInput[]
+    upsert?: EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput | EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput[]
+    createMany?: EventRegistrationCreateManyBeneficiaryInputEnvelope
+    set?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    disconnect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    delete?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    update?: EventRegistrationUpdateWithWhereUniqueWithoutBeneficiaryInput | EventRegistrationUpdateWithWhereUniqueWithoutBeneficiaryInput[]
+    updateMany?: EventRegistrationUpdateManyWithWhereWithoutBeneficiaryInput | EventRegistrationUpdateManyWithWhereWithoutBeneficiaryInput[]
+    deleteMany?: EventRegistrationScalarWhereInput | EventRegistrationScalarWhereInput[]
+  }
+
+  export type SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput = {
+    create?: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput> | SurveyResponseCreateWithoutBeneficiaryInput[] | SurveyResponseUncheckedCreateWithoutBeneficiaryInput[]
+    connectOrCreate?: SurveyResponseCreateOrConnectWithoutBeneficiaryInput | SurveyResponseCreateOrConnectWithoutBeneficiaryInput[]
+    upsert?: SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput | SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput[]
+    createMany?: SurveyResponseCreateManyBeneficiaryInputEnvelope
+    set?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    disconnect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    delete?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    update?: SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput | SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput[]
+    updateMany?: SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput | SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput[]
+    deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
+  }
+
+  export type TelegramUserUncheckedUpdateOneWithoutBeneficiaryNestedInput = {
+    create?: XOR<TelegramUserCreateWithoutBeneficiaryInput, TelegramUserUncheckedCreateWithoutBeneficiaryInput>
+    connectOrCreate?: TelegramUserCreateOrConnectWithoutBeneficiaryInput
+    upsert?: TelegramUserUpsertWithoutBeneficiaryInput
+    disconnect?: TelegramUserWhereInput | boolean
+    delete?: TelegramUserWhereInput | boolean
+    connect?: TelegramUserWhereUniqueInput
+    update?: XOR<XOR<TelegramUserUpdateToOneWithWhereWithoutBeneficiaryInput, TelegramUserUpdateWithoutBeneficiaryInput>, TelegramUserUncheckedUpdateWithoutBeneficiaryInput>
+  }
+
   export type TrainingCreatecluster_schoolsInput = {
     set: string[]
+  }
+
+  export type AttendanceRecordCreateNestedManyWithoutTrainingInput = {
+    create?: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput> | AttendanceRecordCreateWithoutTrainingInput[] | AttendanceRecordUncheckedCreateWithoutTrainingInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTrainingInput | AttendanceRecordCreateOrConnectWithoutTrainingInput[]
+    createMany?: AttendanceRecordCreateManyTrainingInputEnvelope
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
   }
 
   export type BeneficiaryTrainingCreateNestedManyWithoutTrainingInput = {
@@ -50793,11 +52362,11 @@ export namespace Prisma {
     connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
   }
 
-  export type AttendanceRecordCreateNestedManyWithoutTrainingInput = {
-    create?: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput> | AttendanceRecordCreateWithoutTrainingInput[] | AttendanceRecordUncheckedCreateWithoutTrainingInput[]
-    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTrainingInput | AttendanceRecordCreateOrConnectWithoutTrainingInput[]
-    createMany?: AttendanceRecordCreateManyTrainingInputEnvelope
-    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+  export type SurveyResponseCreateNestedManyWithoutTrainingInput = {
+    create?: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput> | SurveyResponseCreateWithoutTrainingInput[] | SurveyResponseUncheckedCreateWithoutTrainingInput[]
+    connectOrCreate?: SurveyResponseCreateOrConnectWithoutTrainingInput | SurveyResponseCreateOrConnectWithoutTrainingInput[]
+    createMany?: SurveyResponseCreateManyTrainingInputEnvelope
+    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
   }
 
   export type TrainingAgendaCreateNestedManyWithoutTrainingInput = {
@@ -50821,11 +52390,11 @@ export namespace Prisma {
     connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
   }
 
-  export type SurveyResponseCreateNestedManyWithoutTrainingInput = {
-    create?: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput> | SurveyResponseCreateWithoutTrainingInput[] | SurveyResponseUncheckedCreateWithoutTrainingInput[]
-    connectOrCreate?: SurveyResponseCreateOrConnectWithoutTrainingInput | SurveyResponseCreateOrConnectWithoutTrainingInput[]
-    createMany?: SurveyResponseCreateManyTrainingInputEnvelope
-    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+  export type AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput = {
+    create?: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput> | AttendanceRecordCreateWithoutTrainingInput[] | AttendanceRecordUncheckedCreateWithoutTrainingInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTrainingInput | AttendanceRecordCreateOrConnectWithoutTrainingInput[]
+    createMany?: AttendanceRecordCreateManyTrainingInputEnvelope
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
   }
 
   export type BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput = {
@@ -50835,11 +52404,11 @@ export namespace Prisma {
     connect?: BeneficiaryTrainingWhereUniqueInput | BeneficiaryTrainingWhereUniqueInput[]
   }
 
-  export type AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput = {
-    create?: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput> | AttendanceRecordCreateWithoutTrainingInput[] | AttendanceRecordUncheckedCreateWithoutTrainingInput[]
-    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTrainingInput | AttendanceRecordCreateOrConnectWithoutTrainingInput[]
-    createMany?: AttendanceRecordCreateManyTrainingInputEnvelope
-    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+  export type SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput = {
+    create?: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput> | SurveyResponseCreateWithoutTrainingInput[] | SurveyResponseUncheckedCreateWithoutTrainingInput[]
+    connectOrCreate?: SurveyResponseCreateOrConnectWithoutTrainingInput | SurveyResponseCreateOrConnectWithoutTrainingInput[]
+    createMany?: SurveyResponseCreateManyTrainingInputEnvelope
+    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
   }
 
   export type TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput = {
@@ -50861,13 +52430,6 @@ export namespace Prisma {
     connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutTrainingInput | TrainingSurveyLinkCreateOrConnectWithoutTrainingInput[]
     createMany?: TrainingSurveyLinkCreateManyTrainingInputEnvelope
     connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-  }
-
-  export type SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput = {
-    create?: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput> | SurveyResponseCreateWithoutTrainingInput[] | SurveyResponseUncheckedCreateWithoutTrainingInput[]
-    connectOrCreate?: SurveyResponseCreateOrConnectWithoutTrainingInput | SurveyResponseCreateOrConnectWithoutTrainingInput[]
-    createMany?: SurveyResponseCreateManyTrainingInputEnvelope
-    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
   }
 
   export type NullableEnumTrainingTypeFieldUpdateOperationsInput = {
@@ -50907,6 +52469,20 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type AttendanceRecordUpdateManyWithoutTrainingNestedInput = {
+    create?: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput> | AttendanceRecordCreateWithoutTrainingInput[] | AttendanceRecordUncheckedCreateWithoutTrainingInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTrainingInput | AttendanceRecordCreateOrConnectWithoutTrainingInput[]
+    upsert?: AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput | AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput[]
+    createMany?: AttendanceRecordCreateManyTrainingInputEnvelope
+    set?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    disconnect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    delete?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    update?: AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput | AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput[]
+    updateMany?: AttendanceRecordUpdateManyWithWhereWithoutTrainingInput | AttendanceRecordUpdateManyWithWhereWithoutTrainingInput[]
+    deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
+  }
+
   export type BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput = {
     create?: XOR<BeneficiaryTrainingCreateWithoutTrainingInput, BeneficiaryTrainingUncheckedCreateWithoutTrainingInput> | BeneficiaryTrainingCreateWithoutTrainingInput[] | BeneficiaryTrainingUncheckedCreateWithoutTrainingInput[]
     connectOrCreate?: BeneficiaryTrainingCreateOrConnectWithoutTrainingInput | BeneficiaryTrainingCreateOrConnectWithoutTrainingInput[]
@@ -50921,18 +52497,18 @@ export namespace Prisma {
     deleteMany?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
   }
 
-  export type AttendanceRecordUpdateManyWithoutTrainingNestedInput = {
-    create?: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput> | AttendanceRecordCreateWithoutTrainingInput[] | AttendanceRecordUncheckedCreateWithoutTrainingInput[]
-    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTrainingInput | AttendanceRecordCreateOrConnectWithoutTrainingInput[]
-    upsert?: AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput | AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput[]
-    createMany?: AttendanceRecordCreateManyTrainingInputEnvelope
-    set?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
-    disconnect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
-    delete?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
-    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
-    update?: AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput | AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput[]
-    updateMany?: AttendanceRecordUpdateManyWithWhereWithoutTrainingInput | AttendanceRecordUpdateManyWithWhereWithoutTrainingInput[]
-    deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
+  export type SurveyResponseUpdateManyWithoutTrainingNestedInput = {
+    create?: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput> | SurveyResponseCreateWithoutTrainingInput[] | SurveyResponseUncheckedCreateWithoutTrainingInput[]
+    connectOrCreate?: SurveyResponseCreateOrConnectWithoutTrainingInput | SurveyResponseCreateOrConnectWithoutTrainingInput[]
+    upsert?: SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput | SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput[]
+    createMany?: SurveyResponseCreateManyTrainingInputEnvelope
+    set?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    disconnect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    delete?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    update?: SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput | SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput[]
+    updateMany?: SurveyResponseUpdateManyWithWhereWithoutTrainingInput | SurveyResponseUpdateManyWithWhereWithoutTrainingInput[]
+    deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
   }
 
   export type TrainingAgendaUpdateManyWithoutTrainingNestedInput = {
@@ -50977,18 +52553,18 @@ export namespace Prisma {
     deleteMany?: TrainingSurveyLinkScalarWhereInput | TrainingSurveyLinkScalarWhereInput[]
   }
 
-  export type SurveyResponseUpdateManyWithoutTrainingNestedInput = {
-    create?: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput> | SurveyResponseCreateWithoutTrainingInput[] | SurveyResponseUncheckedCreateWithoutTrainingInput[]
-    connectOrCreate?: SurveyResponseCreateOrConnectWithoutTrainingInput | SurveyResponseCreateOrConnectWithoutTrainingInput[]
-    upsert?: SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput | SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput[]
-    createMany?: SurveyResponseCreateManyTrainingInputEnvelope
-    set?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    disconnect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    delete?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    update?: SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput | SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput[]
-    updateMany?: SurveyResponseUpdateManyWithWhereWithoutTrainingInput | SurveyResponseUpdateManyWithWhereWithoutTrainingInput[]
-    deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
+  export type AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput = {
+    create?: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput> | AttendanceRecordCreateWithoutTrainingInput[] | AttendanceRecordUncheckedCreateWithoutTrainingInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTrainingInput | AttendanceRecordCreateOrConnectWithoutTrainingInput[]
+    upsert?: AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput | AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput[]
+    createMany?: AttendanceRecordCreateManyTrainingInputEnvelope
+    set?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    disconnect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    delete?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    update?: AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput | AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput[]
+    updateMany?: AttendanceRecordUpdateManyWithWhereWithoutTrainingInput | AttendanceRecordUpdateManyWithWhereWithoutTrainingInput[]
+    deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
   }
 
   export type BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput = {
@@ -51005,18 +52581,18 @@ export namespace Prisma {
     deleteMany?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
   }
 
-  export type AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput = {
-    create?: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput> | AttendanceRecordCreateWithoutTrainingInput[] | AttendanceRecordUncheckedCreateWithoutTrainingInput[]
-    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTrainingInput | AttendanceRecordCreateOrConnectWithoutTrainingInput[]
-    upsert?: AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput | AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput[]
-    createMany?: AttendanceRecordCreateManyTrainingInputEnvelope
-    set?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
-    disconnect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
-    delete?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
-    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
-    update?: AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput | AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput[]
-    updateMany?: AttendanceRecordUpdateManyWithWhereWithoutTrainingInput | AttendanceRecordUpdateManyWithWhereWithoutTrainingInput[]
-    deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
+  export type SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput = {
+    create?: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput> | SurveyResponseCreateWithoutTrainingInput[] | SurveyResponseUncheckedCreateWithoutTrainingInput[]
+    connectOrCreate?: SurveyResponseCreateOrConnectWithoutTrainingInput | SurveyResponseCreateOrConnectWithoutTrainingInput[]
+    upsert?: SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput | SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput[]
+    createMany?: SurveyResponseCreateManyTrainingInputEnvelope
+    set?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    disconnect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    delete?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+    update?: SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput | SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput[]
+    updateMany?: SurveyResponseUpdateManyWithWhereWithoutTrainingInput | SurveyResponseUpdateManyWithWhereWithoutTrainingInput[]
+    deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
   }
 
   export type TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput = {
@@ -51061,36 +52637,8 @@ export namespace Prisma {
     deleteMany?: TrainingSurveyLinkScalarWhereInput | TrainingSurveyLinkScalarWhereInput[]
   }
 
-  export type SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput = {
-    create?: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput> | SurveyResponseCreateWithoutTrainingInput[] | SurveyResponseUncheckedCreateWithoutTrainingInput[]
-    connectOrCreate?: SurveyResponseCreateOrConnectWithoutTrainingInput | SurveyResponseCreateOrConnectWithoutTrainingInput[]
-    upsert?: SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput | SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput[]
-    createMany?: SurveyResponseCreateManyTrainingInputEnvelope
-    set?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    disconnect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    delete?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
-    update?: SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput | SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput[]
-    updateMany?: SurveyResponseUpdateManyWithWhereWithoutTrainingInput | SurveyResponseUpdateManyWithWhereWithoutTrainingInput[]
-    deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
-  }
-
   export type EventCreatetagsInput = {
     set: string[]
-  }
-
-  export type EventSessionCreateNestedManyWithoutEventInput = {
-    create?: XOR<EventSessionCreateWithoutEventInput, EventSessionUncheckedCreateWithoutEventInput> | EventSessionCreateWithoutEventInput[] | EventSessionUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventSessionCreateOrConnectWithoutEventInput | EventSessionCreateOrConnectWithoutEventInput[]
-    createMany?: EventSessionCreateManyEventInputEnvelope
-    connect?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
-  }
-
-  export type EventRegistrationCreateNestedManyWithoutEventInput = {
-    create?: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput> | EventRegistrationCreateWithoutEventInput[] | EventRegistrationUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventRegistrationCreateOrConnectWithoutEventInput | EventRegistrationCreateOrConnectWithoutEventInput[]
-    createMany?: EventRegistrationCreateManyEventInputEnvelope
-    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
   }
 
   export type EventAttendanceRecordCreateNestedManyWithoutEventInput = {
@@ -51100,13 +52648,6 @@ export namespace Prisma {
     connect?: EventAttendanceRecordWhereUniqueInput | EventAttendanceRecordWhereUniqueInput[]
   }
 
-  export type EventSpeakerCreateNestedManyWithoutEventInput = {
-    create?: XOR<EventSpeakerCreateWithoutEventInput, EventSpeakerUncheckedCreateWithoutEventInput> | EventSpeakerCreateWithoutEventInput[] | EventSpeakerUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventSpeakerCreateOrConnectWithoutEventInput | EventSpeakerCreateOrConnectWithoutEventInput[]
-    createMany?: EventSpeakerCreateManyEventInputEnvelope
-    connect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-  }
-
   export type EventMaterialLinkCreateNestedManyWithoutEventInput = {
     create?: XOR<EventMaterialLinkCreateWithoutEventInput, EventMaterialLinkUncheckedCreateWithoutEventInput> | EventMaterialLinkCreateWithoutEventInput[] | EventMaterialLinkUncheckedCreateWithoutEventInput[]
     connectOrCreate?: EventMaterialLinkCreateOrConnectWithoutEventInput | EventMaterialLinkCreateOrConnectWithoutEventInput[]
@@ -51114,18 +52655,25 @@ export namespace Prisma {
     connect?: EventMaterialLinkWhereUniqueInput | EventMaterialLinkWhereUniqueInput[]
   }
 
-  export type EventSessionUncheckedCreateNestedManyWithoutEventInput = {
+  export type EventRegistrationCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput> | EventRegistrationCreateWithoutEventInput[] | EventRegistrationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventRegistrationCreateOrConnectWithoutEventInput | EventRegistrationCreateOrConnectWithoutEventInput[]
+    createMany?: EventRegistrationCreateManyEventInputEnvelope
+    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+  }
+
+  export type EventSessionCreateNestedManyWithoutEventInput = {
     create?: XOR<EventSessionCreateWithoutEventInput, EventSessionUncheckedCreateWithoutEventInput> | EventSessionCreateWithoutEventInput[] | EventSessionUncheckedCreateWithoutEventInput[]
     connectOrCreate?: EventSessionCreateOrConnectWithoutEventInput | EventSessionCreateOrConnectWithoutEventInput[]
     createMany?: EventSessionCreateManyEventInputEnvelope
     connect?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
   }
 
-  export type EventRegistrationUncheckedCreateNestedManyWithoutEventInput = {
-    create?: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput> | EventRegistrationCreateWithoutEventInput[] | EventRegistrationUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventRegistrationCreateOrConnectWithoutEventInput | EventRegistrationCreateOrConnectWithoutEventInput[]
-    createMany?: EventRegistrationCreateManyEventInputEnvelope
-    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+  export type EventSpeakerCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventSpeakerCreateWithoutEventInput, EventSpeakerUncheckedCreateWithoutEventInput> | EventSpeakerCreateWithoutEventInput[] | EventSpeakerUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventSpeakerCreateOrConnectWithoutEventInput | EventSpeakerCreateOrConnectWithoutEventInput[]
+    createMany?: EventSpeakerCreateManyEventInputEnvelope
+    connect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
   }
 
   export type EventAttendanceRecordUncheckedCreateNestedManyWithoutEventInput = {
@@ -51135,18 +52683,32 @@ export namespace Prisma {
     connect?: EventAttendanceRecordWhereUniqueInput | EventAttendanceRecordWhereUniqueInput[]
   }
 
-  export type EventSpeakerUncheckedCreateNestedManyWithoutEventInput = {
-    create?: XOR<EventSpeakerCreateWithoutEventInput, EventSpeakerUncheckedCreateWithoutEventInput> | EventSpeakerCreateWithoutEventInput[] | EventSpeakerUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventSpeakerCreateOrConnectWithoutEventInput | EventSpeakerCreateOrConnectWithoutEventInput[]
-    createMany?: EventSpeakerCreateManyEventInputEnvelope
-    connect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-  }
-
   export type EventMaterialLinkUncheckedCreateNestedManyWithoutEventInput = {
     create?: XOR<EventMaterialLinkCreateWithoutEventInput, EventMaterialLinkUncheckedCreateWithoutEventInput> | EventMaterialLinkCreateWithoutEventInput[] | EventMaterialLinkUncheckedCreateWithoutEventInput[]
     connectOrCreate?: EventMaterialLinkCreateOrConnectWithoutEventInput | EventMaterialLinkCreateOrConnectWithoutEventInput[]
     createMany?: EventMaterialLinkCreateManyEventInputEnvelope
     connect?: EventMaterialLinkWhereUniqueInput | EventMaterialLinkWhereUniqueInput[]
+  }
+
+  export type EventRegistrationUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput> | EventRegistrationCreateWithoutEventInput[] | EventRegistrationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventRegistrationCreateOrConnectWithoutEventInput | EventRegistrationCreateOrConnectWithoutEventInput[]
+    createMany?: EventRegistrationCreateManyEventInputEnvelope
+    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+  }
+
+  export type EventSessionUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventSessionCreateWithoutEventInput, EventSessionUncheckedCreateWithoutEventInput> | EventSessionCreateWithoutEventInput[] | EventSessionUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventSessionCreateOrConnectWithoutEventInput | EventSessionCreateOrConnectWithoutEventInput[]
+    createMany?: EventSessionCreateManyEventInputEnvelope
+    connect?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
+  }
+
+  export type EventSpeakerUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventSpeakerCreateWithoutEventInput, EventSpeakerUncheckedCreateWithoutEventInput> | EventSpeakerCreateWithoutEventInput[] | EventSpeakerUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventSpeakerCreateOrConnectWithoutEventInput | EventSpeakerCreateOrConnectWithoutEventInput[]
+    createMany?: EventSpeakerCreateManyEventInputEnvelope
+    connect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
   }
 
   export type EnumEventTypeFieldUpdateOperationsInput = {
@@ -51166,34 +52728,6 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type EventSessionUpdateManyWithoutEventNestedInput = {
-    create?: XOR<EventSessionCreateWithoutEventInput, EventSessionUncheckedCreateWithoutEventInput> | EventSessionCreateWithoutEventInput[] | EventSessionUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventSessionCreateOrConnectWithoutEventInput | EventSessionCreateOrConnectWithoutEventInput[]
-    upsert?: EventSessionUpsertWithWhereUniqueWithoutEventInput | EventSessionUpsertWithWhereUniqueWithoutEventInput[]
-    createMany?: EventSessionCreateManyEventInputEnvelope
-    set?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
-    disconnect?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
-    delete?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
-    connect?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
-    update?: EventSessionUpdateWithWhereUniqueWithoutEventInput | EventSessionUpdateWithWhereUniqueWithoutEventInput[]
-    updateMany?: EventSessionUpdateManyWithWhereWithoutEventInput | EventSessionUpdateManyWithWhereWithoutEventInput[]
-    deleteMany?: EventSessionScalarWhereInput | EventSessionScalarWhereInput[]
-  }
-
-  export type EventRegistrationUpdateManyWithoutEventNestedInput = {
-    create?: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput> | EventRegistrationCreateWithoutEventInput[] | EventRegistrationUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventRegistrationCreateOrConnectWithoutEventInput | EventRegistrationCreateOrConnectWithoutEventInput[]
-    upsert?: EventRegistrationUpsertWithWhereUniqueWithoutEventInput | EventRegistrationUpsertWithWhereUniqueWithoutEventInput[]
-    createMany?: EventRegistrationCreateManyEventInputEnvelope
-    set?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    disconnect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    delete?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    update?: EventRegistrationUpdateWithWhereUniqueWithoutEventInput | EventRegistrationUpdateWithWhereUniqueWithoutEventInput[]
-    updateMany?: EventRegistrationUpdateManyWithWhereWithoutEventInput | EventRegistrationUpdateManyWithWhereWithoutEventInput[]
-    deleteMany?: EventRegistrationScalarWhereInput | EventRegistrationScalarWhereInput[]
-  }
-
   export type EventAttendanceRecordUpdateManyWithoutEventNestedInput = {
     create?: XOR<EventAttendanceRecordCreateWithoutEventInput, EventAttendanceRecordUncheckedCreateWithoutEventInput> | EventAttendanceRecordCreateWithoutEventInput[] | EventAttendanceRecordUncheckedCreateWithoutEventInput[]
     connectOrCreate?: EventAttendanceRecordCreateOrConnectWithoutEventInput | EventAttendanceRecordCreateOrConnectWithoutEventInput[]
@@ -51206,20 +52740,6 @@ export namespace Prisma {
     update?: EventAttendanceRecordUpdateWithWhereUniqueWithoutEventInput | EventAttendanceRecordUpdateWithWhereUniqueWithoutEventInput[]
     updateMany?: EventAttendanceRecordUpdateManyWithWhereWithoutEventInput | EventAttendanceRecordUpdateManyWithWhereWithoutEventInput[]
     deleteMany?: EventAttendanceRecordScalarWhereInput | EventAttendanceRecordScalarWhereInput[]
-  }
-
-  export type EventSpeakerUpdateManyWithoutEventNestedInput = {
-    create?: XOR<EventSpeakerCreateWithoutEventInput, EventSpeakerUncheckedCreateWithoutEventInput> | EventSpeakerCreateWithoutEventInput[] | EventSpeakerUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventSpeakerCreateOrConnectWithoutEventInput | EventSpeakerCreateOrConnectWithoutEventInput[]
-    upsert?: EventSpeakerUpsertWithWhereUniqueWithoutEventInput | EventSpeakerUpsertWithWhereUniqueWithoutEventInput[]
-    createMany?: EventSpeakerCreateManyEventInputEnvelope
-    set?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-    disconnect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-    delete?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-    connect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-    update?: EventSpeakerUpdateWithWhereUniqueWithoutEventInput | EventSpeakerUpdateWithWhereUniqueWithoutEventInput[]
-    updateMany?: EventSpeakerUpdateManyWithWhereWithoutEventInput | EventSpeakerUpdateManyWithWhereWithoutEventInput[]
-    deleteMany?: EventSpeakerScalarWhereInput | EventSpeakerScalarWhereInput[]
   }
 
   export type EventMaterialLinkUpdateManyWithoutEventNestedInput = {
@@ -51236,7 +52756,21 @@ export namespace Prisma {
     deleteMany?: EventMaterialLinkScalarWhereInput | EventMaterialLinkScalarWhereInput[]
   }
 
-  export type EventSessionUncheckedUpdateManyWithoutEventNestedInput = {
+  export type EventRegistrationUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput> | EventRegistrationCreateWithoutEventInput[] | EventRegistrationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventRegistrationCreateOrConnectWithoutEventInput | EventRegistrationCreateOrConnectWithoutEventInput[]
+    upsert?: EventRegistrationUpsertWithWhereUniqueWithoutEventInput | EventRegistrationUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventRegistrationCreateManyEventInputEnvelope
+    set?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    disconnect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    delete?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    update?: EventRegistrationUpdateWithWhereUniqueWithoutEventInput | EventRegistrationUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventRegistrationUpdateManyWithWhereWithoutEventInput | EventRegistrationUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventRegistrationScalarWhereInput | EventRegistrationScalarWhereInput[]
+  }
+
+  export type EventSessionUpdateManyWithoutEventNestedInput = {
     create?: XOR<EventSessionCreateWithoutEventInput, EventSessionUncheckedCreateWithoutEventInput> | EventSessionCreateWithoutEventInput[] | EventSessionUncheckedCreateWithoutEventInput[]
     connectOrCreate?: EventSessionCreateOrConnectWithoutEventInput | EventSessionCreateOrConnectWithoutEventInput[]
     upsert?: EventSessionUpsertWithWhereUniqueWithoutEventInput | EventSessionUpsertWithWhereUniqueWithoutEventInput[]
@@ -51250,18 +52784,18 @@ export namespace Prisma {
     deleteMany?: EventSessionScalarWhereInput | EventSessionScalarWhereInput[]
   }
 
-  export type EventRegistrationUncheckedUpdateManyWithoutEventNestedInput = {
-    create?: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput> | EventRegistrationCreateWithoutEventInput[] | EventRegistrationUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventRegistrationCreateOrConnectWithoutEventInput | EventRegistrationCreateOrConnectWithoutEventInput[]
-    upsert?: EventRegistrationUpsertWithWhereUniqueWithoutEventInput | EventRegistrationUpsertWithWhereUniqueWithoutEventInput[]
-    createMany?: EventRegistrationCreateManyEventInputEnvelope
-    set?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    disconnect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    delete?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
-    update?: EventRegistrationUpdateWithWhereUniqueWithoutEventInput | EventRegistrationUpdateWithWhereUniqueWithoutEventInput[]
-    updateMany?: EventRegistrationUpdateManyWithWhereWithoutEventInput | EventRegistrationUpdateManyWithWhereWithoutEventInput[]
-    deleteMany?: EventRegistrationScalarWhereInput | EventRegistrationScalarWhereInput[]
+  export type EventSpeakerUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventSpeakerCreateWithoutEventInput, EventSpeakerUncheckedCreateWithoutEventInput> | EventSpeakerCreateWithoutEventInput[] | EventSpeakerUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventSpeakerCreateOrConnectWithoutEventInput | EventSpeakerCreateOrConnectWithoutEventInput[]
+    upsert?: EventSpeakerUpsertWithWhereUniqueWithoutEventInput | EventSpeakerUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventSpeakerCreateManyEventInputEnvelope
+    set?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
+    disconnect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
+    delete?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
+    connect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
+    update?: EventSpeakerUpdateWithWhereUniqueWithoutEventInput | EventSpeakerUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventSpeakerUpdateManyWithWhereWithoutEventInput | EventSpeakerUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventSpeakerScalarWhereInput | EventSpeakerScalarWhereInput[]
   }
 
   export type EventAttendanceRecordUncheckedUpdateManyWithoutEventNestedInput = {
@@ -51278,20 +52812,6 @@ export namespace Prisma {
     deleteMany?: EventAttendanceRecordScalarWhereInput | EventAttendanceRecordScalarWhereInput[]
   }
 
-  export type EventSpeakerUncheckedUpdateManyWithoutEventNestedInput = {
-    create?: XOR<EventSpeakerCreateWithoutEventInput, EventSpeakerUncheckedCreateWithoutEventInput> | EventSpeakerCreateWithoutEventInput[] | EventSpeakerUncheckedCreateWithoutEventInput[]
-    connectOrCreate?: EventSpeakerCreateOrConnectWithoutEventInput | EventSpeakerCreateOrConnectWithoutEventInput[]
-    upsert?: EventSpeakerUpsertWithWhereUniqueWithoutEventInput | EventSpeakerUpsertWithWhereUniqueWithoutEventInput[]
-    createMany?: EventSpeakerCreateManyEventInputEnvelope
-    set?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-    disconnect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-    delete?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-    connect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
-    update?: EventSpeakerUpdateWithWhereUniqueWithoutEventInput | EventSpeakerUpdateWithWhereUniqueWithoutEventInput[]
-    updateMany?: EventSpeakerUpdateManyWithWhereWithoutEventInput | EventSpeakerUpdateManyWithWhereWithoutEventInput[]
-    deleteMany?: EventSpeakerScalarWhereInput | EventSpeakerScalarWhereInput[]
-  }
-
   export type EventMaterialLinkUncheckedUpdateManyWithoutEventNestedInput = {
     create?: XOR<EventMaterialLinkCreateWithoutEventInput, EventMaterialLinkUncheckedCreateWithoutEventInput> | EventMaterialLinkCreateWithoutEventInput[] | EventMaterialLinkUncheckedCreateWithoutEventInput[]
     connectOrCreate?: EventMaterialLinkCreateOrConnectWithoutEventInput | EventMaterialLinkCreateOrConnectWithoutEventInput[]
@@ -51306,10 +52826,46 @@ export namespace Prisma {
     deleteMany?: EventMaterialLinkScalarWhereInput | EventMaterialLinkScalarWhereInput[]
   }
 
-  export type EventCreateNestedOneWithoutSessionsInput = {
-    create?: XOR<EventCreateWithoutSessionsInput, EventUncheckedCreateWithoutSessionsInput>
-    connectOrCreate?: EventCreateOrConnectWithoutSessionsInput
-    connect?: EventWhereUniqueInput
+  export type EventRegistrationUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput> | EventRegistrationCreateWithoutEventInput[] | EventRegistrationUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventRegistrationCreateOrConnectWithoutEventInput | EventRegistrationCreateOrConnectWithoutEventInput[]
+    upsert?: EventRegistrationUpsertWithWhereUniqueWithoutEventInput | EventRegistrationUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventRegistrationCreateManyEventInputEnvelope
+    set?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    disconnect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    delete?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    connect?: EventRegistrationWhereUniqueInput | EventRegistrationWhereUniqueInput[]
+    update?: EventRegistrationUpdateWithWhereUniqueWithoutEventInput | EventRegistrationUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventRegistrationUpdateManyWithWhereWithoutEventInput | EventRegistrationUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventRegistrationScalarWhereInput | EventRegistrationScalarWhereInput[]
+  }
+
+  export type EventSessionUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventSessionCreateWithoutEventInput, EventSessionUncheckedCreateWithoutEventInput> | EventSessionCreateWithoutEventInput[] | EventSessionUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventSessionCreateOrConnectWithoutEventInput | EventSessionCreateOrConnectWithoutEventInput[]
+    upsert?: EventSessionUpsertWithWhereUniqueWithoutEventInput | EventSessionUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventSessionCreateManyEventInputEnvelope
+    set?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
+    disconnect?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
+    delete?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
+    connect?: EventSessionWhereUniqueInput | EventSessionWhereUniqueInput[]
+    update?: EventSessionUpdateWithWhereUniqueWithoutEventInput | EventSessionUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventSessionUpdateManyWithWhereWithoutEventInput | EventSessionUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventSessionScalarWhereInput | EventSessionScalarWhereInput[]
+  }
+
+  export type EventSpeakerUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventSpeakerCreateWithoutEventInput, EventSpeakerUncheckedCreateWithoutEventInput> | EventSpeakerCreateWithoutEventInput[] | EventSpeakerUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventSpeakerCreateOrConnectWithoutEventInput | EventSpeakerCreateOrConnectWithoutEventInput[]
+    upsert?: EventSpeakerUpsertWithWhereUniqueWithoutEventInput | EventSpeakerUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventSpeakerCreateManyEventInputEnvelope
+    set?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
+    disconnect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
+    delete?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
+    connect?: EventSpeakerWhereUniqueInput | EventSpeakerWhereUniqueInput[]
+    update?: EventSpeakerUpdateWithWhereUniqueWithoutEventInput | EventSpeakerUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventSpeakerUpdateManyWithWhereWithoutEventInput | EventSpeakerUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventSpeakerScalarWhereInput | EventSpeakerScalarWhereInput[]
   }
 
   export type EventSessionRegistrationCreateNestedManyWithoutSessionInput = {
@@ -51324,6 +52880,12 @@ export namespace Prisma {
     connectOrCreate?: EventSessionSpeakerCreateOrConnectWithoutSessionInput | EventSessionSpeakerCreateOrConnectWithoutSessionInput[]
     createMany?: EventSessionSpeakerCreateManySessionInputEnvelope
     connect?: EventSessionSpeakerWhereUniqueInput | EventSessionSpeakerWhereUniqueInput[]
+  }
+
+  export type EventCreateNestedOneWithoutSessionsInput = {
+    create?: XOR<EventCreateWithoutSessionsInput, EventUncheckedCreateWithoutSessionsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutSessionsInput
+    connect?: EventWhereUniqueInput
   }
 
   export type EventSessionRegistrationUncheckedCreateNestedManyWithoutSessionInput = {
@@ -51342,14 +52904,6 @@ export namespace Prisma {
 
   export type EnumSessionTypeFieldUpdateOperationsInput = {
     set?: $Enums.SessionType
-  }
-
-  export type EventUpdateOneRequiredWithoutSessionsNestedInput = {
-    create?: XOR<EventCreateWithoutSessionsInput, EventUncheckedCreateWithoutSessionsInput>
-    connectOrCreate?: EventCreateOrConnectWithoutSessionsInput
-    upsert?: EventUpsertWithoutSessionsInput
-    connect?: EventWhereUniqueInput
-    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutSessionsInput, EventUpdateWithoutSessionsInput>, EventUncheckedUpdateWithoutSessionsInput>
   }
 
   export type EventSessionRegistrationUpdateManyWithoutSessionNestedInput = {
@@ -51380,6 +52934,14 @@ export namespace Prisma {
     deleteMany?: EventSessionSpeakerScalarWhereInput | EventSessionSpeakerScalarWhereInput[]
   }
 
+  export type EventUpdateOneRequiredWithoutSessionsNestedInput = {
+    create?: XOR<EventCreateWithoutSessionsInput, EventUncheckedCreateWithoutSessionsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutSessionsInput
+    upsert?: EventUpsertWithoutSessionsInput
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutSessionsInput, EventUpdateWithoutSessionsInput>, EventUncheckedUpdateWithoutSessionsInput>
+  }
+
   export type EventSessionRegistrationUncheckedUpdateManyWithoutSessionNestedInput = {
     create?: XOR<EventSessionRegistrationCreateWithoutSessionInput, EventSessionRegistrationUncheckedCreateWithoutSessionInput> | EventSessionRegistrationCreateWithoutSessionInput[] | EventSessionRegistrationUncheckedCreateWithoutSessionInput[]
     connectOrCreate?: EventSessionRegistrationCreateOrConnectWithoutSessionInput | EventSessionRegistrationCreateOrConnectWithoutSessionInput[]
@@ -51408,16 +52970,16 @@ export namespace Prisma {
     deleteMany?: EventSessionSpeakerScalarWhereInput | EventSessionSpeakerScalarWhereInput[]
   }
 
-  export type EventCreateNestedOneWithoutRegistrationsInput = {
-    create?: XOR<EventCreateWithoutRegistrationsInput, EventUncheckedCreateWithoutRegistrationsInput>
-    connectOrCreate?: EventCreateOrConnectWithoutRegistrationsInput
-    connect?: EventWhereUniqueInput
-  }
-
   export type BeneficiaryCreateNestedOneWithoutEvent_registrationsInput = {
     create?: XOR<BeneficiaryCreateWithoutEvent_registrationsInput, BeneficiaryUncheckedCreateWithoutEvent_registrationsInput>
     connectOrCreate?: BeneficiaryCreateOrConnectWithoutEvent_registrationsInput
     connect?: BeneficiaryWhereUniqueInput
+  }
+
+  export type EventCreateNestedOneWithoutRegistrationsInput = {
+    create?: XOR<EventCreateWithoutRegistrationsInput, EventUncheckedCreateWithoutRegistrationsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutRegistrationsInput
+    connect?: EventWhereUniqueInput
   }
 
   export type EventSessionRegistrationCreateNestedManyWithoutRegistrationInput = {
@@ -51450,14 +53012,6 @@ export namespace Prisma {
     set?: $Enums.AttendeeRole
   }
 
-  export type EventUpdateOneRequiredWithoutRegistrationsNestedInput = {
-    create?: XOR<EventCreateWithoutRegistrationsInput, EventUncheckedCreateWithoutRegistrationsInput>
-    connectOrCreate?: EventCreateOrConnectWithoutRegistrationsInput
-    upsert?: EventUpsertWithoutRegistrationsInput
-    connect?: EventWhereUniqueInput
-    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutRegistrationsInput, EventUpdateWithoutRegistrationsInput>, EventUncheckedUpdateWithoutRegistrationsInput>
-  }
-
   export type BeneficiaryUpdateOneWithoutEvent_registrationsNestedInput = {
     create?: XOR<BeneficiaryCreateWithoutEvent_registrationsInput, BeneficiaryUncheckedCreateWithoutEvent_registrationsInput>
     connectOrCreate?: BeneficiaryCreateOrConnectWithoutEvent_registrationsInput
@@ -51466,6 +53020,14 @@ export namespace Prisma {
     delete?: BeneficiaryWhereInput | boolean
     connect?: BeneficiaryWhereUniqueInput
     update?: XOR<XOR<BeneficiaryUpdateToOneWithWhereWithoutEvent_registrationsInput, BeneficiaryUpdateWithoutEvent_registrationsInput>, BeneficiaryUncheckedUpdateWithoutEvent_registrationsInput>
+  }
+
+  export type EventUpdateOneRequiredWithoutRegistrationsNestedInput = {
+    create?: XOR<EventCreateWithoutRegistrationsInput, EventUncheckedCreateWithoutRegistrationsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutRegistrationsInput
+    upsert?: EventUpsertWithoutRegistrationsInput
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutRegistrationsInput, EventUpdateWithoutRegistrationsInput>, EventUncheckedUpdateWithoutRegistrationsInput>
   }
 
   export type EventSessionRegistrationUpdateManyWithoutRegistrationNestedInput = {
@@ -51524,28 +53086,20 @@ export namespace Prisma {
     update?: XOR<XOR<EventSessionUpdateToOneWithWhereWithoutSession_registrationsInput, EventSessionUpdateWithoutSession_registrationsInput>, EventSessionUncheckedUpdateWithoutSession_registrationsInput>
   }
 
-  export type EventCreateNestedOneWithoutAttendance_recordsInput = {
-    create?: XOR<EventCreateWithoutAttendance_recordsInput, EventUncheckedCreateWithoutAttendance_recordsInput>
-    connectOrCreate?: EventCreateOrConnectWithoutAttendance_recordsInput
-    connect?: EventWhereUniqueInput
-  }
-
   export type BeneficiaryCreateNestedOneWithoutEvent_attendance_recordsInput = {
     create?: XOR<BeneficiaryCreateWithoutEvent_attendance_recordsInput, BeneficiaryUncheckedCreateWithoutEvent_attendance_recordsInput>
     connectOrCreate?: BeneficiaryCreateOrConnectWithoutEvent_attendance_recordsInput
     connect?: BeneficiaryWhereUniqueInput
   }
 
-  export type EnumSessionAttendanceStatusFieldUpdateOperationsInput = {
-    set?: $Enums.SessionAttendanceStatus
-  }
-
-  export type EventUpdateOneRequiredWithoutAttendance_recordsNestedInput = {
+  export type EventCreateNestedOneWithoutAttendance_recordsInput = {
     create?: XOR<EventCreateWithoutAttendance_recordsInput, EventUncheckedCreateWithoutAttendance_recordsInput>
     connectOrCreate?: EventCreateOrConnectWithoutAttendance_recordsInput
-    upsert?: EventUpsertWithoutAttendance_recordsInput
     connect?: EventWhereUniqueInput
-    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutAttendance_recordsInput, EventUpdateWithoutAttendance_recordsInput>, EventUncheckedUpdateWithoutAttendance_recordsInput>
+  }
+
+  export type EnumSessionAttendanceStatusFieldUpdateOperationsInput = {
+    set?: $Enums.SessionAttendanceStatus
   }
 
   export type BeneficiaryUpdateOneWithoutEvent_attendance_recordsNestedInput = {
@@ -51558,10 +53112,12 @@ export namespace Prisma {
     update?: XOR<XOR<BeneficiaryUpdateToOneWithWhereWithoutEvent_attendance_recordsInput, BeneficiaryUpdateWithoutEvent_attendance_recordsInput>, BeneficiaryUncheckedUpdateWithoutEvent_attendance_recordsInput>
   }
 
-  export type EventCreateNestedOneWithoutSpeakersInput = {
-    create?: XOR<EventCreateWithoutSpeakersInput, EventUncheckedCreateWithoutSpeakersInput>
-    connectOrCreate?: EventCreateOrConnectWithoutSpeakersInput
+  export type EventUpdateOneRequiredWithoutAttendance_recordsNestedInput = {
+    create?: XOR<EventCreateWithoutAttendance_recordsInput, EventUncheckedCreateWithoutAttendance_recordsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutAttendance_recordsInput
+    upsert?: EventUpsertWithoutAttendance_recordsInput
     connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutAttendance_recordsInput, EventUpdateWithoutAttendance_recordsInput>, EventUncheckedUpdateWithoutAttendance_recordsInput>
   }
 
   export type EventSessionSpeakerCreateNestedManyWithoutSpeakerInput = {
@@ -51569,6 +53125,12 @@ export namespace Prisma {
     connectOrCreate?: EventSessionSpeakerCreateOrConnectWithoutSpeakerInput | EventSessionSpeakerCreateOrConnectWithoutSpeakerInput[]
     createMany?: EventSessionSpeakerCreateManySpeakerInputEnvelope
     connect?: EventSessionSpeakerWhereUniqueInput | EventSessionSpeakerWhereUniqueInput[]
+  }
+
+  export type EventCreateNestedOneWithoutSpeakersInput = {
+    create?: XOR<EventCreateWithoutSpeakersInput, EventUncheckedCreateWithoutSpeakersInput>
+    connectOrCreate?: EventCreateOrConnectWithoutSpeakersInput
+    connect?: EventWhereUniqueInput
   }
 
   export type EventSessionSpeakerUncheckedCreateNestedManyWithoutSpeakerInput = {
@@ -51580,14 +53142,6 @@ export namespace Prisma {
 
   export type EnumSpeakerTypeFieldUpdateOperationsInput = {
     set?: $Enums.SpeakerType
-  }
-
-  export type EventUpdateOneRequiredWithoutSpeakersNestedInput = {
-    create?: XOR<EventCreateWithoutSpeakersInput, EventUncheckedCreateWithoutSpeakersInput>
-    connectOrCreate?: EventCreateOrConnectWithoutSpeakersInput
-    upsert?: EventUpsertWithoutSpeakersInput
-    connect?: EventWhereUniqueInput
-    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutSpeakersInput, EventUpdateWithoutSpeakersInput>, EventUncheckedUpdateWithoutSpeakersInput>
   }
 
   export type EventSessionSpeakerUpdateManyWithoutSpeakerNestedInput = {
@@ -51602,6 +53156,14 @@ export namespace Prisma {
     update?: EventSessionSpeakerUpdateWithWhereUniqueWithoutSpeakerInput | EventSessionSpeakerUpdateWithWhereUniqueWithoutSpeakerInput[]
     updateMany?: EventSessionSpeakerUpdateManyWithWhereWithoutSpeakerInput | EventSessionSpeakerUpdateManyWithWhereWithoutSpeakerInput[]
     deleteMany?: EventSessionSpeakerScalarWhereInput | EventSessionSpeakerScalarWhereInput[]
+  }
+
+  export type EventUpdateOneRequiredWithoutSpeakersNestedInput = {
+    create?: XOR<EventCreateWithoutSpeakersInput, EventUncheckedCreateWithoutSpeakersInput>
+    connectOrCreate?: EventCreateOrConnectWithoutSpeakersInput
+    upsert?: EventUpsertWithoutSpeakersInput
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutSpeakersInput, EventUpdateWithoutSpeakersInput>, EventUncheckedUpdateWithoutSpeakersInput>
   }
 
   export type EventSessionSpeakerUncheckedUpdateManyWithoutSpeakerNestedInput = {
@@ -51769,13 +53331,6 @@ export namespace Prisma {
     update?: XOR<XOR<TrainingUpdateToOneWithWhereWithoutAgendasInput, TrainingUpdateWithoutAgendasInput>, TrainingUncheckedUpdateWithoutAgendasInput>
   }
 
-  export type TrainingMaterialLinkCreateNestedManyWithoutMaterialInput = {
-    create?: XOR<TrainingMaterialLinkCreateWithoutMaterialInput, TrainingMaterialLinkUncheckedCreateWithoutMaterialInput> | TrainingMaterialLinkCreateWithoutMaterialInput[] | TrainingMaterialLinkUncheckedCreateWithoutMaterialInput[]
-    connectOrCreate?: TrainingMaterialLinkCreateOrConnectWithoutMaterialInput | TrainingMaterialLinkCreateOrConnectWithoutMaterialInput[]
-    createMany?: TrainingMaterialLinkCreateManyMaterialInputEnvelope
-    connect?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
-  }
-
   export type EventMaterialLinkCreateNestedManyWithoutMaterialInput = {
     create?: XOR<EventMaterialLinkCreateWithoutMaterialInput, EventMaterialLinkUncheckedCreateWithoutMaterialInput> | EventMaterialLinkCreateWithoutMaterialInput[] | EventMaterialLinkUncheckedCreateWithoutMaterialInput[]
     connectOrCreate?: EventMaterialLinkCreateOrConnectWithoutMaterialInput | EventMaterialLinkCreateOrConnectWithoutMaterialInput[]
@@ -51783,7 +53338,7 @@ export namespace Prisma {
     connect?: EventMaterialLinkWhereUniqueInput | EventMaterialLinkWhereUniqueInput[]
   }
 
-  export type TrainingMaterialLinkUncheckedCreateNestedManyWithoutMaterialInput = {
+  export type TrainingMaterialLinkCreateNestedManyWithoutMaterialInput = {
     create?: XOR<TrainingMaterialLinkCreateWithoutMaterialInput, TrainingMaterialLinkUncheckedCreateWithoutMaterialInput> | TrainingMaterialLinkCreateWithoutMaterialInput[] | TrainingMaterialLinkUncheckedCreateWithoutMaterialInput[]
     connectOrCreate?: TrainingMaterialLinkCreateOrConnectWithoutMaterialInput | TrainingMaterialLinkCreateOrConnectWithoutMaterialInput[]
     createMany?: TrainingMaterialLinkCreateManyMaterialInputEnvelope
@@ -51797,18 +53352,11 @@ export namespace Prisma {
     connect?: EventMaterialLinkWhereUniqueInput | EventMaterialLinkWhereUniqueInput[]
   }
 
-  export type TrainingMaterialLinkUpdateManyWithoutMaterialNestedInput = {
+  export type TrainingMaterialLinkUncheckedCreateNestedManyWithoutMaterialInput = {
     create?: XOR<TrainingMaterialLinkCreateWithoutMaterialInput, TrainingMaterialLinkUncheckedCreateWithoutMaterialInput> | TrainingMaterialLinkCreateWithoutMaterialInput[] | TrainingMaterialLinkUncheckedCreateWithoutMaterialInput[]
     connectOrCreate?: TrainingMaterialLinkCreateOrConnectWithoutMaterialInput | TrainingMaterialLinkCreateOrConnectWithoutMaterialInput[]
-    upsert?: TrainingMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput | TrainingMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput[]
     createMany?: TrainingMaterialLinkCreateManyMaterialInputEnvelope
-    set?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
-    disconnect?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
-    delete?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
     connect?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
-    update?: TrainingMaterialLinkUpdateWithWhereUniqueWithoutMaterialInput | TrainingMaterialLinkUpdateWithWhereUniqueWithoutMaterialInput[]
-    updateMany?: TrainingMaterialLinkUpdateManyWithWhereWithoutMaterialInput | TrainingMaterialLinkUpdateManyWithWhereWithoutMaterialInput[]
-    deleteMany?: TrainingMaterialLinkScalarWhereInput | TrainingMaterialLinkScalarWhereInput[]
   }
 
   export type EventMaterialLinkUpdateManyWithoutMaterialNestedInput = {
@@ -51825,7 +53373,7 @@ export namespace Prisma {
     deleteMany?: EventMaterialLinkScalarWhereInput | EventMaterialLinkScalarWhereInput[]
   }
 
-  export type TrainingMaterialLinkUncheckedUpdateManyWithoutMaterialNestedInput = {
+  export type TrainingMaterialLinkUpdateManyWithoutMaterialNestedInput = {
     create?: XOR<TrainingMaterialLinkCreateWithoutMaterialInput, TrainingMaterialLinkUncheckedCreateWithoutMaterialInput> | TrainingMaterialLinkCreateWithoutMaterialInput[] | TrainingMaterialLinkUncheckedCreateWithoutMaterialInput[]
     connectOrCreate?: TrainingMaterialLinkCreateOrConnectWithoutMaterialInput | TrainingMaterialLinkCreateOrConnectWithoutMaterialInput[]
     upsert?: TrainingMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput | TrainingMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput[]
@@ -51853,10 +53401,18 @@ export namespace Prisma {
     deleteMany?: EventMaterialLinkScalarWhereInput | EventMaterialLinkScalarWhereInput[]
   }
 
-  export type TrainingCreateNestedOneWithoutMaterial_linksInput = {
-    create?: XOR<TrainingCreateWithoutMaterial_linksInput, TrainingUncheckedCreateWithoutMaterial_linksInput>
-    connectOrCreate?: TrainingCreateOrConnectWithoutMaterial_linksInput
-    connect?: TrainingWhereUniqueInput
+  export type TrainingMaterialLinkUncheckedUpdateManyWithoutMaterialNestedInput = {
+    create?: XOR<TrainingMaterialLinkCreateWithoutMaterialInput, TrainingMaterialLinkUncheckedCreateWithoutMaterialInput> | TrainingMaterialLinkCreateWithoutMaterialInput[] | TrainingMaterialLinkUncheckedCreateWithoutMaterialInput[]
+    connectOrCreate?: TrainingMaterialLinkCreateOrConnectWithoutMaterialInput | TrainingMaterialLinkCreateOrConnectWithoutMaterialInput[]
+    upsert?: TrainingMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput | TrainingMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput[]
+    createMany?: TrainingMaterialLinkCreateManyMaterialInputEnvelope
+    set?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
+    disconnect?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
+    delete?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
+    connect?: TrainingMaterialLinkWhereUniqueInput | TrainingMaterialLinkWhereUniqueInput[]
+    update?: TrainingMaterialLinkUpdateWithWhereUniqueWithoutMaterialInput | TrainingMaterialLinkUpdateWithWhereUniqueWithoutMaterialInput[]
+    updateMany?: TrainingMaterialLinkUpdateManyWithWhereWithoutMaterialInput | TrainingMaterialLinkUpdateManyWithWhereWithoutMaterialInput[]
+    deleteMany?: TrainingMaterialLinkScalarWhereInput | TrainingMaterialLinkScalarWhereInput[]
   }
 
   export type TrainingMaterialCreateNestedOneWithoutTraining_linksInput = {
@@ -51865,12 +53421,10 @@ export namespace Prisma {
     connect?: TrainingMaterialWhereUniqueInput
   }
 
-  export type TrainingUpdateOneRequiredWithoutMaterial_linksNestedInput = {
+  export type TrainingCreateNestedOneWithoutMaterial_linksInput = {
     create?: XOR<TrainingCreateWithoutMaterial_linksInput, TrainingUncheckedCreateWithoutMaterial_linksInput>
     connectOrCreate?: TrainingCreateOrConnectWithoutMaterial_linksInput
-    upsert?: TrainingUpsertWithoutMaterial_linksInput
     connect?: TrainingWhereUniqueInput
-    update?: XOR<XOR<TrainingUpdateToOneWithWhereWithoutMaterial_linksInput, TrainingUpdateWithoutMaterial_linksInput>, TrainingUncheckedUpdateWithoutMaterial_linksInput>
   }
 
   export type TrainingMaterialUpdateOneRequiredWithoutTraining_linksNestedInput = {
@@ -51881,18 +53435,19 @@ export namespace Prisma {
     update?: XOR<XOR<TrainingMaterialUpdateToOneWithWhereWithoutTraining_linksInput, TrainingMaterialUpdateWithoutTraining_linksInput>, TrainingMaterialUncheckedUpdateWithoutTraining_linksInput>
   }
 
+  export type TrainingUpdateOneRequiredWithoutMaterial_linksNestedInput = {
+    create?: XOR<TrainingCreateWithoutMaterial_linksInput, TrainingUncheckedCreateWithoutMaterial_linksInput>
+    connectOrCreate?: TrainingCreateOrConnectWithoutMaterial_linksInput
+    upsert?: TrainingUpsertWithoutMaterial_linksInput
+    connect?: TrainingWhereUniqueInput
+    update?: XOR<XOR<TrainingUpdateToOneWithWhereWithoutMaterial_linksInput, TrainingUpdateWithoutMaterial_linksInput>, TrainingUncheckedUpdateWithoutMaterial_linksInput>
+  }
+
   export type SurveyQuestionCreateNestedManyWithoutSurveyInput = {
     create?: XOR<SurveyQuestionCreateWithoutSurveyInput, SurveyQuestionUncheckedCreateWithoutSurveyInput> | SurveyQuestionCreateWithoutSurveyInput[] | SurveyQuestionUncheckedCreateWithoutSurveyInput[]
     connectOrCreate?: SurveyQuestionCreateOrConnectWithoutSurveyInput | SurveyQuestionCreateOrConnectWithoutSurveyInput[]
     createMany?: SurveyQuestionCreateManySurveyInputEnvelope
     connect?: SurveyQuestionWhereUniqueInput | SurveyQuestionWhereUniqueInput[]
-  }
-
-  export type TrainingSurveyLinkCreateNestedManyWithoutSurveyInput = {
-    create?: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput> | TrainingSurveyLinkCreateWithoutSurveyInput[] | TrainingSurveyLinkUncheckedCreateWithoutSurveyInput[]
-    connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutSurveyInput | TrainingSurveyLinkCreateOrConnectWithoutSurveyInput[]
-    createMany?: TrainingSurveyLinkCreateManySurveyInputEnvelope
-    connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
   }
 
   export type SurveyResponseCreateNestedManyWithoutSurveyInput = {
@@ -51902,6 +53457,13 @@ export namespace Prisma {
     connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
   }
 
+  export type TrainingSurveyLinkCreateNestedManyWithoutSurveyInput = {
+    create?: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput> | TrainingSurveyLinkCreateWithoutSurveyInput[] | TrainingSurveyLinkUncheckedCreateWithoutSurveyInput[]
+    connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutSurveyInput | TrainingSurveyLinkCreateOrConnectWithoutSurveyInput[]
+    createMany?: TrainingSurveyLinkCreateManySurveyInputEnvelope
+    connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+  }
+
   export type SurveyQuestionUncheckedCreateNestedManyWithoutSurveyInput = {
     create?: XOR<SurveyQuestionCreateWithoutSurveyInput, SurveyQuestionUncheckedCreateWithoutSurveyInput> | SurveyQuestionCreateWithoutSurveyInput[] | SurveyQuestionUncheckedCreateWithoutSurveyInput[]
     connectOrCreate?: SurveyQuestionCreateOrConnectWithoutSurveyInput | SurveyQuestionCreateOrConnectWithoutSurveyInput[]
@@ -51909,18 +53471,18 @@ export namespace Prisma {
     connect?: SurveyQuestionWhereUniqueInput | SurveyQuestionWhereUniqueInput[]
   }
 
-  export type TrainingSurveyLinkUncheckedCreateNestedManyWithoutSurveyInput = {
-    create?: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput> | TrainingSurveyLinkCreateWithoutSurveyInput[] | TrainingSurveyLinkUncheckedCreateWithoutSurveyInput[]
-    connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutSurveyInput | TrainingSurveyLinkCreateOrConnectWithoutSurveyInput[]
-    createMany?: TrainingSurveyLinkCreateManySurveyInputEnvelope
-    connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-  }
-
   export type SurveyResponseUncheckedCreateNestedManyWithoutSurveyInput = {
     create?: XOR<SurveyResponseCreateWithoutSurveyInput, SurveyResponseUncheckedCreateWithoutSurveyInput> | SurveyResponseCreateWithoutSurveyInput[] | SurveyResponseUncheckedCreateWithoutSurveyInput[]
     connectOrCreate?: SurveyResponseCreateOrConnectWithoutSurveyInput | SurveyResponseCreateOrConnectWithoutSurveyInput[]
     createMany?: SurveyResponseCreateManySurveyInputEnvelope
     connect?: SurveyResponseWhereUniqueInput | SurveyResponseWhereUniqueInput[]
+  }
+
+  export type TrainingSurveyLinkUncheckedCreateNestedManyWithoutSurveyInput = {
+    create?: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput> | TrainingSurveyLinkCreateWithoutSurveyInput[] | TrainingSurveyLinkUncheckedCreateWithoutSurveyInput[]
+    connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutSurveyInput | TrainingSurveyLinkCreateOrConnectWithoutSurveyInput[]
+    createMany?: TrainingSurveyLinkCreateManySurveyInputEnvelope
+    connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
   }
 
   export type EnumSurveyTypeFieldUpdateOperationsInput = {
@@ -51941,20 +53503,6 @@ export namespace Prisma {
     deleteMany?: SurveyQuestionScalarWhereInput | SurveyQuestionScalarWhereInput[]
   }
 
-  export type TrainingSurveyLinkUpdateManyWithoutSurveyNestedInput = {
-    create?: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput> | TrainingSurveyLinkCreateWithoutSurveyInput[] | TrainingSurveyLinkUncheckedCreateWithoutSurveyInput[]
-    connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutSurveyInput | TrainingSurveyLinkCreateOrConnectWithoutSurveyInput[]
-    upsert?: TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput | TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput[]
-    createMany?: TrainingSurveyLinkCreateManySurveyInputEnvelope
-    set?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-    disconnect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-    delete?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-    connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-    update?: TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput | TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput[]
-    updateMany?: TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput | TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput[]
-    deleteMany?: TrainingSurveyLinkScalarWhereInput | TrainingSurveyLinkScalarWhereInput[]
-  }
-
   export type SurveyResponseUpdateManyWithoutSurveyNestedInput = {
     create?: XOR<SurveyResponseCreateWithoutSurveyInput, SurveyResponseUncheckedCreateWithoutSurveyInput> | SurveyResponseCreateWithoutSurveyInput[] | SurveyResponseUncheckedCreateWithoutSurveyInput[]
     connectOrCreate?: SurveyResponseCreateOrConnectWithoutSurveyInput | SurveyResponseCreateOrConnectWithoutSurveyInput[]
@@ -51967,6 +53515,20 @@ export namespace Prisma {
     update?: SurveyResponseUpdateWithWhereUniqueWithoutSurveyInput | SurveyResponseUpdateWithWhereUniqueWithoutSurveyInput[]
     updateMany?: SurveyResponseUpdateManyWithWhereWithoutSurveyInput | SurveyResponseUpdateManyWithWhereWithoutSurveyInput[]
     deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
+  }
+
+  export type TrainingSurveyLinkUpdateManyWithoutSurveyNestedInput = {
+    create?: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput> | TrainingSurveyLinkCreateWithoutSurveyInput[] | TrainingSurveyLinkUncheckedCreateWithoutSurveyInput[]
+    connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutSurveyInput | TrainingSurveyLinkCreateOrConnectWithoutSurveyInput[]
+    upsert?: TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput | TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput[]
+    createMany?: TrainingSurveyLinkCreateManySurveyInputEnvelope
+    set?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+    disconnect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+    delete?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+    connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+    update?: TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput | TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput[]
+    updateMany?: TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput | TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput[]
+    deleteMany?: TrainingSurveyLinkScalarWhereInput | TrainingSurveyLinkScalarWhereInput[]
   }
 
   export type SurveyQuestionUncheckedUpdateManyWithoutSurveyNestedInput = {
@@ -51983,20 +53545,6 @@ export namespace Prisma {
     deleteMany?: SurveyQuestionScalarWhereInput | SurveyQuestionScalarWhereInput[]
   }
 
-  export type TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyNestedInput = {
-    create?: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput> | TrainingSurveyLinkCreateWithoutSurveyInput[] | TrainingSurveyLinkUncheckedCreateWithoutSurveyInput[]
-    connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutSurveyInput | TrainingSurveyLinkCreateOrConnectWithoutSurveyInput[]
-    upsert?: TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput | TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput[]
-    createMany?: TrainingSurveyLinkCreateManySurveyInputEnvelope
-    set?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-    disconnect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-    delete?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-    connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
-    update?: TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput | TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput[]
-    updateMany?: TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput | TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput[]
-    deleteMany?: TrainingSurveyLinkScalarWhereInput | TrainingSurveyLinkScalarWhereInput[]
-  }
-
   export type SurveyResponseUncheckedUpdateManyWithoutSurveyNestedInput = {
     create?: XOR<SurveyResponseCreateWithoutSurveyInput, SurveyResponseUncheckedCreateWithoutSurveyInput> | SurveyResponseCreateWithoutSurveyInput[] | SurveyResponseUncheckedCreateWithoutSurveyInput[]
     connectOrCreate?: SurveyResponseCreateOrConnectWithoutSurveyInput | SurveyResponseCreateOrConnectWithoutSurveyInput[]
@@ -52011,10 +53559,18 @@ export namespace Prisma {
     deleteMany?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
   }
 
-  export type TrainingCreateNestedOneWithoutSurvey_linksInput = {
-    create?: XOR<TrainingCreateWithoutSurvey_linksInput, TrainingUncheckedCreateWithoutSurvey_linksInput>
-    connectOrCreate?: TrainingCreateOrConnectWithoutSurvey_linksInput
-    connect?: TrainingWhereUniqueInput
+  export type TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyNestedInput = {
+    create?: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput> | TrainingSurveyLinkCreateWithoutSurveyInput[] | TrainingSurveyLinkUncheckedCreateWithoutSurveyInput[]
+    connectOrCreate?: TrainingSurveyLinkCreateOrConnectWithoutSurveyInput | TrainingSurveyLinkCreateOrConnectWithoutSurveyInput[]
+    upsert?: TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput | TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput[]
+    createMany?: TrainingSurveyLinkCreateManySurveyInputEnvelope
+    set?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+    disconnect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+    delete?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+    connect?: TrainingSurveyLinkWhereUniqueInput | TrainingSurveyLinkWhereUniqueInput[]
+    update?: TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput | TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput[]
+    updateMany?: TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput | TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput[]
+    deleteMany?: TrainingSurveyLinkScalarWhereInput | TrainingSurveyLinkScalarWhereInput[]
   }
 
   export type SurveyCreateNestedOneWithoutTraining_linksInput = {
@@ -52023,16 +53579,14 @@ export namespace Prisma {
     connect?: SurveyWhereUniqueInput
   }
 
-  export type EnumSurveyTimingFieldUpdateOperationsInput = {
-    set?: $Enums.SurveyTiming
-  }
-
-  export type TrainingUpdateOneRequiredWithoutSurvey_linksNestedInput = {
+  export type TrainingCreateNestedOneWithoutSurvey_linksInput = {
     create?: XOR<TrainingCreateWithoutSurvey_linksInput, TrainingUncheckedCreateWithoutSurvey_linksInput>
     connectOrCreate?: TrainingCreateOrConnectWithoutSurvey_linksInput
-    upsert?: TrainingUpsertWithoutSurvey_linksInput
     connect?: TrainingWhereUniqueInput
-    update?: XOR<XOR<TrainingUpdateToOneWithWhereWithoutSurvey_linksInput, TrainingUpdateWithoutSurvey_linksInput>, TrainingUncheckedUpdateWithoutSurvey_linksInput>
+  }
+
+  export type EnumSurveyTimingFieldUpdateOperationsInput = {
+    set?: $Enums.SurveyTiming
   }
 
   export type SurveyUpdateOneRequiredWithoutTraining_linksNestedInput = {
@@ -52041,6 +53595,14 @@ export namespace Prisma {
     upsert?: SurveyUpsertWithoutTraining_linksInput
     connect?: SurveyWhereUniqueInput
     update?: XOR<XOR<SurveyUpdateToOneWithWhereWithoutTraining_linksInput, SurveyUpdateWithoutTraining_linksInput>, SurveyUncheckedUpdateWithoutTraining_linksInput>
+  }
+
+  export type TrainingUpdateOneRequiredWithoutSurvey_linksNestedInput = {
+    create?: XOR<TrainingCreateWithoutSurvey_linksInput, TrainingUncheckedCreateWithoutSurvey_linksInput>
+    connectOrCreate?: TrainingCreateOrConnectWithoutSurvey_linksInput
+    upsert?: TrainingUpsertWithoutSurvey_linksInput
+    connect?: TrainingWhereUniqueInput
+    update?: XOR<XOR<TrainingUpdateToOneWithWhereWithoutSurvey_linksInput, TrainingUpdateWithoutSurvey_linksInput>, TrainingUncheckedUpdateWithoutSurvey_linksInput>
   }
 
   export type SurveyQuestionCreateoptions_enInput = {
@@ -52059,17 +53621,17 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type SurveyCreateNestedOneWithoutQuestionsInput = {
-    create?: XOR<SurveyCreateWithoutQuestionsInput, SurveyUncheckedCreateWithoutQuestionsInput>
-    connectOrCreate?: SurveyCreateOrConnectWithoutQuestionsInput
-    connect?: SurveyWhereUniqueInput
-  }
-
   export type SurveyQuestionResponseCreateNestedManyWithoutQuestionInput = {
     create?: XOR<SurveyQuestionResponseCreateWithoutQuestionInput, SurveyQuestionResponseUncheckedCreateWithoutQuestionInput> | SurveyQuestionResponseCreateWithoutQuestionInput[] | SurveyQuestionResponseUncheckedCreateWithoutQuestionInput[]
     connectOrCreate?: SurveyQuestionResponseCreateOrConnectWithoutQuestionInput | SurveyQuestionResponseCreateOrConnectWithoutQuestionInput[]
     createMany?: SurveyQuestionResponseCreateManyQuestionInputEnvelope
     connect?: SurveyQuestionResponseWhereUniqueInput | SurveyQuestionResponseWhereUniqueInput[]
+  }
+
+  export type SurveyCreateNestedOneWithoutQuestionsInput = {
+    create?: XOR<SurveyCreateWithoutQuestionsInput, SurveyUncheckedCreateWithoutQuestionsInput>
+    connectOrCreate?: SurveyCreateOrConnectWithoutQuestionsInput
+    connect?: SurveyWhereUniqueInput
   }
 
   export type SurveyQuestionResponseUncheckedCreateNestedManyWithoutQuestionInput = {
@@ -52103,14 +53665,6 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type SurveyUpdateOneRequiredWithoutQuestionsNestedInput = {
-    create?: XOR<SurveyCreateWithoutQuestionsInput, SurveyUncheckedCreateWithoutQuestionsInput>
-    connectOrCreate?: SurveyCreateOrConnectWithoutQuestionsInput
-    upsert?: SurveyUpsertWithoutQuestionsInput
-    connect?: SurveyWhereUniqueInput
-    update?: XOR<XOR<SurveyUpdateToOneWithWhereWithoutQuestionsInput, SurveyUpdateWithoutQuestionsInput>, SurveyUncheckedUpdateWithoutQuestionsInput>
-  }
-
   export type SurveyQuestionResponseUpdateManyWithoutQuestionNestedInput = {
     create?: XOR<SurveyQuestionResponseCreateWithoutQuestionInput, SurveyQuestionResponseUncheckedCreateWithoutQuestionInput> | SurveyQuestionResponseCreateWithoutQuestionInput[] | SurveyQuestionResponseUncheckedCreateWithoutQuestionInput[]
     connectOrCreate?: SurveyQuestionResponseCreateOrConnectWithoutQuestionInput | SurveyQuestionResponseCreateOrConnectWithoutQuestionInput[]
@@ -52123,6 +53677,14 @@ export namespace Prisma {
     update?: SurveyQuestionResponseUpdateWithWhereUniqueWithoutQuestionInput | SurveyQuestionResponseUpdateWithWhereUniqueWithoutQuestionInput[]
     updateMany?: SurveyQuestionResponseUpdateManyWithWhereWithoutQuestionInput | SurveyQuestionResponseUpdateManyWithWhereWithoutQuestionInput[]
     deleteMany?: SurveyQuestionResponseScalarWhereInput | SurveyQuestionResponseScalarWhereInput[]
+  }
+
+  export type SurveyUpdateOneRequiredWithoutQuestionsNestedInput = {
+    create?: XOR<SurveyCreateWithoutQuestionsInput, SurveyUncheckedCreateWithoutQuestionsInput>
+    connectOrCreate?: SurveyCreateOrConnectWithoutQuestionsInput
+    upsert?: SurveyUpsertWithoutQuestionsInput
+    connect?: SurveyWhereUniqueInput
+    update?: XOR<XOR<SurveyUpdateToOneWithWhereWithoutQuestionsInput, SurveyUpdateWithoutQuestionsInput>, SurveyUncheckedUpdateWithoutQuestionsInput>
   }
 
   export type SurveyQuestionResponseUncheckedUpdateManyWithoutQuestionNestedInput = {
@@ -52139,10 +53701,11 @@ export namespace Prisma {
     deleteMany?: SurveyQuestionResponseScalarWhereInput | SurveyQuestionResponseScalarWhereInput[]
   }
 
-  export type SurveyCreateNestedOneWithoutResponsesInput = {
-    create?: XOR<SurveyCreateWithoutResponsesInput, SurveyUncheckedCreateWithoutResponsesInput>
-    connectOrCreate?: SurveyCreateOrConnectWithoutResponsesInput
-    connect?: SurveyWhereUniqueInput
+  export type SurveyQuestionResponseCreateNestedManyWithoutResponseInput = {
+    create?: XOR<SurveyQuestionResponseCreateWithoutResponseInput, SurveyQuestionResponseUncheckedCreateWithoutResponseInput> | SurveyQuestionResponseCreateWithoutResponseInput[] | SurveyQuestionResponseUncheckedCreateWithoutResponseInput[]
+    connectOrCreate?: SurveyQuestionResponseCreateOrConnectWithoutResponseInput | SurveyQuestionResponseCreateOrConnectWithoutResponseInput[]
+    createMany?: SurveyQuestionResponseCreateManyResponseInputEnvelope
+    connect?: SurveyQuestionResponseWhereUniqueInput | SurveyQuestionResponseWhereUniqueInput[]
   }
 
   export type BeneficiaryCreateNestedOneWithoutSurvey_responsesInput = {
@@ -52151,17 +53714,16 @@ export namespace Prisma {
     connect?: BeneficiaryWhereUniqueInput
   }
 
+  export type SurveyCreateNestedOneWithoutResponsesInput = {
+    create?: XOR<SurveyCreateWithoutResponsesInput, SurveyUncheckedCreateWithoutResponsesInput>
+    connectOrCreate?: SurveyCreateOrConnectWithoutResponsesInput
+    connect?: SurveyWhereUniqueInput
+  }
+
   export type TrainingCreateNestedOneWithoutSurvey_responsesInput = {
     create?: XOR<TrainingCreateWithoutSurvey_responsesInput, TrainingUncheckedCreateWithoutSurvey_responsesInput>
     connectOrCreate?: TrainingCreateOrConnectWithoutSurvey_responsesInput
     connect?: TrainingWhereUniqueInput
-  }
-
-  export type SurveyQuestionResponseCreateNestedManyWithoutResponseInput = {
-    create?: XOR<SurveyQuestionResponseCreateWithoutResponseInput, SurveyQuestionResponseUncheckedCreateWithoutResponseInput> | SurveyQuestionResponseCreateWithoutResponseInput[] | SurveyQuestionResponseUncheckedCreateWithoutResponseInput[]
-    connectOrCreate?: SurveyQuestionResponseCreateOrConnectWithoutResponseInput | SurveyQuestionResponseCreateOrConnectWithoutResponseInput[]
-    createMany?: SurveyQuestionResponseCreateManyResponseInputEnvelope
-    connect?: SurveyQuestionResponseWhereUniqueInput | SurveyQuestionResponseWhereUniqueInput[]
   }
 
   export type SurveyQuestionResponseUncheckedCreateNestedManyWithoutResponseInput = {
@@ -52173,30 +53735,6 @@ export namespace Prisma {
 
   export type NullableBoolFieldUpdateOperationsInput = {
     set?: boolean | null
-  }
-
-  export type SurveyUpdateOneRequiredWithoutResponsesNestedInput = {
-    create?: XOR<SurveyCreateWithoutResponsesInput, SurveyUncheckedCreateWithoutResponsesInput>
-    connectOrCreate?: SurveyCreateOrConnectWithoutResponsesInput
-    upsert?: SurveyUpsertWithoutResponsesInput
-    connect?: SurveyWhereUniqueInput
-    update?: XOR<XOR<SurveyUpdateToOneWithWhereWithoutResponsesInput, SurveyUpdateWithoutResponsesInput>, SurveyUncheckedUpdateWithoutResponsesInput>
-  }
-
-  export type BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput = {
-    create?: XOR<BeneficiaryCreateWithoutSurvey_responsesInput, BeneficiaryUncheckedCreateWithoutSurvey_responsesInput>
-    connectOrCreate?: BeneficiaryCreateOrConnectWithoutSurvey_responsesInput
-    upsert?: BeneficiaryUpsertWithoutSurvey_responsesInput
-    connect?: BeneficiaryWhereUniqueInput
-    update?: XOR<XOR<BeneficiaryUpdateToOneWithWhereWithoutSurvey_responsesInput, BeneficiaryUpdateWithoutSurvey_responsesInput>, BeneficiaryUncheckedUpdateWithoutSurvey_responsesInput>
-  }
-
-  export type TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput = {
-    create?: XOR<TrainingCreateWithoutSurvey_responsesInput, TrainingUncheckedCreateWithoutSurvey_responsesInput>
-    connectOrCreate?: TrainingCreateOrConnectWithoutSurvey_responsesInput
-    upsert?: TrainingUpsertWithoutSurvey_responsesInput
-    connect?: TrainingWhereUniqueInput
-    update?: XOR<XOR<TrainingUpdateToOneWithWhereWithoutSurvey_responsesInput, TrainingUpdateWithoutSurvey_responsesInput>, TrainingUncheckedUpdateWithoutSurvey_responsesInput>
   }
 
   export type SurveyQuestionResponseUpdateManyWithoutResponseNestedInput = {
@@ -52213,6 +53751,30 @@ export namespace Prisma {
     deleteMany?: SurveyQuestionResponseScalarWhereInput | SurveyQuestionResponseScalarWhereInput[]
   }
 
+  export type BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput = {
+    create?: XOR<BeneficiaryCreateWithoutSurvey_responsesInput, BeneficiaryUncheckedCreateWithoutSurvey_responsesInput>
+    connectOrCreate?: BeneficiaryCreateOrConnectWithoutSurvey_responsesInput
+    upsert?: BeneficiaryUpsertWithoutSurvey_responsesInput
+    connect?: BeneficiaryWhereUniqueInput
+    update?: XOR<XOR<BeneficiaryUpdateToOneWithWhereWithoutSurvey_responsesInput, BeneficiaryUpdateWithoutSurvey_responsesInput>, BeneficiaryUncheckedUpdateWithoutSurvey_responsesInput>
+  }
+
+  export type SurveyUpdateOneRequiredWithoutResponsesNestedInput = {
+    create?: XOR<SurveyCreateWithoutResponsesInput, SurveyUncheckedCreateWithoutResponsesInput>
+    connectOrCreate?: SurveyCreateOrConnectWithoutResponsesInput
+    upsert?: SurveyUpsertWithoutResponsesInput
+    connect?: SurveyWhereUniqueInput
+    update?: XOR<XOR<SurveyUpdateToOneWithWhereWithoutResponsesInput, SurveyUpdateWithoutResponsesInput>, SurveyUncheckedUpdateWithoutResponsesInput>
+  }
+
+  export type TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput = {
+    create?: XOR<TrainingCreateWithoutSurvey_responsesInput, TrainingUncheckedCreateWithoutSurvey_responsesInput>
+    connectOrCreate?: TrainingCreateOrConnectWithoutSurvey_responsesInput
+    upsert?: TrainingUpsertWithoutSurvey_responsesInput
+    connect?: TrainingWhereUniqueInput
+    update?: XOR<XOR<TrainingUpdateToOneWithWhereWithoutSurvey_responsesInput, TrainingUpdateWithoutSurvey_responsesInput>, TrainingUncheckedUpdateWithoutSurvey_responsesInput>
+  }
+
   export type SurveyQuestionResponseUncheckedUpdateManyWithoutResponseNestedInput = {
     create?: XOR<SurveyQuestionResponseCreateWithoutResponseInput, SurveyQuestionResponseUncheckedCreateWithoutResponseInput> | SurveyQuestionResponseCreateWithoutResponseInput[] | SurveyQuestionResponseUncheckedCreateWithoutResponseInput[]
     connectOrCreate?: SurveyQuestionResponseCreateOrConnectWithoutResponseInput | SurveyQuestionResponseCreateOrConnectWithoutResponseInput[]
@@ -52227,16 +53789,24 @@ export namespace Prisma {
     deleteMany?: SurveyQuestionResponseScalarWhereInput | SurveyQuestionResponseScalarWhereInput[]
   }
 
+  export type SurveyQuestionCreateNestedOneWithoutAnswersInput = {
+    create?: XOR<SurveyQuestionCreateWithoutAnswersInput, SurveyQuestionUncheckedCreateWithoutAnswersInput>
+    connectOrCreate?: SurveyQuestionCreateOrConnectWithoutAnswersInput
+    connect?: SurveyQuestionWhereUniqueInput
+  }
+
   export type SurveyResponseCreateNestedOneWithoutQuestion_responsesInput = {
     create?: XOR<SurveyResponseCreateWithoutQuestion_responsesInput, SurveyResponseUncheckedCreateWithoutQuestion_responsesInput>
     connectOrCreate?: SurveyResponseCreateOrConnectWithoutQuestion_responsesInput
     connect?: SurveyResponseWhereUniqueInput
   }
 
-  export type SurveyQuestionCreateNestedOneWithoutAnswersInput = {
+  export type SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput = {
     create?: XOR<SurveyQuestionCreateWithoutAnswersInput, SurveyQuestionUncheckedCreateWithoutAnswersInput>
     connectOrCreate?: SurveyQuestionCreateOrConnectWithoutAnswersInput
+    upsert?: SurveyQuestionUpsertWithoutAnswersInput
     connect?: SurveyQuestionWhereUniqueInput
+    update?: XOR<XOR<SurveyQuestionUpdateToOneWithWhereWithoutAnswersInput, SurveyQuestionUpdateWithoutAnswersInput>, SurveyQuestionUncheckedUpdateWithoutAnswersInput>
   }
 
   export type SurveyResponseUpdateOneRequiredWithoutQuestion_responsesNestedInput = {
@@ -52247,12 +53817,26 @@ export namespace Prisma {
     update?: XOR<XOR<SurveyResponseUpdateToOneWithWhereWithoutQuestion_responsesInput, SurveyResponseUpdateWithoutQuestion_responsesInput>, SurveyResponseUncheckedUpdateWithoutQuestion_responsesInput>
   }
 
-  export type SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput = {
-    create?: XOR<SurveyQuestionCreateWithoutAnswersInput, SurveyQuestionUncheckedCreateWithoutAnswersInput>
-    connectOrCreate?: SurveyQuestionCreateOrConnectWithoutAnswersInput
-    upsert?: SurveyQuestionUpsertWithoutAnswersInput
-    connect?: SurveyQuestionWhereUniqueInput
-    update?: XOR<XOR<SurveyQuestionUpdateToOneWithWhereWithoutAnswersInput, SurveyQuestionUpdateWithoutAnswersInput>, SurveyQuestionUncheckedUpdateWithoutAnswersInput>
+  export type BeneficiaryCreateNestedOneWithoutTelegram_userInput = {
+    create?: XOR<BeneficiaryCreateWithoutTelegram_userInput, BeneficiaryUncheckedCreateWithoutTelegram_userInput>
+    connectOrCreate?: BeneficiaryCreateOrConnectWithoutTelegram_userInput
+    connect?: BeneficiaryWhereUniqueInput
+  }
+
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
+  export type BeneficiaryUpdateOneRequiredWithoutTelegram_userNestedInput = {
+    create?: XOR<BeneficiaryCreateWithoutTelegram_userInput, BeneficiaryUncheckedCreateWithoutTelegram_userInput>
+    connectOrCreate?: BeneficiaryCreateOrConnectWithoutTelegram_userInput
+    upsert?: BeneficiaryUpsertWithoutTelegram_userInput
+    connect?: BeneficiaryWhereUniqueInput
+    update?: XOR<XOR<BeneficiaryUpdateToOneWithWhereWithoutTelegram_userInput, BeneficiaryUpdateWithoutTelegram_userInput>, BeneficiaryUncheckedUpdateWithoutTelegram_userInput>
   }
 
   export type UserCreateNestedOneWithoutNotificationsInput = {
@@ -52898,6 +54482,33 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
   export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
     in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
@@ -53010,56 +54621,6 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Notification"> | Date | string
   }
 
-  export type BeneficiaryTrainingCreateWithoutBeneficiaryInput = {
-    beneficiary_training_id?: string
-    registration_date: Date | string
-    registration_method?: $Enums.RegistrationMethod | null
-    attendance_status: $Enums.AttendanceStatus
-    attendance_percentage?: number | null
-    training_role: $Enums.TrainingRole
-    enrollment_type: string
-    certificate_issued?: boolean
-    certificate_number?: string | null
-    certificate_issue_date?: Date | string | null
-    feedback_submitted?: boolean
-    feedback_score?: number | null
-    feedback_comments?: string | null
-    beneficiary_training_status: string
-    beneficiary_training_created_at?: Date | string
-    beneficiary_training_updated_at?: Date | string
-    training: TrainingCreateNestedOneWithoutBeneficiary_trainingsInput
-  }
-
-  export type BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput = {
-    beneficiary_training_id?: string
-    training_id: string
-    registration_date: Date | string
-    registration_method?: $Enums.RegistrationMethod | null
-    attendance_status: $Enums.AttendanceStatus
-    attendance_percentage?: number | null
-    training_role: $Enums.TrainingRole
-    enrollment_type: string
-    certificate_issued?: boolean
-    certificate_number?: string | null
-    certificate_issue_date?: Date | string | null
-    feedback_submitted?: boolean
-    feedback_score?: number | null
-    feedback_comments?: string | null
-    beneficiary_training_status: string
-    beneficiary_training_created_at?: Date | string
-    beneficiary_training_updated_at?: Date | string
-  }
-
-  export type BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput = {
-    where: BeneficiaryTrainingWhereUniqueInput
-    create: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput>
-  }
-
-  export type BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope = {
-    data: BeneficiaryTrainingCreateManyBeneficiaryInput | BeneficiaryTrainingCreateManyBeneficiaryInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AttendanceRecordCreateWithoutBeneficiaryInput = {
     id?: string
     date: Date | string
@@ -53112,49 +54673,107 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SurveyResponseCreateWithoutBeneficiaryInput = {
-    id?: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    survey: SurveyCreateNestedOneWithoutResponsesInput
-    training: TrainingCreateNestedOneWithoutSurvey_responsesInput
-    question_responses?: SurveyQuestionResponseCreateNestedManyWithoutResponseInput
+  export type BeneficiaryTrainingCreateWithoutBeneficiaryInput = {
+    beneficiary_training_id?: string
+    registration_date: Date | string
+    registration_method?: $Enums.RegistrationMethod | null
+    attendance_status: $Enums.AttendanceStatus
+    attendance_percentage?: number | null
+    training_role: $Enums.TrainingRole
+    enrollment_type: string
+    certificate_issued?: boolean
+    certificate_number?: string | null
+    certificate_issue_date?: Date | string | null
+    feedback_submitted?: boolean
+    feedback_score?: number | null
+    feedback_comments?: string | null
+    beneficiary_training_status: string
+    beneficiary_training_created_at?: Date | string
+    beneficiary_training_updated_at?: Date | string
+    training: TrainingCreateNestedOneWithoutBeneficiary_trainingsInput
   }
 
-  export type SurveyResponseUncheckedCreateWithoutBeneficiaryInput = {
-    id?: string
-    survey_id: string
+  export type BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput = {
+    beneficiary_training_id?: string
     training_id: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
+    registration_date: Date | string
+    registration_method?: $Enums.RegistrationMethod | null
+    attendance_status: $Enums.AttendanceStatus
+    attendance_percentage?: number | null
+    training_role: $Enums.TrainingRole
+    enrollment_type: string
+    certificate_issued?: boolean
+    certificate_number?: string | null
+    certificate_issue_date?: Date | string | null
+    feedback_submitted?: boolean
+    feedback_score?: number | null
+    feedback_comments?: string | null
+    beneficiary_training_status: string
+    beneficiary_training_created_at?: Date | string
+    beneficiary_training_updated_at?: Date | string
+  }
+
+  export type BeneficiaryTrainingCreateOrConnectWithoutBeneficiaryInput = {
+    where: BeneficiaryTrainingWhereUniqueInput
+    create: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput>
+  }
+
+  export type BeneficiaryTrainingCreateManyBeneficiaryInputEnvelope = {
+    data: BeneficiaryTrainingCreateManyBeneficiaryInput | BeneficiaryTrainingCreateManyBeneficiaryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EventAttendanceRecordCreateWithoutBeneficiaryInput = {
+    id?: string
+    registration_id?: string | null
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    question_responses?: SurveyQuestionResponseUncheckedCreateNestedManyWithoutResponseInput
+    event: EventCreateNestedOneWithoutAttendance_recordsInput
   }
 
-  export type SurveyResponseCreateOrConnectWithoutBeneficiaryInput = {
-    where: SurveyResponseWhereUniqueInput
-    create: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput>
+  export type EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput = {
+    id?: string
+    event_id: string
+    registration_id?: string | null
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
-  export type SurveyResponseCreateManyBeneficiaryInputEnvelope = {
-    data: SurveyResponseCreateManyBeneficiaryInput | SurveyResponseCreateManyBeneficiaryInput[]
+  export type EventAttendanceRecordCreateOrConnectWithoutBeneficiaryInput = {
+    where: EventAttendanceRecordWhereUniqueInput
+    create: XOR<EventAttendanceRecordCreateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput>
+  }
+
+  export type EventAttendanceRecordCreateManyBeneficiaryInputEnvelope = {
+    data: EventAttendanceRecordCreateManyBeneficiaryInput | EventAttendanceRecordCreateManyBeneficiaryInput[]
     skipDuplicates?: boolean
   }
 
@@ -53234,98 +54853,77 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type EventAttendanceRecordCreateWithoutBeneficiaryInput = {
+  export type SurveyResponseCreateWithoutBeneficiaryInput = {
     id?: string
-    registration_id?: string | null
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
     created_at?: Date | string
     updated_at?: Date | string
-    event: EventCreateNestedOneWithoutAttendance_recordsInput
+    question_responses?: SurveyQuestionResponseCreateNestedManyWithoutResponseInput
+    survey: SurveyCreateNestedOneWithoutResponsesInput
+    training: TrainingCreateNestedOneWithoutSurvey_responsesInput
   }
 
-  export type EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput = {
+  export type SurveyResponseUncheckedCreateWithoutBeneficiaryInput = {
     id?: string
-    event_id: string
-    registration_id?: string | null
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    survey_id: string
+    training_id: string
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
     created_at?: Date | string
     updated_at?: Date | string
+    question_responses?: SurveyQuestionResponseUncheckedCreateNestedManyWithoutResponseInput
   }
 
-  export type EventAttendanceRecordCreateOrConnectWithoutBeneficiaryInput = {
-    where: EventAttendanceRecordWhereUniqueInput
-    create: XOR<EventAttendanceRecordCreateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput>
+  export type SurveyResponseCreateOrConnectWithoutBeneficiaryInput = {
+    where: SurveyResponseWhereUniqueInput
+    create: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput>
   }
 
-  export type EventAttendanceRecordCreateManyBeneficiaryInputEnvelope = {
-    data: EventAttendanceRecordCreateManyBeneficiaryInput | EventAttendanceRecordCreateManyBeneficiaryInput[]
+  export type SurveyResponseCreateManyBeneficiaryInputEnvelope = {
+    data: SurveyResponseCreateManyBeneficiaryInput | SurveyResponseCreateManyBeneficiaryInput[]
     skipDuplicates?: boolean
   }
 
-  export type BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput = {
-    where: BeneficiaryTrainingWhereUniqueInput
-    update: XOR<BeneficiaryTrainingUpdateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedUpdateWithoutBeneficiaryInput>
-    create: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput>
+  export type TelegramUserCreateWithoutBeneficiaryInput = {
+    id?: string
+    telegram_id: bigint | number
+    username?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    language_code?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
-  export type BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput = {
-    where: BeneficiaryTrainingWhereUniqueInput
-    data: XOR<BeneficiaryTrainingUpdateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedUpdateWithoutBeneficiaryInput>
+  export type TelegramUserUncheckedCreateWithoutBeneficiaryInput = {
+    id?: string
+    telegram_id: bigint | number
+    username?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    language_code?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
-  export type BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput = {
-    where: BeneficiaryTrainingScalarWhereInput
-    data: XOR<BeneficiaryTrainingUpdateManyMutationInput, BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryInput>
-  }
-
-  export type BeneficiaryTrainingScalarWhereInput = {
-    AND?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
-    OR?: BeneficiaryTrainingScalarWhereInput[]
-    NOT?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
-    beneficiary_training_id?: StringFilter<"BeneficiaryTraining"> | string
-    beneficiary_id?: StringFilter<"BeneficiaryTraining"> | string
-    training_id?: StringFilter<"BeneficiaryTraining"> | string
-    registration_date?: DateTimeFilter<"BeneficiaryTraining"> | Date | string
-    registration_method?: EnumRegistrationMethodNullableFilter<"BeneficiaryTraining"> | $Enums.RegistrationMethod | null
-    attendance_status?: EnumAttendanceStatusFilter<"BeneficiaryTraining"> | $Enums.AttendanceStatus
-    attendance_percentage?: FloatNullableFilter<"BeneficiaryTraining"> | number | null
-    training_role?: EnumTrainingRoleFilter<"BeneficiaryTraining"> | $Enums.TrainingRole
-    enrollment_type?: StringFilter<"BeneficiaryTraining"> | string
-    certificate_issued?: BoolFilter<"BeneficiaryTraining"> | boolean
-    certificate_number?: StringNullableFilter<"BeneficiaryTraining"> | string | null
-    certificate_issue_date?: DateTimeNullableFilter<"BeneficiaryTraining"> | Date | string | null
-    feedback_submitted?: BoolFilter<"BeneficiaryTraining"> | boolean
-    feedback_score?: FloatNullableFilter<"BeneficiaryTraining"> | number | null
-    feedback_comments?: StringNullableFilter<"BeneficiaryTraining"> | string | null
-    beneficiary_training_status?: StringFilter<"BeneficiaryTraining"> | string
-    beneficiary_training_created_at?: DateTimeFilter<"BeneficiaryTraining"> | Date | string
-    beneficiary_training_updated_at?: DateTimeFilter<"BeneficiaryTraining"> | Date | string
+  export type TelegramUserCreateOrConnectWithoutBeneficiaryInput = {
+    where: TelegramUserWhereUniqueInput
+    create: XOR<TelegramUserCreateWithoutBeneficiaryInput, TelegramUserUncheckedCreateWithoutBeneficiaryInput>
   }
 
   export type AttendanceRecordUpsertWithWhereUniqueWithoutBeneficiaryInput = {
@@ -53369,41 +54967,86 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"AttendanceRecord"> | Date | string
   }
 
-  export type SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput = {
-    where: SurveyResponseWhereUniqueInput
-    update: XOR<SurveyResponseUpdateWithoutBeneficiaryInput, SurveyResponseUncheckedUpdateWithoutBeneficiaryInput>
-    create: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput>
+  export type BeneficiaryTrainingUpsertWithWhereUniqueWithoutBeneficiaryInput = {
+    where: BeneficiaryTrainingWhereUniqueInput
+    update: XOR<BeneficiaryTrainingUpdateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedUpdateWithoutBeneficiaryInput>
+    create: XOR<BeneficiaryTrainingCreateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedCreateWithoutBeneficiaryInput>
   }
 
-  export type SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput = {
-    where: SurveyResponseWhereUniqueInput
-    data: XOR<SurveyResponseUpdateWithoutBeneficiaryInput, SurveyResponseUncheckedUpdateWithoutBeneficiaryInput>
+  export type BeneficiaryTrainingUpdateWithWhereUniqueWithoutBeneficiaryInput = {
+    where: BeneficiaryTrainingWhereUniqueInput
+    data: XOR<BeneficiaryTrainingUpdateWithoutBeneficiaryInput, BeneficiaryTrainingUncheckedUpdateWithoutBeneficiaryInput>
   }
 
-  export type SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput = {
-    where: SurveyResponseScalarWhereInput
-    data: XOR<SurveyResponseUpdateManyMutationInput, SurveyResponseUncheckedUpdateManyWithoutBeneficiaryInput>
+  export type BeneficiaryTrainingUpdateManyWithWhereWithoutBeneficiaryInput = {
+    where: BeneficiaryTrainingScalarWhereInput
+    data: XOR<BeneficiaryTrainingUpdateManyMutationInput, BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryInput>
   }
 
-  export type SurveyResponseScalarWhereInput = {
-    AND?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
-    OR?: SurveyResponseScalarWhereInput[]
-    NOT?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
-    id?: StringFilter<"SurveyResponse"> | string
-    survey_id?: StringFilter<"SurveyResponse"> | string
-    beneficiary_id?: StringFilter<"SurveyResponse"> | string
-    training_id?: StringFilter<"SurveyResponse"> | string
-    started_at?: DateTimeNullableFilter<"SurveyResponse"> | Date | string | null
-    submitted_at?: DateTimeNullableFilter<"SurveyResponse"> | Date | string | null
-    is_complete?: BoolFilter<"SurveyResponse"> | boolean
-    attempt_number?: IntFilter<"SurveyResponse"> | number
-    total_score?: FloatNullableFilter<"SurveyResponse"> | number | null
-    max_score?: FloatNullableFilter<"SurveyResponse"> | number | null
-    percentage?: FloatNullableFilter<"SurveyResponse"> | number | null
-    passed?: BoolNullableFilter<"SurveyResponse"> | boolean | null
-    time_spent_seconds?: IntNullableFilter<"SurveyResponse"> | number | null
-    created_at?: DateTimeFilter<"SurveyResponse"> | Date | string
-    updated_at?: DateTimeFilter<"SurveyResponse"> | Date | string
+  export type BeneficiaryTrainingScalarWhereInput = {
+    AND?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
+    OR?: BeneficiaryTrainingScalarWhereInput[]
+    NOT?: BeneficiaryTrainingScalarWhereInput | BeneficiaryTrainingScalarWhereInput[]
+    beneficiary_training_id?: StringFilter<"BeneficiaryTraining"> | string
+    beneficiary_id?: StringFilter<"BeneficiaryTraining"> | string
+    training_id?: StringFilter<"BeneficiaryTraining"> | string
+    registration_date?: DateTimeFilter<"BeneficiaryTraining"> | Date | string
+    registration_method?: EnumRegistrationMethodNullableFilter<"BeneficiaryTraining"> | $Enums.RegistrationMethod | null
+    attendance_status?: EnumAttendanceStatusFilter<"BeneficiaryTraining"> | $Enums.AttendanceStatus
+    attendance_percentage?: FloatNullableFilter<"BeneficiaryTraining"> | number | null
+    training_role?: EnumTrainingRoleFilter<"BeneficiaryTraining"> | $Enums.TrainingRole
+    enrollment_type?: StringFilter<"BeneficiaryTraining"> | string
+    certificate_issued?: BoolFilter<"BeneficiaryTraining"> | boolean
+    certificate_number?: StringNullableFilter<"BeneficiaryTraining"> | string | null
+    certificate_issue_date?: DateTimeNullableFilter<"BeneficiaryTraining"> | Date | string | null
+    feedback_submitted?: BoolFilter<"BeneficiaryTraining"> | boolean
+    feedback_score?: FloatNullableFilter<"BeneficiaryTraining"> | number | null
+    feedback_comments?: StringNullableFilter<"BeneficiaryTraining"> | string | null
+    beneficiary_training_status?: StringFilter<"BeneficiaryTraining"> | string
+    beneficiary_training_created_at?: DateTimeFilter<"BeneficiaryTraining"> | Date | string
+    beneficiary_training_updated_at?: DateTimeFilter<"BeneficiaryTraining"> | Date | string
+  }
+
+  export type EventAttendanceRecordUpsertWithWhereUniqueWithoutBeneficiaryInput = {
+    where: EventAttendanceRecordWhereUniqueInput
+    update: XOR<EventAttendanceRecordUpdateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedUpdateWithoutBeneficiaryInput>
+    create: XOR<EventAttendanceRecordCreateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput>
+  }
+
+  export type EventAttendanceRecordUpdateWithWhereUniqueWithoutBeneficiaryInput = {
+    where: EventAttendanceRecordWhereUniqueInput
+    data: XOR<EventAttendanceRecordUpdateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedUpdateWithoutBeneficiaryInput>
+  }
+
+  export type EventAttendanceRecordUpdateManyWithWhereWithoutBeneficiaryInput = {
+    where: EventAttendanceRecordScalarWhereInput
+    data: XOR<EventAttendanceRecordUpdateManyMutationInput, EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryInput>
+  }
+
+  export type EventAttendanceRecordScalarWhereInput = {
+    AND?: EventAttendanceRecordScalarWhereInput | EventAttendanceRecordScalarWhereInput[]
+    OR?: EventAttendanceRecordScalarWhereInput[]
+    NOT?: EventAttendanceRecordScalarWhereInput | EventAttendanceRecordScalarWhereInput[]
+    id?: StringFilter<"EventAttendanceRecord"> | string
+    event_id?: StringFilter<"EventAttendanceRecord"> | string
+    beneficiary_id?: StringNullableFilter<"EventAttendanceRecord"> | string | null
+    registration_id?: StringNullableFilter<"EventAttendanceRecord"> | string | null
+    date?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
+    morning_in?: DateTimeNullableFilter<"EventAttendanceRecord"> | Date | string | null
+    morning_out?: DateTimeNullableFilter<"EventAttendanceRecord"> | Date | string | null
+    afternoon_in?: DateTimeNullableFilter<"EventAttendanceRecord"> | Date | string | null
+    afternoon_out?: DateTimeNullableFilter<"EventAttendanceRecord"> | Date | string | null
+    attendance_status?: EnumSessionAttendanceStatusFilter<"EventAttendanceRecord"> | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFilter<"EventAttendanceRecord"> | boolean
+    manual_marked_by?: StringNullableFilter<"EventAttendanceRecord"> | string | null
+    manual_marked_by_name?: StringNullableFilter<"EventAttendanceRecord"> | string | null
+    manual_entry_reason?: StringNullableFilter<"EventAttendanceRecord"> | string | null
+    location_lat?: FloatNullableFilter<"EventAttendanceRecord"> | number | null
+    location_lng?: FloatNullableFilter<"EventAttendanceRecord"> | number | null
+    location_accuracy?: FloatNullableFilter<"EventAttendanceRecord"> | number | null
+    device?: StringNullableFilter<"EventAttendanceRecord"> | string | null
+    created_at?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
+    updated_at?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
   }
 
   export type EventRegistrationUpsertWithWhereUniqueWithoutBeneficiaryInput = {
@@ -53458,46 +55101,126 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"EventRegistration"> | Date | string
   }
 
-  export type EventAttendanceRecordUpsertWithWhereUniqueWithoutBeneficiaryInput = {
-    where: EventAttendanceRecordWhereUniqueInput
-    update: XOR<EventAttendanceRecordUpdateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedUpdateWithoutBeneficiaryInput>
-    create: XOR<EventAttendanceRecordCreateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedCreateWithoutBeneficiaryInput>
+  export type SurveyResponseUpsertWithWhereUniqueWithoutBeneficiaryInput = {
+    where: SurveyResponseWhereUniqueInput
+    update: XOR<SurveyResponseUpdateWithoutBeneficiaryInput, SurveyResponseUncheckedUpdateWithoutBeneficiaryInput>
+    create: XOR<SurveyResponseCreateWithoutBeneficiaryInput, SurveyResponseUncheckedCreateWithoutBeneficiaryInput>
   }
 
-  export type EventAttendanceRecordUpdateWithWhereUniqueWithoutBeneficiaryInput = {
-    where: EventAttendanceRecordWhereUniqueInput
-    data: XOR<EventAttendanceRecordUpdateWithoutBeneficiaryInput, EventAttendanceRecordUncheckedUpdateWithoutBeneficiaryInput>
+  export type SurveyResponseUpdateWithWhereUniqueWithoutBeneficiaryInput = {
+    where: SurveyResponseWhereUniqueInput
+    data: XOR<SurveyResponseUpdateWithoutBeneficiaryInput, SurveyResponseUncheckedUpdateWithoutBeneficiaryInput>
   }
 
-  export type EventAttendanceRecordUpdateManyWithWhereWithoutBeneficiaryInput = {
-    where: EventAttendanceRecordScalarWhereInput
-    data: XOR<EventAttendanceRecordUpdateManyMutationInput, EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryInput>
+  export type SurveyResponseUpdateManyWithWhereWithoutBeneficiaryInput = {
+    where: SurveyResponseScalarWhereInput
+    data: XOR<SurveyResponseUpdateManyMutationInput, SurveyResponseUncheckedUpdateManyWithoutBeneficiaryInput>
   }
 
-  export type EventAttendanceRecordScalarWhereInput = {
-    AND?: EventAttendanceRecordScalarWhereInput | EventAttendanceRecordScalarWhereInput[]
-    OR?: EventAttendanceRecordScalarWhereInput[]
-    NOT?: EventAttendanceRecordScalarWhereInput | EventAttendanceRecordScalarWhereInput[]
-    id?: StringFilter<"EventAttendanceRecord"> | string
-    event_id?: StringFilter<"EventAttendanceRecord"> | string
-    beneficiary_id?: StringNullableFilter<"EventAttendanceRecord"> | string | null
-    registration_id?: StringNullableFilter<"EventAttendanceRecord"> | string | null
-    date?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
-    morning_in?: DateTimeNullableFilter<"EventAttendanceRecord"> | Date | string | null
-    morning_out?: DateTimeNullableFilter<"EventAttendanceRecord"> | Date | string | null
-    afternoon_in?: DateTimeNullableFilter<"EventAttendanceRecord"> | Date | string | null
-    afternoon_out?: DateTimeNullableFilter<"EventAttendanceRecord"> | Date | string | null
-    attendance_status?: EnumSessionAttendanceStatusFilter<"EventAttendanceRecord"> | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFilter<"EventAttendanceRecord"> | boolean
-    manual_marked_by?: StringNullableFilter<"EventAttendanceRecord"> | string | null
-    manual_marked_by_name?: StringNullableFilter<"EventAttendanceRecord"> | string | null
-    manual_entry_reason?: StringNullableFilter<"EventAttendanceRecord"> | string | null
-    location_lat?: FloatNullableFilter<"EventAttendanceRecord"> | number | null
-    location_lng?: FloatNullableFilter<"EventAttendanceRecord"> | number | null
-    location_accuracy?: FloatNullableFilter<"EventAttendanceRecord"> | number | null
-    device?: StringNullableFilter<"EventAttendanceRecord"> | string | null
-    created_at?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
-    updated_at?: DateTimeFilter<"EventAttendanceRecord"> | Date | string
+  export type SurveyResponseScalarWhereInput = {
+    AND?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
+    OR?: SurveyResponseScalarWhereInput[]
+    NOT?: SurveyResponseScalarWhereInput | SurveyResponseScalarWhereInput[]
+    id?: StringFilter<"SurveyResponse"> | string
+    survey_id?: StringFilter<"SurveyResponse"> | string
+    beneficiary_id?: StringFilter<"SurveyResponse"> | string
+    training_id?: StringFilter<"SurveyResponse"> | string
+    started_at?: DateTimeNullableFilter<"SurveyResponse"> | Date | string | null
+    submitted_at?: DateTimeNullableFilter<"SurveyResponse"> | Date | string | null
+    is_complete?: BoolFilter<"SurveyResponse"> | boolean
+    attempt_number?: IntFilter<"SurveyResponse"> | number
+    total_score?: FloatNullableFilter<"SurveyResponse"> | number | null
+    max_score?: FloatNullableFilter<"SurveyResponse"> | number | null
+    percentage?: FloatNullableFilter<"SurveyResponse"> | number | null
+    passed?: BoolNullableFilter<"SurveyResponse"> | boolean | null
+    time_spent_seconds?: IntNullableFilter<"SurveyResponse"> | number | null
+    created_at?: DateTimeFilter<"SurveyResponse"> | Date | string
+    updated_at?: DateTimeFilter<"SurveyResponse"> | Date | string
+  }
+
+  export type TelegramUserUpsertWithoutBeneficiaryInput = {
+    update: XOR<TelegramUserUpdateWithoutBeneficiaryInput, TelegramUserUncheckedUpdateWithoutBeneficiaryInput>
+    create: XOR<TelegramUserCreateWithoutBeneficiaryInput, TelegramUserUncheckedCreateWithoutBeneficiaryInput>
+    where?: TelegramUserWhereInput
+  }
+
+  export type TelegramUserUpdateToOneWithWhereWithoutBeneficiaryInput = {
+    where?: TelegramUserWhereInput
+    data: XOR<TelegramUserUpdateWithoutBeneficiaryInput, TelegramUserUncheckedUpdateWithoutBeneficiaryInput>
+  }
+
+  export type TelegramUserUpdateWithoutBeneficiaryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    telegram_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    language_code?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TelegramUserUncheckedUpdateWithoutBeneficiaryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    telegram_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    language_code?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AttendanceRecordCreateWithoutTrainingInput = {
+    id?: string
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    session_attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    beneficiary: BeneficiaryCreateNestedOneWithoutAttendance_recordsInput
+  }
+
+  export type AttendanceRecordUncheckedCreateWithoutTrainingInput = {
+    id?: string
+    beneficiary_id: string
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    session_attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type AttendanceRecordCreateOrConnectWithoutTrainingInput = {
+    where: AttendanceRecordWhereUniqueInput
+    create: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput>
+  }
+
+  export type AttendanceRecordCreateManyTrainingInputEnvelope = {
+    data: AttendanceRecordCreateManyTrainingInput | AttendanceRecordCreateManyTrainingInput[]
+    skipDuplicates?: boolean
   }
 
   export type BeneficiaryTrainingCreateWithoutTrainingInput = {
@@ -53550,55 +55273,49 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AttendanceRecordCreateWithoutTrainingInput = {
+  export type SurveyResponseCreateWithoutTrainingInput = {
     id?: string
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    session_attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
     created_at?: Date | string
     updated_at?: Date | string
-    beneficiary: BeneficiaryCreateNestedOneWithoutAttendance_recordsInput
+    question_responses?: SurveyQuestionResponseCreateNestedManyWithoutResponseInput
+    beneficiary: BeneficiaryCreateNestedOneWithoutSurvey_responsesInput
+    survey: SurveyCreateNestedOneWithoutResponsesInput
   }
 
-  export type AttendanceRecordUncheckedCreateWithoutTrainingInput = {
+  export type SurveyResponseUncheckedCreateWithoutTrainingInput = {
     id?: string
+    survey_id: string
     beneficiary_id: string
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    session_attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
     created_at?: Date | string
     updated_at?: Date | string
+    question_responses?: SurveyQuestionResponseUncheckedCreateNestedManyWithoutResponseInput
   }
 
-  export type AttendanceRecordCreateOrConnectWithoutTrainingInput = {
-    where: AttendanceRecordWhereUniqueInput
-    create: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput>
+  export type SurveyResponseCreateOrConnectWithoutTrainingInput = {
+    where: SurveyResponseWhereUniqueInput
+    create: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput>
   }
 
-  export type AttendanceRecordCreateManyTrainingInputEnvelope = {
-    data: AttendanceRecordCreateManyTrainingInput | AttendanceRecordCreateManyTrainingInput[]
+  export type SurveyResponseCreateManyTrainingInputEnvelope = {
+    data: SurveyResponseCreateManyTrainingInput | SurveyResponseCreateManyTrainingInput[]
     skipDuplicates?: boolean
   }
 
@@ -53710,50 +55427,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SurveyResponseCreateWithoutTrainingInput = {
-    id?: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    survey: SurveyCreateNestedOneWithoutResponsesInput
-    beneficiary: BeneficiaryCreateNestedOneWithoutSurvey_responsesInput
-    question_responses?: SurveyQuestionResponseCreateNestedManyWithoutResponseInput
+  export type AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput = {
+    where: AttendanceRecordWhereUniqueInput
+    update: XOR<AttendanceRecordUpdateWithoutTrainingInput, AttendanceRecordUncheckedUpdateWithoutTrainingInput>
+    create: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput>
   }
 
-  export type SurveyResponseUncheckedCreateWithoutTrainingInput = {
-    id?: string
-    survey_id: string
-    beneficiary_id: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    question_responses?: SurveyQuestionResponseUncheckedCreateNestedManyWithoutResponseInput
+  export type AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput = {
+    where: AttendanceRecordWhereUniqueInput
+    data: XOR<AttendanceRecordUpdateWithoutTrainingInput, AttendanceRecordUncheckedUpdateWithoutTrainingInput>
   }
 
-  export type SurveyResponseCreateOrConnectWithoutTrainingInput = {
-    where: SurveyResponseWhereUniqueInput
-    create: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput>
-  }
-
-  export type SurveyResponseCreateManyTrainingInputEnvelope = {
-    data: SurveyResponseCreateManyTrainingInput | SurveyResponseCreateManyTrainingInput[]
-    skipDuplicates?: boolean
+  export type AttendanceRecordUpdateManyWithWhereWithoutTrainingInput = {
+    where: AttendanceRecordScalarWhereInput
+    data: XOR<AttendanceRecordUpdateManyMutationInput, AttendanceRecordUncheckedUpdateManyWithoutTrainingInput>
   }
 
   export type BeneficiaryTrainingUpsertWithWhereUniqueWithoutTrainingInput = {
@@ -53772,20 +55459,20 @@ export namespace Prisma {
     data: XOR<BeneficiaryTrainingUpdateManyMutationInput, BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingInput>
   }
 
-  export type AttendanceRecordUpsertWithWhereUniqueWithoutTrainingInput = {
-    where: AttendanceRecordWhereUniqueInput
-    update: XOR<AttendanceRecordUpdateWithoutTrainingInput, AttendanceRecordUncheckedUpdateWithoutTrainingInput>
-    create: XOR<AttendanceRecordCreateWithoutTrainingInput, AttendanceRecordUncheckedCreateWithoutTrainingInput>
+  export type SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput = {
+    where: SurveyResponseWhereUniqueInput
+    update: XOR<SurveyResponseUpdateWithoutTrainingInput, SurveyResponseUncheckedUpdateWithoutTrainingInput>
+    create: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput>
   }
 
-  export type AttendanceRecordUpdateWithWhereUniqueWithoutTrainingInput = {
-    where: AttendanceRecordWhereUniqueInput
-    data: XOR<AttendanceRecordUpdateWithoutTrainingInput, AttendanceRecordUncheckedUpdateWithoutTrainingInput>
+  export type SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput = {
+    where: SurveyResponseWhereUniqueInput
+    data: XOR<SurveyResponseUpdateWithoutTrainingInput, SurveyResponseUncheckedUpdateWithoutTrainingInput>
   }
 
-  export type AttendanceRecordUpdateManyWithWhereWithoutTrainingInput = {
-    where: AttendanceRecordScalarWhereInput
-    data: XOR<AttendanceRecordUpdateManyMutationInput, AttendanceRecordUncheckedUpdateManyWithoutTrainingInput>
+  export type SurveyResponseUpdateManyWithWhereWithoutTrainingInput = {
+    where: SurveyResponseScalarWhereInput
+    data: XOR<SurveyResponseUpdateManyMutationInput, SurveyResponseUncheckedUpdateManyWithoutTrainingInput>
   }
 
   export type TrainingAgendaUpsertWithWhereUniqueWithoutTrainingInput = {
@@ -53887,89 +55574,85 @@ export namespace Prisma {
     linked_by?: StringNullableFilter<"TrainingSurveyLink"> | string | null
   }
 
-  export type SurveyResponseUpsertWithWhereUniqueWithoutTrainingInput = {
-    where: SurveyResponseWhereUniqueInput
-    update: XOR<SurveyResponseUpdateWithoutTrainingInput, SurveyResponseUncheckedUpdateWithoutTrainingInput>
-    create: XOR<SurveyResponseCreateWithoutTrainingInput, SurveyResponseUncheckedCreateWithoutTrainingInput>
-  }
-
-  export type SurveyResponseUpdateWithWhereUniqueWithoutTrainingInput = {
-    where: SurveyResponseWhereUniqueInput
-    data: XOR<SurveyResponseUpdateWithoutTrainingInput, SurveyResponseUncheckedUpdateWithoutTrainingInput>
-  }
-
-  export type SurveyResponseUpdateManyWithWhereWithoutTrainingInput = {
-    where: SurveyResponseScalarWhereInput
-    data: XOR<SurveyResponseUpdateManyMutationInput, SurveyResponseUncheckedUpdateManyWithoutTrainingInput>
-  }
-
-  export type EventSessionCreateWithoutEventInput = {
+  export type EventAttendanceRecordCreateWithoutEventInput = {
     id?: string
-    session_code: string
-    session_name: string
-    session_name_english?: string | null
-    session_description?: string | null
-    session_date: Date | string
-    session_start_time: Date | string
-    session_end_time: Date | string
-    session_location?: string | null
-    session_room?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    virtual_meeting_url?: string | null
-    track_name?: string | null
-    track_color?: string | null
-    max_attendees: number
-    current_attendees?: number
-    session_type?: $Enums.SessionType
-    is_cancelled?: boolean
-    is_deleted?: boolean
-    sort_order?: number
+    registration_id?: string | null
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    session_registrations?: EventSessionRegistrationCreateNestedManyWithoutSessionInput
-    speakers?: EventSessionSpeakerCreateNestedManyWithoutSessionInput
+    beneficiary?: BeneficiaryCreateNestedOneWithoutEvent_attendance_recordsInput
   }
 
-  export type EventSessionUncheckedCreateWithoutEventInput = {
+  export type EventAttendanceRecordUncheckedCreateWithoutEventInput = {
     id?: string
-    session_code: string
-    session_name: string
-    session_name_english?: string | null
-    session_description?: string | null
-    session_date: Date | string
-    session_start_time: Date | string
-    session_end_time: Date | string
-    session_location?: string | null
-    session_room?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    virtual_meeting_url?: string | null
-    track_name?: string | null
-    track_color?: string | null
-    max_attendees: number
-    current_attendees?: number
-    session_type?: $Enums.SessionType
-    is_cancelled?: boolean
-    is_deleted?: boolean
-    sort_order?: number
+    beneficiary_id?: string | null
+    registration_id?: string | null
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    session_registrations?: EventSessionRegistrationUncheckedCreateNestedManyWithoutSessionInput
-    speakers?: EventSessionSpeakerUncheckedCreateNestedManyWithoutSessionInput
   }
 
-  export type EventSessionCreateOrConnectWithoutEventInput = {
-    where: EventSessionWhereUniqueInput
-    create: XOR<EventSessionCreateWithoutEventInput, EventSessionUncheckedCreateWithoutEventInput>
+  export type EventAttendanceRecordCreateOrConnectWithoutEventInput = {
+    where: EventAttendanceRecordWhereUniqueInput
+    create: XOR<EventAttendanceRecordCreateWithoutEventInput, EventAttendanceRecordUncheckedCreateWithoutEventInput>
   }
 
-  export type EventSessionCreateManyEventInputEnvelope = {
-    data: EventSessionCreateManyEventInput | EventSessionCreateManyEventInput[]
+  export type EventAttendanceRecordCreateManyEventInputEnvelope = {
+    data: EventAttendanceRecordCreateManyEventInput | EventAttendanceRecordCreateManyEventInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EventMaterialLinkCreateWithoutEventInput = {
+    id?: string
+    sort_order?: number
+    is_required?: boolean
+    linked_at?: Date | string
+    linked_by?: string | null
+    material: TrainingMaterialCreateNestedOneWithoutEvent_linksInput
+  }
+
+  export type EventMaterialLinkUncheckedCreateWithoutEventInput = {
+    id?: string
+    material_id: string
+    sort_order?: number
+    is_required?: boolean
+    linked_at?: Date | string
+    linked_by?: string | null
+  }
+
+  export type EventMaterialLinkCreateOrConnectWithoutEventInput = {
+    where: EventMaterialLinkWhereUniqueInput
+    create: XOR<EventMaterialLinkCreateWithoutEventInput, EventMaterialLinkUncheckedCreateWithoutEventInput>
+  }
+
+  export type EventMaterialLinkCreateManyEventInputEnvelope = {
+    data: EventMaterialLinkCreateManyEventInput | EventMaterialLinkCreateManyEventInput[]
     skipDuplicates?: boolean
   }
 
@@ -54049,57 +55732,73 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type EventAttendanceRecordCreateWithoutEventInput = {
+  export type EventSessionCreateWithoutEventInput = {
     id?: string
-    registration_id?: string | null
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    session_code: string
+    session_name: string
+    session_name_english?: string | null
+    session_description?: string | null
+    session_date: Date | string
+    session_start_time: Date | string
+    session_end_time: Date | string
+    session_location?: string | null
+    session_room?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    virtual_meeting_url?: string | null
+    track_name?: string | null
+    track_color?: string | null
+    max_attendees: number
+    current_attendees?: number
+    session_type?: $Enums.SessionType
+    is_cancelled?: boolean
+    is_deleted?: boolean
+    sort_order?: number
     created_at?: Date | string
     updated_at?: Date | string
-    beneficiary?: BeneficiaryCreateNestedOneWithoutEvent_attendance_recordsInput
+    created_by?: string | null
+    updated_by?: string | null
+    session_registrations?: EventSessionRegistrationCreateNestedManyWithoutSessionInput
+    speakers?: EventSessionSpeakerCreateNestedManyWithoutSessionInput
   }
 
-  export type EventAttendanceRecordUncheckedCreateWithoutEventInput = {
+  export type EventSessionUncheckedCreateWithoutEventInput = {
     id?: string
-    beneficiary_id?: string | null
-    registration_id?: string | null
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    session_code: string
+    session_name: string
+    session_name_english?: string | null
+    session_description?: string | null
+    session_date: Date | string
+    session_start_time: Date | string
+    session_end_time: Date | string
+    session_location?: string | null
+    session_room?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    virtual_meeting_url?: string | null
+    track_name?: string | null
+    track_color?: string | null
+    max_attendees: number
+    current_attendees?: number
+    session_type?: $Enums.SessionType
+    is_cancelled?: boolean
+    is_deleted?: boolean
+    sort_order?: number
     created_at?: Date | string
     updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    session_registrations?: EventSessionRegistrationUncheckedCreateNestedManyWithoutSessionInput
+    speakers?: EventSessionSpeakerUncheckedCreateNestedManyWithoutSessionInput
   }
 
-  export type EventAttendanceRecordCreateOrConnectWithoutEventInput = {
-    where: EventAttendanceRecordWhereUniqueInput
-    create: XOR<EventAttendanceRecordCreateWithoutEventInput, EventAttendanceRecordUncheckedCreateWithoutEventInput>
+  export type EventSessionCreateOrConnectWithoutEventInput = {
+    where: EventSessionWhereUniqueInput
+    create: XOR<EventSessionCreateWithoutEventInput, EventSessionUncheckedCreateWithoutEventInput>
   }
 
-  export type EventAttendanceRecordCreateManyEventInputEnvelope = {
-    data: EventAttendanceRecordCreateManyEventInput | EventAttendanceRecordCreateManyEventInput[]
+  export type EventSessionCreateManyEventInputEnvelope = {
+    data: EventSessionCreateManyEventInput | EventSessionCreateManyEventInput[]
     skipDuplicates?: boolean
   }
 
@@ -54161,32 +55860,65 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type EventMaterialLinkCreateWithoutEventInput = {
-    id?: string
-    sort_order?: number
-    is_required?: boolean
-    linked_at?: Date | string
-    linked_by?: string | null
-    material: TrainingMaterialCreateNestedOneWithoutEvent_linksInput
+  export type EventAttendanceRecordUpsertWithWhereUniqueWithoutEventInput = {
+    where: EventAttendanceRecordWhereUniqueInput
+    update: XOR<EventAttendanceRecordUpdateWithoutEventInput, EventAttendanceRecordUncheckedUpdateWithoutEventInput>
+    create: XOR<EventAttendanceRecordCreateWithoutEventInput, EventAttendanceRecordUncheckedCreateWithoutEventInput>
   }
 
-  export type EventMaterialLinkUncheckedCreateWithoutEventInput = {
-    id?: string
-    material_id: string
-    sort_order?: number
-    is_required?: boolean
-    linked_at?: Date | string
-    linked_by?: string | null
+  export type EventAttendanceRecordUpdateWithWhereUniqueWithoutEventInput = {
+    where: EventAttendanceRecordWhereUniqueInput
+    data: XOR<EventAttendanceRecordUpdateWithoutEventInput, EventAttendanceRecordUncheckedUpdateWithoutEventInput>
   }
 
-  export type EventMaterialLinkCreateOrConnectWithoutEventInput = {
+  export type EventAttendanceRecordUpdateManyWithWhereWithoutEventInput = {
+    where: EventAttendanceRecordScalarWhereInput
+    data: XOR<EventAttendanceRecordUpdateManyMutationInput, EventAttendanceRecordUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type EventMaterialLinkUpsertWithWhereUniqueWithoutEventInput = {
     where: EventMaterialLinkWhereUniqueInput
+    update: XOR<EventMaterialLinkUpdateWithoutEventInput, EventMaterialLinkUncheckedUpdateWithoutEventInput>
     create: XOR<EventMaterialLinkCreateWithoutEventInput, EventMaterialLinkUncheckedCreateWithoutEventInput>
   }
 
-  export type EventMaterialLinkCreateManyEventInputEnvelope = {
-    data: EventMaterialLinkCreateManyEventInput | EventMaterialLinkCreateManyEventInput[]
-    skipDuplicates?: boolean
+  export type EventMaterialLinkUpdateWithWhereUniqueWithoutEventInput = {
+    where: EventMaterialLinkWhereUniqueInput
+    data: XOR<EventMaterialLinkUpdateWithoutEventInput, EventMaterialLinkUncheckedUpdateWithoutEventInput>
+  }
+
+  export type EventMaterialLinkUpdateManyWithWhereWithoutEventInput = {
+    where: EventMaterialLinkScalarWhereInput
+    data: XOR<EventMaterialLinkUpdateManyMutationInput, EventMaterialLinkUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type EventMaterialLinkScalarWhereInput = {
+    AND?: EventMaterialLinkScalarWhereInput | EventMaterialLinkScalarWhereInput[]
+    OR?: EventMaterialLinkScalarWhereInput[]
+    NOT?: EventMaterialLinkScalarWhereInput | EventMaterialLinkScalarWhereInput[]
+    id?: StringFilter<"EventMaterialLink"> | string
+    event_id?: StringFilter<"EventMaterialLink"> | string
+    material_id?: StringFilter<"EventMaterialLink"> | string
+    sort_order?: IntFilter<"EventMaterialLink"> | number
+    is_required?: BoolFilter<"EventMaterialLink"> | boolean
+    linked_at?: DateTimeFilter<"EventMaterialLink"> | Date | string
+    linked_by?: StringNullableFilter<"EventMaterialLink"> | string | null
+  }
+
+  export type EventRegistrationUpsertWithWhereUniqueWithoutEventInput = {
+    where: EventRegistrationWhereUniqueInput
+    update: XOR<EventRegistrationUpdateWithoutEventInput, EventRegistrationUncheckedUpdateWithoutEventInput>
+    create: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput>
+  }
+
+  export type EventRegistrationUpdateWithWhereUniqueWithoutEventInput = {
+    where: EventRegistrationWhereUniqueInput
+    data: XOR<EventRegistrationUpdateWithoutEventInput, EventRegistrationUncheckedUpdateWithoutEventInput>
+  }
+
+  export type EventRegistrationUpdateManyWithWhereWithoutEventInput = {
+    where: EventRegistrationScalarWhereInput
+    data: XOR<EventRegistrationUpdateManyMutationInput, EventRegistrationUncheckedUpdateManyWithoutEventInput>
   }
 
   export type EventSessionUpsertWithWhereUniqueWithoutEventInput = {
@@ -54237,38 +55969,6 @@ export namespace Prisma {
     updated_by?: StringNullableFilter<"EventSession"> | string | null
   }
 
-  export type EventRegistrationUpsertWithWhereUniqueWithoutEventInput = {
-    where: EventRegistrationWhereUniqueInput
-    update: XOR<EventRegistrationUpdateWithoutEventInput, EventRegistrationUncheckedUpdateWithoutEventInput>
-    create: XOR<EventRegistrationCreateWithoutEventInput, EventRegistrationUncheckedCreateWithoutEventInput>
-  }
-
-  export type EventRegistrationUpdateWithWhereUniqueWithoutEventInput = {
-    where: EventRegistrationWhereUniqueInput
-    data: XOR<EventRegistrationUpdateWithoutEventInput, EventRegistrationUncheckedUpdateWithoutEventInput>
-  }
-
-  export type EventRegistrationUpdateManyWithWhereWithoutEventInput = {
-    where: EventRegistrationScalarWhereInput
-    data: XOR<EventRegistrationUpdateManyMutationInput, EventRegistrationUncheckedUpdateManyWithoutEventInput>
-  }
-
-  export type EventAttendanceRecordUpsertWithWhereUniqueWithoutEventInput = {
-    where: EventAttendanceRecordWhereUniqueInput
-    update: XOR<EventAttendanceRecordUpdateWithoutEventInput, EventAttendanceRecordUncheckedUpdateWithoutEventInput>
-    create: XOR<EventAttendanceRecordCreateWithoutEventInput, EventAttendanceRecordUncheckedCreateWithoutEventInput>
-  }
-
-  export type EventAttendanceRecordUpdateWithWhereUniqueWithoutEventInput = {
-    where: EventAttendanceRecordWhereUniqueInput
-    data: XOR<EventAttendanceRecordUpdateWithoutEventInput, EventAttendanceRecordUncheckedUpdateWithoutEventInput>
-  }
-
-  export type EventAttendanceRecordUpdateManyWithWhereWithoutEventInput = {
-    where: EventAttendanceRecordScalarWhereInput
-    data: XOR<EventAttendanceRecordUpdateManyMutationInput, EventAttendanceRecordUncheckedUpdateManyWithoutEventInput>
-  }
-
   export type EventSpeakerUpsertWithWhereUniqueWithoutEventInput = {
     where: EventSpeakerWhereUniqueInput
     update: XOR<EventSpeakerUpdateWithoutEventInput, EventSpeakerUncheckedUpdateWithoutEventInput>
@@ -54310,134 +56010,6 @@ export namespace Prisma {
     is_deleted?: BoolFilter<"EventSpeaker"> | boolean
     created_at?: DateTimeFilter<"EventSpeaker"> | Date | string
     updated_at?: DateTimeFilter<"EventSpeaker"> | Date | string
-  }
-
-  export type EventMaterialLinkUpsertWithWhereUniqueWithoutEventInput = {
-    where: EventMaterialLinkWhereUniqueInput
-    update: XOR<EventMaterialLinkUpdateWithoutEventInput, EventMaterialLinkUncheckedUpdateWithoutEventInput>
-    create: XOR<EventMaterialLinkCreateWithoutEventInput, EventMaterialLinkUncheckedCreateWithoutEventInput>
-  }
-
-  export type EventMaterialLinkUpdateWithWhereUniqueWithoutEventInput = {
-    where: EventMaterialLinkWhereUniqueInput
-    data: XOR<EventMaterialLinkUpdateWithoutEventInput, EventMaterialLinkUncheckedUpdateWithoutEventInput>
-  }
-
-  export type EventMaterialLinkUpdateManyWithWhereWithoutEventInput = {
-    where: EventMaterialLinkScalarWhereInput
-    data: XOR<EventMaterialLinkUpdateManyMutationInput, EventMaterialLinkUncheckedUpdateManyWithoutEventInput>
-  }
-
-  export type EventMaterialLinkScalarWhereInput = {
-    AND?: EventMaterialLinkScalarWhereInput | EventMaterialLinkScalarWhereInput[]
-    OR?: EventMaterialLinkScalarWhereInput[]
-    NOT?: EventMaterialLinkScalarWhereInput | EventMaterialLinkScalarWhereInput[]
-    id?: StringFilter<"EventMaterialLink"> | string
-    event_id?: StringFilter<"EventMaterialLink"> | string
-    material_id?: StringFilter<"EventMaterialLink"> | string
-    sort_order?: IntFilter<"EventMaterialLink"> | number
-    is_required?: BoolFilter<"EventMaterialLink"> | boolean
-    linked_at?: DateTimeFilter<"EventMaterialLink"> | Date | string
-    linked_by?: StringNullableFilter<"EventMaterialLink"> | string | null
-  }
-
-  export type EventCreateWithoutSessionsInput = {
-    id?: string
-    event_code: string
-    event_name: string
-    event_name_english?: string | null
-    event_description?: string | null
-    event_type: $Enums.EventType
-    event_category?: string | null
-    event_format?: $Enums.EventFormat
-    event_status: $Enums.EventStatus
-    event_start_date: Date | string
-    event_end_date: Date | string
-    registration_deadline?: Date | string | null
-    registration_start?: Date | string | null
-    event_location?: string | null
-    event_venue?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    geofence_radius?: number
-    province_name?: string | null
-    district_name?: string | null
-    virtual_platform?: string | null
-    virtual_meeting_url?: string | null
-    virtual_meeting_id?: string | null
-    virtual_passcode?: string | null
-    max_attendees: number
-    current_attendees?: number
-    allow_public_registration?: boolean
-    requires_approval?: boolean
-    is_multi_track?: boolean
-    qr_code_data?: string | null
-    gps_validation_required?: boolean
-    geofence_validation_required?: boolean
-    is_published?: boolean
-    banner_image_url?: string | null
-    tags?: EventCreatetagsInput | string[]
-    is_deleted?: boolean
-    created_by?: string | null
-    updated_by?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
-    attendance_records?: EventAttendanceRecordCreateNestedManyWithoutEventInput
-    speakers?: EventSpeakerCreateNestedManyWithoutEventInput
-    material_links?: EventMaterialLinkCreateNestedManyWithoutEventInput
-  }
-
-  export type EventUncheckedCreateWithoutSessionsInput = {
-    id?: string
-    event_code: string
-    event_name: string
-    event_name_english?: string | null
-    event_description?: string | null
-    event_type: $Enums.EventType
-    event_category?: string | null
-    event_format?: $Enums.EventFormat
-    event_status: $Enums.EventStatus
-    event_start_date: Date | string
-    event_end_date: Date | string
-    registration_deadline?: Date | string | null
-    registration_start?: Date | string | null
-    event_location?: string | null
-    event_venue?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    geofence_radius?: number
-    province_name?: string | null
-    district_name?: string | null
-    virtual_platform?: string | null
-    virtual_meeting_url?: string | null
-    virtual_meeting_id?: string | null
-    virtual_passcode?: string | null
-    max_attendees: number
-    current_attendees?: number
-    allow_public_registration?: boolean
-    requires_approval?: boolean
-    is_multi_track?: boolean
-    qr_code_data?: string | null
-    gps_validation_required?: boolean
-    geofence_validation_required?: boolean
-    is_published?: boolean
-    banner_image_url?: string | null
-    tags?: EventCreatetagsInput | string[]
-    is_deleted?: boolean
-    created_by?: string | null
-    updated_by?: string | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
-    attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutEventInput
-    speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
-    material_links?: EventMaterialLinkUncheckedCreateNestedManyWithoutEventInput
-  }
-
-  export type EventCreateOrConnectWithoutSessionsInput = {
-    where: EventWhereUniqueInput
-    create: XOR<EventCreateWithoutSessionsInput, EventUncheckedCreateWithoutSessionsInput>
   }
 
   export type EventSessionRegistrationCreateWithoutSessionInput = {
@@ -54490,109 +56062,103 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type EventUpsertWithoutSessionsInput = {
-    update: XOR<EventUpdateWithoutSessionsInput, EventUncheckedUpdateWithoutSessionsInput>
+  export type EventCreateWithoutSessionsInput = {
+    id?: string
+    event_code: string
+    event_name: string
+    event_name_english?: string | null
+    event_description?: string | null
+    event_type: $Enums.EventType
+    event_category?: string | null
+    event_format?: $Enums.EventFormat
+    event_status: $Enums.EventStatus
+    event_start_date: Date | string
+    event_end_date: Date | string
+    registration_deadline?: Date | string | null
+    registration_start?: Date | string | null
+    event_location?: string | null
+    event_venue?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    geofence_radius?: number
+    province_name?: string | null
+    district_name?: string | null
+    virtual_platform?: string | null
+    virtual_meeting_url?: string | null
+    virtual_meeting_id?: string | null
+    virtual_passcode?: string | null
+    max_attendees: number
+    current_attendees?: number
+    allow_public_registration?: boolean
+    requires_approval?: boolean
+    is_multi_track?: boolean
+    qr_code_data?: string | null
+    gps_validation_required?: boolean
+    geofence_validation_required?: boolean
+    is_published?: boolean
+    banner_image_url?: string | null
+    tags?: EventCreatetagsInput | string[]
+    is_deleted?: boolean
+    created_by?: string | null
+    updated_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    attendance_records?: EventAttendanceRecordCreateNestedManyWithoutEventInput
+    material_links?: EventMaterialLinkCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
+    speakers?: EventSpeakerCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutSessionsInput = {
+    id?: string
+    event_code: string
+    event_name: string
+    event_name_english?: string | null
+    event_description?: string | null
+    event_type: $Enums.EventType
+    event_category?: string | null
+    event_format?: $Enums.EventFormat
+    event_status: $Enums.EventStatus
+    event_start_date: Date | string
+    event_end_date: Date | string
+    registration_deadline?: Date | string | null
+    registration_start?: Date | string | null
+    event_location?: string | null
+    event_venue?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    geofence_radius?: number
+    province_name?: string | null
+    district_name?: string | null
+    virtual_platform?: string | null
+    virtual_meeting_url?: string | null
+    virtual_meeting_id?: string | null
+    virtual_passcode?: string | null
+    max_attendees: number
+    current_attendees?: number
+    allow_public_registration?: boolean
+    requires_approval?: boolean
+    is_multi_track?: boolean
+    qr_code_data?: string | null
+    gps_validation_required?: boolean
+    geofence_validation_required?: boolean
+    is_published?: boolean
+    banner_image_url?: string | null
+    tags?: EventCreatetagsInput | string[]
+    is_deleted?: boolean
+    created_by?: string | null
+    updated_by?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutEventInput
+    material_links?: EventMaterialLinkUncheckedCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
+    speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutSessionsInput = {
+    where: EventWhereUniqueInput
     create: XOR<EventCreateWithoutSessionsInput, EventUncheckedCreateWithoutSessionsInput>
-    where?: EventWhereInput
-  }
-
-  export type EventUpdateToOneWithWhereWithoutSessionsInput = {
-    where?: EventWhereInput
-    data: XOR<EventUpdateWithoutSessionsInput, EventUncheckedUpdateWithoutSessionsInput>
-  }
-
-  export type EventUpdateWithoutSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    event_code?: StringFieldUpdateOperationsInput | string
-    event_name?: StringFieldUpdateOperationsInput | string
-    event_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    event_description?: NullableStringFieldUpdateOperationsInput | string | null
-    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
-    event_category?: NullableStringFieldUpdateOperationsInput | string | null
-    event_format?: EnumEventFormatFieldUpdateOperationsInput | $Enums.EventFormat
-    event_status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
-    event_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    event_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    registration_start?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    event_location?: NullableStringFieldUpdateOperationsInput | string | null
-    event_venue?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    geofence_radius?: IntFieldUpdateOperationsInput | number
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    virtual_platform?: NullableStringFieldUpdateOperationsInput | string | null
-    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
-    virtual_meeting_id?: NullableStringFieldUpdateOperationsInput | string | null
-    virtual_passcode?: NullableStringFieldUpdateOperationsInput | string | null
-    max_attendees?: IntFieldUpdateOperationsInput | number
-    current_attendees?: IntFieldUpdateOperationsInput | number
-    allow_public_registration?: BoolFieldUpdateOperationsInput | boolean
-    requires_approval?: BoolFieldUpdateOperationsInput | boolean
-    is_multi_track?: BoolFieldUpdateOperationsInput | boolean
-    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
-    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-    banner_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: EventUpdatetagsInput | string[]
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
-    attendance_records?: EventAttendanceRecordUpdateManyWithoutEventNestedInput
-    speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
-    material_links?: EventMaterialLinkUpdateManyWithoutEventNestedInput
-  }
-
-  export type EventUncheckedUpdateWithoutSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    event_code?: StringFieldUpdateOperationsInput | string
-    event_name?: StringFieldUpdateOperationsInput | string
-    event_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    event_description?: NullableStringFieldUpdateOperationsInput | string | null
-    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
-    event_category?: NullableStringFieldUpdateOperationsInput | string | null
-    event_format?: EnumEventFormatFieldUpdateOperationsInput | $Enums.EventFormat
-    event_status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
-    event_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    event_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    registration_start?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    event_location?: NullableStringFieldUpdateOperationsInput | string | null
-    event_venue?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    geofence_radius?: IntFieldUpdateOperationsInput | number
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    virtual_platform?: NullableStringFieldUpdateOperationsInput | string | null
-    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
-    virtual_meeting_id?: NullableStringFieldUpdateOperationsInput | string | null
-    virtual_passcode?: NullableStringFieldUpdateOperationsInput | string | null
-    max_attendees?: IntFieldUpdateOperationsInput | number
-    current_attendees?: IntFieldUpdateOperationsInput | number
-    allow_public_registration?: BoolFieldUpdateOperationsInput | boolean
-    requires_approval?: BoolFieldUpdateOperationsInput | boolean
-    is_multi_track?: BoolFieldUpdateOperationsInput | boolean
-    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
-    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-    banner_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: EventUpdatetagsInput | string[]
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
-    attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutEventNestedInput
-    speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
-    material_links?: EventMaterialLinkUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventSessionRegistrationUpsertWithWhereUniqueWithoutSessionInput = {
@@ -54650,6 +56216,182 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"EventSessionSpeaker"> | Date | string
   }
 
+  export type EventUpsertWithoutSessionsInput = {
+    update: XOR<EventUpdateWithoutSessionsInput, EventUncheckedUpdateWithoutSessionsInput>
+    create: XOR<EventCreateWithoutSessionsInput, EventUncheckedCreateWithoutSessionsInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutSessionsInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutSessionsInput, EventUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type EventUpdateWithoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_code?: StringFieldUpdateOperationsInput | string
+    event_name?: StringFieldUpdateOperationsInput | string
+    event_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    event_description?: NullableStringFieldUpdateOperationsInput | string | null
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    event_category?: NullableStringFieldUpdateOperationsInput | string | null
+    event_format?: EnumEventFormatFieldUpdateOperationsInput | $Enums.EventFormat
+    event_status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    event_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    event_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    registration_start?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    event_location?: NullableStringFieldUpdateOperationsInput | string | null
+    event_venue?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    geofence_radius?: IntFieldUpdateOperationsInput | number
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    virtual_platform?: NullableStringFieldUpdateOperationsInput | string | null
+    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
+    virtual_meeting_id?: NullableStringFieldUpdateOperationsInput | string | null
+    virtual_passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    max_attendees?: IntFieldUpdateOperationsInput | number
+    current_attendees?: IntFieldUpdateOperationsInput | number
+    allow_public_registration?: BoolFieldUpdateOperationsInput | boolean
+    requires_approval?: BoolFieldUpdateOperationsInput | boolean
+    is_multi_track?: BoolFieldUpdateOperationsInput | boolean
+    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
+    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    is_published?: BoolFieldUpdateOperationsInput | boolean
+    banner_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: EventUpdatetagsInput | string[]
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    attendance_records?: EventAttendanceRecordUpdateManyWithoutEventNestedInput
+    material_links?: EventMaterialLinkUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
+    speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_code?: StringFieldUpdateOperationsInput | string
+    event_name?: StringFieldUpdateOperationsInput | string
+    event_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    event_description?: NullableStringFieldUpdateOperationsInput | string | null
+    event_type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    event_category?: NullableStringFieldUpdateOperationsInput | string | null
+    event_format?: EnumEventFormatFieldUpdateOperationsInput | $Enums.EventFormat
+    event_status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    event_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    event_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    registration_start?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    event_location?: NullableStringFieldUpdateOperationsInput | string | null
+    event_venue?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    geofence_radius?: IntFieldUpdateOperationsInput | number
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    virtual_platform?: NullableStringFieldUpdateOperationsInput | string | null
+    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
+    virtual_meeting_id?: NullableStringFieldUpdateOperationsInput | string | null
+    virtual_passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    max_attendees?: IntFieldUpdateOperationsInput | number
+    current_attendees?: IntFieldUpdateOperationsInput | number
+    allow_public_registration?: BoolFieldUpdateOperationsInput | boolean
+    requires_approval?: BoolFieldUpdateOperationsInput | boolean
+    is_multi_track?: BoolFieldUpdateOperationsInput | boolean
+    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
+    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    is_published?: BoolFieldUpdateOperationsInput | boolean
+    banner_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: EventUpdatetagsInput | string[]
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutEventNestedInput
+    material_links?: EventMaterialLinkUncheckedUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
+    speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type BeneficiaryCreateWithoutEvent_registrationsInput = {
+    teacher_id: string
+    name: string
+    name_english?: string | null
+    phone?: string | null
+    sex?: $Enums.Sex | null
+    role?: string | null
+    passcode?: string | null
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    village_name?: string | null
+    school?: string | null
+    school_id?: string | null
+    position?: string | null
+    subject?: string | null
+    grade?: number | null
+    profile_image_url?: string | null
+    signature_url?: string | null
+    status: $Enums.BeneficiaryStatus
+    is_deleted?: boolean
+    profile_completed?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
+    event_attendance_records?: EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserCreateNestedOneWithoutBeneficiaryInput
+  }
+
+  export type BeneficiaryUncheckedCreateWithoutEvent_registrationsInput = {
+    teacher_id: string
+    name: string
+    name_english?: string | null
+    phone?: string | null
+    sex?: $Enums.Sex | null
+    role?: string | null
+    passcode?: string | null
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    village_name?: string | null
+    school?: string | null
+    school_id?: string | null
+    position?: string | null
+    subject?: string | null
+    grade?: number | null
+    profile_image_url?: string | null
+    signature_url?: string | null
+    status: $Enums.BeneficiaryStatus
+    is_deleted?: boolean
+    profile_completed?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserUncheckedCreateNestedOneWithoutBeneficiaryInput
+  }
+
+  export type BeneficiaryCreateOrConnectWithoutEvent_registrationsInput = {
+    where: BeneficiaryWhereUniqueInput
+    create: XOR<BeneficiaryCreateWithoutEvent_registrationsInput, BeneficiaryUncheckedCreateWithoutEvent_registrationsInput>
+  }
+
   export type EventCreateWithoutRegistrationsInput = {
     id?: string
     event_code: string
@@ -54691,10 +56433,10 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionCreateNestedManyWithoutEventInput
     attendance_records?: EventAttendanceRecordCreateNestedManyWithoutEventInput
-    speakers?: EventSpeakerCreateNestedManyWithoutEventInput
     material_links?: EventMaterialLinkCreateNestedManyWithoutEventInput
+    sessions?: EventSessionCreateNestedManyWithoutEventInput
+    speakers?: EventSpeakerCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutRegistrationsInput = {
@@ -54738,84 +56480,15 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
     attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutEventInput
-    speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
     material_links?: EventMaterialLinkUncheckedCreateNestedManyWithoutEventInput
+    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
+    speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutRegistrationsInput = {
     where: EventWhereUniqueInput
     create: XOR<EventCreateWithoutRegistrationsInput, EventUncheckedCreateWithoutRegistrationsInput>
-  }
-
-  export type BeneficiaryCreateWithoutEvent_registrationsInput = {
-    teacher_id: string
-    name: string
-    name_english?: string | null
-    phone?: string | null
-    sex?: $Enums.Sex | null
-    role?: string | null
-    passcode?: string | null
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    village_name?: string | null
-    school?: string | null
-    school_id?: string | null
-    position?: string | null
-    subject?: string | null
-    grade?: number | null
-    profile_image_url?: string | null
-    signature_url?: string | null
-    status: $Enums.BeneficiaryStatus
-    is_deleted?: boolean
-    profile_completed?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
-    attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
-    event_attendance_records?: EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput
-  }
-
-  export type BeneficiaryUncheckedCreateWithoutEvent_registrationsInput = {
-    teacher_id: string
-    name: string
-    name_english?: string | null
-    phone?: string | null
-    sex?: $Enums.Sex | null
-    role?: string | null
-    passcode?: string | null
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    village_name?: string | null
-    school?: string | null
-    school_id?: string | null
-    position?: string | null
-    subject?: string | null
-    grade?: number | null
-    profile_image_url?: string | null
-    signature_url?: string | null
-    status: $Enums.BeneficiaryStatus
-    is_deleted?: boolean
-    profile_completed?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
-    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
-    event_attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
-  }
-
-  export type BeneficiaryCreateOrConnectWithoutEvent_registrationsInput = {
-    where: BeneficiaryWhereUniqueInput
-    create: XOR<BeneficiaryCreateWithoutEvent_registrationsInput, BeneficiaryUncheckedCreateWithoutEvent_registrationsInput>
   }
 
   export type EventSessionRegistrationCreateWithoutRegistrationInput = {
@@ -54842,6 +56515,83 @@ export namespace Prisma {
   export type EventSessionRegistrationCreateManyRegistrationInputEnvelope = {
     data: EventSessionRegistrationCreateManyRegistrationInput | EventSessionRegistrationCreateManyRegistrationInput[]
     skipDuplicates?: boolean
+  }
+
+  export type BeneficiaryUpsertWithoutEvent_registrationsInput = {
+    update: XOR<BeneficiaryUpdateWithoutEvent_registrationsInput, BeneficiaryUncheckedUpdateWithoutEvent_registrationsInput>
+    create: XOR<BeneficiaryCreateWithoutEvent_registrationsInput, BeneficiaryUncheckedCreateWithoutEvent_registrationsInput>
+    where?: BeneficiaryWhereInput
+  }
+
+  export type BeneficiaryUpdateToOneWithWhereWithoutEvent_registrationsInput = {
+    where?: BeneficiaryWhereInput
+    data: XOR<BeneficiaryUpdateWithoutEvent_registrationsInput, BeneficiaryUncheckedUpdateWithoutEvent_registrationsInput>
+  }
+
+  export type BeneficiaryUpdateWithoutEvent_registrationsInput = {
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    village_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    school_id?: NullableStringFieldUpdateOperationsInput | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    grade?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    profile_completed?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
+    event_attendance_records?: EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUpdateOneWithoutBeneficiaryNestedInput
+  }
+
+  export type BeneficiaryUncheckedUpdateWithoutEvent_registrationsInput = {
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    village_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    school_id?: NullableStringFieldUpdateOperationsInput | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    grade?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    profile_completed?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUncheckedUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type EventUpsertWithoutRegistrationsInput = {
@@ -54896,10 +56646,10 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUpdateManyWithoutEventNestedInput
     attendance_records?: EventAttendanceRecordUpdateManyWithoutEventNestedInput
-    speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
     material_links?: EventMaterialLinkUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUpdateManyWithoutEventNestedInput
+    speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutRegistrationsInput = {
@@ -54943,85 +56693,10 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
     attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutEventNestedInput
-    speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
     material_links?: EventMaterialLinkUncheckedUpdateManyWithoutEventNestedInput
-  }
-
-  export type BeneficiaryUpsertWithoutEvent_registrationsInput = {
-    update: XOR<BeneficiaryUpdateWithoutEvent_registrationsInput, BeneficiaryUncheckedUpdateWithoutEvent_registrationsInput>
-    create: XOR<BeneficiaryCreateWithoutEvent_registrationsInput, BeneficiaryUncheckedCreateWithoutEvent_registrationsInput>
-    where?: BeneficiaryWhereInput
-  }
-
-  export type BeneficiaryUpdateToOneWithWhereWithoutEvent_registrationsInput = {
-    where?: BeneficiaryWhereInput
-    data: XOR<BeneficiaryUpdateWithoutEvent_registrationsInput, BeneficiaryUncheckedUpdateWithoutEvent_registrationsInput>
-  }
-
-  export type BeneficiaryUpdateWithoutEvent_registrationsInput = {
-    teacher_id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    passcode?: NullableStringFieldUpdateOperationsInput | string | null
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    village_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school?: NullableStringFieldUpdateOperationsInput | string | null
-    school_id?: NullableStringFieldUpdateOperationsInput | string | null
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    subject?: NullableStringFieldUpdateOperationsInput | string | null
-    grade?: NullableIntFieldUpdateOperationsInput | number | null
-    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    profile_completed?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
-    attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
-    event_attendance_records?: EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
-  }
-
-  export type BeneficiaryUncheckedUpdateWithoutEvent_registrationsInput = {
-    teacher_id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    passcode?: NullableStringFieldUpdateOperationsInput | string | null
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    village_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school?: NullableStringFieldUpdateOperationsInput | string | null
-    school_id?: NullableStringFieldUpdateOperationsInput | string | null
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    subject?: NullableStringFieldUpdateOperationsInput | string | null
-    grade?: NullableIntFieldUpdateOperationsInput | number | null
-    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    profile_completed?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    event_attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
+    speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventSessionRegistrationUpsertWithWhereUniqueWithoutRegistrationInput = {
@@ -55069,8 +56744,8 @@ export namespace Prisma {
     is_deleted?: boolean
     created_at?: Date | string
     updated_at?: Date | string
-    event: EventCreateNestedOneWithoutRegistrationsInput
     beneficiary?: BeneficiaryCreateNestedOneWithoutEvent_registrationsInput
+    event: EventCreateNestedOneWithoutRegistrationsInput
   }
 
   export type EventRegistrationUncheckedCreateWithoutSession_registrationsInput = {
@@ -55137,8 +56812,8 @@ export namespace Prisma {
     updated_at?: Date | string
     created_by?: string | null
     updated_by?: string | null
-    event: EventCreateNestedOneWithoutSessionsInput
     speakers?: EventSessionSpeakerCreateNestedManyWithoutSessionInput
+    event: EventCreateNestedOneWithoutSessionsInput
   }
 
   export type EventSessionUncheckedCreateWithoutSession_registrationsInput = {
@@ -55216,8 +56891,8 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    event?: EventUpdateOneRequiredWithoutRegistrationsNestedInput
     beneficiary?: BeneficiaryUpdateOneWithoutEvent_registrationsNestedInput
+    event?: EventUpdateOneRequiredWithoutRegistrationsNestedInput
   }
 
   export type EventRegistrationUncheckedUpdateWithoutSession_registrationsInput = {
@@ -55290,8 +56965,8 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    event?: EventUpdateOneRequiredWithoutSessionsNestedInput
     speakers?: EventSessionSpeakerUpdateManyWithoutSessionNestedInput
+    event?: EventUpdateOneRequiredWithoutSessionsNestedInput
   }
 
   export type EventSessionUncheckedUpdateWithoutSession_registrationsInput = {
@@ -55322,6 +56997,77 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     speakers?: EventSessionSpeakerUncheckedUpdateManyWithoutSessionNestedInput
+  }
+
+  export type BeneficiaryCreateWithoutEvent_attendance_recordsInput = {
+    teacher_id: string
+    name: string
+    name_english?: string | null
+    phone?: string | null
+    sex?: $Enums.Sex | null
+    role?: string | null
+    passcode?: string | null
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    village_name?: string | null
+    school?: string | null
+    school_id?: string | null
+    position?: string | null
+    subject?: string | null
+    grade?: number | null
+    profile_image_url?: string | null
+    signature_url?: string | null
+    status: $Enums.BeneficiaryStatus
+    is_deleted?: boolean
+    profile_completed?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserCreateNestedOneWithoutBeneficiaryInput
+  }
+
+  export type BeneficiaryUncheckedCreateWithoutEvent_attendance_recordsInput = {
+    teacher_id: string
+    name: string
+    name_english?: string | null
+    phone?: string | null
+    sex?: $Enums.Sex | null
+    role?: string | null
+    passcode?: string | null
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    village_name?: string | null
+    school?: string | null
+    school_id?: string | null
+    position?: string | null
+    subject?: string | null
+    grade?: number | null
+    profile_image_url?: string | null
+    signature_url?: string | null
+    status: $Enums.BeneficiaryStatus
+    is_deleted?: boolean
+    profile_completed?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserUncheckedCreateNestedOneWithoutBeneficiaryInput
+  }
+
+  export type BeneficiaryCreateOrConnectWithoutEvent_attendance_recordsInput = {
+    where: BeneficiaryWhereUniqueInput
+    create: XOR<BeneficiaryCreateWithoutEvent_attendance_recordsInput, BeneficiaryUncheckedCreateWithoutEvent_attendance_recordsInput>
   }
 
   export type EventCreateWithoutAttendance_recordsInput = {
@@ -55365,10 +57111,10 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionCreateNestedManyWithoutEventInput
-    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
-    speakers?: EventSpeakerCreateNestedManyWithoutEventInput
     material_links?: EventMaterialLinkCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
+    sessions?: EventSessionCreateNestedManyWithoutEventInput
+    speakers?: EventSpeakerCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutAttendance_recordsInput = {
@@ -55412,10 +57158,10 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
-    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
-    speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
     material_links?: EventMaterialLinkUncheckedCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
+    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
+    speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutAttendance_recordsInput = {
@@ -55423,73 +57169,81 @@ export namespace Prisma {
     create: XOR<EventCreateWithoutAttendance_recordsInput, EventUncheckedCreateWithoutAttendance_recordsInput>
   }
 
-  export type BeneficiaryCreateWithoutEvent_attendance_recordsInput = {
-    teacher_id: string
-    name: string
-    name_english?: string | null
-    phone?: string | null
-    sex?: $Enums.Sex | null
-    role?: string | null
-    passcode?: string | null
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    village_name?: string | null
-    school?: string | null
-    school_id?: string | null
-    position?: string | null
-    subject?: string | null
-    grade?: number | null
-    profile_image_url?: string | null
-    signature_url?: string | null
-    status: $Enums.BeneficiaryStatus
-    is_deleted?: boolean
-    profile_completed?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
-    attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
-  }
-
-  export type BeneficiaryUncheckedCreateWithoutEvent_attendance_recordsInput = {
-    teacher_id: string
-    name: string
-    name_english?: string | null
-    phone?: string | null
-    sex?: $Enums.Sex | null
-    role?: string | null
-    passcode?: string | null
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    village_name?: string | null
-    school?: string | null
-    school_id?: string | null
-    position?: string | null
-    subject?: string | null
-    grade?: number | null
-    profile_image_url?: string | null
-    signature_url?: string | null
-    status: $Enums.BeneficiaryStatus
-    is_deleted?: boolean
-    profile_completed?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
-    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
-  }
-
-  export type BeneficiaryCreateOrConnectWithoutEvent_attendance_recordsInput = {
-    where: BeneficiaryWhereUniqueInput
+  export type BeneficiaryUpsertWithoutEvent_attendance_recordsInput = {
+    update: XOR<BeneficiaryUpdateWithoutEvent_attendance_recordsInput, BeneficiaryUncheckedUpdateWithoutEvent_attendance_recordsInput>
     create: XOR<BeneficiaryCreateWithoutEvent_attendance_recordsInput, BeneficiaryUncheckedCreateWithoutEvent_attendance_recordsInput>
+    where?: BeneficiaryWhereInput
+  }
+
+  export type BeneficiaryUpdateToOneWithWhereWithoutEvent_attendance_recordsInput = {
+    where?: BeneficiaryWhereInput
+    data: XOR<BeneficiaryUpdateWithoutEvent_attendance_recordsInput, BeneficiaryUncheckedUpdateWithoutEvent_attendance_recordsInput>
+  }
+
+  export type BeneficiaryUpdateWithoutEvent_attendance_recordsInput = {
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    village_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    school_id?: NullableStringFieldUpdateOperationsInput | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    grade?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    profile_completed?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUpdateOneWithoutBeneficiaryNestedInput
+  }
+
+  export type BeneficiaryUncheckedUpdateWithoutEvent_attendance_recordsInput = {
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    village_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    school_id?: NullableStringFieldUpdateOperationsInput | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    grade?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    profile_completed?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUncheckedUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type EventUpsertWithoutAttendance_recordsInput = {
@@ -55544,10 +57298,10 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUpdateManyWithoutEventNestedInput
-    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
-    speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
     material_links?: EventMaterialLinkUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUpdateManyWithoutEventNestedInput
+    speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutAttendance_recordsInput = {
@@ -55591,85 +57345,34 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
-    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
-    speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
     material_links?: EventMaterialLinkUncheckedUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
+    speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
   }
 
-  export type BeneficiaryUpsertWithoutEvent_attendance_recordsInput = {
-    update: XOR<BeneficiaryUpdateWithoutEvent_attendance_recordsInput, BeneficiaryUncheckedUpdateWithoutEvent_attendance_recordsInput>
-    create: XOR<BeneficiaryCreateWithoutEvent_attendance_recordsInput, BeneficiaryUncheckedCreateWithoutEvent_attendance_recordsInput>
-    where?: BeneficiaryWhereInput
+  export type EventSessionSpeakerCreateWithoutSpeakerInput = {
+    id?: string
+    role?: string | null
+    created_at?: Date | string
+    session: EventSessionCreateNestedOneWithoutSpeakersInput
   }
 
-  export type BeneficiaryUpdateToOneWithWhereWithoutEvent_attendance_recordsInput = {
-    where?: BeneficiaryWhereInput
-    data: XOR<BeneficiaryUpdateWithoutEvent_attendance_recordsInput, BeneficiaryUncheckedUpdateWithoutEvent_attendance_recordsInput>
+  export type EventSessionSpeakerUncheckedCreateWithoutSpeakerInput = {
+    id?: string
+    session_id: string
+    role?: string | null
+    created_at?: Date | string
   }
 
-  export type BeneficiaryUpdateWithoutEvent_attendance_recordsInput = {
-    teacher_id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    passcode?: NullableStringFieldUpdateOperationsInput | string | null
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    village_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school?: NullableStringFieldUpdateOperationsInput | string | null
-    school_id?: NullableStringFieldUpdateOperationsInput | string | null
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    subject?: NullableStringFieldUpdateOperationsInput | string | null
-    grade?: NullableIntFieldUpdateOperationsInput | number | null
-    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    profile_completed?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
-    attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
+  export type EventSessionSpeakerCreateOrConnectWithoutSpeakerInput = {
+    where: EventSessionSpeakerWhereUniqueInput
+    create: XOR<EventSessionSpeakerCreateWithoutSpeakerInput, EventSessionSpeakerUncheckedCreateWithoutSpeakerInput>
   }
 
-  export type BeneficiaryUncheckedUpdateWithoutEvent_attendance_recordsInput = {
-    teacher_id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    passcode?: NullableStringFieldUpdateOperationsInput | string | null
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    village_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school?: NullableStringFieldUpdateOperationsInput | string | null
-    school_id?: NullableStringFieldUpdateOperationsInput | string | null
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    subject?: NullableStringFieldUpdateOperationsInput | string | null
-    grade?: NullableIntFieldUpdateOperationsInput | number | null
-    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    profile_completed?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
+  export type EventSessionSpeakerCreateManySpeakerInputEnvelope = {
+    data: EventSessionSpeakerCreateManySpeakerInput | EventSessionSpeakerCreateManySpeakerInput[]
+    skipDuplicates?: boolean
   }
 
   export type EventCreateWithoutSpeakersInput = {
@@ -55713,10 +57416,10 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionCreateNestedManyWithoutEventInput
-    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
     attendance_records?: EventAttendanceRecordCreateNestedManyWithoutEventInput
     material_links?: EventMaterialLinkCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
+    sessions?: EventSessionCreateNestedManyWithoutEventInput
   }
 
   export type EventUncheckedCreateWithoutSpeakersInput = {
@@ -55760,10 +57463,10 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
-    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
     attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutEventInput
     material_links?: EventMaterialLinkUncheckedCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
+    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
   }
 
   export type EventCreateOrConnectWithoutSpeakersInput = {
@@ -55771,28 +57474,20 @@ export namespace Prisma {
     create: XOR<EventCreateWithoutSpeakersInput, EventUncheckedCreateWithoutSpeakersInput>
   }
 
-  export type EventSessionSpeakerCreateWithoutSpeakerInput = {
-    id?: string
-    role?: string | null
-    created_at?: Date | string
-    session: EventSessionCreateNestedOneWithoutSpeakersInput
-  }
-
-  export type EventSessionSpeakerUncheckedCreateWithoutSpeakerInput = {
-    id?: string
-    session_id: string
-    role?: string | null
-    created_at?: Date | string
-  }
-
-  export type EventSessionSpeakerCreateOrConnectWithoutSpeakerInput = {
+  export type EventSessionSpeakerUpsertWithWhereUniqueWithoutSpeakerInput = {
     where: EventSessionSpeakerWhereUniqueInput
+    update: XOR<EventSessionSpeakerUpdateWithoutSpeakerInput, EventSessionSpeakerUncheckedUpdateWithoutSpeakerInput>
     create: XOR<EventSessionSpeakerCreateWithoutSpeakerInput, EventSessionSpeakerUncheckedCreateWithoutSpeakerInput>
   }
 
-  export type EventSessionSpeakerCreateManySpeakerInputEnvelope = {
-    data: EventSessionSpeakerCreateManySpeakerInput | EventSessionSpeakerCreateManySpeakerInput[]
-    skipDuplicates?: boolean
+  export type EventSessionSpeakerUpdateWithWhereUniqueWithoutSpeakerInput = {
+    where: EventSessionSpeakerWhereUniqueInput
+    data: XOR<EventSessionSpeakerUpdateWithoutSpeakerInput, EventSessionSpeakerUncheckedUpdateWithoutSpeakerInput>
+  }
+
+  export type EventSessionSpeakerUpdateManyWithWhereWithoutSpeakerInput = {
+    where: EventSessionSpeakerScalarWhereInput
+    data: XOR<EventSessionSpeakerUpdateManyMutationInput, EventSessionSpeakerUncheckedUpdateManyWithoutSpeakerInput>
   }
 
   export type EventUpsertWithoutSpeakersInput = {
@@ -55847,10 +57542,10 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUpdateManyWithoutEventNestedInput
-    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
     attendance_records?: EventAttendanceRecordUpdateManyWithoutEventNestedInput
     material_links?: EventMaterialLinkUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUpdateManyWithoutEventNestedInput
   }
 
   export type EventUncheckedUpdateWithoutSpeakersInput = {
@@ -55894,26 +57589,10 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
-    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
     attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutEventNestedInput
     material_links?: EventMaterialLinkUncheckedUpdateManyWithoutEventNestedInput
-  }
-
-  export type EventSessionSpeakerUpsertWithWhereUniqueWithoutSpeakerInput = {
-    where: EventSessionSpeakerWhereUniqueInput
-    update: XOR<EventSessionSpeakerUpdateWithoutSpeakerInput, EventSessionSpeakerUncheckedUpdateWithoutSpeakerInput>
-    create: XOR<EventSessionSpeakerCreateWithoutSpeakerInput, EventSessionSpeakerUncheckedCreateWithoutSpeakerInput>
-  }
-
-  export type EventSessionSpeakerUpdateWithWhereUniqueWithoutSpeakerInput = {
-    where: EventSessionSpeakerWhereUniqueInput
-    data: XOR<EventSessionSpeakerUpdateWithoutSpeakerInput, EventSessionSpeakerUncheckedUpdateWithoutSpeakerInput>
-  }
-
-  export type EventSessionSpeakerUpdateManyWithWhereWithoutSpeakerInput = {
-    where: EventSessionSpeakerScalarWhereInput
-    data: XOR<EventSessionSpeakerUpdateManyMutationInput, EventSessionSpeakerUncheckedUpdateManyWithoutSpeakerInput>
+    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
   }
 
   export type EventSessionCreateWithoutSpeakersInput = {
@@ -55942,8 +57621,8 @@ export namespace Prisma {
     updated_at?: Date | string
     created_by?: string | null
     updated_by?: string | null
-    event: EventCreateNestedOneWithoutSessionsInput
     session_registrations?: EventSessionRegistrationCreateNestedManyWithoutSessionInput
+    event: EventCreateNestedOneWithoutSessionsInput
   }
 
   export type EventSessionUncheckedCreateWithoutSpeakersInput = {
@@ -56071,8 +57750,8 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    event?: EventUpdateOneRequiredWithoutSessionsNestedInput
     session_registrations?: EventSessionRegistrationUpdateManyWithoutSessionNestedInput
+    event?: EventUpdateOneRequiredWithoutSessionsNestedInput
   }
 
   export type EventSessionUncheckedUpdateWithoutSpeakersInput = {
@@ -56205,9 +57884,9 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionCreateNestedManyWithoutEventInput
-    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
     attendance_records?: EventAttendanceRecordCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationCreateNestedManyWithoutEventInput
+    sessions?: EventSessionCreateNestedManyWithoutEventInput
     speakers?: EventSpeakerCreateNestedManyWithoutEventInput
   }
 
@@ -56252,9 +57931,9 @@ export namespace Prisma {
     updated_by?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
-    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
     attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutEventInput
+    registrations?: EventRegistrationUncheckedCreateNestedManyWithoutEventInput
+    sessions?: EventSessionUncheckedCreateNestedManyWithoutEventInput
     speakers?: EventSpeakerUncheckedCreateNestedManyWithoutEventInput
   }
 
@@ -56364,9 +58043,9 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUpdateManyWithoutEventNestedInput
-    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
     attendance_records?: EventAttendanceRecordUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUpdateManyWithoutEventNestedInput
     speakers?: EventSpeakerUpdateManyWithoutEventNestedInput
   }
 
@@ -56411,9 +58090,9 @@ export namespace Prisma {
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
-    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
     attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutEventNestedInput
+    registrations?: EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
+    sessions?: EventSessionUncheckedUpdateManyWithoutEventNestedInput
     speakers?: EventSpeakerUncheckedUpdateManyWithoutEventNestedInput
   }
 
@@ -56499,9 +58178,10 @@ export namespace Prisma {
     created_by?: string | null
     updated_by?: string | null
     attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
     event_attendance_records?: EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserCreateNestedOneWithoutBeneficiaryInput
   }
 
   export type BeneficiaryUncheckedCreateWithoutTrainingsInput = {
@@ -56531,9 +58211,10 @@ export namespace Prisma {
     created_by?: string | null
     updated_by?: string | null
     attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
     event_attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserUncheckedCreateNestedOneWithoutBeneficiaryInput
   }
 
   export type BeneficiaryCreateOrConnectWithoutTrainingsInput = {
@@ -56576,10 +58257,10 @@ export namespace Prisma {
     training_created_at?: Date | string
     training_updated_at?: Date | string
     attendance_records?: AttendanceRecordCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
     agendas?: TrainingAgendaCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
   }
 
   export type TrainingUncheckedCreateWithoutBeneficiary_trainingsInput = {
@@ -56617,10 +58298,10 @@ export namespace Prisma {
     training_created_at?: Date | string
     training_updated_at?: Date | string
     attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
     agendas?: TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
   }
 
   export type TrainingCreateOrConnectWithoutBeneficiary_trainingsInput = {
@@ -56666,9 +58347,10 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
     event_attendance_records?: EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type BeneficiaryUncheckedUpdateWithoutTrainingsInput = {
@@ -56698,9 +58380,10 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
     event_attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUncheckedUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type TrainingUpsertWithoutBeneficiary_trainingsInput = {
@@ -56749,10 +58432,10 @@ export namespace Prisma {
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     attendance_records?: AttendanceRecordUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
     agendas?: TrainingAgendaUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
   }
 
   export type TrainingUncheckedUpdateWithoutBeneficiary_trainingsInput = {
@@ -56790,10 +58473,10 @@ export namespace Prisma {
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
     agendas?: TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
   }
 
   export type BeneficiaryCreateWithoutAttendance_recordsInput = {
@@ -56823,9 +58506,10 @@ export namespace Prisma {
     created_by?: string | null
     updated_by?: string | null
     trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
     event_attendance_records?: EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserCreateNestedOneWithoutBeneficiaryInput
   }
 
   export type BeneficiaryUncheckedCreateWithoutAttendance_recordsInput = {
@@ -56855,9 +58539,10 @@ export namespace Prisma {
     created_by?: string | null
     updated_by?: string | null
     trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
     event_attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserUncheckedCreateNestedOneWithoutBeneficiaryInput
   }
 
   export type BeneficiaryCreateOrConnectWithoutAttendance_recordsInput = {
@@ -56900,10 +58585,10 @@ export namespace Prisma {
     training_created_at?: Date | string
     training_updated_at?: Date | string
     beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
     agendas?: TrainingAgendaCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
   }
 
   export type TrainingUncheckedCreateWithoutAttendance_recordsInput = {
@@ -56941,10 +58626,10 @@ export namespace Prisma {
     training_created_at?: Date | string
     training_updated_at?: Date | string
     beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
     agendas?: TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
   }
 
   export type TrainingCreateOrConnectWithoutAttendance_recordsInput = {
@@ -56990,9 +58675,10 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
     event_attendance_records?: EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type BeneficiaryUncheckedUpdateWithoutAttendance_recordsInput = {
@@ -57022,9 +58708,10 @@ export namespace Prisma {
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
     event_attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUncheckedUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type TrainingUpsertWithoutAttendance_recordsInput = {
@@ -57073,10 +58760,10 @@ export namespace Prisma {
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
     agendas?: TrainingAgendaUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
   }
 
   export type TrainingUncheckedUpdateWithoutAttendance_recordsInput = {
@@ -57114,10 +58801,10 @@ export namespace Prisma {
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
     agendas?: TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
   }
 
   export type TrainingCreateWithoutAgendasInput = {
@@ -57154,11 +58841,11 @@ export namespace Prisma {
     training_updated_by?: string | null
     training_created_at?: Date | string
     training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
     attendance_records?: AttendanceRecordCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
   }
 
   export type TrainingUncheckedCreateWithoutAgendasInput = {
@@ -57195,11 +58882,11 @@ export namespace Prisma {
     training_updated_by?: string | null
     training_created_at?: Date | string
     training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
     attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
   }
 
   export type TrainingCreateOrConnectWithoutAgendasInput = {
@@ -57252,11 +58939,11 @@ export namespace Prisma {
     training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
     attendance_records?: AttendanceRecordUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
   }
 
   export type TrainingUncheckedUpdateWithoutAgendasInput = {
@@ -57293,39 +58980,11 @@ export namespace Prisma {
     training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
     attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
-  }
-
-  export type TrainingMaterialLinkCreateWithoutMaterialInput = {
-    id?: string
-    sort_order?: number
-    is_required?: boolean
-    linked_at?: Date | string
-    linked_by?: string | null
-    training: TrainingCreateNestedOneWithoutMaterial_linksInput
-  }
-
-  export type TrainingMaterialLinkUncheckedCreateWithoutMaterialInput = {
-    id?: string
-    training_id: string
-    sort_order?: number
-    is_required?: boolean
-    linked_at?: Date | string
-    linked_by?: string | null
-  }
-
-  export type TrainingMaterialLinkCreateOrConnectWithoutMaterialInput = {
-    where: TrainingMaterialLinkWhereUniqueInput
-    create: XOR<TrainingMaterialLinkCreateWithoutMaterialInput, TrainingMaterialLinkUncheckedCreateWithoutMaterialInput>
-  }
-
-  export type TrainingMaterialLinkCreateManyMaterialInputEnvelope = {
-    data: TrainingMaterialLinkCreateManyMaterialInput | TrainingMaterialLinkCreateManyMaterialInput[]
-    skipDuplicates?: boolean
   }
 
   export type EventMaterialLinkCreateWithoutMaterialInput = {
@@ -57356,20 +59015,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TrainingMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput = {
+  export type TrainingMaterialLinkCreateWithoutMaterialInput = {
+    id?: string
+    sort_order?: number
+    is_required?: boolean
+    linked_at?: Date | string
+    linked_by?: string | null
+    training: TrainingCreateNestedOneWithoutMaterial_linksInput
+  }
+
+  export type TrainingMaterialLinkUncheckedCreateWithoutMaterialInput = {
+    id?: string
+    training_id: string
+    sort_order?: number
+    is_required?: boolean
+    linked_at?: Date | string
+    linked_by?: string | null
+  }
+
+  export type TrainingMaterialLinkCreateOrConnectWithoutMaterialInput = {
     where: TrainingMaterialLinkWhereUniqueInput
-    update: XOR<TrainingMaterialLinkUpdateWithoutMaterialInput, TrainingMaterialLinkUncheckedUpdateWithoutMaterialInput>
     create: XOR<TrainingMaterialLinkCreateWithoutMaterialInput, TrainingMaterialLinkUncheckedCreateWithoutMaterialInput>
   }
 
-  export type TrainingMaterialLinkUpdateWithWhereUniqueWithoutMaterialInput = {
-    where: TrainingMaterialLinkWhereUniqueInput
-    data: XOR<TrainingMaterialLinkUpdateWithoutMaterialInput, TrainingMaterialLinkUncheckedUpdateWithoutMaterialInput>
-  }
-
-  export type TrainingMaterialLinkUpdateManyWithWhereWithoutMaterialInput = {
-    where: TrainingMaterialLinkScalarWhereInput
-    data: XOR<TrainingMaterialLinkUpdateManyMutationInput, TrainingMaterialLinkUncheckedUpdateManyWithoutMaterialInput>
+  export type TrainingMaterialLinkCreateManyMaterialInputEnvelope = {
+    data: TrainingMaterialLinkCreateManyMaterialInput | TrainingMaterialLinkCreateManyMaterialInput[]
+    skipDuplicates?: boolean
   }
 
   export type EventMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput = {
@@ -57388,91 +59059,20 @@ export namespace Prisma {
     data: XOR<EventMaterialLinkUpdateManyMutationInput, EventMaterialLinkUncheckedUpdateManyWithoutMaterialInput>
   }
 
-  export type TrainingCreateWithoutMaterial_linksInput = {
-    id?: string
-    training_code: string
-    training_name: string
-    training_name_english?: string | null
-    training_description?: string | null
-    training_type?: $Enums.TrainingType | null
-    training_category?: string | null
-    training_level?: $Enums.TrainingLevel | null
-    training_status: $Enums.TrainingStatus
-    training_start_date: Date | string
-    training_end_date: Date | string
-    registration_deadline?: Date | string | null
-    training_location: string
-    training_venue?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    geofence_radius?: number
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    school_name?: string | null
-    cluster_schools?: TrainingCreatecluster_schoolsInput | string[]
-    max_participants: number
-    current_participants?: number
-    qr_code_data?: string | null
-    gps_validation_required?: boolean
-    geofence_validation_required?: boolean
-    is_published?: boolean
-    training_is_deleted?: boolean
-    training_created_by?: string | null
-    training_updated_by?: string | null
-    training_created_at?: Date | string
-    training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
-    attendance_records?: AttendanceRecordCreateNestedManyWithoutTrainingInput
-    agendas?: TrainingAgendaCreateNestedManyWithoutTrainingInput
-    survey_links?: TrainingSurveyLinkCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
+  export type TrainingMaterialLinkUpsertWithWhereUniqueWithoutMaterialInput = {
+    where: TrainingMaterialLinkWhereUniqueInput
+    update: XOR<TrainingMaterialLinkUpdateWithoutMaterialInput, TrainingMaterialLinkUncheckedUpdateWithoutMaterialInput>
+    create: XOR<TrainingMaterialLinkCreateWithoutMaterialInput, TrainingMaterialLinkUncheckedCreateWithoutMaterialInput>
   }
 
-  export type TrainingUncheckedCreateWithoutMaterial_linksInput = {
-    id?: string
-    training_code: string
-    training_name: string
-    training_name_english?: string | null
-    training_description?: string | null
-    training_type?: $Enums.TrainingType | null
-    training_category?: string | null
-    training_level?: $Enums.TrainingLevel | null
-    training_status: $Enums.TrainingStatus
-    training_start_date: Date | string
-    training_end_date: Date | string
-    registration_deadline?: Date | string | null
-    training_location: string
-    training_venue?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    geofence_radius?: number
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    school_name?: string | null
-    cluster_schools?: TrainingCreatecluster_schoolsInput | string[]
-    max_participants: number
-    current_participants?: number
-    qr_code_data?: string | null
-    gps_validation_required?: boolean
-    geofence_validation_required?: boolean
-    is_published?: boolean
-    training_is_deleted?: boolean
-    training_created_by?: string | null
-    training_updated_by?: string | null
-    training_created_at?: Date | string
-    training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
-    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput
-    agendas?: TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput
-    survey_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
+  export type TrainingMaterialLinkUpdateWithWhereUniqueWithoutMaterialInput = {
+    where: TrainingMaterialLinkWhereUniqueInput
+    data: XOR<TrainingMaterialLinkUpdateWithoutMaterialInput, TrainingMaterialLinkUncheckedUpdateWithoutMaterialInput>
   }
 
-  export type TrainingCreateOrConnectWithoutMaterial_linksInput = {
-    where: TrainingWhereUniqueInput
-    create: XOR<TrainingCreateWithoutMaterial_linksInput, TrainingUncheckedCreateWithoutMaterial_linksInput>
+  export type TrainingMaterialLinkUpdateManyWithWhereWithoutMaterialInput = {
+    where: TrainingMaterialLinkScalarWhereInput
+    data: XOR<TrainingMaterialLinkUpdateManyMutationInput, TrainingMaterialLinkUncheckedUpdateManyWithoutMaterialInput>
   }
 
   export type TrainingMaterialCreateWithoutTraining_linksInput = {
@@ -57524,97 +59124,91 @@ export namespace Prisma {
     create: XOR<TrainingMaterialCreateWithoutTraining_linksInput, TrainingMaterialUncheckedCreateWithoutTraining_linksInput>
   }
 
-  export type TrainingUpsertWithoutMaterial_linksInput = {
-    update: XOR<TrainingUpdateWithoutMaterial_linksInput, TrainingUncheckedUpdateWithoutMaterial_linksInput>
+  export type TrainingCreateWithoutMaterial_linksInput = {
+    id?: string
+    training_code: string
+    training_name: string
+    training_name_english?: string | null
+    training_description?: string | null
+    training_type?: $Enums.TrainingType | null
+    training_category?: string | null
+    training_level?: $Enums.TrainingLevel | null
+    training_status: $Enums.TrainingStatus
+    training_start_date: Date | string
+    training_end_date: Date | string
+    registration_deadline?: Date | string | null
+    training_location: string
+    training_venue?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    geofence_radius?: number
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    school_name?: string | null
+    cluster_schools?: TrainingCreatecluster_schoolsInput | string[]
+    max_participants: number
+    current_participants?: number
+    qr_code_data?: string | null
+    gps_validation_required?: boolean
+    geofence_validation_required?: boolean
+    is_published?: boolean
+    training_is_deleted?: boolean
+    training_created_by?: string | null
+    training_updated_by?: string | null
+    training_created_at?: Date | string
+    training_updated_at?: Date | string
+    attendance_records?: AttendanceRecordCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
+    agendas?: TrainingAgendaCreateNestedManyWithoutTrainingInput
+    survey_links?: TrainingSurveyLinkCreateNestedManyWithoutTrainingInput
+  }
+
+  export type TrainingUncheckedCreateWithoutMaterial_linksInput = {
+    id?: string
+    training_code: string
+    training_name: string
+    training_name_english?: string | null
+    training_description?: string | null
+    training_type?: $Enums.TrainingType | null
+    training_category?: string | null
+    training_level?: $Enums.TrainingLevel | null
+    training_status: $Enums.TrainingStatus
+    training_start_date: Date | string
+    training_end_date: Date | string
+    registration_deadline?: Date | string | null
+    training_location: string
+    training_venue?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    geofence_radius?: number
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    school_name?: string | null
+    cluster_schools?: TrainingCreatecluster_schoolsInput | string[]
+    max_participants: number
+    current_participants?: number
+    qr_code_data?: string | null
+    gps_validation_required?: boolean
+    geofence_validation_required?: boolean
+    is_published?: boolean
+    training_is_deleted?: boolean
+    training_created_by?: string | null
+    training_updated_by?: string | null
+    training_created_at?: Date | string
+    training_updated_at?: Date | string
+    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
+    agendas?: TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput
+    survey_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutTrainingInput
+  }
+
+  export type TrainingCreateOrConnectWithoutMaterial_linksInput = {
+    where: TrainingWhereUniqueInput
     create: XOR<TrainingCreateWithoutMaterial_linksInput, TrainingUncheckedCreateWithoutMaterial_linksInput>
-    where?: TrainingWhereInput
-  }
-
-  export type TrainingUpdateToOneWithWhereWithoutMaterial_linksInput = {
-    where?: TrainingWhereInput
-    data: XOR<TrainingUpdateWithoutMaterial_linksInput, TrainingUncheckedUpdateWithoutMaterial_linksInput>
-  }
-
-  export type TrainingUpdateWithoutMaterial_linksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    training_code?: StringFieldUpdateOperationsInput | string
-    training_name?: StringFieldUpdateOperationsInput | string
-    training_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    training_description?: NullableStringFieldUpdateOperationsInput | string | null
-    training_type?: NullableEnumTrainingTypeFieldUpdateOperationsInput | $Enums.TrainingType | null
-    training_category?: NullableStringFieldUpdateOperationsInput | string | null
-    training_level?: NullableEnumTrainingLevelFieldUpdateOperationsInput | $Enums.TrainingLevel | null
-    training_status?: EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
-    training_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    training_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    training_location?: StringFieldUpdateOperationsInput | string
-    training_venue?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    geofence_radius?: IntFieldUpdateOperationsInput | number
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school_name?: NullableStringFieldUpdateOperationsInput | string | null
-    cluster_schools?: TrainingUpdatecluster_schoolsInput | string[]
-    max_participants?: IntFieldUpdateOperationsInput | number
-    current_participants?: IntFieldUpdateOperationsInput | number
-    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
-    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-    training_is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    training_created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
-    attendance_records?: AttendanceRecordUpdateManyWithoutTrainingNestedInput
-    agendas?: TrainingAgendaUpdateManyWithoutTrainingNestedInput
-    survey_links?: TrainingSurveyLinkUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
-  }
-
-  export type TrainingUncheckedUpdateWithoutMaterial_linksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    training_code?: StringFieldUpdateOperationsInput | string
-    training_name?: StringFieldUpdateOperationsInput | string
-    training_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    training_description?: NullableStringFieldUpdateOperationsInput | string | null
-    training_type?: NullableEnumTrainingTypeFieldUpdateOperationsInput | $Enums.TrainingType | null
-    training_category?: NullableStringFieldUpdateOperationsInput | string | null
-    training_level?: NullableEnumTrainingLevelFieldUpdateOperationsInput | $Enums.TrainingLevel | null
-    training_status?: EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
-    training_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    training_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    training_location?: StringFieldUpdateOperationsInput | string
-    training_venue?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    geofence_radius?: IntFieldUpdateOperationsInput | number
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school_name?: NullableStringFieldUpdateOperationsInput | string | null
-    cluster_schools?: TrainingUpdatecluster_schoolsInput | string[]
-    max_participants?: IntFieldUpdateOperationsInput | number
-    current_participants?: IntFieldUpdateOperationsInput | number
-    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
-    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-    training_is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    training_created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
-    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput
-    agendas?: TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput
-    survey_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
   }
 
   export type TrainingMaterialUpsertWithoutTraining_linksInput = {
@@ -57672,6 +59266,99 @@ export namespace Prisma {
     event_links?: EventMaterialLinkUncheckedUpdateManyWithoutMaterialNestedInput
   }
 
+  export type TrainingUpsertWithoutMaterial_linksInput = {
+    update: XOR<TrainingUpdateWithoutMaterial_linksInput, TrainingUncheckedUpdateWithoutMaterial_linksInput>
+    create: XOR<TrainingCreateWithoutMaterial_linksInput, TrainingUncheckedCreateWithoutMaterial_linksInput>
+    where?: TrainingWhereInput
+  }
+
+  export type TrainingUpdateToOneWithWhereWithoutMaterial_linksInput = {
+    where?: TrainingWhereInput
+    data: XOR<TrainingUpdateWithoutMaterial_linksInput, TrainingUncheckedUpdateWithoutMaterial_linksInput>
+  }
+
+  export type TrainingUpdateWithoutMaterial_linksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    training_code?: StringFieldUpdateOperationsInput | string
+    training_name?: StringFieldUpdateOperationsInput | string
+    training_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    training_description?: NullableStringFieldUpdateOperationsInput | string | null
+    training_type?: NullableEnumTrainingTypeFieldUpdateOperationsInput | $Enums.TrainingType | null
+    training_category?: NullableStringFieldUpdateOperationsInput | string | null
+    training_level?: NullableEnumTrainingLevelFieldUpdateOperationsInput | $Enums.TrainingLevel | null
+    training_status?: EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
+    training_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    training_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    training_location?: StringFieldUpdateOperationsInput | string
+    training_venue?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    geofence_radius?: IntFieldUpdateOperationsInput | number
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school_name?: NullableStringFieldUpdateOperationsInput | string | null
+    cluster_schools?: TrainingUpdatecluster_schoolsInput | string[]
+    max_participants?: IntFieldUpdateOperationsInput | number
+    current_participants?: IntFieldUpdateOperationsInput | number
+    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
+    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    is_published?: BoolFieldUpdateOperationsInput | boolean
+    training_is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    training_created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    attendance_records?: AttendanceRecordUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
+    agendas?: TrainingAgendaUpdateManyWithoutTrainingNestedInput
+    survey_links?: TrainingSurveyLinkUpdateManyWithoutTrainingNestedInput
+  }
+
+  export type TrainingUncheckedUpdateWithoutMaterial_linksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    training_code?: StringFieldUpdateOperationsInput | string
+    training_name?: StringFieldUpdateOperationsInput | string
+    training_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    training_description?: NullableStringFieldUpdateOperationsInput | string | null
+    training_type?: NullableEnumTrainingTypeFieldUpdateOperationsInput | $Enums.TrainingType | null
+    training_category?: NullableStringFieldUpdateOperationsInput | string | null
+    training_level?: NullableEnumTrainingLevelFieldUpdateOperationsInput | $Enums.TrainingLevel | null
+    training_status?: EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
+    training_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    training_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    training_location?: StringFieldUpdateOperationsInput | string
+    training_venue?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    geofence_radius?: IntFieldUpdateOperationsInput | number
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school_name?: NullableStringFieldUpdateOperationsInput | string | null
+    cluster_schools?: TrainingUpdatecluster_schoolsInput | string[]
+    max_participants?: IntFieldUpdateOperationsInput | number
+    current_participants?: IntFieldUpdateOperationsInput | number
+    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
+    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    is_published?: BoolFieldUpdateOperationsInput | boolean
+    training_is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    training_created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
+    agendas?: TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput
+    survey_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutTrainingNestedInput
+  }
+
   export type SurveyQuestionCreateWithoutSurveyInput = {
     id?: string
     question_text_en: string
@@ -57726,6 +59413,52 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SurveyResponseCreateWithoutSurveyInput = {
+    id?: string
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    question_responses?: SurveyQuestionResponseCreateNestedManyWithoutResponseInput
+    beneficiary: BeneficiaryCreateNestedOneWithoutSurvey_responsesInput
+    training: TrainingCreateNestedOneWithoutSurvey_responsesInput
+  }
+
+  export type SurveyResponseUncheckedCreateWithoutSurveyInput = {
+    id?: string
+    beneficiary_id: string
+    training_id: string
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    question_responses?: SurveyQuestionResponseUncheckedCreateNestedManyWithoutResponseInput
+  }
+
+  export type SurveyResponseCreateOrConnectWithoutSurveyInput = {
+    where: SurveyResponseWhereUniqueInput
+    create: XOR<SurveyResponseCreateWithoutSurveyInput, SurveyResponseUncheckedCreateWithoutSurveyInput>
+  }
+
+  export type SurveyResponseCreateManySurveyInputEnvelope = {
+    data: SurveyResponseCreateManySurveyInput | SurveyResponseCreateManySurveyInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TrainingSurveyLinkCreateWithoutSurveyInput = {
     id?: string
     timing: $Enums.SurveyTiming
@@ -57755,52 +59488,6 @@ export namespace Prisma {
 
   export type TrainingSurveyLinkCreateManySurveyInputEnvelope = {
     data: TrainingSurveyLinkCreateManySurveyInput | TrainingSurveyLinkCreateManySurveyInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type SurveyResponseCreateWithoutSurveyInput = {
-    id?: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    beneficiary: BeneficiaryCreateNestedOneWithoutSurvey_responsesInput
-    training: TrainingCreateNestedOneWithoutSurvey_responsesInput
-    question_responses?: SurveyQuestionResponseCreateNestedManyWithoutResponseInput
-  }
-
-  export type SurveyResponseUncheckedCreateWithoutSurveyInput = {
-    id?: string
-    beneficiary_id: string
-    training_id: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    question_responses?: SurveyQuestionResponseUncheckedCreateNestedManyWithoutResponseInput
-  }
-
-  export type SurveyResponseCreateOrConnectWithoutSurveyInput = {
-    where: SurveyResponseWhereUniqueInput
-    create: XOR<SurveyResponseCreateWithoutSurveyInput, SurveyResponseUncheckedCreateWithoutSurveyInput>
-  }
-
-  export type SurveyResponseCreateManySurveyInputEnvelope = {
-    data: SurveyResponseCreateManySurveyInput | SurveyResponseCreateManySurveyInput[]
     skipDuplicates?: boolean
   }
 
@@ -57845,22 +59532,6 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"SurveyQuestion"> | Date | string
   }
 
-  export type TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput = {
-    where: TrainingSurveyLinkWhereUniqueInput
-    update: XOR<TrainingSurveyLinkUpdateWithoutSurveyInput, TrainingSurveyLinkUncheckedUpdateWithoutSurveyInput>
-    create: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput>
-  }
-
-  export type TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput = {
-    where: TrainingSurveyLinkWhereUniqueInput
-    data: XOR<TrainingSurveyLinkUpdateWithoutSurveyInput, TrainingSurveyLinkUncheckedUpdateWithoutSurveyInput>
-  }
-
-  export type TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput = {
-    where: TrainingSurveyLinkScalarWhereInput
-    data: XOR<TrainingSurveyLinkUpdateManyMutationInput, TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyInput>
-  }
-
   export type SurveyResponseUpsertWithWhereUniqueWithoutSurveyInput = {
     where: SurveyResponseWhereUniqueInput
     update: XOR<SurveyResponseUpdateWithoutSurveyInput, SurveyResponseUncheckedUpdateWithoutSurveyInput>
@@ -57877,91 +59548,20 @@ export namespace Prisma {
     data: XOR<SurveyResponseUpdateManyMutationInput, SurveyResponseUncheckedUpdateManyWithoutSurveyInput>
   }
 
-  export type TrainingCreateWithoutSurvey_linksInput = {
-    id?: string
-    training_code: string
-    training_name: string
-    training_name_english?: string | null
-    training_description?: string | null
-    training_type?: $Enums.TrainingType | null
-    training_category?: string | null
-    training_level?: $Enums.TrainingLevel | null
-    training_status: $Enums.TrainingStatus
-    training_start_date: Date | string
-    training_end_date: Date | string
-    registration_deadline?: Date | string | null
-    training_location: string
-    training_venue?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    geofence_radius?: number
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    school_name?: string | null
-    cluster_schools?: TrainingCreatecluster_schoolsInput | string[]
-    max_participants: number
-    current_participants?: number
-    qr_code_data?: string | null
-    gps_validation_required?: boolean
-    geofence_validation_required?: boolean
-    is_published?: boolean
-    training_is_deleted?: boolean
-    training_created_by?: string | null
-    training_updated_by?: string | null
-    training_created_at?: Date | string
-    training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
-    attendance_records?: AttendanceRecordCreateNestedManyWithoutTrainingInput
-    agendas?: TrainingAgendaCreateNestedManyWithoutTrainingInput
-    material_links?: TrainingMaterialLinkCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
+  export type TrainingSurveyLinkUpsertWithWhereUniqueWithoutSurveyInput = {
+    where: TrainingSurveyLinkWhereUniqueInput
+    update: XOR<TrainingSurveyLinkUpdateWithoutSurveyInput, TrainingSurveyLinkUncheckedUpdateWithoutSurveyInput>
+    create: XOR<TrainingSurveyLinkCreateWithoutSurveyInput, TrainingSurveyLinkUncheckedCreateWithoutSurveyInput>
   }
 
-  export type TrainingUncheckedCreateWithoutSurvey_linksInput = {
-    id?: string
-    training_code: string
-    training_name: string
-    training_name_english?: string | null
-    training_description?: string | null
-    training_type?: $Enums.TrainingType | null
-    training_category?: string | null
-    training_level?: $Enums.TrainingLevel | null
-    training_status: $Enums.TrainingStatus
-    training_start_date: Date | string
-    training_end_date: Date | string
-    registration_deadline?: Date | string | null
-    training_location: string
-    training_venue?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    geofence_radius?: number
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    school_name?: string | null
-    cluster_schools?: TrainingCreatecluster_schoolsInput | string[]
-    max_participants: number
-    current_participants?: number
-    qr_code_data?: string | null
-    gps_validation_required?: boolean
-    geofence_validation_required?: boolean
-    is_published?: boolean
-    training_is_deleted?: boolean
-    training_created_by?: string | null
-    training_updated_by?: string | null
-    training_created_at?: Date | string
-    training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
-    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput
-    agendas?: TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput
-    material_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutTrainingInput
-    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
+  export type TrainingSurveyLinkUpdateWithWhereUniqueWithoutSurveyInput = {
+    where: TrainingSurveyLinkWhereUniqueInput
+    data: XOR<TrainingSurveyLinkUpdateWithoutSurveyInput, TrainingSurveyLinkUncheckedUpdateWithoutSurveyInput>
   }
 
-  export type TrainingCreateOrConnectWithoutSurvey_linksInput = {
-    where: TrainingWhereUniqueInput
-    create: XOR<TrainingCreateWithoutSurvey_linksInput, TrainingUncheckedCreateWithoutSurvey_linksInput>
+  export type TrainingSurveyLinkUpdateManyWithWhereWithoutSurveyInput = {
+    where: TrainingSurveyLinkScalarWhereInput
+    data: XOR<TrainingSurveyLinkUpdateManyMutationInput, TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyInput>
   }
 
   export type SurveyCreateWithoutTraining_linksInput = {
@@ -58021,97 +59621,91 @@ export namespace Prisma {
     create: XOR<SurveyCreateWithoutTraining_linksInput, SurveyUncheckedCreateWithoutTraining_linksInput>
   }
 
-  export type TrainingUpsertWithoutSurvey_linksInput = {
-    update: XOR<TrainingUpdateWithoutSurvey_linksInput, TrainingUncheckedUpdateWithoutSurvey_linksInput>
+  export type TrainingCreateWithoutSurvey_linksInput = {
+    id?: string
+    training_code: string
+    training_name: string
+    training_name_english?: string | null
+    training_description?: string | null
+    training_type?: $Enums.TrainingType | null
+    training_category?: string | null
+    training_level?: $Enums.TrainingLevel | null
+    training_status: $Enums.TrainingStatus
+    training_start_date: Date | string
+    training_end_date: Date | string
+    registration_deadline?: Date | string | null
+    training_location: string
+    training_venue?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    geofence_radius?: number
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    school_name?: string | null
+    cluster_schools?: TrainingCreatecluster_schoolsInput | string[]
+    max_participants: number
+    current_participants?: number
+    qr_code_data?: string | null
+    gps_validation_required?: boolean
+    geofence_validation_required?: boolean
+    is_published?: boolean
+    training_is_deleted?: boolean
+    training_created_by?: string | null
+    training_updated_by?: string | null
+    training_created_at?: Date | string
+    training_updated_at?: Date | string
+    attendance_records?: AttendanceRecordCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutTrainingInput
+    agendas?: TrainingAgendaCreateNestedManyWithoutTrainingInput
+    material_links?: TrainingMaterialLinkCreateNestedManyWithoutTrainingInput
+  }
+
+  export type TrainingUncheckedCreateWithoutSurvey_linksInput = {
+    id?: string
+    training_code: string
+    training_name: string
+    training_name_english?: string | null
+    training_description?: string | null
+    training_type?: $Enums.TrainingType | null
+    training_category?: string | null
+    training_level?: $Enums.TrainingLevel | null
+    training_status: $Enums.TrainingStatus
+    training_start_date: Date | string
+    training_end_date: Date | string
+    registration_deadline?: Date | string | null
+    training_location: string
+    training_venue?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    geofence_radius?: number
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    school_name?: string | null
+    cluster_schools?: TrainingCreatecluster_schoolsInput | string[]
+    max_participants: number
+    current_participants?: number
+    qr_code_data?: string | null
+    gps_validation_required?: boolean
+    geofence_validation_required?: boolean
+    is_published?: boolean
+    training_is_deleted?: boolean
+    training_created_by?: string | null
+    training_updated_by?: string | null
+    training_created_at?: Date | string
+    training_updated_at?: Date | string
+    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutTrainingInput
+    agendas?: TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput
+    material_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutTrainingInput
+  }
+
+  export type TrainingCreateOrConnectWithoutSurvey_linksInput = {
+    where: TrainingWhereUniqueInput
     create: XOR<TrainingCreateWithoutSurvey_linksInput, TrainingUncheckedCreateWithoutSurvey_linksInput>
-    where?: TrainingWhereInput
-  }
-
-  export type TrainingUpdateToOneWithWhereWithoutSurvey_linksInput = {
-    where?: TrainingWhereInput
-    data: XOR<TrainingUpdateWithoutSurvey_linksInput, TrainingUncheckedUpdateWithoutSurvey_linksInput>
-  }
-
-  export type TrainingUpdateWithoutSurvey_linksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    training_code?: StringFieldUpdateOperationsInput | string
-    training_name?: StringFieldUpdateOperationsInput | string
-    training_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    training_description?: NullableStringFieldUpdateOperationsInput | string | null
-    training_type?: NullableEnumTrainingTypeFieldUpdateOperationsInput | $Enums.TrainingType | null
-    training_category?: NullableStringFieldUpdateOperationsInput | string | null
-    training_level?: NullableEnumTrainingLevelFieldUpdateOperationsInput | $Enums.TrainingLevel | null
-    training_status?: EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
-    training_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    training_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    training_location?: StringFieldUpdateOperationsInput | string
-    training_venue?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    geofence_radius?: IntFieldUpdateOperationsInput | number
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school_name?: NullableStringFieldUpdateOperationsInput | string | null
-    cluster_schools?: TrainingUpdatecluster_schoolsInput | string[]
-    max_participants?: IntFieldUpdateOperationsInput | number
-    current_participants?: IntFieldUpdateOperationsInput | number
-    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
-    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-    training_is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    training_created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
-    attendance_records?: AttendanceRecordUpdateManyWithoutTrainingNestedInput
-    agendas?: TrainingAgendaUpdateManyWithoutTrainingNestedInput
-    material_links?: TrainingMaterialLinkUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
-  }
-
-  export type TrainingUncheckedUpdateWithoutSurvey_linksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    training_code?: StringFieldUpdateOperationsInput | string
-    training_name?: StringFieldUpdateOperationsInput | string
-    training_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    training_description?: NullableStringFieldUpdateOperationsInput | string | null
-    training_type?: NullableEnumTrainingTypeFieldUpdateOperationsInput | $Enums.TrainingType | null
-    training_category?: NullableStringFieldUpdateOperationsInput | string | null
-    training_level?: NullableEnumTrainingLevelFieldUpdateOperationsInput | $Enums.TrainingLevel | null
-    training_status?: EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
-    training_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    training_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    training_location?: StringFieldUpdateOperationsInput | string
-    training_venue?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    geofence_radius?: IntFieldUpdateOperationsInput | number
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school_name?: NullableStringFieldUpdateOperationsInput | string | null
-    cluster_schools?: TrainingUpdatecluster_schoolsInput | string[]
-    max_participants?: IntFieldUpdateOperationsInput | number
-    current_participants?: IntFieldUpdateOperationsInput | number
-    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
-    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
-    is_published?: BoolFieldUpdateOperationsInput | boolean
-    training_is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    training_created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
-    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput
-    agendas?: TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput
-    material_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutTrainingNestedInput
-    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
   }
 
   export type SurveyUpsertWithoutTraining_linksInput = {
@@ -58177,61 +59771,97 @@ export namespace Prisma {
     responses?: SurveyResponseUncheckedUpdateManyWithoutSurveyNestedInput
   }
 
-  export type SurveyCreateWithoutQuestionsInput = {
-    id?: string
-    title_en: string
-    title_km: string
-    description_en?: string | null
-    description_km?: string | null
-    survey_type: $Enums.SurveyType
-    is_template?: boolean
-    is_required?: boolean
-    passing_score?: number | null
-    time_limit?: number | null
-    allow_retake?: boolean
-    max_attempts?: number | null
-    show_results_to_beneficiary?: boolean
-    show_correct_answers?: boolean
-    available_from?: Date | string | null
-    available_until?: Date | string | null
-    is_active?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    training_links?: TrainingSurveyLinkCreateNestedManyWithoutSurveyInput
-    responses?: SurveyResponseCreateNestedManyWithoutSurveyInput
+  export type TrainingUpsertWithoutSurvey_linksInput = {
+    update: XOR<TrainingUpdateWithoutSurvey_linksInput, TrainingUncheckedUpdateWithoutSurvey_linksInput>
+    create: XOR<TrainingCreateWithoutSurvey_linksInput, TrainingUncheckedCreateWithoutSurvey_linksInput>
+    where?: TrainingWhereInput
   }
 
-  export type SurveyUncheckedCreateWithoutQuestionsInput = {
-    id?: string
-    title_en: string
-    title_km: string
-    description_en?: string | null
-    description_km?: string | null
-    survey_type: $Enums.SurveyType
-    is_template?: boolean
-    is_required?: boolean
-    passing_score?: number | null
-    time_limit?: number | null
-    allow_retake?: boolean
-    max_attempts?: number | null
-    show_results_to_beneficiary?: boolean
-    show_correct_answers?: boolean
-    available_from?: Date | string | null
-    available_until?: Date | string | null
-    is_active?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    training_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutSurveyInput
-    responses?: SurveyResponseUncheckedCreateNestedManyWithoutSurveyInput
+  export type TrainingUpdateToOneWithWhereWithoutSurvey_linksInput = {
+    where?: TrainingWhereInput
+    data: XOR<TrainingUpdateWithoutSurvey_linksInput, TrainingUncheckedUpdateWithoutSurvey_linksInput>
   }
 
-  export type SurveyCreateOrConnectWithoutQuestionsInput = {
-    where: SurveyWhereUniqueInput
-    create: XOR<SurveyCreateWithoutQuestionsInput, SurveyUncheckedCreateWithoutQuestionsInput>
+  export type TrainingUpdateWithoutSurvey_linksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    training_code?: StringFieldUpdateOperationsInput | string
+    training_name?: StringFieldUpdateOperationsInput | string
+    training_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    training_description?: NullableStringFieldUpdateOperationsInput | string | null
+    training_type?: NullableEnumTrainingTypeFieldUpdateOperationsInput | $Enums.TrainingType | null
+    training_category?: NullableStringFieldUpdateOperationsInput | string | null
+    training_level?: NullableEnumTrainingLevelFieldUpdateOperationsInput | $Enums.TrainingLevel | null
+    training_status?: EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
+    training_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    training_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    training_location?: StringFieldUpdateOperationsInput | string
+    training_venue?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    geofence_radius?: IntFieldUpdateOperationsInput | number
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school_name?: NullableStringFieldUpdateOperationsInput | string | null
+    cluster_schools?: TrainingUpdatecluster_schoolsInput | string[]
+    max_participants?: IntFieldUpdateOperationsInput | number
+    current_participants?: IntFieldUpdateOperationsInput | number
+    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
+    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    is_published?: BoolFieldUpdateOperationsInput | boolean
+    training_is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    training_created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    attendance_records?: AttendanceRecordUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutTrainingNestedInput
+    agendas?: TrainingAgendaUpdateManyWithoutTrainingNestedInput
+    material_links?: TrainingMaterialLinkUpdateManyWithoutTrainingNestedInput
+  }
+
+  export type TrainingUncheckedUpdateWithoutSurvey_linksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    training_code?: StringFieldUpdateOperationsInput | string
+    training_name?: StringFieldUpdateOperationsInput | string
+    training_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    training_description?: NullableStringFieldUpdateOperationsInput | string | null
+    training_type?: NullableEnumTrainingTypeFieldUpdateOperationsInput | $Enums.TrainingType | null
+    training_category?: NullableStringFieldUpdateOperationsInput | string | null
+    training_level?: NullableEnumTrainingLevelFieldUpdateOperationsInput | $Enums.TrainingLevel | null
+    training_status?: EnumTrainingStatusFieldUpdateOperationsInput | $Enums.TrainingStatus
+    training_start_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    training_end_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    training_location?: StringFieldUpdateOperationsInput | string
+    training_venue?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    geofence_radius?: IntFieldUpdateOperationsInput | number
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school_name?: NullableStringFieldUpdateOperationsInput | string | null
+    cluster_schools?: TrainingUpdatecluster_schoolsInput | string[]
+    max_participants?: IntFieldUpdateOperationsInput | number
+    current_participants?: IntFieldUpdateOperationsInput | number
+    qr_code_data?: NullableStringFieldUpdateOperationsInput | string | null
+    gps_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    geofence_validation_required?: BoolFieldUpdateOperationsInput | boolean
+    is_published?: BoolFieldUpdateOperationsInput | boolean
+    training_is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    training_created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutTrainingNestedInput
+    agendas?: TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput
+    material_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutTrainingNestedInput
   }
 
   export type SurveyQuestionResponseCreateWithoutQuestionInput = {
@@ -58262,6 +59892,93 @@ export namespace Prisma {
   export type SurveyQuestionResponseCreateManyQuestionInputEnvelope = {
     data: SurveyQuestionResponseCreateManyQuestionInput | SurveyQuestionResponseCreateManyQuestionInput[]
     skipDuplicates?: boolean
+  }
+
+  export type SurveyCreateWithoutQuestionsInput = {
+    id?: string
+    title_en: string
+    title_km: string
+    description_en?: string | null
+    description_km?: string | null
+    survey_type: $Enums.SurveyType
+    is_template?: boolean
+    is_required?: boolean
+    passing_score?: number | null
+    time_limit?: number | null
+    allow_retake?: boolean
+    max_attempts?: number | null
+    show_results_to_beneficiary?: boolean
+    show_correct_answers?: boolean
+    available_from?: Date | string | null
+    available_until?: Date | string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    responses?: SurveyResponseCreateNestedManyWithoutSurveyInput
+    training_links?: TrainingSurveyLinkCreateNestedManyWithoutSurveyInput
+  }
+
+  export type SurveyUncheckedCreateWithoutQuestionsInput = {
+    id?: string
+    title_en: string
+    title_km: string
+    description_en?: string | null
+    description_km?: string | null
+    survey_type: $Enums.SurveyType
+    is_template?: boolean
+    is_required?: boolean
+    passing_score?: number | null
+    time_limit?: number | null
+    allow_retake?: boolean
+    max_attempts?: number | null
+    show_results_to_beneficiary?: boolean
+    show_correct_answers?: boolean
+    available_from?: Date | string | null
+    available_until?: Date | string | null
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    responses?: SurveyResponseUncheckedCreateNestedManyWithoutSurveyInput
+    training_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutSurveyInput
+  }
+
+  export type SurveyCreateOrConnectWithoutQuestionsInput = {
+    where: SurveyWhereUniqueInput
+    create: XOR<SurveyCreateWithoutQuestionsInput, SurveyUncheckedCreateWithoutQuestionsInput>
+  }
+
+  export type SurveyQuestionResponseUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: SurveyQuestionResponseWhereUniqueInput
+    update: XOR<SurveyQuestionResponseUpdateWithoutQuestionInput, SurveyQuestionResponseUncheckedUpdateWithoutQuestionInput>
+    create: XOR<SurveyQuestionResponseCreateWithoutQuestionInput, SurveyQuestionResponseUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type SurveyQuestionResponseUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: SurveyQuestionResponseWhereUniqueInput
+    data: XOR<SurveyQuestionResponseUpdateWithoutQuestionInput, SurveyQuestionResponseUncheckedUpdateWithoutQuestionInput>
+  }
+
+  export type SurveyQuestionResponseUpdateManyWithWhereWithoutQuestionInput = {
+    where: SurveyQuestionResponseScalarWhereInput
+    data: XOR<SurveyQuestionResponseUpdateManyMutationInput, SurveyQuestionResponseUncheckedUpdateManyWithoutQuestionInput>
+  }
+
+  export type SurveyQuestionResponseScalarWhereInput = {
+    AND?: SurveyQuestionResponseScalarWhereInput | SurveyQuestionResponseScalarWhereInput[]
+    OR?: SurveyQuestionResponseScalarWhereInput[]
+    NOT?: SurveyQuestionResponseScalarWhereInput | SurveyQuestionResponseScalarWhereInput[]
+    id?: StringFilter<"SurveyQuestionResponse"> | string
+    response_id?: StringFilter<"SurveyQuestionResponse"> | string
+    question_id?: StringFilter<"SurveyQuestionResponse"> | string
+    answer_value?: StringFilter<"SurveyQuestionResponse"> | string
+    answer_text?: StringNullableFilter<"SurveyQuestionResponse"> | string | null
+    points_earned?: FloatNullableFilter<"SurveyQuestionResponse"> | number | null
+    is_correct?: BoolNullableFilter<"SurveyQuestionResponse"> | boolean | null
+    answered_at?: DateTimeFilter<"SurveyQuestionResponse"> | Date | string
   }
 
   export type SurveyUpsertWithoutQuestionsInput = {
@@ -58297,8 +60014,8 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_links?: TrainingSurveyLinkUpdateManyWithoutSurveyNestedInput
     responses?: SurveyResponseUpdateManyWithoutSurveyNestedInput
+    training_links?: TrainingSurveyLinkUpdateManyWithoutSurveyNestedInput
   }
 
   export type SurveyUncheckedUpdateWithoutQuestionsInput = {
@@ -58323,38 +60040,109 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_by?: NullableStringFieldUpdateOperationsInput | string | null
     updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyNestedInput
     responses?: SurveyResponseUncheckedUpdateManyWithoutSurveyNestedInput
+    training_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyNestedInput
   }
 
-  export type SurveyQuestionResponseUpsertWithWhereUniqueWithoutQuestionInput = {
+  export type SurveyQuestionResponseCreateWithoutResponseInput = {
+    id?: string
+    answer_value: string
+    answer_text?: string | null
+    points_earned?: number | null
+    is_correct?: boolean | null
+    answered_at?: Date | string
+    question: SurveyQuestionCreateNestedOneWithoutAnswersInput
+  }
+
+  export type SurveyQuestionResponseUncheckedCreateWithoutResponseInput = {
+    id?: string
+    question_id: string
+    answer_value: string
+    answer_text?: string | null
+    points_earned?: number | null
+    is_correct?: boolean | null
+    answered_at?: Date | string
+  }
+
+  export type SurveyQuestionResponseCreateOrConnectWithoutResponseInput = {
     where: SurveyQuestionResponseWhereUniqueInput
-    update: XOR<SurveyQuestionResponseUpdateWithoutQuestionInput, SurveyQuestionResponseUncheckedUpdateWithoutQuestionInput>
-    create: XOR<SurveyQuestionResponseCreateWithoutQuestionInput, SurveyQuestionResponseUncheckedCreateWithoutQuestionInput>
+    create: XOR<SurveyQuestionResponseCreateWithoutResponseInput, SurveyQuestionResponseUncheckedCreateWithoutResponseInput>
   }
 
-  export type SurveyQuestionResponseUpdateWithWhereUniqueWithoutQuestionInput = {
-    where: SurveyQuestionResponseWhereUniqueInput
-    data: XOR<SurveyQuestionResponseUpdateWithoutQuestionInput, SurveyQuestionResponseUncheckedUpdateWithoutQuestionInput>
+  export type SurveyQuestionResponseCreateManyResponseInputEnvelope = {
+    data: SurveyQuestionResponseCreateManyResponseInput | SurveyQuestionResponseCreateManyResponseInput[]
+    skipDuplicates?: boolean
   }
 
-  export type SurveyQuestionResponseUpdateManyWithWhereWithoutQuestionInput = {
-    where: SurveyQuestionResponseScalarWhereInput
-    data: XOR<SurveyQuestionResponseUpdateManyMutationInput, SurveyQuestionResponseUncheckedUpdateManyWithoutQuestionInput>
+  export type BeneficiaryCreateWithoutSurvey_responsesInput = {
+    teacher_id: string
+    name: string
+    name_english?: string | null
+    phone?: string | null
+    sex?: $Enums.Sex | null
+    role?: string | null
+    passcode?: string | null
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    village_name?: string | null
+    school?: string | null
+    school_id?: string | null
+    position?: string | null
+    subject?: string | null
+    grade?: number | null
+    profile_image_url?: string | null
+    signature_url?: string | null
+    status: $Enums.BeneficiaryStatus
+    is_deleted?: boolean
+    profile_completed?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
+    event_attendance_records?: EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserCreateNestedOneWithoutBeneficiaryInput
   }
 
-  export type SurveyQuestionResponseScalarWhereInput = {
-    AND?: SurveyQuestionResponseScalarWhereInput | SurveyQuestionResponseScalarWhereInput[]
-    OR?: SurveyQuestionResponseScalarWhereInput[]
-    NOT?: SurveyQuestionResponseScalarWhereInput | SurveyQuestionResponseScalarWhereInput[]
-    id?: StringFilter<"SurveyQuestionResponse"> | string
-    response_id?: StringFilter<"SurveyQuestionResponse"> | string
-    question_id?: StringFilter<"SurveyQuestionResponse"> | string
-    answer_value?: StringFilter<"SurveyQuestionResponse"> | string
-    answer_text?: StringNullableFilter<"SurveyQuestionResponse"> | string | null
-    points_earned?: FloatNullableFilter<"SurveyQuestionResponse"> | number | null
-    is_correct?: BoolNullableFilter<"SurveyQuestionResponse"> | boolean | null
-    answered_at?: DateTimeFilter<"SurveyQuestionResponse"> | Date | string
+  export type BeneficiaryUncheckedCreateWithoutSurvey_responsesInput = {
+    teacher_id: string
+    name: string
+    name_english?: string | null
+    phone?: string | null
+    sex?: $Enums.Sex | null
+    role?: string | null
+    passcode?: string | null
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    village_name?: string | null
+    school?: string | null
+    school_id?: string | null
+    position?: string | null
+    subject?: string | null
+    grade?: number | null
+    profile_image_url?: string | null
+    signature_url?: string | null
+    status: $Enums.BeneficiaryStatus
+    is_deleted?: boolean
+    profile_completed?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
+    telegram_user?: TelegramUserUncheckedCreateNestedOneWithoutBeneficiaryInput
+  }
+
+  export type BeneficiaryCreateOrConnectWithoutSurvey_responsesInput = {
+    where: BeneficiaryWhereUniqueInput
+    create: XOR<BeneficiaryCreateWithoutSurvey_responsesInput, BeneficiaryUncheckedCreateWithoutSurvey_responsesInput>
   }
 
   export type SurveyCreateWithoutResponsesInput = {
@@ -58414,75 +60202,6 @@ export namespace Prisma {
     create: XOR<SurveyCreateWithoutResponsesInput, SurveyUncheckedCreateWithoutResponsesInput>
   }
 
-  export type BeneficiaryCreateWithoutSurvey_responsesInput = {
-    teacher_id: string
-    name: string
-    name_english?: string | null
-    phone?: string | null
-    sex?: $Enums.Sex | null
-    role?: string | null
-    passcode?: string | null
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    village_name?: string | null
-    school?: string | null
-    school_id?: string | null
-    position?: string | null
-    subject?: string | null
-    grade?: number | null
-    profile_image_url?: string | null
-    signature_url?: string | null
-    status: $Enums.BeneficiaryStatus
-    is_deleted?: boolean
-    profile_completed?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
-    attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
-    event_attendance_records?: EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput
-  }
-
-  export type BeneficiaryUncheckedCreateWithoutSurvey_responsesInput = {
-    teacher_id: string
-    name: string
-    name_english?: string | null
-    phone?: string | null
-    sex?: $Enums.Sex | null
-    role?: string | null
-    passcode?: string | null
-    province_name?: string | null
-    district_name?: string | null
-    commune_name?: string | null
-    village_name?: string | null
-    school?: string | null
-    school_id?: string | null
-    position?: string | null
-    subject?: string | null
-    grade?: number | null
-    profile_image_url?: string | null
-    signature_url?: string | null
-    status: $Enums.BeneficiaryStatus
-    is_deleted?: boolean
-    profile_completed?: boolean
-    created_at?: Date | string
-    updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
-    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
-    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
-    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
-    event_attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
-  }
-
-  export type BeneficiaryCreateOrConnectWithoutSurvey_responsesInput = {
-    where: BeneficiaryWhereUniqueInput
-    create: XOR<BeneficiaryCreateWithoutSurvey_responsesInput, BeneficiaryUncheckedCreateWithoutSurvey_responsesInput>
-  }
-
   export type TrainingCreateWithoutSurvey_responsesInput = {
     id?: string
     training_code: string
@@ -58517,8 +60236,8 @@ export namespace Prisma {
     training_updated_by?: string | null
     training_created_at?: Date | string
     training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
     attendance_records?: AttendanceRecordCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingCreateNestedManyWithoutTrainingInput
     agendas?: TrainingAgendaCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkCreateNestedManyWithoutTrainingInput
@@ -58558,8 +60277,8 @@ export namespace Prisma {
     training_updated_by?: string | null
     training_created_at?: Date | string
     training_updated_at?: Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
     attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutTrainingInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutTrainingInput
     agendas?: TrainingAgendaUncheckedCreateNestedManyWithoutTrainingInput
     material_links?: TrainingMaterialLinkUncheckedCreateNestedManyWithoutTrainingInput
     survey_links?: TrainingSurveyLinkUncheckedCreateNestedManyWithoutTrainingInput
@@ -58570,34 +60289,97 @@ export namespace Prisma {
     create: XOR<TrainingCreateWithoutSurvey_responsesInput, TrainingUncheckedCreateWithoutSurvey_responsesInput>
   }
 
-  export type SurveyQuestionResponseCreateWithoutResponseInput = {
-    id?: string
-    answer_value: string
-    answer_text?: string | null
-    points_earned?: number | null
-    is_correct?: boolean | null
-    answered_at?: Date | string
-    question: SurveyQuestionCreateNestedOneWithoutAnswersInput
-  }
-
-  export type SurveyQuestionResponseUncheckedCreateWithoutResponseInput = {
-    id?: string
-    question_id: string
-    answer_value: string
-    answer_text?: string | null
-    points_earned?: number | null
-    is_correct?: boolean | null
-    answered_at?: Date | string
-  }
-
-  export type SurveyQuestionResponseCreateOrConnectWithoutResponseInput = {
+  export type SurveyQuestionResponseUpsertWithWhereUniqueWithoutResponseInput = {
     where: SurveyQuestionResponseWhereUniqueInput
+    update: XOR<SurveyQuestionResponseUpdateWithoutResponseInput, SurveyQuestionResponseUncheckedUpdateWithoutResponseInput>
     create: XOR<SurveyQuestionResponseCreateWithoutResponseInput, SurveyQuestionResponseUncheckedCreateWithoutResponseInput>
   }
 
-  export type SurveyQuestionResponseCreateManyResponseInputEnvelope = {
-    data: SurveyQuestionResponseCreateManyResponseInput | SurveyQuestionResponseCreateManyResponseInput[]
-    skipDuplicates?: boolean
+  export type SurveyQuestionResponseUpdateWithWhereUniqueWithoutResponseInput = {
+    where: SurveyQuestionResponseWhereUniqueInput
+    data: XOR<SurveyQuestionResponseUpdateWithoutResponseInput, SurveyQuestionResponseUncheckedUpdateWithoutResponseInput>
+  }
+
+  export type SurveyQuestionResponseUpdateManyWithWhereWithoutResponseInput = {
+    where: SurveyQuestionResponseScalarWhereInput
+    data: XOR<SurveyQuestionResponseUpdateManyMutationInput, SurveyQuestionResponseUncheckedUpdateManyWithoutResponseInput>
+  }
+
+  export type BeneficiaryUpsertWithoutSurvey_responsesInput = {
+    update: XOR<BeneficiaryUpdateWithoutSurvey_responsesInput, BeneficiaryUncheckedUpdateWithoutSurvey_responsesInput>
+    create: XOR<BeneficiaryCreateWithoutSurvey_responsesInput, BeneficiaryUncheckedCreateWithoutSurvey_responsesInput>
+    where?: BeneficiaryWhereInput
+  }
+
+  export type BeneficiaryUpdateToOneWithWhereWithoutSurvey_responsesInput = {
+    where?: BeneficiaryWhereInput
+    data: XOR<BeneficiaryUpdateWithoutSurvey_responsesInput, BeneficiaryUncheckedUpdateWithoutSurvey_responsesInput>
+  }
+
+  export type BeneficiaryUpdateWithoutSurvey_responsesInput = {
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    village_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    school_id?: NullableStringFieldUpdateOperationsInput | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    grade?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    profile_completed?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
+    event_attendance_records?: EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUpdateOneWithoutBeneficiaryNestedInput
+  }
+
+  export type BeneficiaryUncheckedUpdateWithoutSurvey_responsesInput = {
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    village_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    school_id?: NullableStringFieldUpdateOperationsInput | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    grade?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    profile_completed?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    telegram_user?: TelegramUserUncheckedUpdateOneWithoutBeneficiaryNestedInput
   }
 
   export type SurveyUpsertWithoutResponsesInput = {
@@ -58663,81 +60445,6 @@ export namespace Prisma {
     training_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyNestedInput
   }
 
-  export type BeneficiaryUpsertWithoutSurvey_responsesInput = {
-    update: XOR<BeneficiaryUpdateWithoutSurvey_responsesInput, BeneficiaryUncheckedUpdateWithoutSurvey_responsesInput>
-    create: XOR<BeneficiaryCreateWithoutSurvey_responsesInput, BeneficiaryUncheckedCreateWithoutSurvey_responsesInput>
-    where?: BeneficiaryWhereInput
-  }
-
-  export type BeneficiaryUpdateToOneWithWhereWithoutSurvey_responsesInput = {
-    where?: BeneficiaryWhereInput
-    data: XOR<BeneficiaryUpdateWithoutSurvey_responsesInput, BeneficiaryUncheckedUpdateWithoutSurvey_responsesInput>
-  }
-
-  export type BeneficiaryUpdateWithoutSurvey_responsesInput = {
-    teacher_id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    passcode?: NullableStringFieldUpdateOperationsInput | string | null
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    village_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school?: NullableStringFieldUpdateOperationsInput | string | null
-    school_id?: NullableStringFieldUpdateOperationsInput | string | null
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    subject?: NullableStringFieldUpdateOperationsInput | string | null
-    grade?: NullableIntFieldUpdateOperationsInput | number | null
-    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    profile_completed?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
-    attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
-    event_attendance_records?: EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
-  }
-
-  export type BeneficiaryUncheckedUpdateWithoutSurvey_responsesInput = {
-    teacher_id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    passcode?: NullableStringFieldUpdateOperationsInput | string | null
-    province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    district_name?: NullableStringFieldUpdateOperationsInput | string | null
-    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
-    village_name?: NullableStringFieldUpdateOperationsInput | string | null
-    school?: NullableStringFieldUpdateOperationsInput | string | null
-    school_id?: NullableStringFieldUpdateOperationsInput | string | null
-    position?: NullableStringFieldUpdateOperationsInput | string | null
-    subject?: NullableStringFieldUpdateOperationsInput | string | null
-    grade?: NullableIntFieldUpdateOperationsInput | number | null
-    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
-    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    profile_completed?: BoolFieldUpdateOperationsInput | boolean
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
-    event_attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
-  }
-
   export type TrainingUpsertWithoutSurvey_responsesInput = {
     update: XOR<TrainingUpdateWithoutSurvey_responsesInput, TrainingUncheckedUpdateWithoutSurvey_responsesInput>
     create: XOR<TrainingCreateWithoutSurvey_responsesInput, TrainingUncheckedCreateWithoutSurvey_responsesInput>
@@ -58783,8 +60490,8 @@ export namespace Prisma {
     training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
     attendance_records?: AttendanceRecordUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUpdateManyWithoutTrainingNestedInput
     agendas?: TrainingAgendaUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUpdateManyWithoutTrainingNestedInput
@@ -58824,68 +60531,11 @@ export namespace Prisma {
     training_updated_by?: NullableStringFieldUpdateOperationsInput | string | null
     training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
     attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutTrainingNestedInput
+    beneficiary_trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutTrainingNestedInput
     agendas?: TrainingAgendaUncheckedUpdateManyWithoutTrainingNestedInput
     material_links?: TrainingMaterialLinkUncheckedUpdateManyWithoutTrainingNestedInput
     survey_links?: TrainingSurveyLinkUncheckedUpdateManyWithoutTrainingNestedInput
-  }
-
-  export type SurveyQuestionResponseUpsertWithWhereUniqueWithoutResponseInput = {
-    where: SurveyQuestionResponseWhereUniqueInput
-    update: XOR<SurveyQuestionResponseUpdateWithoutResponseInput, SurveyQuestionResponseUncheckedUpdateWithoutResponseInput>
-    create: XOR<SurveyQuestionResponseCreateWithoutResponseInput, SurveyQuestionResponseUncheckedCreateWithoutResponseInput>
-  }
-
-  export type SurveyQuestionResponseUpdateWithWhereUniqueWithoutResponseInput = {
-    where: SurveyQuestionResponseWhereUniqueInput
-    data: XOR<SurveyQuestionResponseUpdateWithoutResponseInput, SurveyQuestionResponseUncheckedUpdateWithoutResponseInput>
-  }
-
-  export type SurveyQuestionResponseUpdateManyWithWhereWithoutResponseInput = {
-    where: SurveyQuestionResponseScalarWhereInput
-    data: XOR<SurveyQuestionResponseUpdateManyMutationInput, SurveyQuestionResponseUncheckedUpdateManyWithoutResponseInput>
-  }
-
-  export type SurveyResponseCreateWithoutQuestion_responsesInput = {
-    id?: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
-    survey: SurveyCreateNestedOneWithoutResponsesInput
-    beneficiary: BeneficiaryCreateNestedOneWithoutSurvey_responsesInput
-    training: TrainingCreateNestedOneWithoutSurvey_responsesInput
-  }
-
-  export type SurveyResponseUncheckedCreateWithoutQuestion_responsesInput = {
-    id?: string
-    survey_id: string
-    beneficiary_id: string
-    training_id: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
-  }
-
-  export type SurveyResponseCreateOrConnectWithoutQuestion_responsesInput = {
-    where: SurveyResponseWhereUniqueInput
-    create: XOR<SurveyResponseCreateWithoutQuestion_responsesInput, SurveyResponseUncheckedCreateWithoutQuestion_responsesInput>
   }
 
   export type SurveyQuestionCreateWithoutAnswersInput = {
@@ -58937,51 +60587,45 @@ export namespace Prisma {
     create: XOR<SurveyQuestionCreateWithoutAnswersInput, SurveyQuestionUncheckedCreateWithoutAnswersInput>
   }
 
-  export type SurveyResponseUpsertWithoutQuestion_responsesInput = {
-    update: XOR<SurveyResponseUpdateWithoutQuestion_responsesInput, SurveyResponseUncheckedUpdateWithoutQuestion_responsesInput>
+  export type SurveyResponseCreateWithoutQuestion_responsesInput = {
+    id?: string
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    beneficiary: BeneficiaryCreateNestedOneWithoutSurvey_responsesInput
+    survey: SurveyCreateNestedOneWithoutResponsesInput
+    training: TrainingCreateNestedOneWithoutSurvey_responsesInput
+  }
+
+  export type SurveyResponseUncheckedCreateWithoutQuestion_responsesInput = {
+    id?: string
+    survey_id: string
+    beneficiary_id: string
+    training_id: string
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type SurveyResponseCreateOrConnectWithoutQuestion_responsesInput = {
+    where: SurveyResponseWhereUniqueInput
     create: XOR<SurveyResponseCreateWithoutQuestion_responsesInput, SurveyResponseUncheckedCreateWithoutQuestion_responsesInput>
-    where?: SurveyResponseWhereInput
-  }
-
-  export type SurveyResponseUpdateToOneWithWhereWithoutQuestion_responsesInput = {
-    where?: SurveyResponseWhereInput
-    data: XOR<SurveyResponseUpdateWithoutQuestion_responsesInput, SurveyResponseUncheckedUpdateWithoutQuestion_responsesInput>
-  }
-
-  export type SurveyResponseUpdateWithoutQuestion_responsesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_complete?: BoolFieldUpdateOperationsInput | boolean
-    attempt_number?: IntFieldUpdateOperationsInput | number
-    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    survey?: SurveyUpdateOneRequiredWithoutResponsesNestedInput
-    beneficiary?: BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput
-    training?: TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput
-  }
-
-  export type SurveyResponseUncheckedUpdateWithoutQuestion_responsesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    survey_id?: StringFieldUpdateOperationsInput | string
-    beneficiary_id?: StringFieldUpdateOperationsInput | string
-    training_id?: StringFieldUpdateOperationsInput | string
-    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_complete?: BoolFieldUpdateOperationsInput | boolean
-    attempt_number?: IntFieldUpdateOperationsInput | number
-    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SurveyQuestionUpsertWithoutAnswersInput = {
@@ -59039,6 +60683,201 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SurveyResponseUpsertWithoutQuestion_responsesInput = {
+    update: XOR<SurveyResponseUpdateWithoutQuestion_responsesInput, SurveyResponseUncheckedUpdateWithoutQuestion_responsesInput>
+    create: XOR<SurveyResponseCreateWithoutQuestion_responsesInput, SurveyResponseUncheckedCreateWithoutQuestion_responsesInput>
+    where?: SurveyResponseWhereInput
+  }
+
+  export type SurveyResponseUpdateToOneWithWhereWithoutQuestion_responsesInput = {
+    where?: SurveyResponseWhereInput
+    data: XOR<SurveyResponseUpdateWithoutQuestion_responsesInput, SurveyResponseUncheckedUpdateWithoutQuestion_responsesInput>
+  }
+
+  export type SurveyResponseUpdateWithoutQuestion_responsesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_complete?: BoolFieldUpdateOperationsInput | boolean
+    attempt_number?: IntFieldUpdateOperationsInput | number
+    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    beneficiary?: BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput
+    survey?: SurveyUpdateOneRequiredWithoutResponsesNestedInput
+    training?: TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput
+  }
+
+  export type SurveyResponseUncheckedUpdateWithoutQuestion_responsesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    survey_id?: StringFieldUpdateOperationsInput | string
+    beneficiary_id?: StringFieldUpdateOperationsInput | string
+    training_id?: StringFieldUpdateOperationsInput | string
+    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_complete?: BoolFieldUpdateOperationsInput | boolean
+    attempt_number?: IntFieldUpdateOperationsInput | number
+    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BeneficiaryCreateWithoutTelegram_userInput = {
+    teacher_id: string
+    name: string
+    name_english?: string | null
+    phone?: string | null
+    sex?: $Enums.Sex | null
+    role?: string | null
+    passcode?: string | null
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    village_name?: string | null
+    school?: string | null
+    school_id?: string | null
+    position?: string | null
+    subject?: string | null
+    grade?: number | null
+    profile_image_url?: string | null
+    signature_url?: string | null
+    status: $Enums.BeneficiaryStatus
+    is_deleted?: boolean
+    profile_completed?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    attendance_records?: AttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingCreateNestedManyWithoutBeneficiaryInput
+    event_attendance_records?: EventAttendanceRecordCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseCreateNestedManyWithoutBeneficiaryInput
+  }
+
+  export type BeneficiaryUncheckedCreateWithoutTelegram_userInput = {
+    teacher_id: string
+    name: string
+    name_english?: string | null
+    phone?: string | null
+    sex?: $Enums.Sex | null
+    role?: string | null
+    passcode?: string | null
+    province_name?: string | null
+    district_name?: string | null
+    commune_name?: string | null
+    village_name?: string | null
+    school?: string | null
+    school_id?: string | null
+    position?: string | null
+    subject?: string | null
+    grade?: number | null
+    profile_image_url?: string | null
+    signature_url?: string | null
+    status: $Enums.BeneficiaryStatus
+    is_deleted?: boolean
+    profile_completed?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
+    attendance_records?: AttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    trainings?: BeneficiaryTrainingUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_attendance_records?: EventAttendanceRecordUncheckedCreateNestedManyWithoutBeneficiaryInput
+    event_registrations?: EventRegistrationUncheckedCreateNestedManyWithoutBeneficiaryInput
+    survey_responses?: SurveyResponseUncheckedCreateNestedManyWithoutBeneficiaryInput
+  }
+
+  export type BeneficiaryCreateOrConnectWithoutTelegram_userInput = {
+    where: BeneficiaryWhereUniqueInput
+    create: XOR<BeneficiaryCreateWithoutTelegram_userInput, BeneficiaryUncheckedCreateWithoutTelegram_userInput>
+  }
+
+  export type BeneficiaryUpsertWithoutTelegram_userInput = {
+    update: XOR<BeneficiaryUpdateWithoutTelegram_userInput, BeneficiaryUncheckedUpdateWithoutTelegram_userInput>
+    create: XOR<BeneficiaryCreateWithoutTelegram_userInput, BeneficiaryUncheckedCreateWithoutTelegram_userInput>
+    where?: BeneficiaryWhereInput
+  }
+
+  export type BeneficiaryUpdateToOneWithWhereWithoutTelegram_userInput = {
+    where?: BeneficiaryWhereInput
+    data: XOR<BeneficiaryUpdateWithoutTelegram_userInput, BeneficiaryUncheckedUpdateWithoutTelegram_userInput>
+  }
+
+  export type BeneficiaryUpdateWithoutTelegram_userInput = {
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    village_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    school_id?: NullableStringFieldUpdateOperationsInput | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    grade?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    profile_completed?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    attendance_records?: AttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUpdateManyWithoutBeneficiaryNestedInput
+    event_attendance_records?: EventAttendanceRecordUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUpdateManyWithoutBeneficiaryNestedInput
+  }
+
+  export type BeneficiaryUncheckedUpdateWithoutTelegram_userInput = {
+    teacher_id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    sex?: NullableEnumSexFieldUpdateOperationsInput | $Enums.Sex | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    passcode?: NullableStringFieldUpdateOperationsInput | string | null
+    province_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    commune_name?: NullableStringFieldUpdateOperationsInput | string | null
+    village_name?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    school_id?: NullableStringFieldUpdateOperationsInput | string | null
+    position?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    grade?: NullableIntFieldUpdateOperationsInput | number | null
+    profile_image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    signature_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumBeneficiaryStatusFieldUpdateOperationsInput | $Enums.BeneficiaryStatus
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    profile_completed?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    attendance_records?: AttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    trainings?: BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_attendance_records?: EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    event_registrations?: EventRegistrationUncheckedUpdateManyWithoutBeneficiaryNestedInput
+    survey_responses?: SurveyResponseUncheckedUpdateManyWithoutBeneficiaryNestedInput
+  }
+
   export type UserCreateWithoutNotificationsInput = {
     id?: string
     username: string
@@ -59052,10 +60891,10 @@ export namespace Prisma {
     school?: string | null
     school_id?: string | null
     province_name?: string | null
-    theme_preference?: string | null
-    khmer_font?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    khmer_font?: string | null
+    theme_preference?: string | null
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -59071,10 +60910,10 @@ export namespace Prisma {
     school?: string | null
     school_id?: string | null
     province_name?: string | null
-    theme_preference?: string | null
-    khmer_font?: string | null
     created_at?: Date | string
     updated_at?: Date | string
+    khmer_font?: string | null
+    theme_preference?: string | null
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -59106,10 +60945,10 @@ export namespace Prisma {
     school?: NullableStringFieldUpdateOperationsInput | string | null
     school_id?: NullableStringFieldUpdateOperationsInput | string | null
     province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
-    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -59125,10 +60964,10 @@ export namespace Prisma {
     school?: NullableStringFieldUpdateOperationsInput | string | null
     school_id?: NullableStringFieldUpdateOperationsInput | string | null
     province_name?: NullableStringFieldUpdateOperationsInput | string | null
-    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
-    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    khmer_font?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_preference?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type NotificationCreateManyUserInput = {
@@ -59195,26 +61034,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BeneficiaryTrainingCreateManyBeneficiaryInput = {
-    beneficiary_training_id?: string
-    training_id: string
-    registration_date: Date | string
-    registration_method?: $Enums.RegistrationMethod | null
-    attendance_status: $Enums.AttendanceStatus
-    attendance_percentage?: number | null
-    training_role: $Enums.TrainingRole
-    enrollment_type: string
-    certificate_issued?: boolean
-    certificate_number?: string | null
-    certificate_issue_date?: Date | string | null
-    feedback_submitted?: boolean
-    feedback_score?: number | null
-    feedback_comments?: string | null
-    beneficiary_training_status: string
-    beneficiary_training_created_at?: Date | string
-    beneficiary_training_updated_at?: Date | string
-  }
-
   export type AttendanceRecordCreateManyBeneficiaryInput = {
     id?: string
     training_id: string
@@ -59236,19 +61055,44 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
-  export type SurveyResponseCreateManyBeneficiaryInput = {
-    id?: string
-    survey_id: string
+  export type BeneficiaryTrainingCreateManyBeneficiaryInput = {
+    beneficiary_training_id?: string
     training_id: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
+    registration_date: Date | string
+    registration_method?: $Enums.RegistrationMethod | null
+    attendance_status: $Enums.AttendanceStatus
+    attendance_percentage?: number | null
+    training_role: $Enums.TrainingRole
+    enrollment_type: string
+    certificate_issued?: boolean
+    certificate_number?: string | null
+    certificate_issue_date?: Date | string | null
+    feedback_submitted?: boolean
+    feedback_score?: number | null
+    feedback_comments?: string | null
+    beneficiary_training_status: string
+    beneficiary_training_created_at?: Date | string
+    beneficiary_training_updated_at?: Date | string
+  }
+
+  export type EventAttendanceRecordCreateManyBeneficiaryInput = {
+    id?: string
+    event_id: string
+    registration_id?: string | null
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -59285,86 +61129,21 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
-  export type EventAttendanceRecordCreateManyBeneficiaryInput = {
+  export type SurveyResponseCreateManyBeneficiaryInput = {
     id?: string
-    event_id: string
-    registration_id?: string | null
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    survey_id: string
+    training_id: string
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
     created_at?: Date | string
     updated_at?: Date | string
-  }
-
-  export type BeneficiaryTrainingUpdateWithoutBeneficiaryInput = {
-    beneficiary_training_id?: StringFieldUpdateOperationsInput | string
-    registration_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_method?: NullableEnumRegistrationMethodFieldUpdateOperationsInput | $Enums.RegistrationMethod | null
-    attendance_status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    attendance_percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    training_role?: EnumTrainingRoleFieldUpdateOperationsInput | $Enums.TrainingRole
-    enrollment_type?: StringFieldUpdateOperationsInput | string
-    certificate_issued?: BoolFieldUpdateOperationsInput | boolean
-    certificate_number?: NullableStringFieldUpdateOperationsInput | string | null
-    certificate_issue_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    feedback_submitted?: BoolFieldUpdateOperationsInput | boolean
-    feedback_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    feedback_comments?: NullableStringFieldUpdateOperationsInput | string | null
-    beneficiary_training_status?: StringFieldUpdateOperationsInput | string
-    beneficiary_training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    training?: TrainingUpdateOneRequiredWithoutBeneficiary_trainingsNestedInput
-  }
-
-  export type BeneficiaryTrainingUncheckedUpdateWithoutBeneficiaryInput = {
-    beneficiary_training_id?: StringFieldUpdateOperationsInput | string
-    training_id?: StringFieldUpdateOperationsInput | string
-    registration_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_method?: NullableEnumRegistrationMethodFieldUpdateOperationsInput | $Enums.RegistrationMethod | null
-    attendance_status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    attendance_percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    training_role?: EnumTrainingRoleFieldUpdateOperationsInput | $Enums.TrainingRole
-    enrollment_type?: StringFieldUpdateOperationsInput | string
-    certificate_issued?: BoolFieldUpdateOperationsInput | boolean
-    certificate_number?: NullableStringFieldUpdateOperationsInput | string | null
-    certificate_issue_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    feedback_submitted?: BoolFieldUpdateOperationsInput | boolean
-    feedback_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    feedback_comments?: NullableStringFieldUpdateOperationsInput | string | null
-    beneficiary_training_status?: StringFieldUpdateOperationsInput | string
-    beneficiary_training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryInput = {
-    beneficiary_training_id?: StringFieldUpdateOperationsInput | string
-    training_id?: StringFieldUpdateOperationsInput | string
-    registration_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    registration_method?: NullableEnumRegistrationMethodFieldUpdateOperationsInput | $Enums.RegistrationMethod | null
-    attendance_status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    attendance_percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    training_role?: EnumTrainingRoleFieldUpdateOperationsInput | $Enums.TrainingRole
-    enrollment_type?: StringFieldUpdateOperationsInput | string
-    certificate_issued?: BoolFieldUpdateOperationsInput | boolean
-    certificate_number?: NullableStringFieldUpdateOperationsInput | string | null
-    certificate_issue_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    feedback_submitted?: BoolFieldUpdateOperationsInput | boolean
-    feedback_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    feedback_comments?: NullableStringFieldUpdateOperationsInput | string | null
-    beneficiary_training_status?: StringFieldUpdateOperationsInput | string
-    beneficiary_training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary_training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AttendanceRecordUpdateWithoutBeneficiaryInput = {
@@ -59430,55 +61209,128 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SurveyResponseUpdateWithoutBeneficiaryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_complete?: BoolFieldUpdateOperationsInput | boolean
-    attempt_number?: IntFieldUpdateOperationsInput | number
-    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    survey?: SurveyUpdateOneRequiredWithoutResponsesNestedInput
-    training?: TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput
-    question_responses?: SurveyQuestionResponseUpdateManyWithoutResponseNestedInput
+  export type BeneficiaryTrainingUpdateWithoutBeneficiaryInput = {
+    beneficiary_training_id?: StringFieldUpdateOperationsInput | string
+    registration_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_method?: NullableEnumRegistrationMethodFieldUpdateOperationsInput | $Enums.RegistrationMethod | null
+    attendance_status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+    attendance_percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    training_role?: EnumTrainingRoleFieldUpdateOperationsInput | $Enums.TrainingRole
+    enrollment_type?: StringFieldUpdateOperationsInput | string
+    certificate_issued?: BoolFieldUpdateOperationsInput | boolean
+    certificate_number?: NullableStringFieldUpdateOperationsInput | string | null
+    certificate_issue_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    feedback_submitted?: BoolFieldUpdateOperationsInput | boolean
+    feedback_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    feedback_comments?: NullableStringFieldUpdateOperationsInput | string | null
+    beneficiary_training_status?: StringFieldUpdateOperationsInput | string
+    beneficiary_training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    beneficiary_training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    training?: TrainingUpdateOneRequiredWithoutBeneficiary_trainingsNestedInput
   }
 
-  export type SurveyResponseUncheckedUpdateWithoutBeneficiaryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    survey_id?: StringFieldUpdateOperationsInput | string
+  export type BeneficiaryTrainingUncheckedUpdateWithoutBeneficiaryInput = {
+    beneficiary_training_id?: StringFieldUpdateOperationsInput | string
     training_id?: StringFieldUpdateOperationsInput | string
-    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_complete?: BoolFieldUpdateOperationsInput | boolean
-    attempt_number?: IntFieldUpdateOperationsInput | number
-    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    question_responses?: SurveyQuestionResponseUncheckedUpdateManyWithoutResponseNestedInput
+    registration_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_method?: NullableEnumRegistrationMethodFieldUpdateOperationsInput | $Enums.RegistrationMethod | null
+    attendance_status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+    attendance_percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    training_role?: EnumTrainingRoleFieldUpdateOperationsInput | $Enums.TrainingRole
+    enrollment_type?: StringFieldUpdateOperationsInput | string
+    certificate_issued?: BoolFieldUpdateOperationsInput | boolean
+    certificate_number?: NullableStringFieldUpdateOperationsInput | string | null
+    certificate_issue_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    feedback_submitted?: BoolFieldUpdateOperationsInput | boolean
+    feedback_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    feedback_comments?: NullableStringFieldUpdateOperationsInput | string | null
+    beneficiary_training_status?: StringFieldUpdateOperationsInput | string
+    beneficiary_training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    beneficiary_training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SurveyResponseUncheckedUpdateManyWithoutBeneficiaryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    survey_id?: StringFieldUpdateOperationsInput | string
+  export type BeneficiaryTrainingUncheckedUpdateManyWithoutBeneficiaryInput = {
+    beneficiary_training_id?: StringFieldUpdateOperationsInput | string
     training_id?: StringFieldUpdateOperationsInput | string
-    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_complete?: BoolFieldUpdateOperationsInput | boolean
-    attempt_number?: IntFieldUpdateOperationsInput | number
-    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
+    registration_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    registration_method?: NullableEnumRegistrationMethodFieldUpdateOperationsInput | $Enums.RegistrationMethod | null
+    attendance_status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
+    attendance_percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    training_role?: EnumTrainingRoleFieldUpdateOperationsInput | $Enums.TrainingRole
+    enrollment_type?: StringFieldUpdateOperationsInput | string
+    certificate_issued?: BoolFieldUpdateOperationsInput | boolean
+    certificate_number?: NullableStringFieldUpdateOperationsInput | string | null
+    certificate_issue_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    feedback_submitted?: BoolFieldUpdateOperationsInput | boolean
+    feedback_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    feedback_comments?: NullableStringFieldUpdateOperationsInput | string | null
+    beneficiary_training_status?: StringFieldUpdateOperationsInput | string
+    beneficiary_training_created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    beneficiary_training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventAttendanceRecordUpdateWithoutBeneficiaryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: EventUpdateOneRequiredWithoutAttendance_recordsNestedInput
+  }
+
+  export type EventAttendanceRecordUncheckedUpdateWithoutBeneficiaryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_id?: StringFieldUpdateOperationsInput | string
+    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event_id?: StringFieldUpdateOperationsInput | string
+    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59581,70 +61433,78 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type EventAttendanceRecordUpdateWithoutBeneficiaryInput = {
+  export type SurveyResponseUpdateWithoutBeneficiaryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
+    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_complete?: BoolFieldUpdateOperationsInput | boolean
+    attempt_number?: IntFieldUpdateOperationsInput | number
+    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    event?: EventUpdateOneRequiredWithoutAttendance_recordsNestedInput
+    question_responses?: SurveyQuestionResponseUpdateManyWithoutResponseNestedInput
+    survey?: SurveyUpdateOneRequiredWithoutResponsesNestedInput
+    training?: TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput
   }
 
-  export type EventAttendanceRecordUncheckedUpdateWithoutBeneficiaryInput = {
+  export type SurveyResponseUncheckedUpdateWithoutBeneficiaryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    event_id?: StringFieldUpdateOperationsInput | string
-    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
+    survey_id?: StringFieldUpdateOperationsInput | string
+    training_id?: StringFieldUpdateOperationsInput | string
+    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_complete?: BoolFieldUpdateOperationsInput | boolean
+    attempt_number?: IntFieldUpdateOperationsInput | number
+    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    question_responses?: SurveyQuestionResponseUncheckedUpdateManyWithoutResponseNestedInput
+  }
+
+  export type SurveyResponseUncheckedUpdateManyWithoutBeneficiaryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    survey_id?: StringFieldUpdateOperationsInput | string
+    training_id?: StringFieldUpdateOperationsInput | string
+    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_complete?: BoolFieldUpdateOperationsInput | boolean
+    attempt_number?: IntFieldUpdateOperationsInput | number
+    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type EventAttendanceRecordUncheckedUpdateManyWithoutBeneficiaryInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    event_id?: StringFieldUpdateOperationsInput | string
-    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type AttendanceRecordCreateManyTrainingInput = {
+    id?: string
+    beneficiary_id: string
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    session_attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type BeneficiaryTrainingCreateManyTrainingInput = {
@@ -59667,23 +61527,19 @@ export namespace Prisma {
     beneficiary_training_updated_at?: Date | string
   }
 
-  export type AttendanceRecordCreateManyTrainingInput = {
+  export type SurveyResponseCreateManyTrainingInput = {
     id?: string
+    survey_id: string
     beneficiary_id: string
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    session_attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    started_at?: Date | string | null
+    submitted_at?: Date | string | null
+    is_complete?: boolean
+    attempt_number?: number
+    total_score?: number | null
+    max_score?: number | null
+    percentage?: number | null
+    passed?: boolean | null
+    time_spent_seconds?: number | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -59727,21 +61583,67 @@ export namespace Prisma {
     linked_by?: string | null
   }
 
-  export type SurveyResponseCreateManyTrainingInput = {
-    id?: string
-    survey_id: string
-    beneficiary_id: string
-    started_at?: Date | string | null
-    submitted_at?: Date | string | null
-    is_complete?: boolean
-    attempt_number?: number
-    total_score?: number | null
-    max_score?: number | null
-    percentage?: number | null
-    passed?: boolean | null
-    time_spent_seconds?: number | null
-    created_at?: Date | string
-    updated_at?: Date | string
+  export type AttendanceRecordUpdateWithoutTrainingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    session_attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    beneficiary?: BeneficiaryUpdateOneRequiredWithoutAttendance_recordsNestedInput
+  }
+
+  export type AttendanceRecordUncheckedUpdateWithoutTrainingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    beneficiary_id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    session_attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AttendanceRecordUncheckedUpdateManyWithoutTrainingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    beneficiary_id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    session_attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BeneficiaryTrainingUpdateWithoutTrainingInput = {
@@ -59804,65 +61706,55 @@ export namespace Prisma {
     beneficiary_training_updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AttendanceRecordUpdateWithoutTrainingInput = {
+  export type SurveyResponseUpdateWithoutTrainingInput = {
     id?: StringFieldUpdateOperationsInput | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    session_attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
+    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_complete?: BoolFieldUpdateOperationsInput | boolean
+    attempt_number?: IntFieldUpdateOperationsInput | number
+    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary?: BeneficiaryUpdateOneRequiredWithoutAttendance_recordsNestedInput
+    question_responses?: SurveyQuestionResponseUpdateManyWithoutResponseNestedInput
+    beneficiary?: BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput
+    survey?: SurveyUpdateOneRequiredWithoutResponsesNestedInput
   }
 
-  export type AttendanceRecordUncheckedUpdateWithoutTrainingInput = {
+  export type SurveyResponseUncheckedUpdateWithoutTrainingInput = {
     id?: StringFieldUpdateOperationsInput | string
+    survey_id?: StringFieldUpdateOperationsInput | string
     beneficiary_id?: StringFieldUpdateOperationsInput | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    session_attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
+    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_complete?: BoolFieldUpdateOperationsInput | boolean
+    attempt_number?: IntFieldUpdateOperationsInput | number
+    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    question_responses?: SurveyQuestionResponseUncheckedUpdateManyWithoutResponseNestedInput
   }
 
-  export type AttendanceRecordUncheckedUpdateManyWithoutTrainingInput = {
+  export type SurveyResponseUncheckedUpdateManyWithoutTrainingInput = {
     id?: StringFieldUpdateOperationsInput | string
+    survey_id?: StringFieldUpdateOperationsInput | string
     beneficiary_id?: StringFieldUpdateOperationsInput | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    session_attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
+    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    is_complete?: BoolFieldUpdateOperationsInput | boolean
+    attempt_number?: IntFieldUpdateOperationsInput | number
+    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
+    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
+    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -59984,85 +61876,35 @@ export namespace Prisma {
     linked_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type SurveyResponseUpdateWithoutTrainingInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_complete?: BoolFieldUpdateOperationsInput | boolean
-    attempt_number?: IntFieldUpdateOperationsInput | number
-    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    survey?: SurveyUpdateOneRequiredWithoutResponsesNestedInput
-    beneficiary?: BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput
-    question_responses?: SurveyQuestionResponseUpdateManyWithoutResponseNestedInput
-  }
-
-  export type SurveyResponseUncheckedUpdateWithoutTrainingInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    survey_id?: StringFieldUpdateOperationsInput | string
-    beneficiary_id?: StringFieldUpdateOperationsInput | string
-    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_complete?: BoolFieldUpdateOperationsInput | boolean
-    attempt_number?: IntFieldUpdateOperationsInput | number
-    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    question_responses?: SurveyQuestionResponseUncheckedUpdateManyWithoutResponseNestedInput
-  }
-
-  export type SurveyResponseUncheckedUpdateManyWithoutTrainingInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    survey_id?: StringFieldUpdateOperationsInput | string
-    beneficiary_id?: StringFieldUpdateOperationsInput | string
-    started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    submitted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    is_complete?: BoolFieldUpdateOperationsInput | boolean
-    attempt_number?: IntFieldUpdateOperationsInput | number
-    total_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    max_score?: NullableFloatFieldUpdateOperationsInput | number | null
-    percentage?: NullableFloatFieldUpdateOperationsInput | number | null
-    passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EventSessionCreateManyEventInput = {
+  export type EventAttendanceRecordCreateManyEventInput = {
     id?: string
-    session_code: string
-    session_name: string
-    session_name_english?: string | null
-    session_description?: string | null
-    session_date: Date | string
-    session_start_time: Date | string
-    session_end_time: Date | string
-    session_location?: string | null
-    session_room?: string | null
-    venue_latitude?: number | null
-    venue_longitude?: number | null
-    virtual_meeting_url?: string | null
-    track_name?: string | null
-    track_color?: string | null
-    max_attendees: number
-    current_attendees?: number
-    session_type?: $Enums.SessionType
-    is_cancelled?: boolean
-    is_deleted?: boolean
-    sort_order?: number
+    beneficiary_id?: string | null
+    registration_id?: string | null
+    date: Date | string
+    morning_in?: Date | string | null
+    morning_out?: Date | string | null
+    afternoon_in?: Date | string | null
+    afternoon_out?: Date | string | null
+    attendance_status: $Enums.SessionAttendanceStatus
+    manual_entry?: boolean
+    manual_marked_by?: string | null
+    manual_marked_by_name?: string | null
+    manual_entry_reason?: string | null
+    location_lat?: number | null
+    location_lng?: number | null
+    location_accuracy?: number | null
+    device?: string | null
     created_at?: Date | string
     updated_at?: Date | string
-    created_by?: string | null
-    updated_by?: string | null
+  }
+
+  export type EventMaterialLinkCreateManyEventInput = {
+    id?: string
+    material_id: string
+    sort_order?: number
+    is_required?: boolean
+    linked_at?: Date | string
+    linked_by?: string | null
   }
 
   export type EventRegistrationCreateManyEventInput = {
@@ -60097,26 +61939,32 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
-  export type EventAttendanceRecordCreateManyEventInput = {
+  export type EventSessionCreateManyEventInput = {
     id?: string
-    beneficiary_id?: string | null
-    registration_id?: string | null
-    date: Date | string
-    morning_in?: Date | string | null
-    morning_out?: Date | string | null
-    afternoon_in?: Date | string | null
-    afternoon_out?: Date | string | null
-    attendance_status: $Enums.SessionAttendanceStatus
-    manual_entry?: boolean
-    manual_marked_by?: string | null
-    manual_marked_by_name?: string | null
-    manual_entry_reason?: string | null
-    location_lat?: number | null
-    location_lng?: number | null
-    location_accuracy?: number | null
-    device?: string | null
+    session_code: string
+    session_name: string
+    session_name_english?: string | null
+    session_description?: string | null
+    session_date: Date | string
+    session_start_time: Date | string
+    session_end_time: Date | string
+    session_location?: string | null
+    session_room?: string | null
+    venue_latitude?: number | null
+    venue_longitude?: number | null
+    virtual_meeting_url?: string | null
+    track_name?: string | null
+    track_color?: string | null
+    max_attendees: number
+    current_attendees?: number
+    session_type?: $Enums.SessionType
+    is_cancelled?: boolean
+    is_deleted?: boolean
+    sort_order?: number
     created_at?: Date | string
     updated_at?: Date | string
+    created_by?: string | null
+    updated_by?: string | null
   }
 
   export type EventSpeakerCreateManyEventInput = {
@@ -60142,101 +61990,97 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
-  export type EventMaterialLinkCreateManyEventInput = {
-    id?: string
-    material_id: string
-    sort_order?: number
-    is_required?: boolean
-    linked_at?: Date | string
-    linked_by?: string | null
-  }
-
-  export type EventSessionUpdateWithoutEventInput = {
+  export type EventAttendanceRecordUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
-    session_code?: StringFieldUpdateOperationsInput | string
-    session_name?: StringFieldUpdateOperationsInput | string
-    session_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    session_description?: NullableStringFieldUpdateOperationsInput | string | null
-    session_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_start_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_location?: NullableStringFieldUpdateOperationsInput | string | null
-    session_room?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
-    track_name?: NullableStringFieldUpdateOperationsInput | string | null
-    track_color?: NullableStringFieldUpdateOperationsInput | string | null
-    max_attendees?: IntFieldUpdateOperationsInput | number
-    current_attendees?: IntFieldUpdateOperationsInput | number
-    session_type?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
-    is_cancelled?: BoolFieldUpdateOperationsInput | boolean
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    sort_order?: IntFieldUpdateOperationsInput | number
+    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    session_registrations?: EventSessionRegistrationUpdateManyWithoutSessionNestedInput
-    speakers?: EventSessionSpeakerUpdateManyWithoutSessionNestedInput
+    beneficiary?: BeneficiaryUpdateOneWithoutEvent_attendance_recordsNestedInput
   }
 
-  export type EventSessionUncheckedUpdateWithoutEventInput = {
+  export type EventAttendanceRecordUncheckedUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
-    session_code?: StringFieldUpdateOperationsInput | string
-    session_name?: StringFieldUpdateOperationsInput | string
-    session_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    session_description?: NullableStringFieldUpdateOperationsInput | string | null
-    session_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_start_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_location?: NullableStringFieldUpdateOperationsInput | string | null
-    session_room?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
-    track_name?: NullableStringFieldUpdateOperationsInput | string | null
-    track_color?: NullableStringFieldUpdateOperationsInput | string | null
-    max_attendees?: IntFieldUpdateOperationsInput | number
-    current_attendees?: IntFieldUpdateOperationsInput | number
-    session_type?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
-    is_cancelled?: BoolFieldUpdateOperationsInput | boolean
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    sort_order?: IntFieldUpdateOperationsInput | number
+    beneficiary_id?: NullableStringFieldUpdateOperationsInput | string | null
+    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
-    session_registrations?: EventSessionRegistrationUncheckedUpdateManyWithoutSessionNestedInput
-    speakers?: EventSessionSpeakerUncheckedUpdateManyWithoutSessionNestedInput
   }
 
-  export type EventSessionUncheckedUpdateManyWithoutEventInput = {
+  export type EventAttendanceRecordUncheckedUpdateManyWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
-    session_code?: StringFieldUpdateOperationsInput | string
-    session_name?: StringFieldUpdateOperationsInput | string
-    session_name_english?: NullableStringFieldUpdateOperationsInput | string | null
-    session_description?: NullableStringFieldUpdateOperationsInput | string | null
-    session_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_start_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    session_location?: NullableStringFieldUpdateOperationsInput | string | null
-    session_room?: NullableStringFieldUpdateOperationsInput | string | null
-    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
-    track_name?: NullableStringFieldUpdateOperationsInput | string | null
-    track_color?: NullableStringFieldUpdateOperationsInput | string | null
-    max_attendees?: IntFieldUpdateOperationsInput | number
-    current_attendees?: IntFieldUpdateOperationsInput | number
-    session_type?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
-    is_cancelled?: BoolFieldUpdateOperationsInput | boolean
-    is_deleted?: BoolFieldUpdateOperationsInput | boolean
-    sort_order?: IntFieldUpdateOperationsInput | number
+    beneficiary_id?: NullableStringFieldUpdateOperationsInput | string | null
+    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
+    manual_entry?: BoolFieldUpdateOperationsInput | boolean
+    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
+    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
+    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
+    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    device?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    created_by?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type EventMaterialLinkUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    material?: TrainingMaterialUpdateOneRequiredWithoutEvent_linksNestedInput
+  }
+
+  export type EventMaterialLinkUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    material_id?: StringFieldUpdateOperationsInput | string
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type EventMaterialLinkUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    material_id?: StringFieldUpdateOperationsInput | string
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EventRegistrationUpdateWithoutEventInput = {
@@ -60337,70 +62181,92 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type EventAttendanceRecordUpdateWithoutEventInput = {
+  export type EventSessionUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
-    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
+    session_code?: StringFieldUpdateOperationsInput | string
+    session_name?: StringFieldUpdateOperationsInput | string
+    session_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    session_description?: NullableStringFieldUpdateOperationsInput | string | null
+    session_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_location?: NullableStringFieldUpdateOperationsInput | string | null
+    session_room?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
+    track_name?: NullableStringFieldUpdateOperationsInput | string | null
+    track_color?: NullableStringFieldUpdateOperationsInput | string | null
+    max_attendees?: IntFieldUpdateOperationsInput | number
+    current_attendees?: IntFieldUpdateOperationsInput | number
+    session_type?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
+    is_cancelled?: BoolFieldUpdateOperationsInput | boolean
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    beneficiary?: BeneficiaryUpdateOneWithoutEvent_attendance_recordsNestedInput
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    session_registrations?: EventSessionRegistrationUpdateManyWithoutSessionNestedInput
+    speakers?: EventSessionSpeakerUpdateManyWithoutSessionNestedInput
   }
 
-  export type EventAttendanceRecordUncheckedUpdateWithoutEventInput = {
+  export type EventSessionUncheckedUpdateWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
-    beneficiary_id?: NullableStringFieldUpdateOperationsInput | string | null
-    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
+    session_code?: StringFieldUpdateOperationsInput | string
+    session_name?: StringFieldUpdateOperationsInput | string
+    session_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    session_description?: NullableStringFieldUpdateOperationsInput | string | null
+    session_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_location?: NullableStringFieldUpdateOperationsInput | string | null
+    session_room?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
+    track_name?: NullableStringFieldUpdateOperationsInput | string | null
+    track_color?: NullableStringFieldUpdateOperationsInput | string | null
+    max_attendees?: IntFieldUpdateOperationsInput | number
+    current_attendees?: IntFieldUpdateOperationsInput | number
+    session_type?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
+    is_cancelled?: BoolFieldUpdateOperationsInput | boolean
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
+    session_registrations?: EventSessionRegistrationUncheckedUpdateManyWithoutSessionNestedInput
+    speakers?: EventSessionSpeakerUncheckedUpdateManyWithoutSessionNestedInput
   }
 
-  export type EventAttendanceRecordUncheckedUpdateManyWithoutEventInput = {
+  export type EventSessionUncheckedUpdateManyWithoutEventInput = {
     id?: StringFieldUpdateOperationsInput | string
-    beneficiary_id?: NullableStringFieldUpdateOperationsInput | string | null
-    registration_id?: NullableStringFieldUpdateOperationsInput | string | null
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    morning_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    morning_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_in?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    afternoon_out?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    attendance_status?: EnumSessionAttendanceStatusFieldUpdateOperationsInput | $Enums.SessionAttendanceStatus
-    manual_entry?: BoolFieldUpdateOperationsInput | boolean
-    manual_marked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_marked_by_name?: NullableStringFieldUpdateOperationsInput | string | null
-    manual_entry_reason?: NullableStringFieldUpdateOperationsInput | string | null
-    location_lat?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_lng?: NullableFloatFieldUpdateOperationsInput | number | null
-    location_accuracy?: NullableFloatFieldUpdateOperationsInput | number | null
-    device?: NullableStringFieldUpdateOperationsInput | string | null
+    session_code?: StringFieldUpdateOperationsInput | string
+    session_name?: StringFieldUpdateOperationsInput | string
+    session_name_english?: NullableStringFieldUpdateOperationsInput | string | null
+    session_description?: NullableStringFieldUpdateOperationsInput | string | null
+    session_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    session_location?: NullableStringFieldUpdateOperationsInput | string | null
+    session_room?: NullableStringFieldUpdateOperationsInput | string | null
+    venue_latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    venue_longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    virtual_meeting_url?: NullableStringFieldUpdateOperationsInput | string | null
+    track_name?: NullableStringFieldUpdateOperationsInput | string | null
+    track_color?: NullableStringFieldUpdateOperationsInput | string | null
+    max_attendees?: IntFieldUpdateOperationsInput | number
+    current_attendees?: IntFieldUpdateOperationsInput | number
+    session_type?: EnumSessionTypeFieldUpdateOperationsInput | $Enums.SessionType
+    is_cancelled?: BoolFieldUpdateOperationsInput | boolean
+    is_deleted?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_by?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EventSpeakerUpdateWithoutEventInput = {
@@ -60472,33 +62338,6 @@ export namespace Prisma {
     is_deleted?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EventMaterialLinkUpdateWithoutEventInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sort_order?: IntFieldUpdateOperationsInput | number
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    material?: TrainingMaterialUpdateOneRequiredWithoutEvent_linksNestedInput
-  }
-
-  export type EventMaterialLinkUncheckedUpdateWithoutEventInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    material_id?: StringFieldUpdateOperationsInput | string
-    sort_order?: IntFieldUpdateOperationsInput | number
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type EventMaterialLinkUncheckedUpdateManyWithoutEventInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    material_id?: StringFieldUpdateOperationsInput | string
-    sort_order?: IntFieldUpdateOperationsInput | number
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EventSessionRegistrationCreateManySessionInput = {
@@ -60621,15 +62460,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TrainingMaterialLinkCreateManyMaterialInput = {
-    id?: string
-    training_id: string
-    sort_order?: number
-    is_required?: boolean
-    linked_at?: Date | string
-    linked_by?: string | null
-  }
-
   export type EventMaterialLinkCreateManyMaterialInput = {
     id?: string
     event_id: string
@@ -60639,31 +62469,13 @@ export namespace Prisma {
     linked_by?: string | null
   }
 
-  export type TrainingMaterialLinkUpdateWithoutMaterialInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sort_order?: IntFieldUpdateOperationsInput | number
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training?: TrainingUpdateOneRequiredWithoutMaterial_linksNestedInput
-  }
-
-  export type TrainingMaterialLinkUncheckedUpdateWithoutMaterialInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    training_id?: StringFieldUpdateOperationsInput | string
-    sort_order?: IntFieldUpdateOperationsInput | number
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TrainingMaterialLinkUncheckedUpdateManyWithoutMaterialInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    training_id?: StringFieldUpdateOperationsInput | string
-    sort_order?: IntFieldUpdateOperationsInput | number
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
+  export type TrainingMaterialLinkCreateManyMaterialInput = {
+    id?: string
+    training_id: string
+    sort_order?: number
+    is_required?: boolean
+    linked_at?: Date | string
+    linked_by?: string | null
   }
 
   export type EventMaterialLinkUpdateWithoutMaterialInput = {
@@ -60693,6 +62505,33 @@ export namespace Prisma {
     linked_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type TrainingMaterialLinkUpdateWithoutMaterialInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training?: TrainingUpdateOneRequiredWithoutMaterial_linksNestedInput
+  }
+
+  export type TrainingMaterialLinkUncheckedUpdateWithoutMaterialInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    training_id?: StringFieldUpdateOperationsInput | string
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TrainingMaterialLinkUncheckedUpdateManyWithoutMaterialInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    training_id?: StringFieldUpdateOperationsInput | string
+    sort_order?: IntFieldUpdateOperationsInput | number
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type SurveyQuestionCreateManySurveyInput = {
     id?: string
     question_text_en: string
@@ -60714,17 +62553,6 @@ export namespace Prisma {
     updated_at?: Date | string
   }
 
-  export type TrainingSurveyLinkCreateManySurveyInput = {
-    id?: string
-    training_id: string
-    timing: $Enums.SurveyTiming
-    is_required?: boolean
-    sort_order?: number
-    custom_deadline?: Date | string | null
-    linked_at?: Date | string
-    linked_by?: string | null
-  }
-
   export type SurveyResponseCreateManySurveyInput = {
     id?: string
     beneficiary_id: string
@@ -60740,6 +62568,17 @@ export namespace Prisma {
     time_spent_seconds?: number | null
     created_at?: Date | string
     updated_at?: Date | string
+  }
+
+  export type TrainingSurveyLinkCreateManySurveyInput = {
+    id?: string
+    training_id: string
+    timing: $Enums.SurveyTiming
+    is_required?: boolean
+    sort_order?: number
+    custom_deadline?: Date | string | null
+    linked_at?: Date | string
+    linked_by?: string | null
   }
 
   export type SurveyQuestionUpdateWithoutSurveyInput = {
@@ -60807,39 +62646,6 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TrainingSurveyLinkUpdateWithoutSurveyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    timing?: EnumSurveyTimingFieldUpdateOperationsInput | $Enums.SurveyTiming
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    sort_order?: IntFieldUpdateOperationsInput | number
-    custom_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-    training?: TrainingUpdateOneRequiredWithoutSurvey_linksNestedInput
-  }
-
-  export type TrainingSurveyLinkUncheckedUpdateWithoutSurveyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    training_id?: StringFieldUpdateOperationsInput | string
-    timing?: EnumSurveyTimingFieldUpdateOperationsInput | $Enums.SurveyTiming
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    sort_order?: IntFieldUpdateOperationsInput | number
-    custom_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    training_id?: StringFieldUpdateOperationsInput | string
-    timing?: EnumSurveyTimingFieldUpdateOperationsInput | $Enums.SurveyTiming
-    is_required?: BoolFieldUpdateOperationsInput | boolean
-    sort_order?: IntFieldUpdateOperationsInput | number
-    custom_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
   export type SurveyResponseUpdateWithoutSurveyInput = {
     id?: StringFieldUpdateOperationsInput | string
     started_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -60853,9 +62659,9 @@ export namespace Prisma {
     time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    question_responses?: SurveyQuestionResponseUpdateManyWithoutResponseNestedInput
     beneficiary?: BeneficiaryUpdateOneRequiredWithoutSurvey_responsesNestedInput
     training?: TrainingUpdateOneRequiredWithoutSurvey_responsesNestedInput
-    question_responses?: SurveyQuestionResponseUpdateManyWithoutResponseNestedInput
   }
 
   export type SurveyResponseUncheckedUpdateWithoutSurveyInput = {
@@ -60891,6 +62697,39 @@ export namespace Prisma {
     time_spent_seconds?: NullableIntFieldUpdateOperationsInput | number | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrainingSurveyLinkUpdateWithoutSurveyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    timing?: EnumSurveyTimingFieldUpdateOperationsInput | $Enums.SurveyTiming
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    custom_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
+    training?: TrainingUpdateOneRequiredWithoutSurvey_linksNestedInput
+  }
+
+  export type TrainingSurveyLinkUncheckedUpdateWithoutSurveyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    training_id?: StringFieldUpdateOperationsInput | string
+    timing?: EnumSurveyTimingFieldUpdateOperationsInput | $Enums.SurveyTiming
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    custom_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TrainingSurveyLinkUncheckedUpdateManyWithoutSurveyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    training_id?: StringFieldUpdateOperationsInput | string
+    timing?: EnumSurveyTimingFieldUpdateOperationsInput | $Enums.SurveyTiming
+    is_required?: BoolFieldUpdateOperationsInput | boolean
+    sort_order?: IntFieldUpdateOperationsInput | number
+    custom_deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    linked_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    linked_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SurveyQuestionResponseCreateManyQuestionInput = {

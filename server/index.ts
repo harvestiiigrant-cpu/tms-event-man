@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import trainingRoutes from './routes/trainings';
 import beneficiaryRoutes from './routes/beneficiaries';
 import authRoutes from './routes/auth';
+import telegramAuthRoutes from './routes/telegram-auth';
 import attendanceRoutes from './routes/attendance';
 import enrollmentRoutes from './routes/enrollments';
 import agendaRoutes from './routes/agendas';
@@ -50,6 +51,7 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', telegramAuthRoutes);
 app.use('/api/trainings', trainingRoutes);
 app.use('/api/beneficiaries', beneficiaryRoutes);
 app.use('/api/attendance', attendanceRoutes);

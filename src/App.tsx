@@ -12,6 +12,8 @@ import Surveys from "./pages/Surveys";
 import Beneficiaries from "./pages/Beneficiaries";
 import Attendance from "./pages/Attendance";
 import Settings from "./pages/Settings";
+import TrainingCalendar from "./pages/TrainingCalendar";
+import TrainingEventCalendar from "./pages/TrainingEventCalendar";
 import PublicEnrollment from "./pages/PublicEnrollment";
 import EnrollmentLanding from "./pages/EnrollmentLanding";
 import TrainingBrowser from "./pages/TrainingBrowser";
@@ -28,10 +30,16 @@ import BeneficiaryProfile from "./pages/portal/BeneficiaryProfile";
 import MySurveys from "./pages/portal/MySurveys";
 import TakeSurvey from "./pages/portal/TakeSurvey";
 import SurveyResults from "./pages/portal/SurveyResults";
+import TelegramAuth from "./pages/telegram/TelegramAuth";
+import TelegramOverview from "./pages/telegram/Overview";
+import TelegramTrainings from "./pages/telegram/Trainings";
+import TelegramAchievements from "./pages/telegram/Achievements";
+import TelegramSettings from "./pages/telegram/Settings";
 import { SidebarProvider } from "@/contexts/SidebarContext";
 import { FontProvider } from "@/contexts/FontContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { TelegramProvider } from "@/contexts/TelegramContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -43,12 +51,13 @@ const App = () => (
     <ThemeProvider>
       <AuthProvider>
         <FontProvider>
-        <TooltipProvider>
-          <SidebarProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
+          <TelegramProvider>
+            <TooltipProvider>
+              <SidebarProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <Routes>
                 {/* Public Home Page */}
                 <Route path="/" element={<HomePage />} />
 
@@ -96,6 +105,22 @@ const App = () => (
                   element={
                     <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
                       <Materials />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/training-calendar"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <TrainingCalendar />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/training-event-calendar"
+                  element={
+                    <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                      <TrainingEventCalendar />
                     </ProtectedRoute>
                   }
                 />
@@ -214,14 +239,50 @@ const App = () => (
                   }
                 />
 
+                {/* Telegram Mini App Routes */}
+                <Route path="/tg/auth" element={<TelegramAuth />} />
+                <Route
+                  path="/tg/overview"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <TelegramOverview />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/tg/trainings"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <TelegramTrainings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/tg/achievements"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <TelegramAchievements />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/tg/settings"
+                  element={
+                    <ProtectedRoute allowedRoles={['BENEFICIARY']}>
+                      <TelegramSettings />
+                    </ProtectedRoute>
+                  }
+                />
+
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </SidebarProvider>
-        </TooltipProvider>
-      </FontProvider>
-    </AuthProvider>
+                  </Routes>
+                </BrowserRouter>
+              </SidebarProvider>
+            </TooltipProvider>
+          </TelegramProvider>
+        </FontProvider>
+      </AuthProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );

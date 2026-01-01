@@ -245,4 +245,136 @@ router.get('/:id/export-participants', authenticateToken, async (req, res) => {
   }
 });
 
+// POST /api/trainings/:id/clone - Clone a training
+router.post('/:id/clone', authenticateToken, requireRole('ADMIN', 'SUPER_ADMIN'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { includeEnrollments = false } = req.body;
+
+    // Get the original training with all related data
+    const originalTraining = await prisma.training.findUnique({
+      where: { id },
+      include: {
+        beneficiary_trainings: true,
+        agendas: true,
+        material_links: true,
+        survey_links: true,
+      },
+    });
+
+    if (!originalTraining) {
+      return res.status(404).json({ error: 'Training not found' });
+    }
+
+    // Generate a unique training code
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substring(2, 8);
+    const newTrainingCode = `${originalTraining.training_code}-CLONE-${timestamp}-${random}`;
+
+    // Create the cloned training with DRAFT status
+    const clonedTraining = await prisma.training.create({
+      data: {
+        training_code: newTrainingCode,
+        training_name: `${originalTraining.training_name} (Clone)`,
+        training_name_english: originalTraining.training_name_english
+          ? `${originalTraining.training_name_english} (Clone)`
+          : undefined,
+        training_description: originalTraining.training_description,
+        training_type: originalTraining.training_type,
+        training_category: originalTraining.training_category,
+        training_level: originalTraining.training_level,
+        training_status: 'DRAFT',
+        training_start_date: originalTraining.training_start_date,
+        training_end_date: originalTraining.training_end_date,
+        registration_deadline: originalTraining.registration_deadline,
+        training_location: originalTraining.training_location,
+        training_venue: originalTraining.training_venue,
+        venue_latitude: originalTraining.venue_latitude,
+        venue_longitude: originalTraining.venue_longitude,
+        geofence_radius: originalTraining.geofence_radius,
+        province_name: originalTraining.province_name,
+        district_name: originalTraining.district_name,
+        commune_name: originalTraining.commune_name,
+        school_name: originalTraining.school_name,
+        cluster_schools: originalTraining.cluster_schools,
+        max_participants: originalTraining.max_participants,
+        current_participants: includeEnrollments ? originalTraining.beneficiary_trainings.length : 0,
+        qr_code_data: originalTraining.qr_code_data,
+        gps_validation_required: originalTraining.gps_validation_required,
+        geofence_validation_required: originalTraining.geofence_validation_required,
+        is_published: false,
+        training_created_by: originalTraining.training_created_by,
+        training_is_deleted: false,
+      },
+    });
+
+    // Clone agendas
+    if (originalTraining.agendas && originalTraining.agendas.length > 0) {
+      await prisma.trainingAgenda.createMany({
+        data: originalTraining.agendas.map((agenda) => ({
+          training_id: clonedTraining.id,
+          day_number: agenda.day_number,
+          start_time: agenda.start_time,
+          end_time: agenda.end_time,
+          topic_en: agenda.topic_en,
+          topic_km: agenda.topic_km,
+          description_en: agenda.description_en,
+          description_km: agenda.description_km,
+          instructor_name: agenda.instructor_name,
+          instructor_name_km: agenda.instructor_name_km,
+          sort_order: agenda.sort_order,
+        })),
+      });
+    }
+
+    // Clone material links
+    if (originalTraining.material_links && originalTraining.material_links.length > 0) {
+      await prisma.trainingMaterialLink.createMany({
+        data: originalTraining.material_links.map((link) => ({
+          training_id: clonedTraining.id,
+          material_id: link.material_id,
+        })),
+      });
+    }
+
+    // Clone survey links
+    if (originalTraining.survey_links && originalTraining.survey_links.length > 0) {
+      await prisma.trainingSurveyLink.createMany({
+        data: originalTraining.survey_links.map((link) => ({
+          training_id: clonedTraining.id,
+          survey_id: link.survey_id,
+          timing: link.timing,
+        })),
+      });
+    }
+
+    // Clone enrollments if requested
+    if (includeEnrollments && originalTraining.beneficiary_trainings.length > 0) {
+      await prisma.beneficiaryTraining.createMany({
+        data: originalTraining.beneficiary_trainings.map((enrollment) => ({
+          beneficiary_id: enrollment.beneficiary_id,
+          training_id: clonedTraining.id,
+          registration_date: new Date(),
+          registration_method: 'MANUAL',
+          attendance_status: 'REGISTERED',
+          training_role: enrollment.training_role,
+          attendance_percentage: 0,
+          enrollment_type: 'CLONE',
+          beneficiary_training_status: 'ACTIVE',
+        })),
+      });
+    }
+
+    res.status(201).json({
+      message: 'Training cloned successfully',
+      originalTrainingId: id,
+      clonedTrainingId: clonedTraining.id,
+      training: clonedTraining,
+    });
+  } catch (error) {
+    console.error('Error cloning training:', error);
+    res.status(500).json({ error: 'Failed to clone training' });
+  }
+});
+
 export default router;

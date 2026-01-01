@@ -32,6 +32,7 @@ import { EditTrainingDialog } from '@/components/trainings/EditTrainingDialog';
 import { ManageParticipantsDialog } from '@/components/trainings/ManageParticipantsDialog';
 import { ViewAttendanceDialog } from '@/components/trainings/ViewAttendanceDialog';
 import { CancelTrainingDialog } from '@/components/trainings/CancelTrainingDialog';
+import { CloneTrainingDialog } from '@/components/trainings/CloneTrainingDialog';
 import { ManageAgendaDialog } from '@/components/trainings/ManageAgendaDialog';
 import { AttachMaterialsDialog } from '@/components/trainings/AttachMaterialsDialog';
 import { AttendanceGridDialog } from '@/components/trainings/AttendanceGridDialog';
@@ -59,6 +60,7 @@ import {
   FileText,
   Grid3x3,
   Download,
+  Copy,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -420,6 +422,15 @@ export default function Trainings() {
                       {training.training_level && training.training_level !== 'CLUSTER' && (
                         <CascadeTrainingDialog training={training} />
                       )}
+                      <CloneTrainingDialog
+                        training={training}
+                        trigger={
+                          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                            <Copy className="mr-2 h-4 w-4" />
+                            ចម្លង
+                          </DropdownMenuItem>
+                        }
+                      />
                       <DropdownMenuSeparator />
                       <CancelTrainingDialog
                         training={training}
@@ -736,6 +747,15 @@ export default function Trainings() {
                           {training.training_level && training.training_level !== 'CLUSTER' && (
                             <CascadeTrainingDialog training={training} />
                           )}
+                          <CloneTrainingDialog
+                            training={training}
+                            trigger={
+                              <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <Copy className="mr-2 h-4 w-4" />
+                                ចម្លង
+                              </DropdownMenuItem>
+                            }
+                          />
                           <DropdownMenuSeparator />
                           <CancelTrainingDialog
                             training={training}

@@ -84,6 +84,10 @@ export const api = {
       body: JSON.stringify({ ids }),
     }),
     getExportData: (id: string) => api.fetch(`/trainings/${id}/export-participants`),
+    clone: (id: string, includeEnrollments: boolean = false) => api.fetch(`/trainings/${id}/clone`, {
+      method: 'POST',
+      body: JSON.stringify({ includeEnrollments }),
+    }),
   },
 
   // Beneficiaries
@@ -428,6 +432,10 @@ export const api = {
       body: JSON.stringify({ ids }),
     }),
     getExportData: (id: string) => api.fetch(`/events/${id}/export-participants`),
+    clone: (id: string, includeRegistrations: boolean = false) => api.fetch(`/events/${id}/clone`, {
+      method: 'POST',
+      body: JSON.stringify({ includeRegistrations }),
+    }),
   },
 
   // Event Sessions

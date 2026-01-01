@@ -32,6 +32,8 @@ const navItems = [
   { path: '/dashboard', label: 'ផ្ទាំងគ្រប់គ្រង', labelEn: 'Dashboard', icon: LayoutDashboard },
   { path: '/trainings', label: 'ការបណ្តុះបណ្តាល', labelEn: 'Trainings', icon: GraduationCap },
   { path: '/events', label: 'ព្រឹត្តិការណ៍', labelEn: 'Events', icon: CalendarDays },
+  { path: '/training-calendar', label: 'ប្រតិទិនការបណ្តុះបណ្តាល', labelEn: 'Training Calendar', icon: CalendarDays },
+  { path: '/training-event-calendar', label: 'ប្រតិទិនរួម', labelEn: 'Training & Event Calendar', icon: CalendarDays },
   { path: '/materials', label: 'បណ្ណាល័យឯកសារ', labelEn: 'Materials', icon: FileText },
   { path: '/surveys', label: 'ការស្ទង់មតិ និងតេស្ត', labelEn: 'Surveys & Tests', icon: ClipboardList },
   { path: '/beneficiaries', label: 'អ្នកទទួលផល', labelEn: 'Beneficiaries', icon: Users },

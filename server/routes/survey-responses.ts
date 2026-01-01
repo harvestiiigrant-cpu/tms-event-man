@@ -143,6 +143,21 @@ router.post('/:surveyId/responses', authenticateToken, async (req, res) => {
       return res.status(404).json({ error: 'Survey not found' });
     }
 
+    // Check if this is a preview test (special training_id = 'preview-test')
+    const isPreviewTest = training_id === 'preview-test';
+
+    // For preview tests, skip beneficiary existence check
+    if (!isPreviewTest) {
+      // Verify beneficiary exists for real surveys
+      const beneficiary = await prisma.beneficiary.findUnique({
+        where: { teacher_id: beneficiary_id },
+      });
+
+      if (!beneficiary) {
+        return res.status(404).json({ error: 'Beneficiary not found' });
+      }
+    }
+
     // Check existing attempts
     const existingResponses = await prisma.surveyResponse.findMany({
       where: {
@@ -157,14 +172,23 @@ router.post('/:surveyId/responses', authenticateToken, async (req, res) => {
     // Calculate score for tests
     let totalScore = 0;
     let maxScore = 0;
-    const questionResponses = [];
+    
+    interface QuestionResponse {
+      question_id: string;
+      answer_value: string;
+      answer_text?: string;
+      points_earned: number | null;
+      is_correct: boolean | null;
+    }
+    
+    const questionResponses: QuestionResponse[] = [];
 
     for (const answer of answers) {
       const question = survey.questions.find((q) => q.id === answer.question_id);
       if (!question) continue;
 
-      let points_earned = null;
-      let is_correct = null;
+      let points_earned: number | null = null;
+      let is_correct: boolean | null = null;
 
       if (question.points && question.correct_answer) {
         maxScore += question.points;
@@ -191,32 +215,79 @@ router.post('/:surveyId/responses', authenticateToken, async (req, res) => {
         : null;
 
     // Create response
-    const response = await prisma.surveyResponse.create({
-      data: {
-        survey_id: surveyId,
-        beneficiary_id,
-        training_id,
-        attempt_number: attemptNumber,
-        started_at: new Date(),
-        submitted_at: new Date(),
-        is_complete: true,
-        total_score: totalScore,
-        max_score: maxScore > 0 ? maxScore : null,
-        percentage,
-        passed,
-        time_spent_seconds,
-        question_responses: {
-          create: questionResponses,
-        },
-      },
-      include: {
-        question_responses: {
-          include: {
-            question: true,
+    // For preview tests, use raw query to bypass foreign key constraints
+    let response;
+    
+    if (isPreviewTest) {
+      // Use raw SQL to insert without FK validation
+      const responseId = `preview_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      await prisma.$executeRaw`
+        INSERT INTO survey_responses (
+          id, survey_id, beneficiary_id, training_id, attempt_number,
+          started_at, submitted_at, is_complete, total_score, max_score,
+          percentage, passed, time_spent_seconds, created_at, updated_at
+        ) VALUES (
+          ${responseId}, ${surveyId}, ${beneficiary_id}, ${training_id}, ${attemptNumber},
+          ${new Date()}, ${new Date()}, ${true}, ${totalScore}, ${maxScore > 0 ? maxScore : null},
+          ${percentage}, ${passed}, ${time_spent_seconds}, ${new Date()}, ${new Date()}
+        )
+      `;
+      
+      // Insert question responses
+      for (const qr of questionResponses) {
+        const qrId = `qr_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        await prisma.$executeRaw`
+          INSERT INTO survey_question_responses (
+            id, response_id, question_id, answer_value, answer_text,
+            points_earned, is_correct, answered_at
+          ) VALUES (
+            ${qrId}, ${responseId}, ${qr.question_id}, ${qr.answer_value}, ${qr.answer_text || null},
+            ${qr.points_earned}, ${qr.is_correct}, ${new Date()}
+          )
+        `;
+      }
+      
+      // Fetch the created response
+      response = await prisma.surveyResponse.findUnique({
+        where: { id: responseId },
+        include: {
+          question_responses: {
+            include: {
+              question: true,
+            },
           },
         },
-      },
-    });
+      });
+    } else {
+      // Normal flow with FK validation
+      response = await prisma.surveyResponse.create({
+        data: {
+          survey_id: surveyId,
+          beneficiary_id,
+          training_id,
+          attempt_number: attemptNumber,
+          started_at: new Date(),
+          submitted_at: new Date(),
+          is_complete: true,
+          total_score: totalScore,
+          max_score: maxScore > 0 ? maxScore : null,
+          percentage,
+          passed,
+          time_spent_seconds,
+          question_responses: {
+            create: questionResponses,
+          },
+        },
+        include: {
+          question_responses: {
+            include: {
+              question: true,
+            },
+          },
+        },
+      });
+    }
 
     res.status(201).json(response);
   } catch (error) {
